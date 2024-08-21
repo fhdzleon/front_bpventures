@@ -1,6 +1,6 @@
 import React from "react";
 
-const Test = () => {
+const Testvane = () => {
   return (
     <div>
       <h1>Componente de prueba</h1>
@@ -8,4 +8,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Testvane;
