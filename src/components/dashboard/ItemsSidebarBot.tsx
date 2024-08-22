@@ -10,7 +10,7 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-6 text-secundary"
+          className="size-6 text-secundary col-start-2"
         >
           <path
             stroke-linecap="round"
@@ -19,7 +19,7 @@ const ItemsSidebarBot = () => {
           />
         </svg>
 
-        <h1 className="text-xs font-futura text-secundary font-bold cursor-pointer col-span-3">
+        <h1 className="text-xs font-futura text-secundary   cursor-pointer col-span-3">
           FACTURACIÓN
         </h1>
       </div>
@@ -31,7 +31,7 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-6 text-secundary"
+          className="size-6 text-secundary col-start-2"
         >
           <path
             stroke-linecap="round"
@@ -40,7 +40,7 @@ const ItemsSidebarBot = () => {
           />
         </svg>
 
-        <h1 className="text-xs text-secundary font-bold cursor-pointer col-span-3">
+        <h1 className="text-xs text-secundary  font-futura cursor-pointer col-span-3">
           MI CUENTA
         </h1>
       </div>
@@ -76,7 +76,7 @@ const ItemsSidebarBot = () => {
           />
         </svg>
 
-        <h1 className="text-xs text-secundary font-bold cursor-pointer col-span-3">
+        <h1 className="text-xs text-secundary font-futura cursor-pointer col-span-3">
           USUARIOS
         </h1>
       </div>
