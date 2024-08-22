@@ -1,0 +1,9 @@
+@media (min-width: 1024px) {
+    
+    .custom-position {
+      top: 25%;
+      /* right: 13%; */
+      right:10vw;
+      transform: translateY(-50%);
+    }
+  }

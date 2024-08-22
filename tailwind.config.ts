@@ -18,6 +18,9 @@ const config: Config = {
         secundary: "#2b4168",
         acent: "#5eba98",
       },
+      fontFamily: {
+        futura: ['"Futura Md BT"', "sans"],
+      },
     },
   },
   plugins: [],

@@ -1,7 +1,8 @@
+import Login from "../components/login/Login";
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>bpVentures</h1>
+    <main>
+      <Login />
     </main>
   );
 }
