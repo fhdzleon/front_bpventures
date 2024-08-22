@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import ItemsSideBarTop from "./ItemsSideBarTop";
 import ItemsSidebarBot from "./ItemsSidebarBot";
-
+ 
 const Sidebar = () => {
   return (
     <div className="flex-col h-screen w-1/6  items-center border-sky-100 bg-slate-300 flex   ">
