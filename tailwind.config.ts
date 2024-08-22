@@ -19,7 +19,7 @@ const config: Config = {
         acent: "#5eba98",
       },
       fontFamily: {
-        futura: ['"Futura Md BT"', "impact"],
+        futura: ['"Futura Md BT"', "sans"],
       },
     },
   },

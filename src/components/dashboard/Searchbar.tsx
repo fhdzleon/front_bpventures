@@ -2,7 +2,7 @@ import React from "react";
 
 const Searchbar = () => {
   return (
-    <div className="flex mx-10 mt-10 items-center">
+    <div className="flex mx-5 md:mx-10 mt-10 items-center">
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +22,7 @@ const Searchbar = () => {
 
       <div>
         <input
-          className=" bg-slate-300 h-12 w-96 outline-none placeholder-secundary px-3"
+          className=" bg-slate-300 w-12 h-12 md:w-96 outline-none placeholder-secundary px-3"
           type="text"
           placeholder="Buscar dentro de tu unidad"
         />
