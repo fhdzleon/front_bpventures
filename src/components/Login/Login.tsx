@@ -112,7 +112,7 @@ export default function Login() {
           </div>
           <div className="hidden md:block absolute bottom-0 left-12">
             <Image
-              src="/img/avatar.svg"
+              src="https://i.ibb.co/pJVrW93/image-5.png"
               alt="People"
               width={400}
               height={400}

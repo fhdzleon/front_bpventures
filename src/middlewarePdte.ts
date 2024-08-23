@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
+  return NextResponse.next();
   const token = request.cookies.get("token")?.value;
   try {
     const response = await fetch(
@@ -33,5 +34,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard"], // Definir rutas en las que aplicar el middleware
+  matcher: ["/"], // Definir rutas en las que aplicar el middleware
 };
