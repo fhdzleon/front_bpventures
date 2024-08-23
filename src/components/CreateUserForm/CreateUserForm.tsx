@@ -1,4 +1,5 @@
 "use client";	
+import { RegisterUser } from "@/helpers/auth.helper";
 import React, { useState } from "react";
 
 interface ICreateUser {
@@ -28,10 +29,22 @@ export const CreateUserForm: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica para manejar el envío del formulario
-    console.log("Datos del formulario: ", formData);
+    // const errors = validateRegisterForm(userData);
+    // if (Object.values(errors).some((error) => error !== '')) {
+    //   alert('Password and confirm password do not match');
+    //   setErrorUser(errors);
+    //   return;
+    // }
+
+    try {
+      await RegisterUser(formData);
+      alert('User registered successfully');
+      // router.push(PATHROUTES.LOGIN);
+    } catch (error: any) {
+      console.error('Error registering user:', error);
+    }
   };
 
   return (
