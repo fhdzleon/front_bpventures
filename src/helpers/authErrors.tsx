@@ -1,9 +1,5 @@
-export function ValidateLogin(name: string, email: string, password: string) {
-  let validationErrors = { name: "", email: "", password: "" };
-
-  if (!name) {
-    validationErrors.name = "el nombre es obligatorio";
-  }
+export function ValidateLogin(email: string, password: string) {
+  let validationErrors = { email: "", password: "" };
 
   if (!email) {
     validationErrors.email = "El email es obligatorio.";
