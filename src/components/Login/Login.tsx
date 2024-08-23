@@ -4,6 +4,7 @@ import "../../styles/style.css";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { ValidateLogin } from "../../helpers/authErrors";
 import { useRouter } from "next/navigation";
+import { Toaster, toast } from "sonner";
 
 export default function Login() {
   const router = useRouter();
@@ -23,7 +24,15 @@ export default function Login() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setFormData({ ...formData, [name]: value });
+
+    const validationErrors = ValidateLogin(
+      name === "email" ? value : formData.email,
+      name === "password" ? value : formData.password
+    );
+
+    setErrors(validationErrors);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -49,16 +58,11 @@ export default function Login() {
 
       const tokenCookie = JSON.stringify(json.token);
       document.cookie = `token=${tokenCookie}`;
+      toast.success("¡Inicio de sesión exitoso!");
       router.push("/dashboard");
     } catch (error) {
+      toast.error("Error en el inicio de sesión. Verifica tus credenciales.");
       console.log("error");
-    }
-
-    const validationErrors = ValidateLogin(formData.email, formData.password);
-    setErrors(validationErrors);
-
-    if (validationErrors.email || validationErrors.password) {
-      return;
     }
 
     console.log("Formulario válido, procesando...", formData);
@@ -71,6 +75,7 @@ export default function Login() {
 
   return (
     <div className=" relative min-h-screen flex items-center justify-center">
+      <Toaster richColors />
       <div className=" flex">
         <div className=" h-screen w-full"></div>
         <div className="bg-white"></div>
@@ -123,7 +128,7 @@ export default function Login() {
             </h2>
 
             <form onSubmit={handleSubmit}>
-              <div className="mb-4">
+              <div className="mb-9">
                 <label
                   className="block font-futura text-left text-gray-700 text-sm font-bold mb-2"
                   htmlFor="email"
@@ -131,7 +136,7 @@ export default function Login() {
                   E-mail
                 </label>
                 <input
-                  className="font-futura appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
+                  className="relative font-futura border-[0.5px] border-gray-300 appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
                   id="email"
                   name="email"
                   type="email"
@@ -140,11 +145,13 @@ export default function Login() {
                   onChange={handleChange}
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-xs italic">{errors.email}</p>
+                  <p className="absolute text-red-500 text-xs italic">
+                    {errors.email}
+                  </p>
                 )}
               </div>
 
-              <div className="mb-6">
+              <div className="mb-9">
                 <label
                   className="font-futura block text-left text-gray-700 text-sm font-bold mb-2"
                   htmlFor="password"
@@ -152,7 +159,7 @@ export default function Login() {
                   Contraseña
                 </label>
                 <input
-                  className="font-futura appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
+                  className=" relative font-futura border-[0.5px] border-gray-300 appearance-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
                   id="password"
                   name="password"
                   type="password"
@@ -161,7 +168,7 @@ export default function Login() {
                   onChange={handleChange}
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-xs italic">
+                  <p className="absolute text-red-500 text-xs italic mt-1">
                     {errors.password}
                   </p>
                 )}
@@ -173,26 +180,6 @@ export default function Login() {
               >
                 Inicia Sesión
               </button>
-
-              <div className="flex items-center my-6 border-black">
-                <hr className="flex-grow border-black" />
-                <span className="mx-4 text-gray-600">O</span>
-                <hr className="flex-grow border-black" />
-              </div>
-
-              <div className="flex items-center space-x-2 mt-8 rounded-full p-3 bg-white border border-gray-300">
-                <Image
-                  src="/img/cromo.png"
-                  alt="Imagen del celular"
-                  width={30}
-                  height={30}
-                  layout="intrinsic"
-                  className="rounded"
-                />
-                <button className="font-futura text-sm">
-                  Accede con tu cuenta de Google
-                </button>
-              </div>
             </form>
           </div>
         </div>
