@@ -3,20 +3,20 @@ import Image from "next/image";
 import "../../styles/style.css";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { ValidateLogin } from "../../helpers/authErrors";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState<{
-    name: string;
     email: string;
     password: string;
   }>({
-    name: "",
     email: "",
     password: "",
   });
@@ -29,25 +29,41 @@ export default function Login() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const validationErrors = ValidateLogin(
-      formData.name,
-      formData.email,
-      formData.password
-    );
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/signin`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Credenciales invalidas");
+      }
+
+      const json = await response.json();
+
+      const tokenCookie = JSON.stringify(json.token);
+      document.cookie = `token=${tokenCookie}`;
+      router.push("/dashboard");
+    } catch (error) {
+      console.log("error");
+    }
+
+    const validationErrors = ValidateLogin(formData.email, formData.password);
     setErrors(validationErrors);
 
-    if (
-      validationErrors.email ||
-      validationErrors.password ||
-      validationErrors.name
-    ) {
+    if (validationErrors.email || validationErrors.password) {
       return;
     }
 
     console.log("Formulario válido, procesando...", formData);
 
     setFormData({
-      name: "",
       email: "",
       password: "",
     });
@@ -107,27 +123,6 @@ export default function Login() {
             </h2>
 
             <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label
-                  className="block font-futura text-left text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="name"
-                >
-                  Nombre
-                </label>
-                <input
-                  className="appearance-none border-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Ingresa tu nombre"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-                {errors.name && (
-                  <p className="text-red-500 text-xs italic">{errors.name}</p>
-                )}
-              </div>
-
               <div className="mb-4">
                 <label
                   className="block font-futura text-left text-gray-700 text-sm font-bold mb-2"
