@@ -10,8 +10,9 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-5 md:size-6 text-secundary  "
+          className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 md:col-start-1 md:size-6 text-secundary  "
         >
+          <title>Facturación</title>
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -19,7 +20,7 @@ const ItemsSidebarBot = () => {
           />
         </svg>
 
-        <h1 className="text-xs font-futura text-secundary   cursor-pointer col-span-3">
+        <h1 className="text-xs font-futura text-secundary hidden md:block  cursor-pointer col-span-3">
           FACTURACIÓN
         </h1>
       </div>
@@ -31,8 +32,9 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-5 md:size-6 text-secundary  "
+          className="size-8 hover:scale-125 md:hover:scale-100 md:size-6 col-start-2 md:col-start-1 text-secundary  "
         >
+          <title>Mi cuenta</title>
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -40,7 +42,7 @@ const ItemsSidebarBot = () => {
           />
         </svg>
 
-        <h1 className="text-xs text-secundary  font-futura cursor-pointer col-span-3">
+        <h1 className="text-xs text-secundary hidden md:block  font-futura cursor-pointer col-span-3">
           MI CUENTA
         </h1>
       </div>
@@ -52,8 +54,9 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-5 md:size-6 text-secundary"
+          className="size-8 hover:scale-125 md:hover:scale-100 md:size-6 col-start-2 md:col-start-1 text-secundary"
         >
+          <title>Usuarios</title>
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -61,7 +64,7 @@ const ItemsSidebarBot = () => {
           />
         </svg>
 
-        <h1 className="text-xs text-secundary font-futura cursor-pointer col-span-3">
+        <h1 className="text-xs text-secundary hidden md:block font-futura cursor-pointer col-span-3">
           USUARIOS
         </h1>
 
@@ -71,7 +74,7 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-4 text-secundary"
+          className="size-4 hidden md:block text-secundary"
         >
           <path
             stroke-linecap="round"
@@ -88,7 +91,7 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-4 text-secundary"
+          className="size-4 hidden md:block text-secundary"
         >
           <path
             stroke-linecap="round"
@@ -103,8 +106,9 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-5 md:size-6 text-secundary"
+          className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 md:col-start-2 md:size-6 text-secundary"
         >
+          <title>Ver usuarios</title>
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -112,7 +116,7 @@ const ItemsSidebarBot = () => {
           />
         </svg>
 
-        <h1 className="text-xs text-secundary  font-futura cursor-pointer col-span-3">
+        <h1 className="text-xs text-secundary hidden md:block font-futura cursor-pointer col-span-3">
           VER USUARIOS
         </h1>
       </div>
@@ -124,7 +128,7 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-4 text-secundary"
+          className="size-4 hidden md:block text-secundary"
         >
           <path
             stroke-linecap="round"
@@ -139,8 +143,9 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-5 md:size-6 text-secundary"
+          className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 md:col-start-2 md:size-6 text-secundary"
         >
+          <title>Agregar usuarios</title>
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -148,7 +153,7 @@ const ItemsSidebarBot = () => {
           />
         </svg>
 
-        <h1 className="text-xs text-secundary  font-futura cursor-pointer col-span-3">
+        <h1 className="text-xs text-secundary hidden md:block font-futura cursor-pointer col-span-3">
           AGREGAR USUARIO
         </h1>
       </div>
