@@ -22,7 +22,7 @@ const Searchbar = () => {
 
       <div>
         <input
-          className=" bg-slate-300 w-12 h-12 md:w-96 outline-none placeholder-secundary px-3"
+          className=" bg-slate-300 w-40 text-xs md:text-lg h-12 md:w-96 outline-none placeholder-secundary px-3"
           type="text"
           placeholder="Buscar dentro de tu unidad"
         />
