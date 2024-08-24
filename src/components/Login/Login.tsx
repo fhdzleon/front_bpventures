@@ -5,9 +5,11 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { ValidateLogin } from "../../helpers/authErrors";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Login() {
   const router = useRouter();
+  const {user, setUser}:any = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -40,7 +42,7 @@ export default function Login() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/signin`,
+        `${process.env.NEXT_PUBLIC_API_URL}/signin`,
         {
           method: "POST",
           headers: {
@@ -55,9 +57,12 @@ export default function Login() {
       }
 
       const json = await response.json();
-
+      console.log(json);
+      
       const tokenCookie = JSON.stringify(json.token);
+      
       document.cookie = `token=${tokenCookie}`;
+      setUser(json.userPayload);
       toast.success("¡Inicio de sesión exitoso!");
       router.push("/dashboard");
     } catch (error) {
@@ -128,6 +133,18 @@ export default function Login() {
             </h2>
 
             <form onSubmit={handleSubmit}>
+              <div className="grid items-center">
+                <input
+                  id="prueba"
+                  type="text"
+                  placeholder=" "
+                  className=" relative font-futura border-[0.5px] text-black border-gray-300 appearance-none rounded w-full py-2 px-5 leading-tight focus:outline-none bg-transparent  font-inherit text-inherit border-none  outline outline-[0.5px] outline-gray-300 box-border placeholder-transparent focus:outline-black/20 peer"
+                />
+                <label htmlFor="prueba" className=" text-gray-400 absolute left-0 transition-transform transform -translate-y-0 scale-100 bg-transparent justify-self-start transition-padding transition-font-size duration-500 mx-8 pointer-events-none peer-focus:-translate-y-[90%]  peer-focus:scale-90 peer-focus:text-gray-700 peer-focus:bg-white peer-focus:px-1  peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100">
+                  Label
+                </label>
+              </div>
+
               <div className="mb-9">
                 <label
                   className="block font-futura text-left text-gray-700 text-sm font-bold mb-2"
