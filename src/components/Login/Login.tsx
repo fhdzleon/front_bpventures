@@ -5,6 +5,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { ValidateLogin } from "../../helpers/authErrors";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
+import { PATHROUTES } from "@/helpers/pathRoutes";
 
 export default function Login() {
   const router = useRouter();
@@ -59,10 +60,9 @@ export default function Login() {
       const tokenCookie = JSON.stringify(json.token);
       document.cookie = `token=${tokenCookie}`;
       toast.success("¡Inicio de sesión exitoso!");
-      router.push("/dashboard");
+      router.push(PATHROUTES.HOME);
     } catch (error) {
       toast.error("Error en el inicio de sesión. Verifica tus credenciales.");
-      console.log("error");
     }
 
     console.log("Formulario válido, procesando...", formData);

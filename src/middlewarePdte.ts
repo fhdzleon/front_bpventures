@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  return NextResponse.next();
   const token = request.cookies.get("token")?.value;
   try {
     const response = await fetch(
@@ -10,7 +9,7 @@ export async function middleware(request: NextRequest) {
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`, // Enviar el token en el header Authorization
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       }
@@ -25,14 +24,14 @@ export async function middleware(request: NextRequest) {
       console.log(data);
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(new URL("/not-allowed", request.url)); // Redirigir a otra página
+      return NextResponse.redirect(new URL("/not-allowed", request.url));
     }
   } catch (error) {
     console.error("Error en el middleware:", error);
-    return NextResponse.redirect(new URL("/", request.url)); // Redirigir a una página de error
+    return NextResponse.redirect(new URL("/", request.url));
   }
 }
 
 export const config = {
-  matcher: ["/"], // Definir rutas en las que aplicar el middleware
+  matcher: ["/"],
 };
