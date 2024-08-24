@@ -5,9 +5,12 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { ValidateLogin } from "../../helpers/authErrors";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
+import { AuthContextType, useAuth } from "../../context/AuthContext";
+import { PATHROUTES } from "@/helpers/pathRoutes";
 
 export default function Login() {
   const router = useRouter();
+  const {user, setUser}:AuthContextType = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -55,14 +58,16 @@ export default function Login() {
       }
 
       const json = await response.json();
-
+      
+      
       const tokenCookie = JSON.stringify(json.token);
+      
       document.cookie = `token=${tokenCookie}`;
+      setUser(json.userPayload);
       toast.success("¡Inicio de sesión exitoso!");
-      router.push("/dashboard");
+      router.push(PATHROUTES.HOME);
     } catch (error) {
       toast.error("Error en el inicio de sesión. Verifica tus credenciales.");
-      console.log("error");
     }
 
     console.log("Formulario válido, procesando...", formData);

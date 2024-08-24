@@ -1,15 +1,6 @@
-
 export enum PATHROUTES {
-
-    HOME = "/",
-  
-    LOGIN = "/login",
-  
-    DASHBOARD = "/dashboard",
-
-    CREATE_USER = "/create-user",
-  
-    UPDATE_USER = "/update-user",
-
-  
-  }
+  LOGIN = "/",
+  HOME = "/in",
+  CREATE_USER = "/in/create-user",
+  UPDATE_USER = "/in/update-user",
+}
