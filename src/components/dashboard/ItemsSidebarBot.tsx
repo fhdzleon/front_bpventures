@@ -1,4 +1,6 @@
 import React from "react";
+import Link from "next/link";
+import { PATHROUTES } from "@/helpers/pathRoutes";
 
 const ItemsSidebarBot = () => {
   return (
@@ -87,7 +89,7 @@ const ItemsSidebarBot = () => {
       <div className="grid grid-cols-6 py-2 px-4 items-center ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill=""
+          fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
@@ -96,7 +98,7 @@ const ItemsSidebarBot = () => {
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+            d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
           />
         </svg>
 
@@ -124,7 +126,7 @@ const ItemsSidebarBot = () => {
       <div className="grid grid-cols-6 py-2 px-4 items-center ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill=""
+          fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
@@ -133,28 +135,29 @@ const ItemsSidebarBot = () => {
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+            d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
           />
         </svg>
-
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 md:col-start-2 md:size-6 text-secundary"
+          className="size-8 hover:scale-125 p-0 m-0 md:hover:scale-100 col-start-2 md:col-start-2 md:size-6 text-secundary"
         >
           <title>Agregar usuarios</title>
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
-          />
+          <Link href={PATHROUTES.CREATE_USER}>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
+            />
+          </Link>
         </svg>
 
         <h1 className="text-xs text-secundary hidden md:block font-futura cursor-pointer col-span-3">
-          AGREGAR USUARIO
+          <Link href={PATHROUTES.CREATE_USER}>AGREGAR USUARIO</Link>
         </h1>
       </div>
     </div>
