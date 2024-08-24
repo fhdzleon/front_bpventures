@@ -2,8 +2,10 @@ import React from "react";
 import Image from "next/image";
 import ItemsSideBarTop from "./ItemsSideBarTop";
 import ItemsSidebarBot from "./ItemsSidebarBot";
+import { AuthContextType, useAuth } from "@/context/AuthContext";
 
 const Sidebar = () => {
+  
   return (
     <div className="flex-col h-screen w-1/5  md:w-2/6 lg:w-2/6 2xl:w-1/6  items-center  bg-slate-300 md:flex   ">
       <div className=" hidden md:flex">
