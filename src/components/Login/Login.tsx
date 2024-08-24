@@ -5,10 +5,12 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import { ValidateLogin } from "../../helpers/authErrors";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
+import { AuthContextType, useAuth } from "../../context/AuthContext";
+import { PATHROUTES } from "@/helpers/pathRoutes";
 
 export default function Login() {
   const router = useRouter();
-  const {user, setUser}:any = useAuth();
+  const {user, setUser}:AuthContextType = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -56,7 +58,7 @@ export default function Login() {
       }
 
       const json = await response.json();
-      console.log(json);
+      
       
       const tokenCookie = JSON.stringify(json.token);
       
