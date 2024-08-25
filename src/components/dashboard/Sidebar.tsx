@@ -1,13 +1,14 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import Image from "next/image";
 import ItemsSideBarTop from "./ItemsSideBarTop";
 import ItemsSidebarBot from "./ItemsSidebarBot";
 import { AuthContextType, useAuth } from "@/context/AuthContext";
 
 const Sidebar = () => {
-  
+  const {userData} = useAuth();
   return (
-    <div className="flex-col h-screen w-1/5  md:w-2/6 lg:w-2/6 2xl:w-1/6  items-center  bg-slate-300 md:flex   ">
+    <div className="flex-col min-h-screen w-1/5  md:w-2/6 lg:w-2/6 2xl:w-1/6  items-center  bg-slate-300 md:flex   ">
       <div className=" hidden md:flex">
         <Image
           src={"https://i.ibb.co/56pzqfC/bp-ventures-color.png"}
@@ -38,7 +39,7 @@ const Sidebar = () => {
           width={160}
         />
         <h1 className="text-secundary font-bold text-lg">Bienvenido</h1>
-        <h1 className="text-secundary text-lg">Usuario</h1>
+        <h1 className="text-secundary text-lg"> {userData?.Names}</h1>
       </div>
     </div>
   );

@@ -63,6 +63,7 @@ export default function Login() {
       const tokenCookie = JSON.stringify(json.token);
       
       document.cookie = `token=${tokenCookie}`;
+      sessionStorage.setItem("user", JSON.stringify(json.userPayload));
       setUser(json.userPayload);
       toast.success("¡Inicio de sesión exitoso!");
       router.push(PATHROUTES.HOME);

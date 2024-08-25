@@ -45,7 +45,7 @@ const ItemsSidebarBot = () => {
         </svg>
 
         <h1 className="text-xs text-secundary hidden md:block  font-futura cursor-pointer col-span-3">
-          MI CUENTA
+          <Link href={PATHROUTES.MY_ACCOUNT}>MI CUENTA</Link>
         </h1>
       </div>
 

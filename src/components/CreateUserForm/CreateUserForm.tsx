@@ -1,6 +1,9 @@
 "use client";	
 import { RegisterUser } from "@/helpers/auth.helper";
 import React, { useState } from "react";
+import { Toaster, toast } from "sonner";
+import InputField from "../FormComponent/InputField";
+import Button from "../FormComponent/Button";
 
 interface ICreateUser {
   email: string;
@@ -34,15 +37,20 @@ export const CreateUserForm: React.FC = () => {
 
     try {
       await RegisterUser(formData);
-      alert('User registered successfully');
+      toast.success("¡Usuario Registrado exitosamente!");
+
     } catch (error: any) {
       console.error('Error registering user:', error);
+      toast.error(error.message);
     }
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit} className="space-y-6 bg-gradient-to-b from-white via-[#d6dbdc] to-white dark:from-black dark:via-black dark:to-black p-6 rounded-lg shadow-lg text-[color:rgb(var(--foreground-rgb))]">
-      <div>
+       <Toaster richColors />
+
+      {/* <div>
         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">Email</label>
         <input
           type="email"
@@ -107,8 +115,40 @@ export const CreateUserForm: React.FC = () => {
         className="w-full py-3 mt-6 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
       >
         Create User
-      </button>
+      </button> */}
+        <div className="w-4/5 max-w-md p-5 bg-white shadow-lg rounded-lg">
+        <h2 className="font-futura text-center">Crear Usuario</h2>
+
+        <form className="form-apply" onSubmit={handleSubmit}>
+          {["email", "password", "Names", "LastName", "Position"].map((field, index) => (
+            <>
+              <label htmlFor={field} className="label-apply">
+              {field}
+            </label>
+            <input
+              key={index}
+             className="relative font-futura border-[0.5px] border-gray-300 appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
+              type={field === "password" ? "password" : "text"}
+              name={field}
+              // value={userData[field as keyof User]}
+              // onChange={handleInputChange}
+              placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+              required
+            />
+             </>
+          ))}
+          
+
+          
+          <Button type="submit">Crear Usuario</Button>
+        </form>
+      </div>
+      
     </form>
+    
+    </>
+
+
   );
 };
 

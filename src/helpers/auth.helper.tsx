@@ -14,7 +14,8 @@ export const RegisterUser = async (userData: any) => {
             return response.json();
         } else {
             const errorData = await response.json();
-            alert(errorData.message || "User creation error");
+            // alert(errorData.message || "User creation error");
+
             throw new Error(errorData.message || "User creation error");
 
         }
@@ -23,7 +24,7 @@ export const RegisterUser = async (userData: any) => {
     }
 };
 
-export const GetUserById = async (userId: string) => {
+export const GetUserById = async (userId: string) => { 
     try {
         const response = await fetch(`${apiURL}/users/${userId}`, {
             method: 'GET',
@@ -48,7 +49,7 @@ export const GetUserById = async (userId: string) => {
 export const UpdateUser = async (userData: any, userId: string) => {
     try {
         const response = await fetch(`${apiURL}/users/${userId}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },

@@ -1,10 +1,15 @@
+"use client"
+
 import React from "react";
 import UpdateUserComponent from "@/components/CreateUserForm/UpdateUser";
+import { useAuth } from "@/context/AuthContext";
 
 const UpdateUser = () => {
+  const { user } = useAuth();
+
   return (
     <div className="flex items-start">
-      <UpdateUserComponent />
+      <UpdateUserComponent  id={user?.id} />
     </div>
   );
 };
