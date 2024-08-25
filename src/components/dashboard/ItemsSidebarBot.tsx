@@ -12,7 +12,7 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 md:col-start-1 md:size-6 text-secundary  "
+          className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
         >
           <title>Facturación</title>
           <path
@@ -27,14 +27,14 @@ const ItemsSidebarBot = () => {
         </h1>
       </div>
 
-      <div className="grid grid-cols-6 py-2 px-4 items-center ">
+      <div className="grid grid-cols-6 py-2 px-4 items-center  ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-8 hover:scale-125 md:hover:scale-100 md:size-6 col-start-2 md:col-start-1 text-secundary  "
+          className="size-8 hover:scale-125 md:hover:scale-100 md:size-6 col-start-2 md:col-start-1 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
         >
           <title>Mi cuenta</title>
           <path
@@ -56,7 +56,7 @@ const ItemsSidebarBot = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="size-8 hover:scale-125 md:hover:scale-100 md:size-6 col-start-2 md:col-start-1 text-secundary"
+          className="size-8 hover:scale-125 md:hover:scale-100 md:size-6 col-start-2 md:col-start-1 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer"
         >
           <title>Usuarios</title>
           <path
