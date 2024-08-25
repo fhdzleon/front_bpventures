@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 export interface userPayload{
     id: number;
@@ -15,6 +15,21 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<any>(null);
+  
+  useEffect(() => {
+    const user = sessionStorage.getItem('user');
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      sessionStorage.setItem('user', JSON.stringify(user));
+    } else {
+      sessionStorage.removeItem('user');
+    }
+  }, [user]);
     
   return (
     <AuthContext.Provider value={{ user, setUser }}>
