@@ -13,7 +13,7 @@ const ItemsSideBarTop = () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="size-8 col-start-2 hover:scale-125 md:hover:scale-100 md:col-start-1 md:size-6 text-secundary "
+            className="size-8 col-start-2 hover:scale-125 md:hover:scale-100 transform transition-all duration-500 ease-in-out md:col-start-1 md:size-6 text-secundary "
           >
             <title>Home</title>
             <path

@@ -7,7 +7,7 @@ import Avatar from "./Avatar";
 
 const Sidebar = () => {
   return (
-    <div className="flex-col w-1/5 md:w-2/6 lg:w-2/6 2xl:w-1/6 min-h-screen items-center  bg-slate-300 md:flex   ">
+    <div className="flex-col w-1/5 md:w-2/6 lg:w-1/6 min-h-screen items-center  bg-slate-300 md:flex   ">
       <div className=" hidden md:flex">
         <Image
           src={"https://i.ibb.co/56pzqfC/bp-ventures-color.png"}
@@ -28,7 +28,6 @@ const Sidebar = () => {
       <div className="flex-grow">
         <ItemsSideBarTop />
         <ItemsSidebarBot />
-        <SecurityButton />
       </div>
 
       <div className="md:flex hidden flex-col items-center  md:mb-12 justify-center">
