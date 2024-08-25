@@ -27,27 +27,29 @@ const ItemsSidebarBot = () => {
         </h1>
       </div>
 
-      <div className="grid grid-cols-6 py-2 px-4 items-center  ">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          className="size-8 hover:scale-125 md:hover:scale-100 md:size-6 col-start-2 md:col-start-1 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
-        >
-          <title>Mi cuenta</title>
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-          />
-        </svg>
+      <Link href={PATHROUTES.MY_ACCOUNT}>
+        <div className="grid grid-cols-6 py-2 px-4 items-center  ">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            className="size-8 hover:scale-125 md:hover:scale-100 md:size-6 col-start-2 md:col-start-1 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+          >
+            <title>Mi cuenta</title>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+            />
+          </svg>
 
-        <h1 className="text-xs text-secundary hidden md:block  font-futura  col-span-3">
-          MI CUENTA
-        </h1>
-      </div>
+          <h1 className="text-xs text-secundary hidden md:block  font-futura  col-span-3">
+            MI CUENTA
+          </h1>
+        </div>
+      </Link>
 
       <div className="grid grid-cols-6 py-2 px-4 items-center ">
         <svg

@@ -40,7 +40,7 @@ const deliverableWidget = () => {
   console.log(allDeliverables);
 
   return (
-    <div className="   p-6 font-futura ">
+    <div className="p-6 font-futura ">
       <h1 className="text-4xl font-futura mb-6 text-secundary">
         ULTIMOS ARCHIVOS
       </h1>
