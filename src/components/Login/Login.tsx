@@ -82,6 +82,7 @@ useEffect(() => {
 
       document.cookie = `token=${tokenCookie};`;
       
+      document.cookie = `token=${tokenCookie}`;
       sessionStorage.setItem("user", JSON.stringify(json.userPayload));
       setUser(json.userPayload);
     
