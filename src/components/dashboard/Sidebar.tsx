@@ -28,7 +28,6 @@ const Sidebar = () => {
       <div className="flex-grow">
         <ItemsSideBarTop />
         <ItemsSidebarBot />
-        <SecurityButton />
       </div>
 
       <div className="md:flex hidden flex-col items-center  md:mb-12 justify-center">

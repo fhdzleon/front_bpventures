@@ -20,7 +20,9 @@ const UsersTable = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("https://api.1rodemayo.com/users");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/users`
+        );
         const data = await response.json();
         console.log(data);
 

@@ -111,7 +111,7 @@ const ItemsSidebarBot = () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 md:col-start-2 md:size-6 text-secundary"
+            className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 transform transition-all duration-500 ease-in-out md:col-start-2 md:size-6 text-secundary"
           >
             <title>Ver usuarios</title>
             <path
@@ -149,7 +149,7 @@ const ItemsSidebarBot = () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="size-8 hover:scale-125 p-0 m-0 md:hover:scale-100 col-start-2 md:col-start-2 md:size-6 text-secundary"
+            className="size-8 hover:scale-125 p-0 m-0 md:hover:scale-100 transform transition-all duration-500 ease-in-out col-start-2 md:col-start-2 md:size-6 text-secundary"
           >
             <title>Agregar usuarios</title>
             <path
