@@ -47,7 +47,7 @@ export const CreateUserForm: React.FC = () => {
 
   return (
     <>
-    <form onSubmit={handleSubmit} className="space-y-6 bg-gradient-to-b from-white via-[#d6dbdc] to-white dark:from-black dark:via-black dark:to-black p-6 rounded-lg shadow-lg text-[color:rgb(var(--foreground-rgb))]">
+    <form onSubmit={handleSubmit} className="flex justify-center items-center p-5 w-full min-w-lg">
        <Toaster richColors />
 
       {/* <div>

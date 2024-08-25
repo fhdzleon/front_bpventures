@@ -7,7 +7,7 @@ import { AuthContextType, useAuth } from "@/context/AuthContext";
 const Sidebar = () => {
 
   return (
-    <div className="flex-col h-screen w-1/5  md:w-2/6 lg:w-2/6 2xl:w-1/6  items-center  bg-slate-300 md:flex lg:max-w-[300px] 2xl:max-w-[300px]   ">
+    <div className="flex-col min-h-screen w-1/5  md:w-2/6 lg:w-2/6 2xl:w-1/6  items-center  bg-slate-300 md:flex lg:max-w-[300px] 2xl:max-w-[300px]   ">
       <div className=" hidden md:flex">
         <Image
           src={"https://i.ibb.co/56pzqfC/bp-ventures-color.png"}

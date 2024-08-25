@@ -48,10 +48,12 @@ export default function SecuritySettings() {
   };
 
   return (
-    <div className=" max-w-lg p-6 bg-white shadow-lg border border-gray-200 rounded-lg mb-5 mt-6 mx-4">
+    <div className="min-w-lg p-6 bg-white shadow-lg border border-gray-200 rounded-lg mb-5 mt-6 mx-4 md:grid md:grid-cols-2 md:w-full">
+    <section className="col-span-1">
       <h1 className="text-2xl font-futura mb-4 text-[#2B4168]">
         Configuración de Seguridad
       </h1>
+
       <div className="mb-6">
         <p className="font-futura text-gray-700 mb-4">
           La autenticación de dos factores (2FA) es una capa adicional de
@@ -69,6 +71,9 @@ export default function SecuritySettings() {
           aplicación de autenticación y luego, si necesitas el código secreto
           para configuraciones manuales, elige la opción correspondiente.
         </p>
+      </div>
+    </section>
+    <div className="col-span-1 md:place-self-center md:mt-20  ">
         {is2FAEnabled ? (
           <div className="flex flex-col items-center">
             <div className="flex mb-4">
