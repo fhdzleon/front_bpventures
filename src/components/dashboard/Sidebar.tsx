@@ -2,8 +2,8 @@ import React from "react";
 import Image from "next/image";
 import ItemsSideBarTop from "./ItemsSideBarTop";
 import ItemsSidebarBot from "./ItemsSidebarBot";
-import { AuthContextType, useAuth } from "@/context/AuthContext";
 import SecurityButton from "../buttonSecurity/ButtonSecurity";
+import Avatar from "./Avatar";
 
 const Sidebar = () => {
   return (
@@ -28,19 +28,11 @@ const Sidebar = () => {
       <div className="flex-grow">
         <ItemsSideBarTop />
         <ItemsSidebarBot />
+        <SecurityButton />
       </div>
 
-      <div className="md:flex hidden flex-col items-center  md:mb-7 justify-center">
-        <Image
-          src="https://i.ibb.co/4Jt1dX0/147133.png"
-          alt="avatar"
-          height={400}
-          width={160}
-        />
-
-        <h1 className="text-secundary font-bold text-lg">Bienvenido</h1>
-        <h1 className="text-secundary text-lg">Usuario</h1>
-        <SecurityButton />
+      <div className="md:flex hidden flex-col items-center  md:mb-12 justify-center">
+        <Avatar />
       </div>
     </div>
   );

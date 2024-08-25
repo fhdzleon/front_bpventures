@@ -42,7 +42,7 @@ const deliverableWidget = () => {
   return (
     <div className="   p-6 font-futura ">
       <h1 className="text-4xl font-futura mb-6 text-secundary">
-        Ultimos Archivos Editados
+        ULTIMOS ARCHIVOS
       </h1>
 
       <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
@@ -67,16 +67,16 @@ const deliverableWidget = () => {
                 key={deliverable.id}
                 className="hover:bg-gray-50 transition-colors duration-200"
               >
-                <td className="py-4 px-6 font-futura text-sm text-gray-900">
+                <td className="py-4 px-6 font-sans text-sm text-gray-900">
                   {deliverable.deliverableName}
                 </td>
-                <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                <td className="py-4 px-6 font-sans text-sm text-gray-700">
                   {deliverable.deliverableType}
                 </td>
-                <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                <td className="py-4 px-6 font-sans text-sm text-gray-700">
                   {deliverable.permissionType}
                 </td>
-                <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                <td className="py-4 px-6 font-sans text-sm text-gray-700">
                   {deliverable.lastDate}
                 </td>
               </tr>
@@ -85,7 +85,9 @@ const deliverableWidget = () => {
         </table>
 
         {allDeliverables.length === 0 && (
-          <p className="p-6 text-gray-600">No se encontraron archivos.</p>
+          <p className="p-6 text-gray-600">
+            No se encontraron archivos recientes.
+          </p>
         )}
       </div>
     </div>

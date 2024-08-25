@@ -44,24 +44,22 @@ const invoiceWidget = () => {
   return (
     <div className=" p-6 font-futura">
       <h1 className="text-4xl font-futura mb-6 text-secundary">
-        Facturas pendientes
+        FACTURAS PENDIENTES
       </h1>
 
       <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
             <tr>
-              <th className="py-3 px-6 font-futura text-left text-lg">
+              <th className="py-3 px-6  text-left text-lg">
                 Numero de factura
               </th>
-              <th className="py-3 px-6 font-futura text-left text-lg">Monto</th>
-              <th className="py-3 px-6 font-futura text-left text-lg">
-                Estado
-              </th>
-              <th className="py-3 px-6 font-futura text-left text-lg">
+              <th className="py-3 px-6 font-sans text-left text-lg">Monto</th>
+              <th className="py-3 px-6 font-sans text-left text-lg">Estado</th>
+              <th className="py-3 px-6 font-sans text-left text-lg">
                 Fecha de emision
               </th>
-              <th className="py-3 px-6 font-futura text-left text-lg">
+              <th className="py-3 px-6 font-sans text-left text-lg">
                 Fecha de vencimiento
               </th>
             </tr>
@@ -93,7 +91,9 @@ const invoiceWidget = () => {
         </table>
 
         {allInvoices.length === 0 && (
-          <p className="p-6 text-gray-600">No se encontraron archivos.</p>
+          <p className="p-6 text-gray-600">
+            No se encontraron facturas pendientes.
+          </p>
         )}
       </div>
     </div>

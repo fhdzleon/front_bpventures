@@ -1,10 +1,11 @@
-'use client';
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+"use client";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
-export interface userPayload{
-    id: number;
-    sub: number;
-    email: string;
+export interface userPayload {
+  name: ReactNode;
+  id: number;
+  sub: number;
+  email: string;
 }
 export interface AuthContextType {
   user: userPayload; // Cambia 'any' al tipo específico si lo tienes
@@ -13,9 +14,11 @@ export interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<any>(null);
-    
+
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       {children}
@@ -26,7 +29,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
