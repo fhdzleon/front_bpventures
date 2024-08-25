@@ -57,7 +57,7 @@ const UsersTable = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 font-futura min-h-screen">
+    <div className="container mx-auto p-6 w-4/5 font-futura ">
       <h1 className="text-4xl font-futura mb-6 text-secundary">
         Lista de Usuarios
       </h1>

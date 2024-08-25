@@ -2,9 +2,11 @@
 
 import React from "react";
 import { useParams } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 const DeleteUser = () => {
   const { id } = useParams();
+  const { user } = useAuth();
 
   const handleClick = async () => {
     try {

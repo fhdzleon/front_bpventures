@@ -3,5 +3,6 @@ export enum PATHROUTES {
   HOME = "/in",
   CREATE_USER = "/in/create-user",
   UPDATE_USER = "/in/update-user",
-  MY_ACCOUNT = "/in/my-account",
+  LIST = "/in/list"
+  MY_ACCOUNT = "/in/my-account"
 }

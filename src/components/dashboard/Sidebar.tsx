@@ -2,12 +2,12 @@ import React from "react";
 import Image from "next/image";
 import ItemsSideBarTop from "./ItemsSideBarTop";
 import ItemsSidebarBot from "./ItemsSidebarBot";
-import { AuthContextType, useAuth } from "@/context/AuthContext";
+import SecurityButton from "../buttonSecurity/ButtonSecurity";
+import Avatar from "./Avatar";
 
 const Sidebar = () => {
-
   return (
-    <div className="flex-col min-h-screen w-1/5  md:w-2/6 lg:w-2/6 2xl:w-1/6  items-center  bg-slate-300 md:flex lg:max-w-[300px] 2xl:max-w-[300px]   ">
+    <div className="flex-col w-1/5 md:w-2/6 lg:w-2/6 2xl:w-1/6 min-h-screen items-center  bg-slate-300 md:flex   ">
       <div className=" hidden md:flex">
         <Image
           src={"https://i.ibb.co/56pzqfC/bp-ventures-color.png"}
@@ -28,17 +28,11 @@ const Sidebar = () => {
       <div className="flex-grow">
         <ItemsSideBarTop />
         <ItemsSidebarBot />
+        <SecurityButton />
       </div>
 
-      <div className="md:flex hidden flex-col items-center  md:mb-7 justify-center">
-        <Image
-          src="https://i.ibb.co/4Jt1dX0/147133.png"
-          alt="avatar"
-          height={400}
-          width={160}
-        />
-        <h1 className="text-secundary font-bold text-lg">Bienvenido</h1>
-        <h1 className="text-secundary text-lg">Usuario</h1>
+      <div className="md:flex hidden flex-col items-center  md:mb-12 justify-center">
+        <Avatar />
       </div>
     </div>
   );
