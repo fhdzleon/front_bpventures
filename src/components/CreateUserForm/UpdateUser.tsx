@@ -18,8 +18,6 @@ interface Props {
 }
 const UpdateUserComponent: React.FC<Props> = (props) => {
   const { id } = props;
-  console.log(id);
-  const { user } = useAuth();
   const userId = id; // Considera hacer esto dinámico si es necesario
 
   const [userData, setUserData] = useState<User>({
@@ -68,11 +66,15 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      
-      <div className="w-4/5 max-w-md p-5 bg-white shadow-lg rounded-lg">
-        <h2 className="font-futura text-center">Editar Usuario</h2>
+    <div className="flex w-full justify-center ">
+      <div className="md:grid md:grid-cols-2 fle p-5 bg-white shadow-lg rounded-lg">
+        <div className="col-span-1 font-futura ">
 
+        <h2 className=" text-start mt-10 text-2xl text-[#2B4168]">Editar Usuario</h2>
+        <p className="text-black/50" >Si deseas editar los datos de tu usuario puedes llenar los siguientes campos</p>
+        </div>
+    
+      <div className="col-span-1">
         <form className="form-apply" onSubmit={handleSubmit}>
           {["email", "password", "Names", "LastName", "Position"].map((field, index) => (
             <>
@@ -81,7 +83,7 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
             </label>
             <input
               key={index}
-             className="relative font-futura border-[0.5px] border-gray-300 appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
+              className="relative font-futura border-[0.5px] border-gray-300 appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
               type={field === "password" ? "password" : "text"}
               name={field}
               value={userData[field as keyof User]}
@@ -92,12 +94,10 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
              </>
           ))}
           
-
-
-          <Button type="submit">Guardar Cambios</Button>
+          <Button  type="submit">Guardar Cambios</Button>
         </form>
       </div>
-
+      </div>
     </div>
   );
 };

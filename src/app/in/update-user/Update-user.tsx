@@ -8,7 +8,7 @@ const UpdateUser = () => {
   const { user } = useAuth();
 
   return (
-    <div className="flex items-start">
+    <div className="flex">
       <UpdateUserComponent  id={user?.id} />
     </div>
   );

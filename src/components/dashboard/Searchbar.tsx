@@ -2,7 +2,7 @@ import React from "react";
 
 const Searchbar = () => {
   return (
-    <div className="flex mx-5 md:mx-10 mt-10 items-center">
+    <div className="flex  mx-5  md:mx-10 mt-10 items-center">
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
