@@ -302,33 +302,13 @@ export default function Login() {
                         key={index}
                         ref={(el) => (inputsRef.current[index] = el)}
                         type="text"
-                        maxLength="1"
+                        maxLength={1}
                         value={otp[index]}
                         onChange={(e) => handleChange(e, index)}
                         className="w-12 h-12 text-center border-2 border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       />
                     ))}
 
-                    {/* <label
-                      className="block font-futura text-left text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="mfa"
-                    >
-                      Código 2FA
-                    </label>
-                    <input
-                      className="relative font-futura border-[0.5px] border-gray-300 appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
-                      id="mfa"
-                      name="mfa"
-                      type="text"
-                      placeholder="Ingresa tu código 2FA"
-                      value={formData.mfa}
-                      onChange={handleChange}
-                    />
-                      {errors.password && (
-                      <p className="absolute text-red-500 text-xs italic mt-1">
-                        {errors.mfa}
-                      </p>
-                    )} */}
                   </div>
                   <button
                     className="font-futura bg-[#2B4168] hover:bg-[#1e2a44] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full"
