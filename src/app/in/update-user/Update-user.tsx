@@ -1,12 +1,15 @@
+"use client"
+
 import React from "react";
-import Sidebar from "@/components/dashboard/Sidebar";
-import Searchbar from "@/components/dashboard/Searchbar";
-import CreateUserForm from "@/components/CreateUserForm/CreateUserForm";
+import UpdateUserComponent from "@/components/CreateUserForm/UpdateUser";
+import { useAuth } from "@/context/AuthContext";
 
 const UpdateUser = () => {
+  const { user } = useAuth();
+
   return (
     <div className="flex items-start">
-      <CreateUserForm />
+      <UpdateUserComponent  id={user?.id} />
     </div>
   );
 };
