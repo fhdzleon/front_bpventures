@@ -30,7 +30,7 @@ const Sidebar = () => {
         <ItemsSidebarBot />
       </div>
 
-      <div className="md:flex hidden flex-col items-center  md:mb-12 justify-center">
+      <div className="md:flex hidden flex-col items-center md:mb-12 justify-center">
         <Avatar />
       </div>
     </div>
