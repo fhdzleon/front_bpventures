@@ -67,36 +67,42 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
 
   return (
     <div className="flex w-full justify-center ">
-      <div className="md:grid md:grid-cols-2 fle p-5 bg-white shadow-lg rounded-lg">
+      <div className="md:grid md:grid-cols-2  p-5 bg-white shadow-lg rounded-lg">
         <div className="col-span-1 font-futura ">
-
-        <h2 className=" text-start mt-10 text-2xl text-[#2B4168]">Editar Usuario</h2>
-        <p className="text-black/50" >Si deseas editar los datos de tu usuario puedes llenar los siguientes campos</p>
+          <h2 className=" text-start mt-10 text-2xl text-[#2B4168]">
+            Editar Usuario
+          </h2>
+          <p className="text-black/50">
+            Si deseas editar los datos de tu usuario puedes llenar los
+            siguientes campos
+          </p>
         </div>
-    
-      <div className="col-span-1">
-        <form className="form-apply" onSubmit={handleSubmit}>
-          {["email", "password", "Names", "LastName", "Position"].map((field, index) => (
-            <>
-              <label htmlFor={field} className="label-apply">
-              {field}
-            </label>
-            <input
-              key={index}
-              className="relative font-futura border-[0.5px] border-gray-300 appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
-              type={field === "password" ? "password" : "text"}
-              name={field}
-              value={userData[field as keyof User]}
-              onChange={handleInputChange}
-              placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-              required
-            />
-             </>
-          ))}
-          
-          <Button  type="submit">Guardar Cambios</Button>
-        </form>
-      </div>
+
+        <div className="col-span-1">
+          <form className="form-apply" onSubmit={handleSubmit}>
+            {["email", "password", "Names", "LastName", "Position"].map(
+              (field, index) => (
+                <>
+                  <label htmlFor={field} className="label-apply">
+                    {field}
+                  </label>
+                  <input
+                    key={index}
+                    className="relative font-futura border-[0.5px] border-gray-300 appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
+                    type={field === "password" ? "password" : "text"}
+                    name={field}
+                    value={userData[field as keyof User]}
+                    onChange={handleInputChange}
+                    placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                    required
+                  />
+                </>
+              )
+            )}
+
+            <Button type="submit">Guardar Cambios</Button>
+          </form>
+        </div>
       </div>
     </div>
   );
