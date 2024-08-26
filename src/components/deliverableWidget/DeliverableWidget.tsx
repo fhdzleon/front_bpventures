@@ -43,16 +43,14 @@ const deliverableWidget = () => {
 
       <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
-          <thead className="bg-secundary font-futura text-white">
+          <thead className="bg-secundary sans text-white">
             <tr>
-              <th className="py-3 px-6 font-futura text-left text-lg">
-                Nombre
-              </th>
-              <th className="py-3 px-6 font-futura text-left text-lg">Tipo</th>
-              <th className="py-3 px-6 font-futura text-left text-lg">
+              <th className="py-3 px-6 font-sans text-left text-lg">Nombre</th>
+              <th className="py-3 px-6 font-sans text-left text-lg">Tipo</th>
+              <th className="py-3 px-6 font-sans text-left text-lg">
                 Permisos
               </th>
-              <th className="py-3 px-6 font-futura text-left text-lg">
+              <th className="py-3 px-6 font-sans text-left text-lg">
                 Ultima fecha de modificacion
               </th>
             </tr>
