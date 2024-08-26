@@ -45,7 +45,7 @@ const invoiceWidget = () => {
 
       <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
-          <thead className="bg-secundary font-futura text-white">
+          <thead className="bg-secundary font-sans text-white">
             <tr>
               <th className="py-3 px-6  text-left text-lg">
                 Numero de factura
