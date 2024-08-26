@@ -122,7 +122,7 @@ export const CreateUserForm: React.FC = () => {
         <form className="form-apply" onSubmit={handleSubmit}>
           {["email", "password", "Names", "LastName", "Position"].map((field, index) => (
             <>
-              <label htmlFor={field} className="label-apply">
+              <label htmlFor={field} key={index} className="label-apply">
               {field}
             </label>
             <input
