@@ -25,7 +25,6 @@ const deliverableWidget = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${user.id}`
         );
         const data = await response.json();
-        console.log(data);
 
         setAllDeliverables(Array.isArray(data) ? data : []);
       } catch (error) {
@@ -35,9 +34,6 @@ const deliverableWidget = () => {
 
     fetchDeliverables();
   }, []);
-  console.log("objeto deli");
-
-  console.log(allDeliverables);
 
   return (
     <div className="p-6 font-futura ">

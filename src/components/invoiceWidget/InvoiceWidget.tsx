@@ -23,14 +23,10 @@ const invoiceWidget = () => {
   useEffect(() => {
     const fetchDeliverables = async () => {
       try {
-        console.log("hola");
-        console.log(user?.id);
-
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/invoices/${user?.id}`
         );
         const data = await response.json();
-        console.log(data);
 
         setAllInvoices(Array.isArray(data) ? data : []);
       } catch (error) {
