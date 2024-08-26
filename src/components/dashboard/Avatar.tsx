@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 
 const Avatar = () => {
-  const { user } = useAuth();
+  const { userData } = useAuth();
 
   return (
     <div className="text-center">
@@ -18,7 +18,7 @@ const Avatar = () => {
       />
 
       <h1 className="text-secundary font-bold text-lg">Bienvenido</h1>
-      <h1 className="text-secundary text-lg">{user.email}</h1>
+      <h1 className="text-secundary text-lg">{userData?.Names}</h1>
 
       {/* <h1 className="text-secundary text-lg">Henry</h1> */}
     </div>
