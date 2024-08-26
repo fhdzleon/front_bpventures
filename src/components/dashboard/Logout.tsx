@@ -10,7 +10,7 @@ const Logout = () => {
   const clickHandler = () => {
     localStorage.clear();
     document.cookie =
-      "user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; secure; samesite=strict;";
+      "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; secure; samesite=strict;";
     router.push(PATHROUTES.LOGIN);
   };
 

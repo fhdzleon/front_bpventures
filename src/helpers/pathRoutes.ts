@@ -4,5 +4,6 @@ export enum PATHROUTES {
   CREATE_USER = "/in/create-user",
   UPDATE_USER = "/in/update-user",
   LIST = "/in/list",
-  MY_ACCOUNT = "/in/my-account"
+  MY_ACCOUNT = "/in/my-account",
+  MAITENANCE = "/in/maitenance",
 }

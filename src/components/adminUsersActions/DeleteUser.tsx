@@ -2,8 +2,6 @@
 
 import React from "react";
 import { useParams } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
-import { cookies } from "next/headers";
 
 const DeleteUser = () => {
   const { id } = useParams();
@@ -16,7 +14,7 @@ const DeleteUser = () => {
           method: "PUT",
           headers: {
             "content-type": "applicatio/json",
-            Authorization: `Bearer ${token}`,
+            /* Authorization: `Bearer ${token}`, */
           },
         }
       );
@@ -25,10 +23,10 @@ const DeleteUser = () => {
         throw new Error("No se logro borrar el usuario");
       }
       const data = (await response).json();
+      alert("Usuario eliminado");
     } catch (error) {
       console.error("Hubo un problema con la peticion");
     }
-    alert("Borrado");
   };
 
   return (

@@ -35,8 +35,8 @@ const Sidebar = () => {
       <div className="flex-grow">
         <ItemsSideBarTop />
         <ItemsSidebarBot />
-
-        {user.email === "user1@example.com" && <ItemsAdminUser />}
+        <ItemsAdminUser />
+        {/*  {user.email === "user1@example.com" && <ItemsAdminUser />} */}
 
         <div className="mt-10">
           <Logout />
