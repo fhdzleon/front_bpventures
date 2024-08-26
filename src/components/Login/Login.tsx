@@ -191,7 +191,7 @@ export default function Login() {
           </div>
           <div className="hidden md:block absolute bottom-0 left-12">
             <Image
-              src="https://i.ibb.co/pJVrW93/image-5.png"
+              src="https://i.postimg.cc/wMn5dSqK/image-5.png"
               alt="People"
               width={400}
               height={400}
@@ -308,7 +308,6 @@ export default function Login() {
                         className="w-12 h-12 text-center border-2 border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       />
                     ))}
-
                   </div>
                   <button
                     className="font-futura bg-[#2B4168] hover:bg-[#1e2a44] text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full"

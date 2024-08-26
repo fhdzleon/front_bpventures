@@ -3,10 +3,10 @@
 import React from "react";
 import { useParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { cookies } from "next/headers";
 
 const DeleteUser = () => {
   const { id } = useParams();
-  const { user } = useAuth();
 
   const handleClick = async () => {
     try {
@@ -16,7 +16,7 @@ const DeleteUser = () => {
           method: "PUT",
           headers: {
             "content-type": "applicatio/json",
-            /* Authorization: `Bearer ${token}`, */ //!<-- ACCEDER AL TOKEN
+            Authorization: `Bearer ${token}`,
           },
         }
       );
