@@ -1,17 +1,17 @@
 "use client";
 import { useState } from "react";
 import SecurityButton from "../buttonSecurity/ButtonSecurity";
+import Cookies from "js-cookie";
 
 export default function SecuritySettings() {
   const [is2FAEnabled, setIs2FAEnabled] = useState(false);
   const [qrCode, setQrCode] = useState<string | undefined>("");
   const [secret, setSecret] = useState<string | undefined>("");
   const [view, setView] = useState<"qr" | "secret">("qr");
+  const token = Cookies.get("token");
 
   const handleGenerateQRCode = async () => {
     try {
-      const token = getCookie("token");
-
       if (!token) {
         console.error("Token no encontrado en las cookies");
         return;
@@ -22,8 +22,8 @@ export default function SecuritySettings() {
         {
           method: "POST",
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzEsInN1YiI6MzEsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTcyNDUzODcxOCwiZXhwIjoxNzI0NjI1MTE4fQ.YNJpZCGIl4dHotRZSMqfVg_5O8G-MkSiY68jj8ERk2o`, // Usar el token obtenido
           },
           body: JSON.stringify({}),
         }
@@ -48,10 +48,12 @@ export default function SecuritySettings() {
   };
 
   return (
-    <div className=" max-w-lg p-6 bg-white shadow-lg border border-gray-200 rounded-lg mb-5 mt-6 mx-4">
+    <div className="min-w-lg p-6 bg-white shadow-xl border border-gray-200 rounded-lg mb-5 mt-6 mx-4 md:grid md:grid-cols-2 md:max-w-5xl">
+    <section className="col-span-1">
       <h1 className="text-2xl font-futura mb-4 text-[#2B4168]">
         Configuración de Seguridad
       </h1>
+
       <div className="mb-6">
         <p className="font-futura text-gray-700 mb-4">
           La autenticación de dos factores (2FA) es una capa adicional de
@@ -69,6 +71,9 @@ export default function SecuritySettings() {
           aplicación de autenticación y luego, si necesitas el código secreto
           para configuraciones manuales, elige la opción correspondiente.
         </p>
+      </div>
+    </section>
+    <div className="col-span-1 md:place-self-center md:mt-20  ">
         {is2FAEnabled ? (
           <div className="flex flex-col items-center">
             <div className="flex mb-4">
@@ -118,8 +123,3 @@ export default function SecuritySettings() {
   );
 }
 
-function getCookie(name: string): string | undefined {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop()?.split(";").shift();
-}

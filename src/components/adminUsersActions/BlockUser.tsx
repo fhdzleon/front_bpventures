@@ -1,12 +1,56 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 
 const BlockUser = () => {
   const [isBlock, setIsBlock] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const id = useParams();
 
-  const handleClick = () => {
-    setIsBlock((prevState) => !prevState);
+  const handleBlock = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/status/${id}/2`,
+        {
+          method: "PUT",
+          headers: {
+            "content-type": "applicatio/json",
+            /* Authorization: `Bearer ${token}`, */
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("No se logro bloquear el usuario");
+      }
+      setIsBlock((prevState) => !prevState);
+      alert("Usuario Bloqueado");
+    } catch (error) {
+      console.error("Hubo un problema con la peticion");
+    }
+  };
+
+  const handleUnblock = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/status/${id}/1`,
+        {
+          method: "PUT",
+          headers: {
+            "content-type": "applicatio/json",
+            /* Authorization: `Bearer ${token}`, */
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("No se logro bloquear el usuario");
+      }
+      setIsBlock((prevState) => !prevState);
+      alert("Usuario Bloqueado");
+    } catch (error) {
+      console.error("Hubo un problema con la peticion");
+    }
   };
 
   useEffect(() => {
@@ -25,7 +69,7 @@ const BlockUser = () => {
     <div>
       {!isBlock ? (
         <button
-          onClick={handleClick}
+          onClick={handleBlock}
           className="flex space-x-2 bg-secundary px-4 py-1 rounded-full"
         >
           <svg
@@ -46,7 +90,7 @@ const BlockUser = () => {
         </button>
       ) : (
         <button
-          onClick={handleClick}
+          onClick={handleUnblock}
           className="flex space-x-2 bg-secundary px-4 py-1 rounded-full"
         >
           <svg

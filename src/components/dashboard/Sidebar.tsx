@@ -1,16 +1,23 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import ItemsSideBarTop from "./ItemsSideBarTop";
 import ItemsSidebarBot from "./ItemsSidebarBot";
-import { AuthContextType, useAuth } from "@/context/AuthContext";
+import ItemsAdminUser from "./ItemsAdminUser";
+import Logout from "./Logout";
+import { useAuth } from "@/context/AuthContext";
+
+import Avatar from "./Avatar";
 
 const Sidebar = () => {
-  
+  const { user } = useAuth();
+
   return (
-    <div className="flex-col h-screen w-1/5  md:w-2/6 lg:w-2/6 2xl:w-1/6  items-center  bg-slate-300 md:flex   ">
+    <div className="flex-col w-1/5 md:w-2/6 lg:max-w-80 2xl:max-w-80 min-h-screen items-center  bg-slate-300 md:flex">
       <div className=" hidden md:flex">
         <Image
-          src={"https://i.ibb.co/56pzqfC/bp-ventures-color.png"}
+          src={"https://i.postimg.cc/htcz7S3y/bp-ventures-color.png"}
           alt="logo"
           width={220}
           height={10}
@@ -19,7 +26,7 @@ const Sidebar = () => {
 
       <div className=" md:hidden mt-5 flex">
         <Image
-          src={"https://i.ibb.co/SyxGR9k/isologo-bp-ventures-a-color.png"}
+          src={"https://i.postimg.cc/5tmmF73v/isologo-bp-ventures-a-color.png"}
           alt="logo"
           width={220}
           height={10}
@@ -28,17 +35,16 @@ const Sidebar = () => {
       <div className="flex-grow">
         <ItemsSideBarTop />
         <ItemsSidebarBot />
+        <ItemsAdminUser />
+        {/*  {user.email === "user1@example.com" && <ItemsAdminUser />} */}
+
+        <div className="mt-10">
+          <Logout />
+        </div>
       </div>
 
-      <div className="md:flex hidden flex-col items-center  md:mb-7 justify-center">
-        <Image
-          src="https://i.ibb.co/4Jt1dX0/147133.png"
-          alt="avatar"
-          height={400}
-          width={160}
-        />
-        <h1 className="text-secundary font-bold text-lg">Bienvenido</h1>
-        <h1 className="text-secundary text-lg">Usuario</h1>
+      <div className="md:flex hidden flex-col items-center md:mb-12 justify-center">
+        <Avatar />
       </div>
     </div>
   );

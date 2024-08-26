@@ -2,13 +2,16 @@
 
 import React from "react";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { PATHROUTES } from "@/helpers/pathRoutes";
 
 const EditUser = () => {
-  const { id } = useParams();
+  const { user } = useAuth();
+  const router = useRouter();
 
   const handleClick = () => {
-    //? Abrir formulario de edicion y mandar la peticion al back...
-    alert("Editado");
+    router.push(`${PATHROUTES.UPDATE_USER}/${user.id}`);
   };
 
   return (
