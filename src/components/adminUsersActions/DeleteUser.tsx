@@ -2,11 +2,11 @@
 
 import React from "react";
 import { useParams } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
+import Cookies from "js-cookie";
 
 const DeleteUser = () => {
   const { id } = useParams();
-  const { user } = useAuth();
+  const token = Cookies.get("token");
 
   const handleClick = async () => {
     try {
@@ -16,7 +16,7 @@ const DeleteUser = () => {
           method: "PUT",
           headers: {
             "content-type": "applicatio/json",
-            /* Authorization: `Bearer ${token}`, */ //!<-- ACCEDER AL TOKEN
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -24,11 +24,11 @@ const DeleteUser = () => {
       if (!response.ok) {
         throw new Error("No se logro borrar el usuario");
       }
-      const data = (await response).json();
+      const data = response.json();
+      alert("Usuario eliminado");
     } catch (error) {
       console.error("Hubo un problema con la peticion");
     }
-    alert("Borrado");
   };
 
   return (
