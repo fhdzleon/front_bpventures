@@ -9,7 +9,7 @@ const MyAccount = () => {
         <UpdateUser />
       </section>
       <hr />
-      <section className="grid-span-1  w-full rounded-xl ">
+      <section className="grid-span-1 w-full  rounded-xl ">
         <Security />
       </section>
     </div>

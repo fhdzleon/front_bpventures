@@ -48,7 +48,7 @@ export default function SecuritySettings() {
   };
 
   return (
-    <div className="min-w-lg p-6 bg-white shadow-xl border border-gray-200 rounded-lg mb-5 mt-6 mx-4 md:grid md:grid-cols-2 md:max-w-5xl">
+    <div className="min-w-lg p-6 bg-white shadow-xl border border-gray-200 rounded-lg mb-5 mt-6 mx-4 md:grid md:grid-cols-2 md:max-w-screen-2xl">
     <section className="col-span-1">
       <h1 className="text-2xl font-futura mb-4 text-[#2B4168]">
         Configuración de Seguridad
