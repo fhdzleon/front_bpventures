@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SecurityButton from "../buttonSecurity/ButtonSecurity";
 import Cookies from "js-cookie";
 
@@ -8,8 +8,18 @@ export default function SecuritySettings() {
   const [qrCode, setQrCode] = useState<string | undefined>("");
   const [secret, setSecret] = useState<string | undefined>("");
   const [view, setView] = useState<"qr" | "secret">("qr");
+  const [mfaistrue, setmfaistrue] =useState<string | undefined>("")
   const token = Cookies.get("token");
 
+
+
+
+  useEffect(() => {
+      const mfa =Cookies.get("mfa")
+   setmfaistrue(mfa)
+ 
+  }, []);
+  
   const handleGenerateQRCode = async () => {
     try {
       if (!token) {
@@ -109,17 +119,22 @@ export default function SecuritySettings() {
               </p>
             )}
           </div>
-        ) : (
-          <button
-            onClick={handleGenerateQRCode}
-            className="bg-[#2B4168] font-futura text-white py-2 px-4 rounded-full shadow hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
-          >
-            Habilitar Autenticación de Dos Factores
-          </button>
-        )}
+        
+      
+    ) : mfaistrue ? (
+      <button
+        onClick={handleGenerateQRCode}
+        className="bg-[#2B4168] font-futura text-white py-2 px-4 rounded-full shadow hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+      >
+        Habilitar Autenticación de Dos Factores
+      </button>
+    ) : (
+      <button>Cuenta Autenticada</button>
+    )}
       </div>
       <SecurityButton/>
     </div>
   );
 }
 
+//IRXUOWSUMJBHCPSRJAVGCSC2IQTG2YJX
