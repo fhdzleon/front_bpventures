@@ -122,7 +122,7 @@ export default function SecuritySettings() {
       >
         Habilitar Autenticación de Dos Factores
       </button>
-    ) 
+    )}
       </div>
       <SecurityButton/>
     </div>
