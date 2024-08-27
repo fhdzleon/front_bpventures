@@ -113,7 +113,7 @@ export default function SecuritySettings() {
                 </p>
               )}
             </div>
-          ) : userData.mfaEnabled ? (
+          ) : userData?.mfaEnabled ? (
             <button>Cuenta Autenticada</button>
           
           ) : (
