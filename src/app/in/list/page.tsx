@@ -26,7 +26,8 @@ const UsersTable = () => {
         const data = await response.json();
         console.log(data);
 
-        setAllUsers(Array.isArray(data.users) ? data.users : []);
+        // setAllUsers(Array.isArray(data.users) ? data.users : []);
+        setAllUsers(data)
       } catch (error) {
         console.error("Error fetching users:", error);
       }
