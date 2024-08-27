@@ -81,7 +81,7 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
       <section className="mb-12">
         <div className="bg-gradient-to-br bg-white p-8 rounded-lg shadow-lg">
           <h2 className="text-3xl font-futura text-[#2B4168] mb-6">
-            Información de Facturación
+            Información de Facturación (EN PROCESO DE DESARROLLO)
           </h2>
           <p className="text-lg font-futura mb-4">Estado de Facturación:</p>
           <p className="text-lg">Sin facturas pendientes</p>
