@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-
+import { useAuth } from "@/context/AuthContext";
 const BlockUser = () => {
-  const [isBlock, setIsBlock] = useState(false);
+  const {blocked , setBlocked} = useAuth();
   const { id } = useParams();
 
   const token = Cookies.get("token");
@@ -37,7 +37,7 @@ const BlockUser = () => {
           if (!response.ok) {
             throw new Error("No se logró bloquear el usuario");
           }
-          setIsBlock(true);
+          setBlocked( true );
           Swal.fire("Bloqueado!", "El usuario ha sido bloqueado.", "success");
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
@@ -78,7 +78,7 @@ const BlockUser = () => {
           if (!response.ok) {
             throw new Error("No se logró desbloquear el usuario");
           }
-          setIsBlock(false);
+          setBlocked(false);
           Swal.fire(
             "Desbloqueado!",
             "El usuario ha sido desbloqueado.",
@@ -98,7 +98,7 @@ const BlockUser = () => {
 
   return (
     <div>
-      {!isBlock ? (
+      {!blocked ? (
         <button
           onClick={handleBlock}
           className="flex space-x-2 bg-secundary px-4 py-1 rounded-full"

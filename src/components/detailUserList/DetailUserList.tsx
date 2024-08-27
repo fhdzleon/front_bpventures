@@ -1,8 +1,11 @@
+'use client'
 import Link from "next/link";
 import EditUser from "../adminUsersActions/EditUser";
 import DeleteUser from "../adminUsersActions/DeleteUser";
 import BlockUser from "../adminUsersActions/BlockUser";
 import { PATHROUTES } from "@/helpers/pathRoutes";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 export interface User {
   id: number;
   email: string;
@@ -16,7 +19,12 @@ interface UserDetailViewProps {
   user: User;
 }
 
+
+
 const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
+
+  const {blocked} = useAuth();
+    
   return (
     <div className="m-3 max-w-4xl mx-auto p-8 bg-gray-100 shadow-xl rounded-xl font-sans">
       <section className="mb-12">
@@ -55,19 +63,18 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
               </p>
             </div>
             <div className="space-y-4">
-              <p className="text-lg">
+            <p className="text-lg">
                 <strong className="font-futura">Estado de la Cuenta:</strong>
                 {"  "}
                 <span
                   className={`p-2 m-3 font-futura inline-block rounded-full text-white ${
-                    user.statusId === 1? "bg-green-500" : "bg-red-500"
+                    !blocked ? "bg-green-500" : "bg-red-500"
                   }`}
                 >
-                  {user.statusId ===1 ? " Desbloqueado" : "Bloqueado"}
+                  { !blocked ? "Activo" : "Bloqueado"}
                 </span>
              
               </p>
-             
             </div>
           </div>
         </div>

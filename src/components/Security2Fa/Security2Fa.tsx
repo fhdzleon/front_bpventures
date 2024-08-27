@@ -34,7 +34,6 @@ export default function SecuritySettings() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Response Data:", data);
         setIs2FAEnabled(true);
         setQrCode(data.qrCode || "");
         setSecret(data.secret || "");
@@ -115,7 +114,7 @@ export default function SecuritySettings() {
                 </p>
               )}
             </div>
-          ) : userData.mfaEnabled ? (
+          ) : userData?.mfaEnabled ? (
             <button>Cuenta Autenticada</button>
           
           ) : (

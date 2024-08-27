@@ -41,7 +41,6 @@ const DeleteUser = () => {
           }
 
           const data = await response.json();
-          console.log(data);
 
           Swal.fire(
             "Eliminado!",

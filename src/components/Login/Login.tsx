@@ -146,7 +146,6 @@ const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
         }
 
         const json = await response.json();
-        console.log(json);
         const tokenCookie = JSON.stringify(json.token);
         document.cookie = `token=${tokenCookie};`;
        
