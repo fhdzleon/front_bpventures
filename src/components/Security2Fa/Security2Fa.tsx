@@ -2,6 +2,7 @@
 import { useState } from "react";
 import SecurityButton from "../buttonSecurity/ButtonSecurity";
 import Cookies from "js-cookie";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SecuritySettings() {
   const [is2FAEnabled, setIs2FAEnabled] = useState(false);
@@ -9,7 +10,8 @@ export default function SecuritySettings() {
   const [secret, setSecret] = useState<string | undefined>("");
   const [view, setView] = useState<"qr" | "secret">("qr");
   const token = Cookies.get("token");
-
+  const {userData} = useAuth();
+  
   const handleGenerateQRCode = async () => {
     try {
       if (!token) {
@@ -111,13 +113,16 @@ export default function SecuritySettings() {
                 </p>
               )}
             </div>
+          ) : userData.mfaEnabled ? (
+            <button>Cuenta Autenticada</button>
+          
           ) : (
             <button
-              onClick={handleGenerateQRCode}
-              className="bg-[#2B4168] font-futura text-white py-2 px-4 rounded-full shadow hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
-            >
-              Habilitar Autenticación de Dos Factores
-            </button>
+            onClick={handleGenerateQRCode}
+            className="bg-[#2B4168] font-futura text-white py-2 px-4 rounded-full shadow hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+          >
+            Habilitar Autenticación de Dos Factores
+          </button>
           )}
         </div>
         <SecurityButton />
