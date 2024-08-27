@@ -9,6 +9,7 @@ export default function SecuritySettings() {
   const [qrCode, setQrCode] = useState<string | undefined>("");
   const [secret, setSecret] = useState<string | undefined>("");
   const [view, setView] = useState<"qr" | "secret">("qr");
+ 
   const token = Cookies.get("token");
   const {userData} = useAuth();
   
@@ -76,6 +77,7 @@ export default function SecuritySettings() {
               correspondiente.
             </p>
           </div>
+          
         </section>
         <div className="col-span-1 md:place-self-center md:mt-20  ">
           {is2FAEnabled ? (
