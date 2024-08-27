@@ -24,7 +24,6 @@ const DeleteUser = () => {
       cancelButtonText: "Cancelar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        // Si el usuario confirma, proceder con la eliminación
         try {
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/users/status/${id}/3`,
