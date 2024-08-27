@@ -38,7 +38,7 @@ const deliverableWidget = () => {
   return (
     <div className="p-6 font-futura ">
       <h1 className="text-4xl font-futura mb-6 text-secundary">
-        ULTIMOS ARCHIVOS
+        Ultimos Archivos
       </h1>
 
       <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
