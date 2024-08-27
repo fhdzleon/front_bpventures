@@ -149,8 +149,7 @@ const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
         console.log(json);
         const tokenCookie = JSON.stringify(json.token);
         document.cookie = `token=${tokenCookie};`;
-        // const mfacode =JSON.parse(json.mfa);
-        document.cookie = `mfa=true;`;
+       
         sessionStorage.setItem("user", JSON.stringify(json.userPayload));
         setUser(json.userPayload);
         toast.success("¡Inicio de sesión exitoso!");
