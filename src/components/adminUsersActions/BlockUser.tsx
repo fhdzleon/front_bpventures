@@ -24,7 +24,7 @@ const BlockUser = () => {
       if (result.isConfirmed) {
         try {
           const response = await fetch(
-            `https://api.1rodemayo.com/users/status/${id}/2`,
+            `${process.env.NEXT_PUBLIC_API_URL}/users/status/${id}/2`,
             {
               method: "PUT",
               headers: {
