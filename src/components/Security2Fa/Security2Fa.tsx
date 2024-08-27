@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SecurityButton from "../buttonSecurity/ButtonSecurity";
 import Cookies from "js-cookie";
 
@@ -10,9 +10,6 @@ export default function SecuritySettings() {
   const [view, setView] = useState<"qr" | "secret">("qr");
  
   const token = Cookies.get("token");
-
-
-
 
   const handleGenerateQRCode = async () => {
     try {
