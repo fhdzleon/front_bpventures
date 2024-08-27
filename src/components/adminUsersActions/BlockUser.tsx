@@ -11,35 +11,6 @@ const BlockUser = () => {
   const token = Cookies.get("token");
 
   const handleBlock = async () => {
-    /* PUT https://api.1rodemayo.com/users/status/1/3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzEsInN1YiI6MzEsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTcyNDcyMjY3NCwiZXhwIjoxNzI0ODA5MDc0fQ.QnnEvwNSbj_8eLme-Llcp1hu7azwLtmeKY2MlEacglY */
-
-    /*  try {
-      const response = await fetch(
-        `https://api.1rodemayo.com/users/status/1/3`,
-        {
-          method: "PUT",
-          headers: {
-            "content-type": "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzEsInN1YiI6MzEsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTcyNDcyMjY3NCwiZXhwIjoxNzI0ODA5MDc0fQ.QnnEvwNSbj_8eLme-Llcp1hu7azwLtmeKY2MlEacglY",
-          },
-        }
-      );
-
-      console.log(response);
-
-      if (!response.ok) {
-        throw new Error("No se logró bloquear el usuario");
-      }
-      setIsBlock(true);
-      Swal.fire("Bloqueado!", "El usuario ha sido bloqueado.", "success");
-    } catch (error) {
-      console.error("Hubo un problema con la petición", error);
-      Swal.fire("Error", "Hubo un problema al bloquear el usuario.", "error");
-    }
-    return; */
-
     Swal.fire({
       title: "¿Estás seguro?",
       text: "El usuario será bloqueado",
