@@ -24,8 +24,9 @@ const UsersTable = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/users`
         );
         const data = await response.json();
-
+        
         setAllUsers(data);
+
       } catch (error) {
         console.error("Error fetching users:", error);
       }
