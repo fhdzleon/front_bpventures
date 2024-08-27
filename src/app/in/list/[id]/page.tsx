@@ -9,7 +9,7 @@ export interface User {
   Names: string;
   LastName: string;
   Position: string;
-  statusId: boolean;
+  statusId: number;
 }
 
 interface IdParams {
@@ -21,7 +21,7 @@ interface IdParams {
 const DetailUser: React.FC<IdParams> = async ({ params }) => {
   const idUser = Number(params.id);
 
-  const users = await FunctionFetch("https://back.bpventures.com.ar/users");
+  const users = await FunctionFetch(`${process.env.NEXT_PUBLIC_API_URL}/users`);
 
   const user = users.find((user: { id: number }) => user.id === idUser);
 

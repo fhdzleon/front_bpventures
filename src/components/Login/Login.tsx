@@ -23,6 +23,8 @@ export default function Login() {
     remember: false,
   });
 
+  const [activeField, setActiveField] = useState("");  // Campo activo (enfocado)
+
   const [errors, setErrors] = useState<{
     email: string;
     password: string;
@@ -46,6 +48,8 @@ export default function Login() {
     const newOtp = [...otp];
     newOtp[index] = e.target.value;
 
+
+
     // Move to next input if not last input
     if (e.target.value.length === 1 && index < 5) {
       inputsRef.current[index + 1]?.focus();
@@ -67,6 +71,9 @@ export default function Login() {
     );
 
     setErrors(validationErrors);
+  };
+const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    setActiveField(e.target.name); // Establecer el campo activo cuando recibe foco
   };
 
   const handleCheckboxChange = () => {
@@ -139,9 +146,9 @@ export default function Login() {
         }
 
         const json = await response.json();
-        console.log(json);
         const tokenCookie = JSON.stringify(json.token);
         document.cookie = `token=${tokenCookie};`;
+       
         sessionStorage.setItem("user", JSON.stringify(json.userPayload));
         setUser(json.userPayload);
         toast.success("¡Inicio de sesión exitoso!");
@@ -231,12 +238,13 @@ export default function Login() {
                       placeholder="Ingresa tu e-mail"
                       value={formData.email}
                       onChange={handleChange}
+                      onFocus={handleFocus}
                     />
-                    {errors.email && (
-                      <p className="absolute text-red-500 text-xs italic">
+                  
+                      {/* Mostrar error solo si el campo está activo */}
+          {activeField === "email" && errors.email &&  <p className="absolute text-red-500 text-xs italic mt-1">
                         {errors.email}
-                      </p>
-                    )}
+                      </p>}
                   </div>
 
                   <div className="mb-9">
@@ -254,12 +262,11 @@ export default function Login() {
                       placeholder="Ingresa tu password"
                       value={formData.password}
                       onChange={handleChange}
+                      onFocus={handleFocus}
                     />
-                    {errors.password && (
-                      <p className="absolute text-red-500 text-xs italic mt-1">
+                      {activeField === "password" && errors.password &&  <p className="absolute text-red-500 text-xs italic mt-1">
                         {errors.password}
-                      </p>
-                    )}
+                      </p>}
                   </div>
                   {/* Remember me checkbox */}
                   <div className="mb-6 flex items-center justify-between">

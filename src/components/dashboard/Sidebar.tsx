@@ -11,7 +11,7 @@ import { useAuth } from "@/context/AuthContext";
 import Avatar from "./Avatar";
 
 const Sidebar = () => {
-  const { user } = useAuth();
+  const { userData } = useAuth();
 
   return (
     <div className="flex-col w-1/5 md:w-2/6 lg:max-w-80 2xl:max-w-80 min-h-screen items-center  bg-slate-300 md:flex">
@@ -35,8 +35,8 @@ const Sidebar = () => {
       <div className="flex-grow">
         <ItemsSideBarTop />
         <ItemsSidebarBot />
-        <ItemsAdminUser />
-        {/*  {user.email === "user1@example.com" && <ItemsAdminUser />} */}
+
+        {userData?.isAdmin && <ItemsAdminUser />}
 
         <div className="mt-10">
           <Logout />

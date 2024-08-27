@@ -5,6 +5,7 @@ import { GetUserById, UpdateUser } from "@/helpers/auth.helper";
 import React, { useEffect, useState } from "react";
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
+import { Toaster, toast } from "sonner";
 
 interface User {
   email: string;
@@ -63,9 +64,11 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
     e.preventDefault();
     try {
       await UpdateUser(userData, userId.toString());
-      alert("Usuario actualizado exitosamente");
-    } catch (error) {
+      toast.success("Usuario actualizado exitosamente!");
+    } catch (error:any) {
       console.error("Error al actualizar el usuario:", error);
+      toast.error(error.message);
+
     }
   };
 
@@ -79,7 +82,9 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
   };
 
   return (
+
     <div className="flex w-full justify-center">
+      <Toaster richColors />
       <div className="md:grid md:grid-cols-2 p-5 bg-white shadow-lg rounded-lg">
         <div className="col-span-1 font-futura">
           <h2 className="text-start mt-10 text-2xl text-[#2B4168]">Editar Usuario</h2>
@@ -131,7 +136,6 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
                 )}
               </React.Fragment>
             ))}
-
             <Button type="submit">Guardar Cambios</Button>
           </form>
         </div>

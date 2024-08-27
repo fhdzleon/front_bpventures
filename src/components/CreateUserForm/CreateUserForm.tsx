@@ -96,7 +96,7 @@ export const CreateUserForm: React.FC = () => {
                   value={field === "password" ? formData.password : formData[field as keyof ICreateUser]}
                   onChange={handleChange}
                   placeholder={fieldLabels[field]}
-                  required
+                  // required
                 />
                 {field === "password" && (
                   <button type="button" onClick={handlePasswordVisibilityToggle} className="absolute inset-y-0 right-0 px-3 py-2 text-gray-500">
