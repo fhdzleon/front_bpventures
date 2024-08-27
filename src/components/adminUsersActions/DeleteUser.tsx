@@ -63,7 +63,7 @@ const DeleteUser = () => {
     <div>
       <button
         onClick={handleClick}
-        className="flex space-x-2 bg-secundary px-4 py-1 rounded-full"
+        className="flex space-x-2 bg-secundary px-4 hover:bg-acent transition duration-300 py-1 rounded-full"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

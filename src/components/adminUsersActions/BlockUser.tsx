@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { useAuth } from "@/context/AuthContext";
 const BlockUser = () => {
-  const {blocked , setBlocked} = useAuth();
+  const { blocked, setBlocked } = useAuth();
   const { id } = useParams();
 
   const token = Cookies.get("token");
@@ -37,7 +37,7 @@ const BlockUser = () => {
           if (!response.ok) {
             throw new Error("No se logró bloquear el usuario");
           }
-          setBlocked( true );
+          setBlocked(true);
           Swal.fire("Bloqueado!", "El usuario ha sido bloqueado.", "success");
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
@@ -101,7 +101,7 @@ const BlockUser = () => {
       {!blocked ? (
         <button
           onClick={handleBlock}
-          className="flex space-x-2 bg-secundary px-4 py-1 rounded-full"
+          className="flex space-x-2 bg-secundary hover:bg-acent transition duration-300 px-4 py-1 rounded-full"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
