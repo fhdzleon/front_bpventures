@@ -82,6 +82,7 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
   };
 
   return (
+
     <div className="flex w-full justify-center">
       <Toaster richColors />
       <div className="md:grid md:grid-cols-2 p-5 bg-white shadow-lg rounded-lg">
@@ -135,7 +136,6 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
                 )}
               </React.Fragment>
             ))}
-
             <Button type="submit">Guardar Cambios</Button>
           </form>
         </div>
