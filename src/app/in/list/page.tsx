@@ -1,8 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import Link from "next/link";
 
 export interface User {
+  look: ReactNode;
   id: number;
   email: string;
   Names: string;
@@ -85,6 +86,10 @@ const UsersTable = () => {
               <th className="py-3 px-6 font-futura text-left text-lg">
                 Estado
               </th>
+              <th className="flex py-3 px-6 font-futura text-center text-lg">
+                Ver Usuario
+              </th>
+              
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -108,7 +113,15 @@ const UsersTable = () => {
                   {user.Position}
                 </td>
                 <td className="py-4 px-6 font-futura text-sm text-gray-700">
-                  {user.statusId === 1 ? "Activo" : "Inactivo"}
+                  {user.statusId === 1 ? "Desbloqueado" : "Bloqueado"}
+                </td>
+                <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                <Link
+                    href={`/in/list/${user.id}`}
+                    className="text-black hover:text-blue-700"
+                  >
+                  Ver Usuario
+                  </Link>
                 </td>
               </tr>
             ))}
