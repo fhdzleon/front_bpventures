@@ -9,9 +9,10 @@ import { PATHROUTES } from "@/helpers/pathRoutes";
 const EditUser = () => {
   const { user } = useAuth();
   const router = useRouter();
+  const { id } = useParams();
 
   const handleClick = () => {
-    router.push(`${PATHROUTES.UPDATE_USER}/${user.id}`);
+    router.push(`${PATHROUTES.UPDATE_USER}/${id}`);
   };
 
   return (
