@@ -42,11 +42,12 @@ const DeleteUser = () => {
 
           const data = await response.json();
 
-          Swal.fire(
-            "Eliminado!",
-            "El usuario ha sido eliminado correctamente.",
-            "success"
-          ).finally(() => router.push(PATHROUTES.LIST));
+          Swal.fire({
+            title: "Eliminado!",
+            text: "El usuario ha sido eliminado.",
+            icon: "success",
+            confirmButtonColor: "#2b4168",
+          }).finally(() => router.push(PATHROUTES.LIST));
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
           Swal.fire(
