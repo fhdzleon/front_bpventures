@@ -13,7 +13,7 @@ const DeliverablesList = () => {
         <thead className="bg-secundary font-futura text-white">
           <tr>
             <th className="py-3 px-4 w-1/6 font-sans text-center text-md first:">
-              Archivo
+              Nombre
             </th>
             <th className="py-3 px-4 w-1/6 font-sans text-center text-md ">
               Tipo
@@ -42,10 +42,10 @@ const DeliverablesList = () => {
               className="hover:bg-gray-50 transition-colors duration-200"
             >
               <td className="py-4 px-6 font-sans text-sm text-gray-900">
-                {deliverable.archivo}
+                {deliverable.archivo.split(".")[0]}
               </td>
               <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
-                {deliverable.tipo}
+                {deliverable.archivo.split(".")[1]}
               </td>
               <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
                 {deliverable.fechaCreacion}
@@ -91,7 +91,7 @@ const DeliverablesList = () => {
         </tbody>
       </table>
 
-      {!deliverableData && (
+      {deliverableData.length === 0 && (
         <p className="p-6 text-gray-600">No se encontraron archivos.</p>
       )}
     </div>
