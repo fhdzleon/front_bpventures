@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 
 const invoiceStatuses = [
@@ -6,7 +7,7 @@ const invoiceStatuses = [
   { id: 3, name: 'Vencida' },
 ];
 
-const UploadInvoice: React.FC = () => {
+export const UploadInvoiceComponet: React.FC = () => {
   const [numeroFactura, setNumeroFactura] = useState('');
   const [fechaEmision, setFechaEmision] = useState('');
   const [fechaVencimiento, setFechaVencimiento] = useState('');
@@ -128,4 +129,4 @@ const UploadInvoice: React.FC = () => {
   );
 };
 
-export default UploadInvoice;
+export default UploadInvoiceComponet;
