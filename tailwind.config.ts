@@ -17,6 +17,7 @@ const config: Config = {
         bpgray: "#706f6f",
         secundary: "#2b4168",
         acent: "#5eba98",
+        google: "#498AF4",
       },
       fontFamily: {
         futura: ['"Futura Md BT"', "sans"],

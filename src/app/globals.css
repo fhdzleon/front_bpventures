@@ -18,7 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  font-family: "Futura Md BT";
+  /*  font-family: "Futura Md BT"; */
 }
 
 @layer utilities {

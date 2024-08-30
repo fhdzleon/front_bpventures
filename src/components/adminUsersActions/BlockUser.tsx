@@ -3,43 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-
+import { useAuth } from "@/context/AuthContext";
 const BlockUser = () => {
-  const [isBlock, setIsBlock] = useState(false);
+  const { blocked, setBlocked } = useAuth();
   const { id } = useParams();
 
   const token = Cookies.get("token");
 
   const handleBlock = async () => {
-    /* PUT https://api.1rodemayo.com/users/status/1/3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzEsInN1YiI6MzEsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTcyNDcyMjY3NCwiZXhwIjoxNzI0ODA5MDc0fQ.QnnEvwNSbj_8eLme-Llcp1hu7azwLtmeKY2MlEacglY */
-
-    /*  try {
-      const response = await fetch(
-        `https://api.1rodemayo.com/users/status/1/3`,
-        {
-          method: "PUT",
-          headers: {
-            "content-type": "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzEsInN1YiI6MzEsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTcyNDcyMjY3NCwiZXhwIjoxNzI0ODA5MDc0fQ.QnnEvwNSbj_8eLme-Llcp1hu7azwLtmeKY2MlEacglY",
-          },
-        }
-      );
-
-      console.log(response);
-
-      if (!response.ok) {
-        throw new Error("No se logró bloquear el usuario");
-      }
-      setIsBlock(true);
-      Swal.fire("Bloqueado!", "El usuario ha sido bloqueado.", "success");
-    } catch (error) {
-      console.error("Hubo un problema con la petición", error);
-      Swal.fire("Error", "Hubo un problema al bloquear el usuario.", "error");
-    }
-    return; */
-
     Swal.fire({
       title: "¿Estás seguro?",
       text: "El usuario será bloqueado",
@@ -53,7 +24,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzEsInN1YiI6M
       if (result.isConfirmed) {
         try {
           const response = await fetch(
-            `https://api.1rodemayo.com/users/status/${id}/2`,
+            `${process.env.NEXT_PUBLIC_API_URL}/users/status/${id}/2`,
             {
               method: "PUT",
               headers: {
@@ -66,8 +37,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzEsInN1YiI6M
           if (!response.ok) {
             throw new Error("No se logró bloquear el usuario");
           }
-          setIsBlock(true);
-          Swal.fire("Bloqueado!", "El usuario ha sido bloqueado.", "success");
+          setBlocked(true);
+          Swal.fire({
+            title: "Bloqueado!",
+            text: "El usuario ha sido bloqueado.",
+            icon: "success",
+            confirmButtonColor: "#2b4168",
+          });
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
           Swal.fire(
@@ -107,12 +83,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzEsInN1YiI6M
           if (!response.ok) {
             throw new Error("No se logró desbloquear el usuario");
           }
-          setIsBlock(false);
-          Swal.fire(
-            "Desbloqueado!",
-            "El usuario ha sido desbloqueado.",
-            "success"
-          );
+          setBlocked(false);
+          Swal.fire({
+            title: "Bloqueado!",
+            text: "El usuario ha sido desbloqueado.",
+            icon: "success",
+            confirmButtonColor: "#2b4168",
+          });
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
           Swal.fire(
@@ -127,10 +104,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzEsInN1YiI6M
 
   return (
     <div>
-      {!isBlock ? (
+      {!blocked ? (
         <button
           onClick={handleBlock}
-          className="flex space-x-2 bg-secundary px-4 py-1 rounded-full"
+          className="flex space-x-2 bg-secundary hover:bg-acent transition duration-300 px-4 py-1 rounded-full"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

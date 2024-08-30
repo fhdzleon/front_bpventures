@@ -35,7 +35,7 @@ const Sidebar = () => {
       <div className="flex-grow">
         <ItemsSideBarTop />
         <ItemsSidebarBot />
-        {/*       <ItemsAdminUser /> */}
+
         {userData?.isAdmin && <ItemsAdminUser />}
 
         <div className="mt-10">

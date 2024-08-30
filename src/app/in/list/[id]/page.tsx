@@ -9,7 +9,7 @@ export interface User {
   Names: string;
   LastName: string;
   Position: string;
-  statusId: boolean;
+  statusId: number;
 }
 
 interface IdParams {

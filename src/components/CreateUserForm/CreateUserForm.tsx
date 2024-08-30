@@ -3,6 +3,10 @@ import { RegisterUser } from "@/helpers/auth.helper";
 import React, { useState } from "react";
 import { Toaster, toast } from "sonner";
 import Button from "../FormComponent/Button";
+import "../../styles/form-style.css";
+import { useRouter } from "next/navigation";
+import { PATHROUTES } from "@/helpers/pathRoutes";
+
 
 interface ICreateUser {
   email: string;
@@ -31,8 +35,9 @@ export const CreateUserForm: React.FC = () => {
     Position: "",
   });
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -55,7 +60,9 @@ export const CreateUserForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await RegisterUser(formData);
+      const res =  await RegisterUser(formData);
+      router.push(`${PATHROUTES.LIST}/${res.id}`);
+
       toast.success("¡Usuario registrado exitosamente!");
     } catch (error: any) {
       console.error("Error al registrar usuario:", error);
@@ -81,30 +88,22 @@ export const CreateUserForm: React.FC = () => {
             <label htmlFor={field} className="label-apply">
               {fieldLabels[field]}
             </label>
-            {field === "Position" ? (
-              <select id={field} name={field} className="input-apply" value={formData[field as keyof ICreateUser]} onChange={handleChange} required>
-                <option value="gerente">Gerente</option>
-                <option value="supervisor">Supervisor</option>
-                <option value="operario">Operario</option>
-              </select>
-            ) : (
-              <div className="relative">
-                <input
-                  className="input-apply"
-                  type={field === "password" && !passwordVisible ? "password" : "text"}
-                  name={field}
-                  value={field === "password" ? formData.password : formData[field as keyof ICreateUser]}
-                  onChange={handleChange}
-                  placeholder={fieldLabels[field]}
-                  // required
-                />
-                {field === "password" && (
-                  <button type="button" onClick={handlePasswordVisibilityToggle} className="absolute inset-y-0 right-0 px-3 py-2 text-gray-500">
-                    {passwordVisible ? "Ocultar" : "Mostrar"}
-                  </button>
-                )}
-              </div>
-            )}
+            <div className="relative">
+              <input
+                className="input-apply"
+                type={field === "password" && !passwordVisible ? "password" : "text"}
+                name={field}
+                value={formData[field as keyof ICreateUser]}
+                onChange={handleChange}
+                placeholder={fieldLabels[field]}
+                // required
+              />
+              {field === "password" && (
+                <button type="button" onClick={handlePasswordVisibilityToggle} className="absolute inset-y-0 right-0 px-3 py-2 text-gray-500">
+                  {passwordVisible ? "Ocultar" : "Mostrar"}
+                </button>
+              )}
+            </div>
             {field === "password" && (
               <Button onClick={handlePasswordGeneration} type="button">
                 Generar Contraseña
@@ -112,7 +111,6 @@ export const CreateUserForm: React.FC = () => {
             )}
           </div>
         ))}
-
         <Button type="submit">Crear Usuario</Button>
       </form>
     </div>

@@ -9,16 +9,17 @@ import { PATHROUTES } from "@/helpers/pathRoutes";
 const EditUser = () => {
   const { user } = useAuth();
   const router = useRouter();
+  const { id } = useParams();
 
   const handleClick = () => {
-    router.push(`${PATHROUTES.UPDATE_USER}/${user.id}`);
+    router.push(`${PATHROUTES.UPDATE_USER}/${id}`);
   };
 
   return (
     <div>
       <button
         onClick={handleClick}
-        className="flex space-x-2 bg-secundary px-4 py-1 rounded-full"
+        className="flex hover:bg-acent transition duration-300 space-x-2 bg-secundary px-4 py-1 rounded-full"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

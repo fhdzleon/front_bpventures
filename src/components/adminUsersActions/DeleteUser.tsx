@@ -24,7 +24,6 @@ const DeleteUser = () => {
       cancelButtonText: "Cancelar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        // Si el usuario confirma, proceder con la eliminación
         try {
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/users/status/${id}/3`,
@@ -42,13 +41,13 @@ const DeleteUser = () => {
           }
 
           const data = await response.json();
-          console.log(data);
 
-          Swal.fire(
-            "Eliminado!",
-            "El usuario ha sido eliminado correctamente.",
-            "success"
-          ).finally(() => router.push(PATHROUTES.LIST));
+          Swal.fire({
+            title: "Eliminado!",
+            text: "El usuario ha sido eliminado.",
+            icon: "success",
+            confirmButtonColor: "#2b4168",
+          }).finally(() => router.push(PATHROUTES.LIST));
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
           Swal.fire(
@@ -65,7 +64,7 @@ const DeleteUser = () => {
     <div>
       <button
         onClick={handleClick}
-        className="flex space-x-2 bg-secundary px-4 py-1 rounded-full"
+        className="flex space-x-2 bg-secundary px-4 hover:bg-acent transition duration-300 py-1 rounded-full"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

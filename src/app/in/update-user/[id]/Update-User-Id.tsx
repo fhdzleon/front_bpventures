@@ -5,8 +5,6 @@ import React from "react";
 
 const UpdateUserId = ({params }: {params: { id: number }}) => {
     const { id } = params;
-    console.log(id)
-    
   return (
     <div className="flex items-start">
             <UpdateUserComponent id={id} />
