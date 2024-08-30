@@ -2,13 +2,14 @@ import Link from "next/link";
 import EditUser from "../adminUsersActions/EditUser";
 import DeleteUser from "../adminUsersActions/DeleteUser";
 import BlockUser from "../adminUsersActions/BlockUser";
+import { PATHROUTES } from "@/helpers/pathRoutes";
 export interface User {
   id: number;
   email: string;
   Names: string;
   LastName: string;
   Position: string;
-  statusId: boolean;
+  statusId: number;
 }
 
 interface UserDetailViewProps {
@@ -21,7 +22,7 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
       <section className="mb-12">
         <section className="mb-12">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-4xl font-bold text-[#2B4168] border-b-4 border-[#2B4168] pb-2">
+            <h1 className="text-4xl font-bold text-[#2B4168]  border-[#2B4168] pb-2">
               Detalles del Usuario
             </h1>
             <Link href="/in/list">
@@ -59,12 +60,14 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
                 {"  "}
                 <span
                   className={`p-2 m-3 font-futura inline-block rounded-full text-white ${
-                    user.statusId ? "bg-green-500" : "bg-red-500"
+                    user.statusId === 1? "bg-green-500" : "bg-red-500"
                   }`}
                 >
-                  {user.statusId ? "Activo" : "Inactivo"}
+                  {user.statusId ===1 ? " Desbloqueado" : "Bloqueado"}
                 </span>
+             
               </p>
+             
             </div>
           </div>
         </div>
@@ -80,13 +83,13 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
 
       <section className="mb-12">
         <div className="bg-gradient-to-br bg-white p-8 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-futura text-[#2B4168] mb-6">
-            Información de Facturación (EN PROCESO DE DESARROLLO)
-          </h2>
+         <Link href={PATHROUTES.MAITENANCE}> <h2 className="text-3xl font-futura text-[#2B4168] mb-6">
+            Información de Facturación
+          </h2></Link>
           <p className="text-lg font-futura mb-4">Estado de Facturación:</p>
           <p className="text-lg">Sin facturas pendientes</p>
         </div>
-        <button className="m-5 bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex items-center">
+       <Link href={PATHROUTES.MAITENANCE}> <button className="m-5 bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex items-center">
           <svg
             width="22"
             height="15"
@@ -101,7 +104,7 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
             />
           </svg>{" "}
           Ver Facturación
-        </button>
+        </button></Link>
       </section>
     </div>
   );
