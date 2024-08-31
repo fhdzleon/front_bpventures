@@ -42,7 +42,7 @@ const DeliverablesList = () => {
       }
     };
     fetchDeliverables();
-  }, []);
+  }, [deliverableData]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
@@ -137,7 +137,7 @@ const DeliverablesList = () => {
                       <ViewDeliverable />
                       <DownloadDeliverable />
                       <EditDeliverable />
-                      <DeleteDeliverable />
+                      <DeleteDeliverable id={deliverable.id} />
                     </div>
                   </td>
                   <td>
