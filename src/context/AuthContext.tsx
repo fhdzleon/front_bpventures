@@ -37,8 +37,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [deliverableData, setDeliverableData] = useState<any>(null);
   const [allUsers, setAllUsers] = useState<any>(null);
 
-  console.log(userData);
-
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
