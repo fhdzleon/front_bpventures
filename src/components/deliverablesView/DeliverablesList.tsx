@@ -10,7 +10,6 @@ import Image from "next/image";
 
 import Cookies from "js-cookie";
 import { useAuth } from "@/context/AuthContext";
-import PermissionManager from "@/components/PemissionComponent.tsx/permissioncomponent"
 
 const DeliverablesList = () => {
   const { setDeliverableData, userData, deliverableData } = useAuth();
@@ -196,7 +195,7 @@ const DeliverablesList = () => {
           >
             Siguiente
           </button>
-          <PermissionManager deliverableId={0}/>
+     
         </div>
       </div>
     </>

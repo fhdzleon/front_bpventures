@@ -1,6 +1,6 @@
 import React from "react";
 
-const DeleteDeliverable = () => {
+const DeleteDeliverable = (deliverableId: any) => {
   /* `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${id}, {
     method: "DELETE"
   }` */
