@@ -47,6 +47,66 @@ const deliverableData = [
     fechaCreacion: "2024-08-21",
     autor: "Jorge Gutiérrez",
   },
+  {
+    id: 9,
+    archivo: "informe_financiero.xlsx",
+    fechaCreacion: "2024-08-20",
+    autor: "Sofía Jiménez",
+  },
+  {
+    id: 10,
+    archivo: "calendario_actividades.xlsx",
+    fechaCreacion: "2024-08-19",
+    autor: "Miguel Castro",
+  },
+  {
+    id: 11,
+    archivo: "contrato_servicios.pdf",
+    fechaCreacion: "2024-08-18",
+    autor: "Laura Mendoza",
+  },
+  {
+    id: 12,
+    archivo: "esquema_arquitectura.vsdx",
+    fechaCreacion: "2024-08-17",
+    autor: "Fernando Silva",
+  },
+  {
+    id: 13,
+    archivo: "reporte_ventas.xlsx",
+    fechaCreacion: "2024-08-16",
+    autor: "Patricia Ruiz",
+  },
+  {
+    id: 14,
+    archivo: "memo_interno.docx",
+    fechaCreacion: "2024-08-15",
+    autor: "Gabriel Torres",
+  },
+  {
+    id: 15,
+    archivo: "estrategia_seo.docx",
+    fechaCreacion: "2024-08-14",
+    autor: "Elena Vargas",
+  },
+  {
+    id: 16,
+    archivo: "minuta_reunion.docx",
+    fechaCreacion: "2024-08-13",
+    autor: "Héctor Navarro",
+  },
+  {
+    id: 17,
+    archivo: "analisis_riesgos.pdf",
+    fechaCreacion: "2024-08-12",
+    autor: "Valeria Ríos",
+  },
+  {
+    id: 18,
+    archivo: "presupuesto_evento.xlsx",
+    fechaCreacion: "2024-08-11",
+    autor: "David Peña",
+  },
 ];
 
 export default deliverableData;

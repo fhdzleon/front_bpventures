@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 const UploadDeliverable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(""); // Estado para la opción seleccionada
+  const [selectedOption, setSelectedOption] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     description: "",
