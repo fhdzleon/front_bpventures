@@ -8,6 +8,7 @@ import ViewDeliverable from "../deliverablesActions/ViewDeliverable";
 import EditDeliverable from "../deliverablesActions/EditDeliverable";
 import deliverableMock from "@/helpers/deliverableData";
 import { useAuth } from "@/context/AuthContext";
+import PermissionManager from "@/components/PemissionComponent.tsx/permissioncomponent"
 
 const DeliverablesList = () => {
   const { setDeliverableData, deliverableData } = useAuth();
@@ -140,6 +141,7 @@ const DeliverablesList = () => {
           >
             Siguiente
           </button>
+          <PermissionManager deliverableId={0}/>
         </div>
       </div>
     </>
