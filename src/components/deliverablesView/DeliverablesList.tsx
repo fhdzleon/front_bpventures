@@ -54,22 +54,20 @@ const DeliverablesList = () => {
         <table className=" min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
             <tr>
-              <th className="py-3 px-4 w-1/6 font-sans text-center text-md first:">
+              <th className="py-3 px-4 w-1/5 font-sans text-center text-md first:">
                 Nombre
               </th>
-              <th className="py-3 px-4 w-1/6 font-sans text-center text-md ">
-                Tipo
-              </th>
-              <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
+
+              <th className="py-3 px-4 w-1/5 font-sans text-center text-md">
                 Fecha de Creación
               </th>
-              <th className="py-3 px-4 w-1/6 font-sans text-center text-md ">
+              <th className="py-3 px-4 w-1/5 font-sans text-center text-md ">
                 Categorias
               </th>
-              <th className="py-3 px-4 w-1/6 font-sans text-center text-md ">
+              <th className="py-3 px-4 w-1/5 font-sans text-center text-md ">
                 Acciones
               </th>
-              <th className=" py-3 px-4  w-1/6font-sans text-center text-md">
+              <th className=" py-3 px-4  w-1/5 font-sans text-center text-md">
                 Permisos
               </th>
             </tr>
@@ -82,46 +80,69 @@ const DeliverablesList = () => {
                   key={deliverable.id}
                   className="hover:bg-gray-50 transition-colors duration-200"
                 >
-                  <td className="py-4 px-6 font-sans text-sm text-gray-900">
-                    {deliverable.deliverableName}
+                  <td className="py-4 px-6 font-sans text-end text-sm text-gray-700">
+                    <div className="grid grid-cols-2">
+                      {deliverable.deliverableIsFolder ? (
+                        <div className="flex justify-center">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="size-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"
+                            />
+                          </svg>
+                        </div>
+                      ) : deliverable.deliverableType === "pdf" ? (
+                        <div className="flex justify-center">
+                          <Image
+                            src="https://i.postimg.cc/zG3S11H3/file-pdf-svgrepo-com.png"
+                            alt="PDF"
+                            width={30}
+                            height={30}
+                          />
+                        </div>
+                      ) : deliverable.deliverableType === "xls" ||
+                        deliverable.deliverableType === "xlsx" ? (
+                        <div className="flex justify-center">
+                          <Image
+                            src="https://i.postimg.cc/rsrXHHGH/xls-file-format-symbol-svgrepo-com.png"
+                            alt="XLS"
+                            width={30}
+                            height={30}
+                          />
+                        </div>
+                      ) : deliverable.deliverableType === "doc" ? (
+                        <div className="flex justify-center">
+                          <Image
+                            src="https://i.postimg.cc/QtRxV10R/doc-file-format-svgrepo-com.png"
+                            alt="DOC"
+                            width={30}
+                            height={30}
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center">
+                          <Image
+                            src="https://i.postimg.cc/y8XBBwq4/file-question-svgrepo-com-1.png"
+                            alt="Otro Tipo"
+                            width={35}
+                            height={35}
+                          />
+                        </div>
+                      )}
+                      <span className="text-start">
+                        {deliverable.deliverableName}
+                      </span>
+                    </div>
                   </td>
 
-                  <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
-                    {deliverable.deliverableType === "pdf" ? (
-                      <div className="flex justify-center">
-                        <Image
-                          src="https://i.postimg.cc/zG3S11H3/file-pdf-svgrepo-com.png"
-                          alt="PDF"
-                          width={30}
-                          height={30}
-                        />
-                      </div>
-                    ) : deliverable.deliverableType === "xls" ||
-                      deliverable.deliverableType === "xlsx" ? (
-                      <Image
-                        src="https://i.postimg.cc/rsrXHHGH/xls-file-format-symbol-svgrepo-com.png"
-                        alt="JPG"
-                        width={30}
-                        height={30}
-                      />
-                    ) : deliverable.deliverableType === "doc" ? (
-                      <Image
-                        src="https://i.postimg.cc/QtRxV10R/doc-file-format-svgrepo-com.png"
-                        alt="JPG"
-                        width={30}
-                        height={30}
-                      />
-                    ) : (
-                      <div className="flex justify-center">
-                        <Image
-                          src="https://i.postimg.cc/y8XBBwq4/file-question-svgrepo-com-1.png"
-                          alt="Otro Tipo"
-                          width={35}
-                          height={35}
-                        />
-                      </div>
-                    )}
-                  </td>
                   <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
                     {deliverable.lastDate}
                   </td>
