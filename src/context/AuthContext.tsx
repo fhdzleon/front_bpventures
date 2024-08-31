@@ -20,10 +20,11 @@ export interface AuthContextType {
   userData: any;
   blocked: boolean;
   setBlocked: (blocked: boolean) => void;
+  deliverableData: any;
+  setDeliverableData: (deliverableData: any) => void;
+  allUsers: any;
+  setAllUsers: (allUser: any) => void;
 }
-
-
-
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -33,6 +34,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [user, setUser] = useState<any>(null);
   const [userData, setUserData] = useState<any>(null);
   const [blocked, setBlocked] = useState<boolean>(false);
+  const [deliverableData, setDeliverableData] = useState<any>(null);
+  const [allUsers, setAllUsers] = useState<any>(null);
+
+  console.log(userData);
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -52,7 +57,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, userData, blocked, setBlocked }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        userData,
+        blocked,
+        setBlocked,
+        deliverableData,
+        setDeliverableData,
+        allUsers,
+        setAllUsers: setAllUsers,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

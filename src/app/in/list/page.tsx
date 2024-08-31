@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, ReactNode } from "react";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 export interface User {
   look: ReactNode;
@@ -13,7 +14,7 @@ export interface User {
 }
 
 const UsersTable = () => {
-  const [allUsers, setAllUsers] = useState<User[]>([]);
+  const { allUsers, setAllUsers } = useAuth();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 5;
@@ -26,10 +27,7 @@ const UsersTable = () => {
         );
         const data = await response.json();
 
-        
         setAllUsers(data);
-
-
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -90,7 +88,6 @@ const UsersTable = () => {
               <th className="flex py-3 px-6 font-futura text-center text-lg">
                 Ver Usuario
               </th>
-              
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -117,11 +114,11 @@ const UsersTable = () => {
                   {user.statusId === 1 ? "Desbloqueado" : "Bloqueado"}
                 </td>
                 <td className="py-4 px-6 font-futura text-sm text-gray-700">
-                <Link
+                  <Link
                     href={`/in/list/${user.id}`}
                     className="text-black hover:text-blue-700"
                   >
-                  Ver Usuario
+                    Ver Usuario
                   </Link>
                 </td>
               </tr>
