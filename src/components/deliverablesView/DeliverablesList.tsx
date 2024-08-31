@@ -33,16 +33,12 @@ const DeliverablesList = () => {
         );
         const data = await response.json();
         setDeliverableData(data);
-
-        console.log(response);
-        console.log(data);
-        console.log(deliverableData);
       } catch (error) {
         console.error("Error fetching deliverables", error);
       }
     };
     fetchDeliverables();
-  }, [deliverableData]);
+  }, [currentPage, deliverableData, setDeliverableData, token, userData.id]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
@@ -133,9 +129,12 @@ const DeliverablesList = () => {
                     {deliverable.deliverableCategory}
                   </td>
                   <td>
-                    <div className="grid grid-cols-4 justify-center justify-items-center">
-                      <ViewDeliverable />
-                      <DownloadDeliverable />
+                    <div className="grid grid-cols-3 justify-center justify-items-center">
+                      <DownloadDeliverable
+                        id={deliverable.id}
+                        path={deliverable.deliverablePath}
+                        type={deliverable.deliverableType}
+                      />
                       <EditDeliverable />
                       <DeleteDeliverable id={deliverable.id} />
                     </div>
