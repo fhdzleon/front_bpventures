@@ -1,9 +1,24 @@
-const deliverableData = [
+import { permission } from "process";
+
+const deliverableMock = [
   {
     id: 1,
     archivo: "documento_proyecto.pdf",
     fechaCreacion: "2024-08-28",
     autor: "Juan Pérez",
+    permission: [
+      {
+        id: 1,
+        name: "edit",
+        userId: 2,
+        created: "2024-02-10",
+        updatedAt: "2024-02-10",
+        permissionType: {
+          id: 1,
+          name: "edit",
+        },
+      },
+    ],
   },
   {
     id: 2,
@@ -109,4 +124,4 @@ const deliverableData = [
   },
 ];
 
-export default deliverableData;
+export default deliverableMock;

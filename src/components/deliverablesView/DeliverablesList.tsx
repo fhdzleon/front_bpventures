@@ -6,13 +6,17 @@ import DeleteDeliverable from "../deliverablesActions/DeleteDeliverable";
 import DownloadDeliverable from "../deliverablesActions/DownloadDeliverable";
 import ViewDeliverable from "../deliverablesActions/ViewDeliverable";
 import EditDeliverable from "../deliverablesActions/EditDeliverable";
-import deliverableData from "../../helpers/deliverableData";
+import deliverableMock from "@/helpers/deliverableData";
+import { useAuth } from "@/context/AuthContext";
 
 const DeliverablesList = () => {
+  const { setDeliverableData, deliverableData } = useAuth();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 7;
 
-  const totalPages = Math.ceil(deliverableData.length / itemsPerPage);
+  setDeliverableData(deliverableMock);
+
+  const totalPages = Math.ceil(deliverableData?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedDeliverables = deliverableData.slice(startIndex, endIndex);
@@ -56,7 +60,7 @@ const DeliverablesList = () => {
 
           {/* INICIA EL BODY */}
           <tbody className="bg-white divide-y divide-gray-200">
-            {paginatedDeliverables.map((deliverable) => (
+            {paginatedDeliverables.map((deliverable: any) => (
               <tr
                 key={deliverable.id}
                 className="hover:bg-gray-50 transition-colors duration-200"

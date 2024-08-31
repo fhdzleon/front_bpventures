@@ -135,7 +135,7 @@ const UploadDeliverable = () => {
                   Subir Archivo:
                 </h3>
                 <button className="font-sans bg-google p-2 rounded text-white mb-2">
-                  Subir con Google Drive
+                  Importar desde Google Drive
                 </button>
                 <p className="font-sans mb-2">
                   O selecciona un archivo desde tu PC.
