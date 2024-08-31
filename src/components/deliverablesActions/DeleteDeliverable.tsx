@@ -1,6 +1,10 @@
 import React from "react";
 
 const DeleteDeliverable = () => {
+  /* `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${id}, {
+    method: "DELETE"
+  }` */
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
