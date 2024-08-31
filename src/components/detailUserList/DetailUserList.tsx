@@ -89,31 +89,33 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
         </div>
       </section>
 
-      <section className="mb-12">
-        <div className="bg-gradient-to-br bg-white p-8 rounded-lg shadow-lg">
-         <Link href={PATHROUTES.MAITENANCE}> <h2 className="text-3xl font-futura text-[#2B4168] mb-6">
-            Información de Facturación
-          </h2></Link>
-          <p className="text-lg font-futura mb-4">Estado de Facturación:</p>
-          <p className="text-lg">Sin facturas pendientes</p>
-        </div>
-       <Link href={PATHROUTES.MAITENANCE}> <button className="m-5 bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex items-center">
-          <svg
-            width="22"
-            height="15"
-            viewBox="0 0 22 15"
-            fill="none"
-            className="mr-2"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M11 4.5C10.2044 4.5 9.44129 4.81607 8.87868 5.37868C8.31607 5.94129 8 6.70435 8 7.5C8 8.29565 8.31607 9.05871 8.87868 9.62132C9.44129 10.1839 10.2044 10.5 11 10.5C11.7956 10.5 12.5587 10.1839 13.1213 9.62132C13.6839 9.05871 14 8.29565 14 7.5C14 6.70435 13.6839 5.94129 13.1213 5.37868C12.5587 4.81607 11.7956 4.5 11 4.5ZM11 12.5C9.67392 12.5 8.40215 11.9732 7.46447 11.0355C6.52678 10.0979 6 8.82608 6 7.5C6 6.17392 6.52678 4.90215 7.46447 3.96447C8.40215 3.02678 9.67392 2.5 11 2.5C12.3261 2.5 13.5979 3.02678 14.5355 3.96447C15.4732 4.90215 16 6.17392 16 7.5C16 8.82608 15.4732 10.0979 14.5355 11.0355C13.5979 11.9732 12.3261 12.5 11 12.5ZM11 0C6 0 1.73 3.11 0 7.5C1.73 11.89 6 15 11 15C16 15 20.27 11.89 22 7.5C20.27 3.11 16 0 11 0Z"
-              fill="white"
-            />
-          </svg>{" "}
-          Ver Facturación
-        </button></Link>
+        <section className=" bg-gradient-to-br  bg-white p-8 rounded-lg shadow-lg">
+      <h2 className=" mt-19 text-3xl  text-left font-futura text-[#2B4168] ">
+          Información de Facturación
+        </h2>
+       <Link href={'/in/Invoices'}><button className="flex m-8  text-white  p-2 rounded-full bg-[#2B4168] ">Ver Facturacion del Usuario <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      className="w-6 h-6 mx-auto hover:text-acent"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+      />
+    </svg></button></Link> 
+        {/* {userInvoices.length > 0 ? (
+          userInvoices.map(invoice => (
+            <InvoiceDetail key={invoice.id} Invoice={invoice} />
+          ))
+        ) : (
+          <p>No hay facturas disponibles para este usuario.</p>
+        )} */}
       </section>
+    
     </div>
   );
 };

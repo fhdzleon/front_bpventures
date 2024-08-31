@@ -5,6 +5,11 @@ import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 
 export interface Deliverable {
+  autor: ReactNode;
+  tipo: ReactNode;
+  fechaCreacion: ReactNode;
+  archivo: any;
+  permisos: any;
   id: number;
   deliverableName: string;
   deliverableType: string;

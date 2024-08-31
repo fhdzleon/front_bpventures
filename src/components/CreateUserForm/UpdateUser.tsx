@@ -15,6 +15,9 @@ interface User {
   Names: string;
   LastName: string;
   Position: string;
+  Empresa:string;
+  Cuit: number,
+  Domicilio:string,
 }
 
 interface Props {
@@ -34,6 +37,9 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
     Names: "",
     LastName: "",
     Position: "",
+    Empresa:"",
+    Cuit:0,
+    Domicilio:"",
   });
 
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -80,6 +86,9 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
     Names: "Nombres",
     LastName: "Apellidos",
     Position: "Puesto",
+    Empresa: "Empresa",
+    Cuit: "CUIT",
+    Domicilio:"Domicilio"
   };
 
   return (
@@ -112,7 +121,7 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
 
         <div className="col-span-1">
           <form className="form-apply" onSubmit={handleSubmit}>
-            {["email", "password", "Names", "LastName", "Position"].map(
+            {["email", "password", "Names", "LastName", "Position", "Empresa", "Cuit", "Domicilio"].map(
               (field, index) => (
                 <React.Fragment key={index}>
                   <label htmlFor={field} className="label-apply">
