@@ -1,8 +1,10 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 const Searchbar = () => {
   return (
-    <div className="flex  mx-5  md:mx-10 mt-10 items-center">
+    <div className="flex mt-5 items-center">
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +24,7 @@ const Searchbar = () => {
 
       <div>
         <input
-          className=" bg-slate-300 w-40 text-xs md:text-lg h-12 md:w-96 outline-none placeholder-secundary px-3"
+          className=" bg-slate-300 w-40 font-sans text-xs md:text-lg h-12 md:w-96 outline-none placeholder-secundary px-3"
           type="text"
           placeholder="Buscar dentro de tu unidad"
         />

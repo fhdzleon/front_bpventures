@@ -28,7 +28,7 @@ const ItemsSideBarTop = () => {
         </div>
       </Link>
 
-      <Link href={PATHROUTES.MAITENANCE}>
+      <Link href={PATHROUTES.DELIVERABLES}>
         <div className="grid mt-4 grid-cols-6 px-4 items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"

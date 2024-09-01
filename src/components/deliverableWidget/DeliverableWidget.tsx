@@ -1,10 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
+
 import { useAuth } from "@/context/AuthContext";
 
 export interface Deliverable {
+  autor: string;
+  tipo: string;
+  fechaCreacion: string;
+  archivo: any;
+  permisos: any;
   id: number;
   deliverableName: string;
   deliverableType: string;
@@ -22,10 +27,11 @@ const deliverableWidget = () => {
     const fetchDeliverables = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${user.id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/deliverables/user/${user.id}`
         );
         const data = await response.json();
         console.log(data);
+
         setAllDeliverables(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching users:", error);

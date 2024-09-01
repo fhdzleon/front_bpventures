@@ -38,7 +38,12 @@ const BlockUser = () => {
             throw new Error("No se logró bloquear el usuario");
           }
           setBlocked(true);
-          Swal.fire("Bloqueado!", "El usuario ha sido bloqueado.", "success");
+          Swal.fire({
+            title: "Bloqueado!",
+            text: "El usuario ha sido bloqueado.",
+            icon: "success",
+            confirmButtonColor: "#2b4168",
+          });
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
           Swal.fire(
@@ -79,11 +84,12 @@ const BlockUser = () => {
             throw new Error("No se logró desbloquear el usuario");
           }
           setBlocked(false);
-          Swal.fire(
-            "Desbloqueado!",
-            "El usuario ha sido desbloqueado.",
-            "success"
-          );
+          Swal.fire({
+            title: "Bloqueado!",
+            text: "El usuario ha sido desbloqueado.",
+            icon: "success",
+            confirmButtonColor: "#2b4168",
+          });
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
           Swal.fire(

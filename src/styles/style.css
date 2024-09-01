@@ -1,17 +1,16 @@
 @media (min-width: 1024px) {
-    
-    .custom-position {
-      top: 20%;
-      /* right: 13%; */
-      right:19vw;
-      transform: translateY(-50%);
-    }
+  .custom-position {
+    top: 20%;
+    /* right: 13%; */
+    right: 19vw;
+    transform: translateY(-50%);
   }
-  @media screen and (max-width: 1024px) and (min-width: 768px) {
-    .custom-position {
-      position: relative;
-      top:8vw;
-   margin-right: -60vw;
-      transform: translateY(-50%);
-    }
+}
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+  .custom-position {
+    position: relative;
+    top: 8vw;
+    margin-right: -60vw;
+    transform: translateY(-50%);
   }
+}
