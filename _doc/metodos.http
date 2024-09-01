@@ -1,0 +1,20 @@
+### 
+GET https://api.1rodemayo.com/invoices/
+
+### Obtener facturas por usuario
+GET https://api.1rodemayo.com/invoices/1
+Content-Type: application/json
+
+### Crear una nueva factura
+POST https://api.1rodemayo.com/invoices
+Content-Type: application/json
+
+{
+  "invoiceNumber": "INV-001",
+  "path": "/invoices/inv001.pdf",
+  "issueDate": "2024-08-30",
+  "dueDate": "2024-09-15",
+  "amount": 1500.00,
+  "userId": 1,
+  "invoiceStatusId": 2
+}

@@ -15,4 +15,3 @@ export const filesData = [
     { userId: 102, fileId: 1, permissionTypes: ["view", "edit", "delete"] }
   ];
   
-  

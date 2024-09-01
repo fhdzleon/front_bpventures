@@ -1,4 +1,5 @@
 'use client';
+import { GetPermisos, UpdatePermission } from '@/helpers/auth.helper';
 import { useState, useEffect } from 'react';
 
 //  estado global simulado para permisos PORQUE NECESITO DONDE GUARDAR
@@ -18,24 +19,33 @@ export default function PermissionPanel({ fileId, users, closePanel }: Permissio
   const [userPermissions, setUserPermissions] = useState<{ [key: number]: string[] }>({});
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [newUserId, setNewUserId] = useState<number | null>(null);
+ const [permission, setPermission] = useState([]);
 
   useEffect(() => {
-    const permissions = simulatedPermissionsData.filter(permission => permission.fileId === fileId);
-    const permissionsMap = permissions.reduce<{ [key: number]: string[] }>((acc, curr) => {
-      acc[curr.userId] = curr.permissionTypes;
-      return acc;
-    }, {});
-    setUserPermissions(permissionsMap);
-  }, [fileId]);
+    const getPermissions = async () => {
+      try {
+        const response = await GetPermisos(fileId);
+        const data = await response.json();
+        setPermission(data); 
+      } catch (error) {
+        console.error("Error fetching permissions", error);
+      }
+    };
+
+   
+    getPermissions();
+  }, [fileId]); 
+
+
   // useEffect(() => {
-  //   const permissionsMap = simulatedPermissionsData.reduce<{ [key: number]: string[] }>((acc, curr) => {
+  //   const permissions = simulatedPermissionsData.filter(permission => permission.fileId === fileId);
+  //   const permissionsMap = permissions.reduce<{ [key: number]: string[] }>((acc, curr) => {
   //     acc[curr.userId] = curr.permissionTypes;
   //     return acc;
   //   }, {});
   //   setUserPermissions(permissionsMap);
-  // }, []); 
+  // }, [fileId]);
   
-
   const handlePermissionChange = (userId: number, permission: string) => {
     setUserPermissions(prevPermissions => {
       const userPerms = prevPermissions[userId] || [];
@@ -53,32 +63,46 @@ export default function PermissionPanel({ fileId, users, closePanel }: Permissio
     });
   };
 
-  const savePermissions = () => {
- 
-    const updatedPermissions = Object.entries(userPermissions).map(([userId, permissionTypes]) => ({
-      userId: parseInt(userId),
-      fileId,
-      permissionTypes
-    }));
+const savePermissions = async () => {
 
-
-    simulatedPermissionsData = simulatedPermissionsData.filter(p => p.fileId !== fileId);
-
-
-    simulatedPermissionsData.push(...updatedPermissions);
+  const updatedPermissions = Object.entries(userPermissions).map(([userId, permissionTypes]) => ({
+    userId: parseInt(userId),
+    fileId,
+    permissionTypes
+  }));
+//  simulatedPermissionsData = simulatedPermissionsData.filter(p => p.fileId !== fileId);
+//   simulatedPermissionsData.push(...updatedPermissions);
+// console.log(simulatedPermissionsData)
+  try {
+   
+    const response = await UpdatePermission(updatedPermissions, fileId);
+    console.log(updatedPermissions,"update")
+    if (!response.ok) {
+      throw new Error('Failed to update permissions');
+    }
 
     alert(`Permisos actualizados para el archivo ${fileId}`);
     closePanel();
-  };
+  } catch (error) {
+    console.error("Error updating permissions", error);
+    alert('Error al actualizar permisos, por favor intenta nuevamente.');
+  }
+};
   // const savePermissions = () => {
+ 
   //   const updatedPermissions = Object.entries(userPermissions).map(([userId, permissionTypes]) => ({
   //     userId: parseInt(userId),
-  //     permissionTypes,
+  //     fileId,
+  //     permissionTypes
   //   }));
-  
-  //   simulatedPermissionsData = updatedPermissions;
-  
-  //   alert('Permisos actualizados para el archivo actual');
+
+
+  //   simulatedPermissionsData = simulatedPermissionsData.filter(p => p.fileId !== fileId);
+
+
+  //   simulatedPermissionsData.push(...updatedPermissions);
+
+  //   alert(`Permisos actualizados para el archivo ${fileId}`);
   //   closePanel();
   // };
   

@@ -96,3 +96,74 @@ export const LoginUser = async (userData: any) => {
 export const logoutUser = () => {
     localStorage.removeItem('userSession');
 };
+
+export const GetPermisos = async (DeliverableId: number) => {
+    try {
+        const response = await fetch(`${apiURL}/deliverables/permision/${DeliverableId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+       
+        });
+
+        if (response.ok) {
+            return response.json();
+        } else {
+            const errorData = await response.json();
+            alert(errorData.message || "Error in permissions");
+            throw new Error(errorData.message || "Error in permission");
+        }
+
+    } catch (error: any) {
+        throw new Error(error);
+    }
+}
+
+export const UpdatePermission = async (permission: any, Deliverable: number) => {
+    try {
+        const response = await fetch(`${apiURL}/deliverables/permision/{deliverableId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(permission),
+        });
+
+        if (response.ok) {
+            return response.json();
+        } else {
+            const errorData = await response.json();
+            alert(errorData.message || "User update error");
+            throw new Error(errorData.message || "User update error");
+
+        }
+    } catch (error: any) {
+        throw new Error(error);
+    }
+};
+
+
+
+export const GetInvoices = async (userId: number) => {
+    try {
+        const response = await fetch(`${apiURL}/invoices/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+       
+        });
+
+        if (response.ok) {
+            return response.json();
+        } else {
+            const errorData = await response.json();
+            alert(errorData.message || "Error in Invoices");
+            throw new Error(errorData.message || "Error in Invoices");
+        }
+
+    } catch (error: any) {
+        throw new Error(error);
+    }
+}
