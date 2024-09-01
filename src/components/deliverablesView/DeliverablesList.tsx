@@ -215,6 +215,7 @@ const DeliverablesList = () => {
           >
             Siguiente
           </button>
+     
         </div>
       </div>
     </>

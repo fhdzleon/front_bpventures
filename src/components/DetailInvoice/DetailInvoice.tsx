@@ -30,7 +30,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
 
   return (
     <section className="mb-12 p-4 bg-white rounded-xl shadow-lg m-4">
-      <Link href="/in/Invoices">
+      <Link href="/in/list-invoices">
         <button className="bg-[#2B4168] mb-5 text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex ">
           Volver
         </button>
