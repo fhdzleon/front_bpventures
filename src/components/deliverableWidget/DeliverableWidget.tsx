@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import React, { useState, useEffect, ReactNode } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useAuth } from "@/context/AuthContext";
 
 export interface Deliverable {
-  autor: ReactNode;
-  tipo: ReactNode;
-  fechaCreacion: ReactNode;
+  autor: string;
+  tipo: string;
+  fechaCreacion: string;
   archivo: any;
   permisos: any;
   id: number;
