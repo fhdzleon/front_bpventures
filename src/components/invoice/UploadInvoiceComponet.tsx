@@ -10,12 +10,12 @@ const invoiceStatuses = [
   { id: 3, name: 'Anulada' },
 ];
 
-export const UploadInvoiceComponet: React.FC = () => {
+export const UploadInvoiceComponet: React.FC < { userId: number }> = ({ userId }: { userId: number }) => {
   const [invoiceNumber, setInvoiceNumber] = useState('INV-123456');
   const [issueDate, setIssueDate] = useState('2024-08-31');
   const [dueDate, setDueDate] = useState('2024-09-15');
   const [amount, setAmount] = useState(1500);
-  const [userId, setUserId] = useState(1);
+  // const [userId, setUserId] = useState(1);
   const [invoiceStatusId, setInvoiceStatusId] = useState(invoiceStatuses[0].id);
   const [file, setFile] = useState<File | null>(null);
 
@@ -42,7 +42,7 @@ export const UploadInvoiceComponet: React.FC = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/invoices', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, {
         method: 'POST',
         body: formData,
       });
@@ -76,7 +76,7 @@ export const UploadInvoiceComponet: React.FC = () => {
     <div className="flex justify-center items-center w-full min-h-screen">
 
       <form className="form-apply" onSubmit={handleSubmit}>
-        <h1 className="text-center text-[1.2rem] mb-6">Cargar Nueva Factura</h1>
+        <h1 className="text-center text-[1.2rem] mb-6">Cargar Nueva Factura {userId}</h1>
         <div className="mb-4">
           <label className="label-apply">Número de Factura:</label>
           <input

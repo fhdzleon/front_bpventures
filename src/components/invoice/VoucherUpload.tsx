@@ -3,7 +3,21 @@ import React, { useState } from 'react';
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
 
-export const VoucherUpload: React.FC = () => {
+export interface Invoice {
+  id: number,
+  invoicePath: null,
+  invoiceNumber: string,
+  invoiceIssueDate: string,
+  invoiceDueDate: string,
+  invoiceAmount: string,
+  invoiceStatus: string,
+  overdueIndicator: boolean
+  }
+interface InvoiceDetailProps {
+  Invoice: Invoice;
+}
+
+export const VoucherUpload: React.FC <InvoiceDetailProps>= ({ Invoice }) => {
   const [invoiceNumber, setInvoiceNumber] = useState('INV-123456');
   const [paymentDate, setPaymentDate] = useState('2024-09-01');
   const [amount, setAmount] = useState(1500);
@@ -19,15 +33,16 @@ export const VoucherUpload: React.FC = () => {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append('invoiceNumber', invoiceNumber);
+    formData.append('number', invoiceNumber);
     formData.append('paymentDate', paymentDate);
     formData.append('amount', amount.toString());
+    formData.append('invoiceId', Invoice.id.toString());
     if (file) {
       formData.append('file', file);
     }
 
     try {
-      const response = await fetch('http://localhost:3000/payment-vouchers', {
+      const response = await fetch(' http://localhost:3000/vouchers', {
         method: 'POST',
         body: formData,
       });
@@ -47,6 +62,7 @@ export const VoucherUpload: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
+     <pre>{JSON.stringify(Invoice, null, 2)}</pre>
       <form className="form-apply" onSubmit={handleSubmit}>
         <h1 className="text-center text-[1.2rem] mb-6">Cargar Comprobante de Pago</h1>
         <div className="mb-4">
