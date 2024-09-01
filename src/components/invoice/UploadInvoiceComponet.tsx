@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
+import ButtonUploadInvoice from './ButtonUploadInvoices';
 
 const invoiceStatuses = [
   { id: 1, name: 'Pendiente' },
@@ -169,6 +170,8 @@ export const UploadInvoiceComponet: React.FC = () => {
           <Button type="submit">Guardar Factura</Button>
         {/* </div> */}
       </form>
+
+    
     </div>
   );
 };
