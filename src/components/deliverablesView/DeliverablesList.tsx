@@ -67,7 +67,7 @@ const DeliverablesList = () => {
               <th className="py-3 px-4 w-1/5 font-sans text-center text-md ">
                 Acciones
               </th>
-              <th className=" py-3 px-4  w-1/5 font-sans text-center text-md">
+              <th className=" py-3 px-4  w-1/5font-sans text-center text-md">
                 Permisos
               </th>
             </tr>
