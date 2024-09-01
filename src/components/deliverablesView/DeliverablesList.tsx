@@ -7,6 +7,7 @@ import DownloadDeliverable from "../deliverablesActions/DownloadDeliverable";
 import ViewDeliverable from "../deliverablesActions/ViewDeliverable";
 import EditDeliverable from "../deliverablesActions/EditDeliverable";
 import deliverableMock from "@/helpers/deliverableData";
+
 import Image from "next/image";
 
 import Cookies from "js-cookie";
@@ -51,7 +52,8 @@ const DeliverablesList = () => {
 
   return (
     <>
-      <div className="overflow-x-auto mt-5 bg-white shadow-lg rounded-lg border border-gray-300">
+      <span className="font-sans ">miUnidad/</span>
+      <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
         <table className=" min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
             <tr>
@@ -109,7 +111,7 @@ const DeliverablesList = () => {
                         ) : deliverable.deliverableType === "pdf" ? (
                           <div className="flex mr-4 justify-end">
                             <Image
-                              src="https://i.postimg.cc/zG3S11H3/file-pdf-svgrepo-com.png"
+                              src="https://i.postimg.cc/SN9VC7dD/file-expand-Pdf-icon-icons-com-68956.png"
                               alt="PDF"
                               width={30}
                               height={30}
@@ -119,7 +121,7 @@ const DeliverablesList = () => {
                           deliverable.deliverableType === "xlsx" ? (
                           <div className="flex mr-4  justify-end">
                             <Image
-                              src="https://i.postimg.cc/rsrXHHGH/xls-file-format-symbol-svgrepo-com.png"
+                              src="https://i.postimg.cc/BZLCfcr4/file-10-icon-icons-com-68948.png"
                               alt="XLS"
                               width={30}
                               height={30}
@@ -128,7 +130,17 @@ const DeliverablesList = () => {
                         ) : deliverable.deliverableType === "doc" ? (
                           <div className="flex mr-4  justify-end">
                             <Image
-                              src="https://i.postimg.cc/QtRxV10R/doc-file-format-svgrepo-com.png"
+                              src="https://i.postimg.cc/RCkLSJmf/file-5-icon-icons-com-68953.png"
+                              alt="DOC"
+                              width={30}
+                              height={30}
+                            />
+                          </div>
+                        ) : deliverable.deliverableType === "jpg" ||
+                          deliverable.deliverableType === "png" ? (
+                          <div className="flex mr-4  justify-end">
+                            <Image
+                              src="https://i.postimg.cc/hPRVWF81/file-3-icon-icons-com-68952.png"
                               alt="DOC"
                               width={30}
                               height={30}
@@ -159,22 +171,52 @@ const DeliverablesList = () => {
                     {!deliverable.deliverableIsFolder && (
                       <td>
                         <div className="grid grid-cols-3 justify-center justify-items-center">
-                          <DownloadDeliverable
-                            id={deliverable.id}
-                            path={deliverable.deliverablePath}
-                            type={deliverable.deliverableType}
-                          />
-                          <EditDeliverable
-                            name={deliverable.deliverableName}
-                            description="Aqui debia haber una descripcion"
-                            category={deliverable.deliverableCategory}
-                          />
-                          <DeleteDeliverable id={deliverable.id} />
+                          {/* Si el usuario es owner, puede hacer todo */}
+                          {deliverable.permissionTypes.includes("owner") ? (
+                            <>
+                              <DownloadDeliverable
+                                id={deliverable.id}
+                                path={deliverable.deliverablePath}
+                                type={deliverable.deliverableType}
+                              />
+                              <EditDeliverable
+                                id={deliverable.id}
+                                name={deliverable.deliverableName}
+                                description="Aqui debia haber una descripcion"
+                                category={deliverable.deliverableCategory}
+                              />
+                              <DeleteDeliverable id={deliverable.id} />
+                            </>
+                          ) : (
+                            <>
+                              {deliverable.permissionTypes.includes("view") && (
+                                <DownloadDeliverable
+                                  id={deliverable.id}
+                                  path={deliverable.deliverablePath}
+                                  type={deliverable.deliverableType}
+                                />
+                              )}
+
+                              {deliverable.permissionTypes.includes("edit") && (
+                                <EditDeliverable
+                                  id={deliverable.id}
+                                  name={deliverable.deliverableName}
+                                  description="Aqui debia haber una descripcion"
+                                  category={deliverable.deliverableCategory}
+                                />
+                              )}
+
+                              {deliverable.permissionTypes.includes(
+                                "owner"
+                              ) && <DeleteDeliverable id={deliverable.id} />}
+                            </>
+                          )}
                         </div>
                       </td>
                     )}
 
-                    {!deliverable.deliverableIsFolder && (
+                    {deliverable.permissionTypes.includes("owner") &&
+                    !deliverable.deliverableIsFolder ? (
                       <td>
                         <div className="flex justify-center items-center">
                           <svg
@@ -198,7 +240,7 @@ const DeliverablesList = () => {
                           </svg>
                         </div>
                       </td>
-                    )}
+                    ) : null}
                   </tr>
                 ))
             ) : (

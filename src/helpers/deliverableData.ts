@@ -96,7 +96,7 @@ const deliverableMock = [
     deliverablePath: "folder_c/product_overview.pdf",
     deliverableType: "pdf",
     deliverableCategory: "Productos",
-    permissionTypes: ["view"],
+    permissionTypes: ["view", "edit"],
     lastDate: "01-09-2024",
   },
   {
@@ -118,7 +118,7 @@ const deliverableMock = [
     deliverablePath: "folder_b/compliance_checklist.pdf",
     deliverableType: "pdf",
     deliverableCategory: "Legal",
-    permissionTypes: ["view", "edit"],
+    permissionTypes: ["owner"],
     lastDate: "01-09-2024",
   },
   {
@@ -127,7 +127,7 @@ const deliverableMock = [
     deliverableName: "User Manual",
     deliverableIsFolder: false,
     deliverablePath: "folder_c/user_manual.pdf",
-    deliverableType: "pdf",
+    deliverableType: "jpg",
     deliverableCategory: "Documentación",
     permissionTypes: ["view"],
     lastDate: "01-09-2024",
