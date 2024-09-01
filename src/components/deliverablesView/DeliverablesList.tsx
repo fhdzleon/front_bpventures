@@ -22,7 +22,7 @@ const DeliverablesList = () => {
     const fetchDeliverables = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${userData.id}?page=${currentPage}&limit=${itemsPerPage}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/deliverables/user/${userData.id}?page=${currentPage}&limit=${itemsPerPage}`,
           {
             method: "GET",
             headers: {
@@ -38,7 +38,7 @@ const DeliverablesList = () => {
       }
     };
     fetchDeliverables();
-  }, [currentPage, deliverableData, setDeliverableData, token, userData.id]);
+  }, [currentPage, deliverableData, setDeliverableData, token, userData?.id]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
@@ -215,7 +215,6 @@ const DeliverablesList = () => {
           >
             Siguiente
           </button>
-     
         </div>
       </div>
     </>
