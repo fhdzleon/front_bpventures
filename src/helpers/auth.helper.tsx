@@ -25,16 +25,17 @@ export const RegisterUser = async (userData: any) => {
 
 export const GetUserById = async (userId: string) => {
   try {
-    const response = await fetch(`${apiURL}/users/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("byId", response);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (response.ok) {
-      console.log(response.json());
-      return await response.json();
+      return response.json();
     } else {
       const errorData = await response.json();
       throw new Error(errorData.message || "User not found");
