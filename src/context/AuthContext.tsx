@@ -44,13 +44,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     if (user) {
       const fetchUserID = async () => {
-        const res = await GetUserById(user.id);
+        const res = await GetUserById(user?.id);
         setUserData(res);
       };
+      console.log(user);
+      
       fetchUserID();
     }
   }, [user]);
-
+  console.log(userData);
+  
   return (
     <AuthContext.Provider value={{ user, setUser, userData, blocked, setBlocked }}>
       {children}

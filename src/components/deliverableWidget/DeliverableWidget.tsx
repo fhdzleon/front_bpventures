@@ -25,7 +25,7 @@ const deliverableWidget = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${user.id}`
         );
         const data = await response.json();
-
+        console.log(data);
         setAllDeliverables(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching users:", error);
