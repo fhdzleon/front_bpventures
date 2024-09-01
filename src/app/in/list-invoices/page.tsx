@@ -1,78 +1,119 @@
 "use client";
+import { useAuth } from '@/context/AuthContext';
 import FileTableNew from '../../../components/permisosprueba/table'
 
 import Link from "next/link";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { GetInvoices } from '@/helpers/auth.helper';
+// formData.append('invoiceNumber', invoiceNumber);
+// formData.append('issueDate', issueDate);
+// formData.append('dueDate', dueDate);
+// formData.append('amount', amount.toString());
+// formData.append('userId', userId.toString());
+// formData.append('invoiceStatusId', invoiceStatusId.toString());
 
 //SOLO PORQUE NECESITABA INFO
-const usersData = [
-  { id: 101, name: "Juan Pérez" },
-  { id: 102, name: "Ana Gómez" },
-  { id: 103, name: "Carlos Rodríguez" },
-  { id: 104, name: "María López" },
-  { id: 105, name: "Lucía Fernández" },
-  { id: 106, name: "Pedro Martínez" },
-  { id: 107, name: "Laura Sánchez" },
-  { id: 108, name: "Sofía Ramírez" },
-  { id: 109, name: "Ricardo Hernández" },
-  { id: 110, name: "Elena Vargas" },
-];
-//SOLO PORQUE NECESITABA EJEMPLOS
-const invoicesData = [
-  {
-    id: 1,
-    amount: 150.0,
-    invoiceStatusId: 3,
-    issueDate: "2024-08-01",
-    userId: 101,
-  },
-  {
-    id: 2,
-    amount: 300.5,
-    invoiceStatusId: 2,
-    issueDate: "2024-08-10",
-    userId: 102,
-  },
-  {
-    id: 3,
-    amount: 75.2,
-    invoiceStatusId: 1,
-    issueDate: "2024-08-15",
-    userId: 103,
-  },
-  {
-    id: 4,
-    amount: 200.0,
-    invoiceStatusId: 2,
-    issueDate: "2024-08-20",
-    userId: 104,
-  },
-  {
-    id: 5,
-    amount: 50.0,
-    invoiceStatusId: 1,
-    issueDate: "2024-08-25",
-    userId: 105,
-  },
-];
+// const usersData = [
+//   { id: 101, name: "Juan Pérez" },
+//   { id: 102, name: "Ana Gómez" },
+//   { id: 103, name: "Carlos Rodríguez" },
+//   { id: 104, name: "María López" },
+//   { id: 105, name: "Lucía Fernández" },
+//   { id: 106, name: "Pedro Martínez" },
+//   { id: 107, name: "Laura Sánchez" },
+//   { id: 108, name: "Sofía Ramírez" },
+//   { id: 109, name: "Ricardo Hernández" },
+//   { id: 110, name: "Elena Vargas" },
+// ];
+// //SOLO PORQUE NECESITABA EJEMPLOS
+// const invoicesData = [
+//   {
+//     id: 1,
+//     amount: 150.0,
+//     invoiceStatusId: 3,
+//     issueDate: "2024-08-01",
+//     dueDate:"304959",
+//     userId: 101,
+//   },
+//   {
+//     id: 2,
+//     amount: 300.5,
+//     invoiceStatusId: 2,
+//     issueDate: "2024-08-10",
+//     dueDate:"304959",
+//     userId: 102,
+//   },
+//   {
+//     id: 3,
+//     amount: 75.2,
+//     invoiceStatusId: 1,
+//     issueDate: "2024-08-15",
+//     dueDate:"304959",
+//     userId: 103,
+//   },
+//   {
+//     id: 4,
+//     amount: 200.0,
+//     invoiceStatusId: 2,
+//     issueDate: "2024-08-20",
+//     dueDate:"304959",
+//     userId: 104,
+//   },
+//   {
+//     id: 5,
+//     amount: 50.0,
+//     invoiceStatusId: 1,
+//     issueDate: "2024-08-25",
+//     dueDate:"304959",
+//     userId: 105,
+//   },
+// ];
 const BillingTable = () => {
-  const [invoices, setInvoices] = useState(invoicesData);
-  const [users] = useState(usersData);
+  const [invoices, setInvoices] = useState(
+    [
+      {
+        "id": 0,
+        "invoicePath": null,
+        "invoiceNumber": "",
+        "invoiceIssueDate": "",
+        "invoiceDueDate": "",
+        "invoiceAmount": "",
+        "invoiceStatus": "",
+        "overdueIndicator": false
+      },
+    ]);
+  const [users] = useState();
+  const { userData } = useAuth();
 
-  const getUserName = (userId: number) => {
-    const user = users.find((user) => user.id === userId);
-    return user ? user.name : "Usuario no encontrado";
-  };
 
-  const handleDownload = (id: number) => {
-    console.log(`Descargando factura con ID: ${id}`);
-  };
+  useEffect(() => {
+    const GetInvoices1 = async () => {
+      try {
+        const response = await GetInvoices(userData.id);
+     
+        setInvoices(response); 
+      } catch (error) {
+        console.error("Error fetching permissions", error);
+      }
+      
+    };
+    GetInvoices1()
+  },[])
 
-  const handleDelete = (id: number) => {
-    setInvoices(invoices.filter((invoice) => invoice.id !== id));
-    console.log(`Eliminando factura con ID: ${id}`);
-  };
+  // const getUserName = (userId: number) => {
+  //   const user = users.find((user) => user.id === userId);
+  //   return user ? user.name : "Usuario no encontrado";
+  // };
+
+  // const handleDownload = (id: number) => {
+  //   console.log(`Descargando factura con ID: ${id}`);
+  // };
+
+  // const handleDelete = (id: number) => {
+  //   setInvoices(invoices.filter((invoice) => invoice.id !== id));
+  //   console.log(`Eliminando factura con ID: ${id}`);
+  // };
 
   const getInvoiceStatus = (invoiceStatusId: number) => {
     switch (invoiceStatusId) {
@@ -89,8 +130,9 @@ const BillingTable = () => {
 
   return (
     <div className="m-5 overflow-x-auto mt-5 bg-white shadow-lg rounded-lg ">
+      {/* <pre> {JSON.stringify(invoices,null,2)} </pre> */}
       <h1 className="text-4xl font-futura mb-6 text-primary">
-        Lista de Facturas
+        Lista de Facturas: {userData?.Names}
       </h1>
 
       <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
@@ -98,7 +140,7 @@ const BillingTable = () => {
           <thead className="bg-secundary font-futura text-white">
             <tr>
               <th className="py-3 px-4 font-futura text-left text-lg">
-                Usuario
+              Factura
               </th>
               <th className="py-3 px-4 font-futura text-left text-lg">Monto</th>
               <th className="py-3 px-4 font-futura text-left text-lg">
@@ -108,30 +150,36 @@ const BillingTable = () => {
                 Fecha de Emisión
               </th>
               <th className="py-3 px-4 font-futura text-left text-lg">
+             Vencimiento
+              </th>
+              <th className="py-3 px-4 font-futura text-left text-lg">
                 Acciones
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {invoices.map((invoice) => (
+            {invoices && invoices?.map((invoice) => (
               <tr
                 key={invoice.id}
                 className="hover:bg-gray-50 transition-colors duration-200"
               >
                 <td className="py-4 px-6 font-futura text-sm text-gray-900">
-                  {getUserName(invoice.userId)}
+                  {invoice.invoiceNumber}
                 </td>
                 <td className="py-4 px-6 font-futura text-sm text-gray-700">
-                  ${invoice.amount.toFixed(2)}
+                  ${invoice.invoiceAmount}
                 </td>
                 <td className="py-4 px-6 font-futura text-sm text-gray-700">
-                  {getInvoiceStatus(invoice.invoiceStatusId)}
+                  {invoice.invoiceStatus}
                 </td>
                 <td className="py-4 px-6 font-futura text-sm text-gray-700">
-                  {invoice.issueDate}
+                  {invoice.invoiceIssueDate}
+                </td>
+                <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                  {invoice.invoiceDueDate}
                 </td>
                 <td className="py-4 px-6 font-futura text-sm text-gray-700 flex space-x-4">
-                  <button onClick={() => handleDownload(invoice.id)}>
+                  <button >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -147,7 +195,7 @@ const BillingTable = () => {
                       />
                     </svg>
                   </button>
-                  <button onClick={() => handleDelete(invoice.id)}>
+                  <button >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -181,6 +229,11 @@ const BillingTable = () => {
                       </svg>
                     </button>
                   </Link>
+
+                  <button><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+</button>
                 </td>
               </tr>
             ))}
