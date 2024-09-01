@@ -7,6 +7,7 @@ import DownloadDeliverable from "../deliverablesActions/DownloadDeliverable";
 import ViewDeliverable from "../deliverablesActions/ViewDeliverable";
 import EditDeliverable from "../deliverablesActions/EditDeliverable";
 import deliverableMock from "@/helpers/deliverableData";
+
 import Image from "next/image";
 
 import Cookies from "js-cookie";
@@ -51,6 +52,7 @@ const DeliverablesList = () => {
 
   return (
     <>
+      <span className="font-sans pt-4">miUnidad/</span>
       <div className="overflow-x-auto mt-5 bg-white shadow-lg rounded-lg border border-gray-300">
         <table className=" min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
@@ -159,17 +161,46 @@ const DeliverablesList = () => {
                     {!deliverable.deliverableIsFolder && (
                       <td>
                         <div className="grid grid-cols-3 justify-center justify-items-center">
-                          <DownloadDeliverable
-                            id={deliverable.id}
-                            path={deliverable.deliverablePath}
-                            type={deliverable.deliverableType}
-                          />
-                          <EditDeliverable
-                            name={deliverable.deliverableName}
-                            description="Aqui debia haber una descripcion"
-                            category={deliverable.deliverableCategory}
-                          />
-                          <DeleteDeliverable id={deliverable.id} />
+                          {/* Si el usuario es owner, puede hacer todo */}
+                          {deliverable.permissionTypes.includes("owner") ? (
+                            <>
+                              <DownloadDeliverable
+                                id={deliverable.id}
+                                path={deliverable.deliverablePath}
+                                type={deliverable.deliverableType}
+                              />
+                              <EditDeliverable
+                                id={deliverable.id}
+                                name={deliverable.deliverableName}
+                                description="Aqui debia haber una descripcion"
+                                category={deliverable.deliverableCategory}
+                              />
+                              <DeleteDeliverable id={deliverable.id} />
+                            </>
+                          ) : (
+                            <>
+                              {deliverable.permissionTypes.includes("view") && (
+                                <DownloadDeliverable
+                                  id={deliverable.id}
+                                  path={deliverable.deliverablePath}
+                                  type={deliverable.deliverableType}
+                                />
+                              )}
+
+                              {deliverable.permissionTypes.includes("edit") && (
+                                <EditDeliverable
+                                  id={deliverable.id}
+                                  name={deliverable.deliverableName}
+                                  description="Aqui debia haber una descripcion"
+                                  category={deliverable.deliverableCategory}
+                                />
+                              )}
+
+                              {deliverable.permissionTypes.includes(
+                                "owner"
+                              ) && <DeleteDeliverable id={deliverable.id} />}
+                            </>
+                          )}
                         </div>
                       </td>
                     )}
