@@ -1,4 +1,5 @@
 "use client";
+import FileTableNew from '../../../components/permisosprueba/table'
 
 import Link from "next/link";
 
@@ -162,7 +163,7 @@ const BillingTable = () => {
                       />
                     </svg>
                   </button>
-                  <Link href={`/in/Invoices/${invoice.id}`}>
+                  <Link href={`/in/list-invoices/${invoice.id}`}>
                     <button>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +191,9 @@ const BillingTable = () => {
           <p className="p-6 text-gray-600">No se encontraron facturas.</p>
         )}
       </div>
+      <FileTableNew/>
     </div>
+
   );
 };
 

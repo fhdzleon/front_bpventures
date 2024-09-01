@@ -93,7 +93,7 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
       <h2 className=" mt-19 text-3xl  text-left font-futura text-[#2B4168] ">
           Información de Facturación
         </h2>
-       <Link href={'/in/Invoices'}><button className="flex m-8  text-white  p-2 rounded-full bg-[#2B4168] ">Ver Facturacion del Usuario <svg
+       <Link href={'/in/list-invoices'}><button className="flex m-8  text-white  p-2 rounded-full bg-[#2B4168] ">Ver Facturacion del Usuario <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
