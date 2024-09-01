@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from 'react';
+import "../../styles/form-style.css";
+import Button from "../FormComponent/Button";
 
 const invoiceStatuses = [
   { id: 1, name: 'Pendiente' },
@@ -8,84 +10,120 @@ const invoiceStatuses = [
 ];
 
 export const UploadInvoiceComponet: React.FC = () => {
-  const [numeroFactura, setNumeroFactura] = useState('');
-  const [fechaEmision, setFechaEmision] = useState('');
-  const [fechaVencimiento, setFechaVencimiento] = useState('');
-  const [monto, setMonto] = useState(0);
-  const [idUser, setIdUser] = useState('');
-  const [estadoFactura, setEstadoFactura] = useState(invoiceStatuses[0].id);
-  const [comprobante, setComprobante] = useState<File | null>(null);
+  const [invoiceNumber, setInvoiceNumber] = useState('INV-123456');
+  const [issueDate, setIssueDate] = useState('2024-08-31');
+  const [dueDate, setDueDate] = useState('2024-09-15');
+  const [amount, setAmount] = useState(1500);
+  const [userId, setUserId] = useState(1);
+  const [invoiceStatusId, setInvoiceStatusId] = useState(invoiceStatuses[0].id);
+  const [file, setFile] = useState<File | null>(null);
 
-  const handleComprobanteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setComprobante(event.target.files[0]);
+      setFile(event.target.files[0]);
     }
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const selectedStatus = invoiceStatuses.find(status => status.id === estadoFactura);
+    const selectedStatus = invoiceStatuses.find(status => status.id === invoiceStatusId);
 
-    const nuevaFactura = {
-      numeroFactura,
-      fechaEmision,
-      fechaVencimiento,
-      monto,
-      idUser,
-      estadoFactura: selectedStatus, // Incluye el estado como un objeto {id, name}
-      comprobante,
-    };
+    const formData = new FormData();
+    formData.append('invoiceNumber', invoiceNumber);
+    formData.append('issueDate', issueDate);
+    formData.append('dueDate', dueDate);
+    formData.append('amount', amount.toString());
+    formData.append('userId', userId.toString());
+    formData.append('invoiceStatusId', invoiceStatusId.toString());
+    if (file) {
+      formData.append('file', file);
+    }
 
-    console.log(nuevaFactura);
-    // Aquí puedes enviar `nuevaFactura` a tu backend
+    try {
+      const response = await fetch('http://localhost:3000/invoices', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        alert('Invoice uploaded successfully!');
+        console.log(result);
+      } else {
+        alert('Error uploading invoice');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while uploading the invoice.');
+    }
+    // const nuevaFactura = {
+    //   numeroFactura,
+    //   fechaEmision,
+    //   fechaVencimiento,
+    //   monto,
+    //   idUser,
+    //   estadoFactura: selectedStatus, // Incluye el estado como un objeto {id, name}
+    //   comprobante,
+    // };
+
+    // console.log(nuevaFactura);
+    // // Aquí puedes enviar `nuevaFactura` a tu backend
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Cargar Nueva Factura</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="flex justify-center items-center w-full min-h-screen">
+
+      <form className="form-apply" onSubmit={handleSubmit}>
+        <h1 className="text-center text-[1.2rem] mb-6">Cargar Nueva Factura</h1>
         <div className="mb-4">
-          <label className="block text-gray-700">Número de Factura:</label>
+          <label className="label-apply">Número de Factura:</label>
           <input
             type="text"
-            value={numeroFactura}
-            onChange={(e) => setNumeroFactura(e.target.value)}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            id="numeroFactura"
+            value={invoiceNumber}
+            onChange={(e) => setInvoiceNumber(e.target.value)}
+            className="input-apply"
             required
           />
         </div>
+
         <div className="mb-4">
-          <label className="block text-gray-700">Fecha de Emisión:</label>
+          <label className="label-apply">Fecha de Emisión:</label>
           <input
             type="date"
-            value={fechaEmision}
-            onChange={(e) => setFechaEmision(e.target.value)}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            id="fechaEmision"
+            value={issueDate}
+            onChange={(e) => setIssueDate(e.target.value)}
+            className="input-apply"
             required
           />
+
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Fecha de Vencimiento:</label>
+          <label className="label-apply">Fecha de Vencimiento:</label>
           <input
             type="date"
-            value={fechaVencimiento}
-            onChange={(e) => setFechaVencimiento(e.target.value)}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            id="fechaVencimiento"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            className="input-apply"
             required
           />
+
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Monto:</label>
+          <label className="label-apply">Monto:</label>
           <input
             type="number"
-            value={monto}
-            onChange={(e) => setMonto(parseFloat(e.target.value))}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            id="monto"
+            value={amount}
+            onChange={(e) => setAmount(parseFloat(e.target.value))}
+            className="input-apply"
             required
           />
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label className="block text-gray-700">ID Usuario:</label>
           <input
             type="text"
@@ -94,13 +132,14 @@ export const UploadInvoiceComponet: React.FC = () => {
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
             required
           />
-        </div>
+        </div> */}
         <div className="mb-4">
-          <label className="block text-gray-700">Estado de la Factura:</label>
+          <label className="label-apply">Estado de la Factura:</label>
           <select
-            value={estadoFactura}
-            onChange={(e) => setEstadoFactura(parseInt(e.target.value))}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+          id='estadoFactura'
+            value={invoiceStatusId}
+            onChange={(e) => setInvoiceStatusId(parseInt(e.target.value))}
+            className="input-apply"
             required
           >
             {invoiceStatuses.map((status) => (
@@ -110,20 +149,25 @@ export const UploadInvoiceComponet: React.FC = () => {
             ))}
           </select>
         </div>
+
         <div className="mb-4">
-          <label className="block text-gray-700">Cargar Comprobante de Pago:</label>
+          <label className="label-apply">Cargar Comprobante de Pago:</label>
           <input
             type="file"
-            onChange={handleComprobanteChange}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            id="comprobante"
+            onChange={handleFileChange}
+            className="input-apply"
           />
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600"
-        >
-          Guardar Factura
-        </button>
+        
+        {/* <div className="flex justify-center w-3/4 mt-4"> */}
+          {/* <button
+            type="submit"
+            className="bg-secundary font-sans text-white font-bold py-2 px-4 rounded">
+            Guardar Factura
+          </button> */}
+          <Button type="submit">Guardar Factura</Button>
+        {/* </div> */}
       </form>
     </div>
   );

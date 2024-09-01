@@ -1,9 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-// Definir un estado global simulado para permisos
+//  estado global simulado para permisos PORQUE NECESITO DONDE GUARDAR
 let simulatedPermissionsData = [
-  // Ejemplo de permisos simulados
+
 
   { userId: 2, fileId: 1, permissionTypes: [''] },
 ];
@@ -27,6 +27,14 @@ export default function PermissionPanel({ fileId, users, closePanel }: Permissio
     }, {});
     setUserPermissions(permissionsMap);
   }, [fileId]);
+  // useEffect(() => {
+  //   const permissionsMap = simulatedPermissionsData.reduce<{ [key: number]: string[] }>((acc, curr) => {
+  //     acc[curr.userId] = curr.permissionTypes;
+  //     return acc;
+  //   }, {});
+  //   setUserPermissions(permissionsMap);
+  // }, []); 
+  
 
   const handlePermissionChange = (userId: number, permission: string) => {
     setUserPermissions(prevPermissions => {
@@ -62,7 +70,18 @@ export default function PermissionPanel({ fileId, users, closePanel }: Permissio
     alert(`Permisos actualizados para el archivo ${fileId}`);
     closePanel();
   };
-
+  // const savePermissions = () => {
+  //   const updatedPermissions = Object.entries(userPermissions).map(([userId, permissionTypes]) => ({
+  //     userId: parseInt(userId),
+  //     permissionTypes,
+  //   }));
+  
+  //   simulatedPermissionsData = updatedPermissions;
+  
+  //   alert('Permisos actualizados para el archivo actual');
+  //   closePanel();
+  // };
+  
   const handleAddUser = () => {
     if (newUserId !== null) {
       setUserPermissions(prevPermissions => ({
