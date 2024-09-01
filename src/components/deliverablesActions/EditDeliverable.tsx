@@ -83,7 +83,7 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
         viewBox="0 0 24 24"
         strokeWidth="1.5"
         stroke="currentColor"
-        className="w-6 h-6 mx-auto hover:text-accent cursor-pointer"
+        className="w-6 h-6 mx-auto hover:text-accent hover:text-acent cursor-pointer"
         onClick={toggleModal}
       >
         <path
