@@ -52,8 +52,8 @@ const DeliverablesList = () => {
 
   return (
     <>
-      <span className="font-sans pt-4">miUnidad/</span>
-      <div className="overflow-x-auto mt-5 bg-white shadow-lg rounded-lg border border-gray-300">
+      <span className="font-sans ">miUnidad/</span>
+      <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
         <table className=" min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
             <tr>
@@ -111,7 +111,7 @@ const DeliverablesList = () => {
                         ) : deliverable.deliverableType === "pdf" ? (
                           <div className="flex mr-4 justify-end">
                             <Image
-                              src="https://i.postimg.cc/zG3S11H3/file-pdf-svgrepo-com.png"
+                              src="https://i.postimg.cc/SN9VC7dD/file-expand-Pdf-icon-icons-com-68956.png"
                               alt="PDF"
                               width={30}
                               height={30}
@@ -121,7 +121,7 @@ const DeliverablesList = () => {
                           deliverable.deliverableType === "xlsx" ? (
                           <div className="flex mr-4  justify-end">
                             <Image
-                              src="https://i.postimg.cc/rsrXHHGH/xls-file-format-symbol-svgrepo-com.png"
+                              src="https://i.postimg.cc/BZLCfcr4/file-10-icon-icons-com-68948.png"
                               alt="XLS"
                               width={30}
                               height={30}
@@ -130,7 +130,17 @@ const DeliverablesList = () => {
                         ) : deliverable.deliverableType === "doc" ? (
                           <div className="flex mr-4  justify-end">
                             <Image
-                              src="https://i.postimg.cc/QtRxV10R/doc-file-format-svgrepo-com.png"
+                              src="https://i.postimg.cc/RCkLSJmf/file-5-icon-icons-com-68953.png"
+                              alt="DOC"
+                              width={30}
+                              height={30}
+                            />
+                          </div>
+                        ) : deliverable.deliverableType === "jpg" ||
+                          deliverable.deliverableType === "png" ? (
+                          <div className="flex mr-4  justify-end">
+                            <Image
+                              src="https://i.postimg.cc/hPRVWF81/file-3-icon-icons-com-68952.png"
                               alt="DOC"
                               width={30}
                               height={30}
@@ -205,7 +215,8 @@ const DeliverablesList = () => {
                       </td>
                     )}
 
-                    {!deliverable.deliverableIsFolder && (
+                    {deliverable.permissionTypes.includes("owner") &&
+                    !deliverable.deliverableIsFolder ? (
                       <td>
                         <div className="flex justify-center items-center">
                           <svg
@@ -229,7 +240,7 @@ const DeliverablesList = () => {
                           </svg>
                         </div>
                       </td>
-                    )}
+                    ) : null}
                   </tr>
                 ))
             ) : (

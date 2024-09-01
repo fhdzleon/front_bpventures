@@ -127,7 +127,7 @@ const deliverableMock = [
     deliverableName: "User Manual",
     deliverableIsFolder: false,
     deliverablePath: "folder_c/user_manual.pdf",
-    deliverableType: "pdf",
+    deliverableType: "jpg",
     deliverableCategory: "Documentación",
     permissionTypes: ["view"],
     lastDate: "01-09-2024",
