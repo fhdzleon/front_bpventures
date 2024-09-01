@@ -6,7 +6,7 @@ import Button from "../FormComponent/Button";
 const invoiceStatuses = [
   { id: 1, name: 'Pendiente' },
   { id: 2, name: 'Pagada' },
-  { id: 3, name: 'Vencida' },
+  { id: 3, name: 'Anulada' },
 ];
 
 export const UploadInvoiceComponet: React.FC = () => {
@@ -151,10 +151,10 @@ export const UploadInvoiceComponet: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label className="label-apply">Cargar Comprobante de Pago:</label>
+          <label className="label-apply">Cargar Factura:</label>
           <input
             type="file"
-            id="comprobante"
+            id="cargadeFactura"
             onChange={handleFileChange}
             className="input-apply"
           />
