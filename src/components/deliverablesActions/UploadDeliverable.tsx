@@ -173,6 +173,7 @@ const UploadDeliverable = () => {
               >
                 Cancelar
               </button>
+
               <button className="bg-secundary font-sans text-white font-bold py-2 px-4 rounded">
                 Agregar
               </button>
