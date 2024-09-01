@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import DeleteDeliverable from "../deliverablesActions/DeleteDeliverable";
 import DownloadDeliverable from "../deliverablesActions/DownloadDeliverable";
-import ViewDeliverable from "../deliverablesActions/ViewDeliverable";
+
 import EditDeliverable from "../deliverablesActions/EditDeliverable";
 import deliverableMock from "@/helpers/deliverableData";
 
@@ -17,6 +17,7 @@ const DeliverablesList = () => {
   const { setDeliverableData, userData, deliverableData } = useAuth();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [currentParentId, setCurrentParentId] = useState<string | null>(null);
   const itemsPerPage = 10;
   const token = Cookies.get("token");
 
@@ -48,6 +49,10 @@ const DeliverablesList = () => {
 
   const handlePreviusPage = () => {
     if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+  };
+
+  const handleSubmit2 = () => {
+    alert("Hola");
   };
 
   return (
@@ -156,7 +161,18 @@ const DeliverablesList = () => {
                             />
                           </div>
                         )}
-                        <span className=" flex text-start">
+                        <span
+                          className={`flex text-start cursor-pointer ${
+                            deliverable.deliverableIsFolder
+                              ? ""
+                              : "pointer-events-none"
+                          }`}
+                          onDoubleClick={
+                            deliverable.deliverableIsFolder
+                              ? handleSubmit2
+                              : undefined
+                          }
+                        >
                           {deliverable.deliverableName}
                         </span>
                       </div>
