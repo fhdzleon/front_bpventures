@@ -2,12 +2,18 @@ import Link from "next/link";
 import React from "react";
 
 export interface Invoice {
-  id: number;
-  amount: number;
-  invoiceStatusId: number;
-  issueDate: string;
-  userId: number;
+id: number,
+invoicePath: null,
+invoiceNumber: string,
+invoiceIssueDate: string,
+invoiceDueDate: string,
+invoiceAmount: string,
+invoiceStatus: string,
+overdueIndicator: boolean
 }
+
+
+
 
 interface InvoiceDetailProps {
   Invoice: Invoice;
@@ -15,13 +21,13 @@ interface InvoiceDetailProps {
 
 const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
 
-  const getInvoiceStatus = (invoiceStatusId: number) => {
-    switch (invoiceStatusId) {
-      case 1:
+  const getInvoiceStatus = (invoiceStatus: string) => {
+    switch (invoiceStatus.toLowerCase()) {
+      case "payed":
         return "Pagado";
-      case 2:
+      case "pending":
         return "Pendiente";
-      case 3:
+      case "canceled":
         return "Anulado";
       default:
         return "Estado desconocido";
@@ -39,13 +45,16 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
         <h2 className="text-2xl font-semibold text-[#2B4168] mb-4">Información de Facturación</h2>
         <div className="space-y-4">
           <p className="text-lg">
-            <span className="font-bold text-gray-700">Monto:</span> {"$" + Invoice.amount}
+            <span className="font-bold text-gray-700">Monto:</span> {"$" + Invoice.invoiceAmount}
           </p>
           <p className="text-lg">
-            <span className="font-bold text-gray-700">Fecha de Emisión:</span> {Invoice.issueDate}
+            <span className="font-bold text-gray-700">Fecha de Emisión:</span> {Invoice.invoiceIssueDate}
           </p>
           <p className="text-lg">
-            <span className="font-bold text-gray-700">Estado:</span> {getInvoiceStatus(Invoice.invoiceStatusId)}
+            <span className="font-bold text-gray-700">Fecha de Emisión:</span> {Invoice.invoiceDueDate}
+          </p>
+          <p className="text-lg">
+            <span className="font-bold text-gray-700">Estado:</span> {getInvoiceStatus(Invoice.invoiceStatus)}
           </p>
         </div>
       </div>
