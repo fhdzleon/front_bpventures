@@ -2,10 +2,13 @@
 
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { PATHROUTES } from "@/helpers/pathRoutes";
 
 const UploadDeliverable = () => {
   const token = Cookies.get("token");
 
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -52,34 +55,37 @@ const UploadDeliverable = () => {
     });
   };
 
-  const handleCategoryChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setCategoryOption(event.target.value);
+  const handleCategoryChange = (event: any) => {
+    setFormData({
+      ...formData,
+      category: event.target.value,
+    });
   };
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/`,
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: formDataFetch,
-        }
-      );
+      const url =
+        Number(selectedOption) > 2
+          ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/`
+          : `${process.env.NEXT_PUBLIC_API_URL}/deliverables/no-file`;
+      //! CAMBIARAN LOS END POINT A /delivarbles/file , delivarables/folder y deliverable/link
+
+      const response = await fetch(url, {
+        method: "POST",
+        body: formDataFetch,
+      });
 
       if (response.ok) {
         const result = await response.json();
-        alert("Archivo agregado con exito");
+        alert("Archivo agregado con éxito");
       } else {
         alert("Error al subir el archivo");
       }
     } catch (error) {
       console.error("Error", error);
+    } finally {
+      setFormData({ name: "", description: "", category: "" });
+      setIsModalOpen(false);
     }
   };
 
