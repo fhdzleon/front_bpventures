@@ -19,22 +19,7 @@ const UsersTable = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 5;
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/users`
-        );
-        const data = await response.json();
 
-        setAllUsers(data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
 
   const filteredUsers = Array.isArray(allUsers)
     ? allUsers.filter((user) => {
