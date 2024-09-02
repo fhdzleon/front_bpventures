@@ -223,7 +223,7 @@ const BillingTable = () => {
         )}
       </div>
 
-      <div> <FileTableNew /></div>
+ 
     </div>
   );
 };
