@@ -222,8 +222,6 @@ const BillingTable = () => {
           <p className="p-6 text-gray-600">No se encontraron facturas.</p>
         )}
       </div>
-
- 
     </div>
   );
 };

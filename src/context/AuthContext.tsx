@@ -14,15 +14,36 @@ export interface userPayload {
   sub: number;
   email: string;
 }
+
+interface userdata{
+  id: number;
+  email: string;
+  Names: string;
+  LastName: string;
+  Position: string;
+  empresa: string | null;
+  cuit: number | null;
+  domicilio: string | null;
+  verifiedEmail: boolean;
+  mfaEnabled: boolean;
+  mfaBackupCodes: string;
+  mfaSecret: string;
+  mfaVerified: null | boolean;
+  createdAt: string;
+  modifiedAt: string;
+  statusId: number;
+  isAdmin: boolean;
+}
+
 export interface AuthContextType {
   user: userPayload;
   setUser: (user: userPayload) => void;
-  userData: any;
+  userData: userdata;
   blocked: boolean;
   setBlocked: (blocked: boolean) => void;
   deliverableData: any;
   setDeliverableData: (deliverableData: any) => void;
-  allUsers: any;
+  allUsers: userdata[];
   setAllUsers: (allUser: any) => void;
 }
 
@@ -37,22 +58,40 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [deliverableData, setDeliverableData] = useState<any>(null);
   const [allUsers, setAllUsers] = useState<any>(null);
 
-  const storedUser = sessionStorage.getItem("user");
 
   useEffect(() => {
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, [storedUser]);
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/users`
+        );
+        const data = await response.json();
 
-  useEffect(() => {
-    const fetchUserID = async () => {
-      const res = await GetUserById(user?.id);
-      setUserData(res);
+        setAllUsers(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
     };
-    fetchUserID();
+
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    const session = sessionStorage.getItem("user");
+    if (session) {
+      setUser(JSON.parse(session));
+    }
+  }, []);
+
+  useEffect(() => {
+      const fetchUserID = async () => {
+        const res = await GetUserById(user?.id);
+        setUserData(res);
+      };  
+      fetchUserID();
   }, [user]);
 
+  
   return (
     <AuthContext.Provider
       value={{

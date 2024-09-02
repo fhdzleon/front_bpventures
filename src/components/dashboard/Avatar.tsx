@@ -9,9 +9,7 @@ const Avatar = () => {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    if (userData?.Names) {
-      setName(userData.Names);
-    }
+      setName(userData?.Names);
   }, [userData]);
   return (
     <div className="flex flex-col items-center justify-center mt-7">
