@@ -151,7 +151,7 @@ export default function Login() {
         document.cookie = `token=${tokenCookie};`;
 
         sessionStorage.setItem("user", JSON.stringify(json.userPayload));
-        // setUser(json.userPayload);
+        setUser(json.userPayload);
         toast.success("¡Inicio de sesión exitoso!");
         router.push(PATHROUTES.HOME);
       } catch (error) {
