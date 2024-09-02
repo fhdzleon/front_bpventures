@@ -5,9 +5,9 @@ export const filesData = [
   ];
   
   export const usersData = [
-    { id: 101, name: "Juan Pérez" },
-    { id: 102, name: "Ana Gómez" },
-    { id: 103, name: "Carlos Rodríguez" },
+    { id: 1, name: "Juan Pérez" },
+    { id: 2, name: "Ana Gómez" },
+    { id: 2, name: "Carlos Rodríguez" },
   ];
   
   export const permissionsData = [

@@ -191,7 +191,7 @@ const BillingTable = () => {
         )}
       </div>
 
-      {/* <div> <FileTableNew /></div> */}
+      <div> <FileTableNew /></div>
     </div>
   );
 };

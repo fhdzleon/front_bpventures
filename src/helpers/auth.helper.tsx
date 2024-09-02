@@ -148,7 +148,7 @@ export const GetInvoices = async (userId: number) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-       
+      
         });
 
         if (response.ok) {
