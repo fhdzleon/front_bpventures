@@ -4,10 +4,8 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import DeleteDeliverable from "../deliverablesActions/DeleteDeliverable";
 import DownloadDeliverable from "../deliverablesActions/DownloadDeliverable";
-
 import EditDeliverable from "../deliverablesActions/EditDeliverable";
 import deliverableMock from "@/helpers/deliverableData";
-
 import Image from "next/image";
 
 import Cookies from "js-cookie";
@@ -18,6 +16,7 @@ const DeliverablesList = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentParentId, setCurrentParentId] = useState<string | null>(null);
+  const [isRoot, setIsRoot] = useState<boolean>(true);
   const itemsPerPage = 10;
   const token = Cookies.get("token");
 
@@ -51,8 +50,23 @@ const DeliverablesList = () => {
     if (currentPage > 1) setCurrentPage((prev) => prev - 1);
   };
 
-  const handleSubmit2 = () => {
-    alert("Hola");
+  const handleSubmit2 = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/files-folder/2?page=${currentPage}&limit=${itemsPerPage}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setDeliverableData(data);
+    } catch (error) {
+      console.error("Error fetching deliverables", error);
+    }
   };
 
   return (
@@ -83,8 +97,8 @@ const DeliverablesList = () => {
 
           <tbody className="bg-white divide-y divide-gray-200">
             {deliverableData && deliverableData.length > 0 ? (
-              /* deliverableData.map((deliverable: any) => ( */
-              deliverableMock
+              deliverableData
+                /*deliverableMock*/
                 .sort(
                   (a: any, b: any) =>
                     b.deliverableIsFolder - a.deliverableIsFolder
@@ -167,7 +181,7 @@ const DeliverablesList = () => {
                               ? ""
                               : "pointer-events-none"
                           }`}
-                          onDoubleClick={
+                          onClick={
                             deliverable.deliverableIsFolder
                               ? handleSubmit2
                               : undefined
@@ -188,7 +202,7 @@ const DeliverablesList = () => {
                       <td>
                         <div className="grid grid-cols-3 justify-center justify-items-center">
                           {/* Si el usuario es owner, puede hacer todo */}
-                          {deliverable.permissionTypes.includes("owner") ? (
+                          {deliverable.permissionTypes?.includes("owner") ? (
                             <>
                               <DownloadDeliverable
                                 id={deliverable.id}
@@ -205,7 +219,9 @@ const DeliverablesList = () => {
                             </>
                           ) : (
                             <>
-                              {deliverable.permissionTypes.includes("view") && (
+                              {deliverable.permissionTypes?.includes(
+                                "view"
+                              ) && (
                                 <DownloadDeliverable
                                   id={deliverable.id}
                                   path={deliverable.deliverablePath}
@@ -213,7 +229,9 @@ const DeliverablesList = () => {
                                 />
                               )}
 
-                              {deliverable.permissionTypes.includes("edit") && (
+                              {deliverable.permissionTypes?.includes(
+                                "edit"
+                              ) && (
                                 <EditDeliverable
                                   id={deliverable.id}
                                   name={deliverable.deliverableName}
@@ -222,7 +240,7 @@ const DeliverablesList = () => {
                                 />
                               )}
 
-                              {deliverable.permissionTypes.includes(
+                              {deliverable.permissionTypes?.includes(
                                 "owner"
                               ) && <DeleteDeliverable id={deliverable.id} />}
                             </>
@@ -231,7 +249,7 @@ const DeliverablesList = () => {
                       </td>
                     )}
 
-                    {deliverable.permissionTypes.includes("owner") &&
+                    {deliverable.permissionTypes?.includes("owner") &&
                     !deliverable.deliverableIsFolder ? (
                       <td>
                         <div className="flex justify-center items-center">
