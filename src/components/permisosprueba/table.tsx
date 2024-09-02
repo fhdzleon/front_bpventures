@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import PermissionPanel from './permissionpanel';
-import { filesData, usersData } from './data';
+// import { filesData, usersData } from './data';
 
 export default function FileTableNew() {
   const [openPanel, setOpenPanel] = useState<number | null>(null);

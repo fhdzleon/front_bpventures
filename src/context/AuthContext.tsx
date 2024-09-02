@@ -36,7 +36,7 @@ interface userdata{
 }
 
 export interface AuthContextType {
-  user: userPayload; // Cambia 'any' al tipo específico si lo tienes
+  user: userPayload;
   setUser: (user: userPayload) => void;
   userData: userdata;
   blocked: boolean;
