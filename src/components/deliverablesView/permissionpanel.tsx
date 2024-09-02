@@ -18,13 +18,11 @@ interface Permission {
 
 interface PermissionPanelProps {
   fileId: number;
-  users: { id: number; name: string }[];
   closePanel: () => void;
 }
 
 export default function PermissionPanel({
   fileId,
-  users,
   closePanel,
 }: PermissionPanelProps) {
   const [userPermissions, setUserPermissions] = useState<Permission[]>();

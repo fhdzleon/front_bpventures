@@ -4,12 +4,10 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import DeleteDeliverable from "../deliverablesActions/DeleteDeliverable";
 import DownloadDeliverable from "../deliverablesActions/DownloadDeliverable";
-import ViewDeliverable from "../deliverablesActions/ViewDeliverable";
 import EditDeliverable from "../deliverablesActions/EditDeliverable";
 import deliverableMock from "@/helpers/deliverableData";
-
 import Image from "next/image";
-
+import PermissionPanel from "./permissionpanel";
 import Cookies from "js-cookie";
 import { useAuth } from "@/context/AuthContext";
 
@@ -17,8 +15,15 @@ const DeliverablesList = () => {
   const { setDeliverableData, userData, deliverableData } = useAuth();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [previusFolder, setPreviusFolder] = useState<string>("");
   const itemsPerPage = 10;
   const token = Cookies.get("token");
+  const [openPanel, setOpenPanel] = useState<number | null>(null);
+
+  const togglePanel = (fileId: number | null) => {
+    setOpenPanel(openPanel === fileId ? null : fileId);
+  };
+
 
   useEffect(() => {
     const fetchDeliverables = async () => {
@@ -34,13 +39,16 @@ const DeliverablesList = () => {
           }
         );
         const data = await response.json();
+
         setDeliverableData(data);
+        setPreviusFolder(data.parentId);
       } catch (error) {
         console.error("Error fetching deliverables", error);
       }
     };
+
     fetchDeliverables();
-  }, [currentPage,  setDeliverableData, token, userData?.id]);
+  }, [currentPage, setDeliverableData, token, userData?.id]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
@@ -49,6 +57,35 @@ const DeliverablesList = () => {
   const handlePreviusPage = () => {
     if (currentPage > 1) setCurrentPage((prev) => prev - 1);
   };
+
+  const handleSubmit2 = async (parentId: any) => {
+    try {
+      const response = await fetch(
+        /* `${process.env.NEXT_PUBLIC_API_URL}/deliverables/files-folder/${parentId}`, */
+        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/user/${userData.id}?page=${currentPage}&limit=${itemsPerPage}&parentId=${parentId}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data2 = await response.json();
+
+      const backItem = {
+        deliverableName: "Volver...",
+        deliverableIsFolder: true,
+        parentId: previusFolder,
+      };
+
+      const updatedData = [backItem, ...data2];
+      setDeliverableData(updatedData);
+    } catch (error) {
+      console.error("Error fetching deliverables", error);
+    }
+  };
+  console.log("data2", deliverableData);
 
   return (
     <>
@@ -78,8 +115,8 @@ const DeliverablesList = () => {
 
           <tbody className="bg-white divide-y divide-gray-200">
             {deliverableData && deliverableData.length > 0 ? (
-              /* deliverableData.map((deliverable: any) => ( */
-              deliverableMock
+              deliverableData
+                /* deliverableMock */
                 .sort(
                   (a: any, b: any) =>
                     b.deliverableIsFolder - a.deliverableIsFolder
@@ -149,14 +186,25 @@ const DeliverablesList = () => {
                         ) : (
                           <div className="flex flex-col items-center">
                             <Image
-                              src="https://i.postimg.cc/y8XBBwq4/file-question-svgrepo-com-1.png"
+                              src="https://i.postimg.cc/Dy6Byywc/empty-file-icon-icons-com-72420.png"
                               alt="Otro Tipo"
                               width={35}
                               height={35}
                             />
                           </div>
                         )}
-                        <span className=" flex text-start">
+                        <span
+                          className={`flex text-start cursor-pointer ${
+                            deliverable.deliverableIsFolder
+                              ? ""
+                              : "pointer-events-none"
+                          }`}
+                          onClick={
+                            deliverable.deliverableIsFolder
+                              ? () => handleSubmit2(deliverable.id)
+                              : undefined
+                          }
+                        >
                           {deliverable.deliverableName}
                         </span>
                       </div>
@@ -172,7 +220,7 @@ const DeliverablesList = () => {
                       <td>
                         <div className="grid grid-cols-3 justify-center justify-items-center">
                           {/* Si el usuario es owner, puede hacer todo */}
-                          {deliverable.permissionTypes.includes("owner") ? (
+                          {deliverable.permissionTypes?.includes("owner") ? (
                             <>
                               <DownloadDeliverable
                                 id={deliverable.id}
@@ -189,7 +237,9 @@ const DeliverablesList = () => {
                             </>
                           ) : (
                             <>
-                              {deliverable.permissionTypes.includes("view") && (
+                              {deliverable.permissionTypes?.includes(
+                                "view"
+                              ) && (
                                 <DownloadDeliverable
                                   id={deliverable.id}
                                   path={deliverable.deliverablePath}
@@ -197,7 +247,9 @@ const DeliverablesList = () => {
                                 />
                               )}
 
-                              {deliverable.permissionTypes.includes("edit") && (
+                              {deliverable.permissionTypes?.includes(
+                                "edit"
+                              ) && (
                                 <EditDeliverable
                                   id={deliverable.id}
                                   name={deliverable.deliverableName}
@@ -206,7 +258,7 @@ const DeliverablesList = () => {
                                 />
                               )}
 
-                              {deliverable.permissionTypes.includes(
+                              {deliverable.permissionTypes?.includes(
                                 "owner"
                               ) && <DeleteDeliverable id={deliverable.id} />}
                             </>
@@ -215,22 +267,26 @@ const DeliverablesList = () => {
                       </td>
                     )}
 
-                    {deliverable.permissionTypes.includes("owner") &&
+                    {(deliverable.permissionTypes?.includes("owner") || userData?.isAdmin) && 
                     !deliverable.deliverableIsFolder ? (
-                      <td>
-                        <div className="flex justify-center items-center">
+                      <td className="py-4 px-6 text-sm text-gray-700 relative">
+                        <button
+                          onClick={() => togglePanel(deliverable?.id)}
+                          className="text-gray-500 hover:text-gray-700 "
+                        >
+                          {/* Administrar permisos */}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            className="size-6 "
+                            className="size-6"
                           >
                             <path
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"
+                              d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128c.332-.183.582-.495.644-.869l.214-1.28Z"
                             />
                             <path
                               stroke-linecap="round"
@@ -238,7 +294,13 @@ const DeliverablesList = () => {
                               d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                             />
                           </svg>
-                        </div>
+                        </button>
+                        {openPanel === deliverable?.id && (
+                          <PermissionPanel
+                            fileId={deliverable?.id}
+                            closePanel={() => setOpenPanel(null)}
+                          />
+                        )}
                       </td>
                     ) : null}
                   </tr>

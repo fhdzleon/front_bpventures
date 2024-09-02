@@ -1,8 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 const Searchbar = () => {
+  const { deliverableData } = useAuth();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filtra los datos según el texto de búsqueda
+  const filteredData = deliverableData?.filter((item: any) =>
+    item?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="flex mt-5 items-center">
       <div>
@@ -24,9 +33,11 @@ const Searchbar = () => {
 
       <div>
         <input
-          className=" bg-slate-300 w-40 font-sans text-xs md:text-lg h-12 md:w-96 outline-none placeholder-secundary px-3"
+          className="bg-slate-300 w-40 font-sans text-xs md:text-lg h-12 md:w-96 outline-none placeholder-secundary px-3"
           type="text"
           placeholder="Buscar dentro de tu unidad"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
@@ -45,6 +56,14 @@ const Searchbar = () => {
             d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
           />
         </svg>
+      </div>
+
+      <div className="mt-4">
+        {filteredData?.map((item: any) => (
+          <div key={item.id} className="bg-slate-200 p-2 mb-2 rounded">
+            {item.name}
+          </div>
+        ))}
       </div>
     </div>
   );

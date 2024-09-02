@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import PermissionPanel from './permissionpanel';
+import PermissionPanel from '../deliverablesView/permissionpanel';
 // import { filesData, usersData } from './data';
 
 export default function FileTableNew() {

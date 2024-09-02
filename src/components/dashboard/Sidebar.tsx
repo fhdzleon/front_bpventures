@@ -40,11 +40,8 @@ const Sidebar = () => {
 
         <div className="mt-10">
           <Logout />
+          <Avatar />
         </div>
-      </div>
-
-      <div className="md:flex hidden flex-col items-center md:mb-12 justify-center">
-        <Avatar />
       </div>
     </div>
   );

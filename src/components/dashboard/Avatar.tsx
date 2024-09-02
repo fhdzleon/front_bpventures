@@ -11,18 +11,16 @@ const Avatar = () => {
   useEffect(() => {
       setName(userData?.Names);
   }, [userData]);
-
   return (
-    <div className="text-center">
+    <div className="flex flex-col items-center justify-center mt-7">
       <Image
         src="https://i.postimg.cc/7hR9Z5NW/avatardashboard.png"
-        /* src="https://i.ibb.co/4Jt1dX0/147133.png" */ //* ESTE ES EL AVATAR CON FONDO AMARILLO
         alt="avatar"
         height={400}
         width={160}
+        className="mb-4" // Margen inferior para espaciar la imagen del texto
       />
-
-      <h1 className="text-secundary font-bold text-lg">Bienvenido</h1>
+      <h1 className="text-secundary font-bold text-lg mb-1">Bienvenido</h1>
       <h1 className="text-secundary text-lg">{name}</h1>
     </div>
   );

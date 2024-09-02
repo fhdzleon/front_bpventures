@@ -11,8 +11,6 @@ const Deliverables = () => {
       <Searchbar />
       <UploadDeliverable />
       <DeliverablesList />
-      
-      {/* <FileTableNew/> */}
     </div>
   );
 };
