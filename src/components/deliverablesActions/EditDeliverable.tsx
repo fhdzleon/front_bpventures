@@ -83,7 +83,7 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
         viewBox="0 0 24 24"
         strokeWidth="1.5"
         stroke="currentColor"
-        className="w-6 h-6 mx-auto hover:text-accent cursor-pointer"
+        className="w-6 h-6 mx-auto hover:text-accent hover:text-acent cursor-pointer"
         onClick={toggleModal}
       >
         <path
@@ -98,7 +98,7 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
           <div className="bg-white rounded-lg p-8 shadow-lg w-full max-w-lg mx-4 sm:mx-auto space-y-5">
             <form className="flex flex-col  space-y-3">
               <h3 className="text-secundary text-xl mb-2 text-center font-sans  text-secondary">
-                Edita los campos que Necesites
+                Edición de Archivo
               </h3>
 
               <label className="font-sans" htmlFor="name">
@@ -112,35 +112,6 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
                 className="border py-2 font-sans text-slate-400"
                 placeholder="Nombre"
               />
-
-              <label className="font-sans" htmlFor="description">
-                Descripción:
-              </label>
-              <input
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                className="border py-2 font-sans text-slate-400"
-                placeholder="Descripción"
-              />
-
-              <h3 className="font-sans text-lg text-secondary">
-                Elije la categoría:
-              </h3>
-              <select
-                className="px-11 font-sans py-2"
-                name="category"
-                value={formData.category}
-                onChange={handleInputChange}
-              >
-                <option value="" disabled hidden>
-                  Selecciona una categoría
-                </option>
-                <option value="pending">Pendientes</option>
-                <option value="done">Terminados</option>
-                <option value="review">Revisión</option>
-              </select>
             </form>
             <div className="flex justify-center mt-4">
               <button
@@ -154,7 +125,7 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
                 onClick={handleClick}
                 className="bg-secundary font-sans text-white font-bold py-2 px-4 rounded"
               >
-                Agregar
+                Actualizar
               </button>
             </div>
           </div>

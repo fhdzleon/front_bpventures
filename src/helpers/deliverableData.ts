@@ -1,7 +1,7 @@
 const deliverableMock = [
   {
     id: 1,
-    parentId: 2,
+    parentId: null, // No tiene parentId, es la raíz
     deliverableName: "Folder A",
     deliverableIsFolder: true,
     deliverablePath: "folder_a",
@@ -12,7 +12,7 @@ const deliverableMock = [
   },
   {
     id: 2,
-    parentId: 2,
+    parentId: null, // No tiene parentId, es la raíz
     deliverableName: "Folder B",
     deliverableIsFolder: true,
     deliverablePath: "folder_b",
@@ -21,7 +21,17 @@ const deliverableMock = [
     permissionTypes: ["owner", "view"],
     lastDate: "01-09-2024",
   },
-
+  {
+    id: 3,
+    parentId: 2,
+    deliverableName: "Folder C",
+    deliverableIsFolder: true,
+    deliverablePath: "folder_c",
+    deliverableType: "Folder",
+    deliverableCategory: "Recursos",
+    permissionTypes: ["view", "edit"],
+    lastDate: "01-09-2024",
+  },
   {
     id: 4,
     parentId: 1,
@@ -78,17 +88,6 @@ const deliverableMock = [
     lastDate: "01-09-2024",
   },
   {
-    id: 3,
-    parentId: 2,
-    deliverableName: "Folder C",
-    deliverableIsFolder: true,
-    deliverablePath: "folder_c",
-    deliverableType: "Folder",
-    deliverableCategory: "Recursos",
-    permissionTypes: ["view", "edit"],
-    lastDate: "01-09-2024",
-  },
-  {
     id: 9,
     parentId: 3,
     deliverableName: "Product Overview",
@@ -127,7 +126,7 @@ const deliverableMock = [
     deliverableName: "User Manual",
     deliverableIsFolder: false,
     deliverablePath: "folder_c/user_manual.pdf",
-    deliverableType: "pdf",
+    deliverableType: "jpg",
     deliverableCategory: "Documentación",
     permissionTypes: ["view"],
     lastDate: "01-09-2024",

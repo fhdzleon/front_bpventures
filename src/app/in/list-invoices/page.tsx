@@ -7,9 +7,12 @@ import { GetInvoices } from "@/helpers/auth.helper";
 import InvoiceDetail, {
   Invoice,
 } from "@/components/DetailInvoice/DetailInvoice";
+import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
+import VoucherUpload from "@/components/invoice/VoucherUpload";
 
 const BillingTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenVoucher, setIsModalOpenVoucher] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
 
   const handleOpenModal = (invoice: Invoice) => {
@@ -19,6 +22,15 @@ const BillingTable = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedInvoice(null);
+  };
+
+  const handleOpenModalVoucher = (invoice: Invoice) => {
+    setSelectedInvoice(invoice);    
+    setIsModalOpenVoucher(true);
+  };
+  const handleCloseModalVoucher = () => {
+    setIsModalOpenVoucher(false); 
     setSelectedInvoice(null);
   };
 
@@ -54,7 +66,7 @@ const BillingTable = () => {
       <h1 className="text-4xl font-futura mb-6 text-secundary">
         Lista de Facturas: {userData?.Names}
       </h1>
-
+      <ButtonUploadInvoice userId={userData?.id}/>
       <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
@@ -164,7 +176,9 @@ const BillingTable = () => {
                       </div>
                     )}
 
-                    <button>
+
+{/* voucher */}
+                    <button onClick={() => handleOpenModalVoucher(invoice)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -180,6 +194,24 @@ const BillingTable = () => {
                         />
                       </svg>
                     </button>
+                    {isModalOpenVoucher && selectedInvoice &&  (
+                      <div className=" fixed inset-0  flex items-center justify-center">
+                        <div className="bg-white p-6 rounded-lg shadow-lg max-w-2xl  sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+                          {/* <InvoiceDetail Invoice={selectedInvoice} /> */}
+                          <VoucherUpload Invoice={selectedInvoice}/>
+                          {/* <pre>{JSON.stringify(selectedInvoice, null, 2)}</pre> */}
+                          {/* <h2>Factura Id: {invoice.id}</h2>
+                          <h2>Numero de Factura: {invoice.invoiceNumber}</h2> */}
+
+                          <button
+                            onClick={handleCloseModalVoucher}
+                            className="mt-4 bg-secundary text-white px-4 py-2 rounded-full"
+                          >
+                            Cerrar
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}

@@ -15,7 +15,7 @@ export interface userPayload {
   email: string;
 }
 export interface AuthContextType {
-  user: userPayload; // Cambia 'any' al tipo específico si lo tienes
+  user: userPayload;
   setUser: (user: userPayload) => void;
   userData: any;
   blocked: boolean;
@@ -37,23 +37,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [deliverableData, setDeliverableData] = useState<any>(null);
   const [allUsers, setAllUsers] = useState<any>(null);
 
+  const storedUser = sessionStorage.getItem("user");
+
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-  }, []);
+  }, [storedUser]);
 
   useEffect(() => {
-    if (user) {
-      const fetchUserID = async () => {
-        const res = await GetUserById(user?.id);
-        console.log("userData", res);
-
-        setUserData(res);
-      };
-      fetchUserID();
-    }
+    const fetchUserID = async () => {
+      const res = await GetUserById(user?.id);
+      setUserData(res);
+    };
+    fetchUserID();
   }, [user]);
 
   return (

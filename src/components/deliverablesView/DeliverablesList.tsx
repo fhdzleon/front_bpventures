@@ -4,10 +4,8 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import DeleteDeliverable from "../deliverablesActions/DeleteDeliverable";
 import DownloadDeliverable from "../deliverablesActions/DownloadDeliverable";
-import ViewDeliverable from "../deliverablesActions/ViewDeliverable";
 import EditDeliverable from "../deliverablesActions/EditDeliverable";
 import deliverableMock from "@/helpers/deliverableData";
-
 import Image from "next/image";
 
 import Cookies from "js-cookie";
@@ -17,6 +15,7 @@ const DeliverablesList = () => {
   const { setDeliverableData, userData, deliverableData } = useAuth();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [previusFolder, setPreviusFolder] = useState<string>("");
   const itemsPerPage = 10;
   const token = Cookies.get("token");
 
@@ -34,13 +33,16 @@ const DeliverablesList = () => {
           }
         );
         const data = await response.json();
+
         setDeliverableData(data);
+        setPreviusFolder(data.parentId);
       } catch (error) {
         console.error("Error fetching deliverables", error);
       }
     };
+
     fetchDeliverables();
-  }, [currentPage, deliverableData, setDeliverableData, token, userData?.id]);
+  }, [currentPage, setDeliverableData, token, userData?.id]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
@@ -50,10 +52,39 @@ const DeliverablesList = () => {
     if (currentPage > 1) setCurrentPage((prev) => prev - 1);
   };
 
+  const handleSubmit2 = async (parentId: any) => {
+    try {
+      const response = await fetch(
+        /* `${process.env.NEXT_PUBLIC_API_URL}/deliverables/files-folder/${parentId}`, */
+        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/user/${userData.id}?page=${currentPage}&limit=${itemsPerPage}&parentId=${parentId}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data2 = await response.json();
+
+      const backItem = {
+        deliverableName: "Volver...",
+        deliverableIsFolder: true,
+        parentId: previusFolder,
+      };
+
+      const updatedData = [backItem, ...data2];
+      setDeliverableData(updatedData);
+    } catch (error) {
+      console.error("Error fetching deliverables", error);
+    }
+  };
+  console.log("data2", deliverableData);
+
   return (
     <>
-      <span className="font-sans pt-4">miUnidad/</span>
-      <div className="overflow-x-auto mt-5 bg-white shadow-lg rounded-lg border border-gray-300">
+      <span className="font-sans ">miUnidad/</span>
+      <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
         <table className=" min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
             <tr>
@@ -78,8 +109,8 @@ const DeliverablesList = () => {
 
           <tbody className="bg-white divide-y divide-gray-200">
             {deliverableData && deliverableData.length > 0 ? (
-              /* deliverableData.map((deliverable: any) => ( */
-              deliverableMock
+              deliverableData
+                /* deliverableMock */
                 .sort(
                   (a: any, b: any) =>
                     b.deliverableIsFolder - a.deliverableIsFolder
@@ -111,7 +142,7 @@ const DeliverablesList = () => {
                         ) : deliverable.deliverableType === "pdf" ? (
                           <div className="flex mr-4 justify-end">
                             <Image
-                              src="https://i.postimg.cc/zG3S11H3/file-pdf-svgrepo-com.png"
+                              src="https://i.postimg.cc/SN9VC7dD/file-expand-Pdf-icon-icons-com-68956.png"
                               alt="PDF"
                               width={30}
                               height={30}
@@ -121,7 +152,7 @@ const DeliverablesList = () => {
                           deliverable.deliverableType === "xlsx" ? (
                           <div className="flex mr-4  justify-end">
                             <Image
-                              src="https://i.postimg.cc/rsrXHHGH/xls-file-format-symbol-svgrepo-com.png"
+                              src="https://i.postimg.cc/BZLCfcr4/file-10-icon-icons-com-68948.png"
                               alt="XLS"
                               width={30}
                               height={30}
@@ -130,7 +161,17 @@ const DeliverablesList = () => {
                         ) : deliverable.deliverableType === "doc" ? (
                           <div className="flex mr-4  justify-end">
                             <Image
-                              src="https://i.postimg.cc/QtRxV10R/doc-file-format-svgrepo-com.png"
+                              src="https://i.postimg.cc/RCkLSJmf/file-5-icon-icons-com-68953.png"
+                              alt="DOC"
+                              width={30}
+                              height={30}
+                            />
+                          </div>
+                        ) : deliverable.deliverableType === "jpg" ||
+                          deliverable.deliverableType === "png" ? (
+                          <div className="flex mr-4  justify-end">
+                            <Image
+                              src="https://i.postimg.cc/hPRVWF81/file-3-icon-icons-com-68952.png"
                               alt="DOC"
                               width={30}
                               height={30}
@@ -139,14 +180,25 @@ const DeliverablesList = () => {
                         ) : (
                           <div className="flex flex-col items-center">
                             <Image
-                              src="https://i.postimg.cc/y8XBBwq4/file-question-svgrepo-com-1.png"
+                              src="https://i.postimg.cc/Dy6Byywc/empty-file-icon-icons-com-72420.png"
                               alt="Otro Tipo"
                               width={35}
                               height={35}
                             />
                           </div>
                         )}
-                        <span className=" flex text-start">
+                        <span
+                          className={`flex text-start cursor-pointer ${
+                            deliverable.deliverableIsFolder
+                              ? ""
+                              : "pointer-events-none"
+                          }`}
+                          onClick={
+                            deliverable.deliverableIsFolder
+                              ? () => handleSubmit2(deliverable.id)
+                              : undefined
+                          }
+                        >
                           {deliverable.deliverableName}
                         </span>
                       </div>
@@ -162,7 +214,7 @@ const DeliverablesList = () => {
                       <td>
                         <div className="grid grid-cols-3 justify-center justify-items-center">
                           {/* Si el usuario es owner, puede hacer todo */}
-                          {deliverable.permissionTypes.includes("owner") ? (
+                          {deliverable.permissionTypes?.includes("owner") ? (
                             <>
                               <DownloadDeliverable
                                 id={deliverable.id}
@@ -179,7 +231,9 @@ const DeliverablesList = () => {
                             </>
                           ) : (
                             <>
-                              {deliverable.permissionTypes.includes("view") && (
+                              {deliverable.permissionTypes?.includes(
+                                "view"
+                              ) && (
                                 <DownloadDeliverable
                                   id={deliverable.id}
                                   path={deliverable.deliverablePath}
@@ -187,7 +241,9 @@ const DeliverablesList = () => {
                                 />
                               )}
 
-                              {deliverable.permissionTypes.includes("edit") && (
+                              {deliverable.permissionTypes?.includes(
+                                "edit"
+                              ) && (
                                 <EditDeliverable
                                   id={deliverable.id}
                                   name={deliverable.deliverableName}
@@ -196,7 +252,7 @@ const DeliverablesList = () => {
                                 />
                               )}
 
-                              {deliverable.permissionTypes.includes(
+                              {deliverable.permissionTypes?.includes(
                                 "owner"
                               ) && <DeleteDeliverable id={deliverable.id} />}
                             </>
@@ -205,7 +261,8 @@ const DeliverablesList = () => {
                       </td>
                     )}
 
-                    {!deliverable.deliverableIsFolder && (
+                    {deliverable.permissionTypes?.includes("owner") &&
+                    !deliverable.deliverableIsFolder ? (
                       <td>
                         <div className="flex justify-center items-center">
                           <svg
@@ -229,7 +286,7 @@ const DeliverablesList = () => {
                           </svg>
                         </div>
                       </td>
-                    )}
+                    ) : null}
                   </tr>
                 ))
             ) : (

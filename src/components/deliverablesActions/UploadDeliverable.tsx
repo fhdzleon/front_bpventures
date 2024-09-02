@@ -1,17 +1,37 @@
 "use client";
 
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 
 const UploadDeliverable = () => {
+  const token = Cookies.get("token");
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [categoryOption, setCategoryOption] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     category: "",
   });
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setFile(event.target.files[0]);
+    }
+  };
+
   const [folders, setFolders] = useState([]); // Estado para almacenar las carpetas creadas
+
+  const formDataFetch = new FormData();
+  formDataFetch.append("name", formData.name);
+  formDataFetch.append("deliverableTypeId", selectedOption);
+  formDataFetch.append("deliverableCategoryId", categoryOption);
+  formDataFetch.append("isFolder", selectedOption === "1" ? "true" : "false");
+  if (file) {
+    formDataFetch.append("file", file);
+  }
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -32,11 +52,42 @@ const UploadDeliverable = () => {
     });
   };
 
+  const handleCategoryChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setCategoryOption(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: formDataFetch,
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        alert("Archivo agregado con exito");
+      } else {
+        alert("Error al subir el archivo");
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
+
   return (
     <div className="mt-5 flex justify-start">
       {/* Botón que abre el modal */}
       <button
-        className="flex items-center justify-center bg-secundary hover:text-secundary hover:bg-acent text-white font-sans px-4 py-2 rounded-full"
+        className="flex items-center justify-center mb-3 bg-secundary hover:text-secundary hover:bg-acent text-white font-sans px-4 py-2 rounded-full"
         onClick={toggleModal}
       >
         <svg
@@ -75,14 +126,28 @@ const UploadDeliverable = () => {
                 <option value="" disabled hidden>
                   Selecciona una opción
                 </option>
-                <option className="font-sans" value="folder">
+
+                <option className="font-sans" value="1">
                   Carpeta
                 </option>
-                <option className="font-sans" value="file">
-                  Archivo
-                </option>
-                <option className="font-sans" value="link">
+
+                <option className="font-sans" value="2">
                   Link
+                </option>
+                <option className="font-sans" value="3">
+                  pdf
+                </option>
+                <option className="font-sans" value="4">
+                  doc
+                </option>
+                <option className="font-sans" value="5">
+                  xls
+                </option>
+                <option className="font-sans" value="6">
+                  jpg
+                </option>
+                <option className="font-sans" value="7">
+                  png
                 </option>
               </select>
 
@@ -111,25 +176,25 @@ const UploadDeliverable = () => {
                 className="px-11 font-sans w-auto py-2"
                 name="category"
                 value={formData.category}
-                onChange={handleInputChange}
+                onChange={handleCategoryChange}
               >
                 <option value="" disabled hidden>
                   Selecciona una categoría
                 </option>
-                <option className="font-sans" value="pending">
+                <option className="font-sans" value="1">
                   Pendientes
                 </option>
-                <option className="font-sans" value="done">
+                <option className="font-sans" value="2">
                   Terminados
                 </option>
-                <option className="font-sans" value="review">
+                <option className="font-sans" value="3">
                   Revisión
                 </option>
               </select>
             </form>
 
             {/* Vista condicional según la selección */}
-            {selectedOption === "file" && (
+            {Number(selectedOption) > 2 && (
               <div className="w-3/4 space-y-5 mt-4">
                 <h3 className="font-sans text-lg text-secundary">
                   Subir Archivo:
@@ -140,7 +205,11 @@ const UploadDeliverable = () => {
                 <p className="font-sans mb-2">
                   O selecciona un archivo desde tu PC.
                 </p>
-                <input type="file" className="mb-4 border-2" />
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className="mb-4 border-2"
+                />
               </div>
             )}
 
@@ -152,7 +221,7 @@ const UploadDeliverable = () => {
               </div>
             )}
 
-            {selectedOption === "link" && (
+            {selectedOption === "2" && (
               <div className="w-3/4 mt-4">
                 <h3 className="font-sans text-lg text-secundary">
                   Agregar Link:
@@ -174,7 +243,10 @@ const UploadDeliverable = () => {
                 Cancelar
               </button>
 
-              <button className="bg-secundary font-sans text-white font-bold py-2 px-4 rounded">
+              <button
+                onClick={handleSubmit}
+                className="bg-secundary font-sans text-white font-bold py-2 px-4 rounded"
+              >
                 Agregar
               </button>
             </div>
