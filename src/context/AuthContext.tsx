@@ -45,6 +45,7 @@ export interface AuthContextType {
   setDeliverableData: (deliverableData: any) => void;
   allUsers: userdata[];
   setAllUsers: (allUser: any) => void;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -57,18 +58,24 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [blocked, setBlocked] = useState<boolean>(false);
   const [deliverableData, setDeliverableData] = useState<any>(null);
   const [allUsers, setAllUsers] = useState<any>(null);
-
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/users`
         );
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
         const data = await response.json();
-
+        setLoading(false);
+        
         setAllUsers(data);
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching users:", error);
       }
     };
@@ -77,6 +84,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   useEffect(() => {
+    
     const session = sessionStorage.getItem("user");
     if (session) {
       setUser(JSON.parse(session));
@@ -85,10 +93,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
       const fetchUserID = async () => {
+
+        setLoading(true);
         const res = await GetUserById(user?.id);
         setUserData(res);
-      };  
-      fetchUserID();
+        setLoading(false);
+      };
+      if(user) {
+        fetchUserID();
+      } 
   }, [user]);
 
   
@@ -104,6 +117,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         setDeliverableData,
         allUsers,
         setAllUsers: setAllUsers,
+        loading,
       }}
     >
       {children}

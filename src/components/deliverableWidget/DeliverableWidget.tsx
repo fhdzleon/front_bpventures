@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useAuth } from "@/context/AuthContext";
+import Cookies from "js-cookie";
 
 export interface Deliverable {
   autor: string;
@@ -20,14 +21,22 @@ export interface Deliverable {
 
 const deliverableWidget = () => {
   const [allDeliverables, setAllDeliverables] = useState<Deliverable[]>([]);
-
+  const token = Cookies.get("token");
   const { user } = useAuth();
 
   useEffect(() => {
     const fetchDeliverables = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/deliverables/user/${user.id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/deliverables/user/${user.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+
         );
         const data = await response.json();
         console.log(data);

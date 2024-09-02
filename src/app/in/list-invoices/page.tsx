@@ -1,7 +1,5 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
-import FileTableNew from "../../../components/permisosprueba/table";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { GetInvoices } from "@/helpers/auth.helper";
 import InvoiceDetail, {
@@ -46,13 +44,15 @@ const BillingTable = () => {
       overdueIndicator: false,
     },
   ]);
-  const { userData } = useAuth();
+  const { userData,loading } = useAuth();
 
   useEffect(() => {
     const fetchInvoices = async () => {
-      try {
-        const response = await GetInvoices(userData.id);
-        setInvoices(response);
+      try {  
+        if(!loading){
+          const response = await GetInvoices(userData?.id);
+          setInvoices(response);
+        }    
       } catch (error) {
         console.error("Error fetching invoices", error);
       }
