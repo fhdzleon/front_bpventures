@@ -36,11 +36,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
 
   return (
     <section className="mb-12 p-4 bg-white rounded-xl shadow-lg m-4">
-      <Link href="/in/list-invoices">
-        <button className="bg-[#2B4168] mb-5 text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex ">
-          Volver
-        </button>
-      </Link>
+    
       <div className="p-6 bg-gradient-to-r from-blue-50 to-blue-50 rounded-xl shadow-md">
         <h2 className="text-2xl font-semibold text-[#2B4168] mb-4">Información de Facturación</h2>
         <div className="space-y-4">

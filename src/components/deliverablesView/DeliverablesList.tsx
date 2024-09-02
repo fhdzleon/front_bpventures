@@ -90,7 +90,7 @@ const DeliverablesList = () => {
   return (
     <>
       <span className="font-sans ">miUnidad/</span>
-      <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
+      <div className=" bg-white shadow-lg rounded-lg border border-gray-300">
         <table className=" min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
             <tr>

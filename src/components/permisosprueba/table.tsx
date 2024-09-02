@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import PermissionPanel from '../deliverablesView/permissionpanel';
-// import { filesData, usersData } from './data';
+import { filesData } from './data';
 
 export default function FileTableNew() {
   const [openPanel, setOpenPanel] = useState<number | null>(null);
@@ -51,7 +51,7 @@ export default function FileTableNew() {
                     {openPanel === file.id && (
                       <PermissionPanel
                         fileId={file.id}
-                        users={usersData}
+                    
                         closePanel={() => setOpenPanel(null)}
                       />
                     )}
