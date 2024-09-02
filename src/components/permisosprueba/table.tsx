@@ -5,7 +5,7 @@ export default function FileTableNew() {
   const [openPanel, setOpenPanel] = useState<number | null>(null);
   const [previewData, setPreviewData] = useState(null); // Estado para guardar los datos obtenidos
 
-  const togglePanel = (fileId: number | null) => {
+  const togglePanelpreview = (fileId: number | null) => {
     setOpenPanel(openPanel === fileId ? null : fileId);
   };
 
@@ -21,7 +21,7 @@ export default function FileTableNew() {
         console.warn('Received null data');
       }
       setPreviewData(data);
-      togglePanel(fileId);
+      togglePanelpreview(fileId);
     } catch (error) {
       console.error('Error:');
     }
@@ -73,4 +73,8 @@ console.log (previewData, "preview")
       </div>
     </div>
   );
+}
+
+function togglePanel(fileId: number) {
+  throw new Error('Function not implemented.');
 }
