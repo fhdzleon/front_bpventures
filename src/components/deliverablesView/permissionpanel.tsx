@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { AuthContextType, useAuth } from "@/context/AuthContext";
+import Swal from "sweetalert2";
 //  estado global simulado para permisos PORQUE NECESITO DONDE GUARDAR
 // let simulatedPermissionsData = [
 //   { userId: 2, fileId: 1, permissionTypes: [''] },
@@ -155,13 +156,23 @@ export default function PermissionPanel({
         throw new Error('Error al guardar permisos');
       }
   
-      
-          alert(`Permisos actualizados para el archivo ${fileId}`);
-          closePanel();
+      Swal.fire({
+        title: "Permiso Guardado!",
+        text: "Permiso guardado para el archivo "+ fileId,
+        icon: "success",
+        confirmButtonColor: "#2b4168",
+      });
     } catch (error) {
-      console.error('Error al guardar permisos:', error);
-      alert('Hubo un error al guardar los permisos');
+      console.error("Hubo un problema con la petición", error);
+      Swal.fire(
+        "Error",
+        "Hubo un problema al guardar el permiso.",
+        "error"
+      );
     }
+          
+          closePanel();
+   
 
   };
 
