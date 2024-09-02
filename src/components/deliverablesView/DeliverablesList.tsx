@@ -25,7 +25,6 @@ const DeliverablesList = () => {
     setOpenPanel(openPanel === fileId ? null : fileId);
   };
 
-
   useEffect(() => {
     const fetchDeliverables = async () => {
       try {
@@ -222,7 +221,8 @@ const DeliverablesList = () => {
                       <td>
                         <div className="grid grid-cols-3 justify-center justify-items-center">
                           {/* Si el usuario es owner, puede hacer todo */}
-                          {deliverable.permissionTypes?.includes("owner") ? (
+                          {deliverable.permissionTypes?.includes("owner") ||
+                          userData.isAdmin ? (
                             <>
                               <DownloadDeliverable
                                 id={deliverable.id}
@@ -272,7 +272,8 @@ const DeliverablesList = () => {
                       </td>
                     )}
 
-                    {(deliverable.permissionTypes?.includes("owner") || userData?.isAdmin) && 
+                    {(deliverable.permissionTypes?.includes("owner") ||
+                      userData?.isAdmin) &&
                     !deliverable.deliverableIsFolder ? (
                       <td className="py-4 px-6 text-sm text-gray-700 relative">
                         <button
