@@ -13,7 +13,7 @@ import { useAuth } from "@/context/AuthContext";
 import FileTableNew from "../permisosprueba/table";
 
 const DeliverablesList = () => {
-  const { setDeliverableData, userData, deliverableData } = useAuth();
+  const { setDeliverableData, userData, deliverableData, loading } = useAuth();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [previusFolder, setPreviusFolder] = useState<string>("");
@@ -89,6 +89,8 @@ const DeliverablesList = () => {
 
   return (
     <>
+    {!loading ? (
+      <>
       <span className="font-sans ">miUnidad/</span>
       <div className=" bg-white shadow-lg rounded-lg border border-gray-300">
         <table className=" min-w-full divide-y divide-gray-300">
@@ -344,6 +346,15 @@ const DeliverablesList = () => {
         </div>
         {/* <FileTableNew/> */}
       </div>
+
+      </>
+    ): (
+      <>
+      <div className="flex  flex-col items-center justify-center mt-7">
+        <span className="loader"></span>
+      </div>
+    </>
+    )}
     </>
   );
 };

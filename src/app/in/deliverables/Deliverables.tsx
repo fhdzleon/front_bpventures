@@ -2,7 +2,6 @@ import React from "react";
 import Searchbar from "@/components/deliverablesView/Searchbar";
 import DeliverablesList from "@/components/deliverablesView/DeliverablesList";
 import UploadDeliverable from "@/components/deliverablesActions/UploadDeliverable";
-import FileTableNew from "@/components/permisosprueba/table";
 
 const Deliverables = () => {
   return (
