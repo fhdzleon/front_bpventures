@@ -43,20 +43,23 @@ export default function Login() {
     }
   }, [remember]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, index?: number) => {
     const { name, value } = e.target;
     const newOtp = [...otp];
-    newOtp[index] = e.target.value;
+    if(index){
+      newOtp[index] = e.target.value;
+      // Move to next input if not last input
+      if (e.target.value.length === 1 && index < 5) {
+        inputsRef.current[index + 1]?.focus();
+      }
+  
+      // Handle backspace to move to previous input
+      if (e.target.value.length === 0 && index > 0) {
+        inputsRef.current[index - 1]?.focus();
+      }
 
-    // Move to next input if not last input
-    if (e.target.value.length === 1 && index < 5) {
-      inputsRef.current[index + 1]?.focus();
     }
 
-    // Handle backspace to move to previous input
-    if (e.target.value.length === 0 && index > 0) {
-      inputsRef.current[index - 1]?.focus();
-    }
     setOtp(newOtp);
     const mfa = newOtp.join("");
 
@@ -148,7 +151,7 @@ export default function Login() {
         document.cookie = `token=${tokenCookie};`;
 
         sessionStorage.setItem("user", JSON.stringify(json.userPayload));
-        setUser(json.userPayload);
+        // setUser(json.userPayload);
         toast.success("¡Inicio de sesión exitoso!");
         router.push(PATHROUTES.HOME);
       } catch (error) {

@@ -38,7 +38,7 @@ const DeliverablesList = () => {
       }
     };
     fetchDeliverables();
-  }, [currentPage, deliverableData, setDeliverableData, token, userData?.id]);
+  }, [currentPage,  setDeliverableData, token, userData?.id]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);

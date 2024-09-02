@@ -14,15 +14,36 @@ export interface userPayload {
   sub: number;
   email: string;
 }
+
+interface userdata{
+  id: number;
+  email: string;
+  Names: string;
+  LastName: string;
+  Position: string;
+  empresa: string | null;
+  cuit: number | null;
+  domicilio: string | null;
+  verifiedEmail: boolean;
+  mfaEnabled: boolean;
+  mfaBackupCodes: string;
+  mfaSecret: string;
+  mfaVerified: null | boolean;
+  createdAt: string;
+  modifiedAt: string;
+  statusId: number;
+  isAdmin: boolean;
+}
+
 export interface AuthContextType {
   user: userPayload; // Cambia 'any' al tipo específico si lo tienes
   setUser: (user: userPayload) => void;
-  userData: any;
+  userData: userdata;
   blocked: boolean;
   setBlocked: (blocked: boolean) => void;
   deliverableData: any;
   setDeliverableData: (deliverableData: any) => void;
-  allUsers: any;
+  allUsers: userdata[];
   setAllUsers: (allUser: any) => void;
 }
 
@@ -37,26 +58,39 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [deliverableData, setDeliverableData] = useState<any>(null);
   const [allUsers, setAllUsers] = useState<any>(null);
 
+
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/users`
+        );
+        const data = await response.json();
+
+        setAllUsers(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    const session = sessionStorage.getItem("user");
+    if (session) {
+      setUser(JSON.parse(session));
     }
   }, []);
 
   useEffect(() => {
-    if (user) {
       const fetchUserID = async () => {
         const res = await GetUserById(user?.id);
-        console.log(res);
         setUserData(res);
-      };
-      console.log(user);
-      
+      };  
       fetchUserID();
-    }
   }, [user]);
-  console.log(userData);
+
   
   return (
     <AuthContext.Provider

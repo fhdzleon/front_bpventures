@@ -24,27 +24,26 @@ export const RegisterUser = async (userData: any) => {
     }
 };
 
-export const GetUserById = async (userId: string) => { 
-    try {
-        const response = await fetch(`${apiURL}/users/${userId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (response.ok) {
-            return response.json();
-        } else {
-            const errorData = await response.json();
-            throw new Error(errorData.message || "User not found");
-
-        }
-        
-    } catch (error: any) {
-        throw new Error(error);
-        
+export const GetUserById = async (userId: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      
+      throw new Error("User not found");
     }
-}
+    return response.json();
+  } catch (error: any) {
+    console.log(error);
+  }
+};
 
 export const UpdateUser = async (userData: any, userId: string) => {
     try {
