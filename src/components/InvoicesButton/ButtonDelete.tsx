@@ -5,16 +5,16 @@ import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { PATHROUTES } from "@/helpers/pathRoutes";
+import { useAuth } from "@/context/AuthContext";
 
 interface DeleteInvoiceProps {
-  onClick: () => void;
   id: any; // o el tipo adecuado para `id`
 }
 
-const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ onClick, id }) => {
+const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({  id }) => {
   const token = Cookies.get("token");
-  onClick();
   const router = useRouter();
+  const {fetchAgain, setFetchAgain} = useAuth();
 
   const handleClick = async () => {
     Swal.fire({
@@ -39,14 +39,13 @@ const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ onClick, id }) => {
               },
             }
           );
-          console.log(response);
+        
           
           if (!response.ok) {
             throw new Error("No se logro borrar el archivo");
           }
 
           const data = await response.json();
-          console.log(data);
           
           Swal.fire({
             title: "Eliminado",
@@ -54,7 +53,7 @@ const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ onClick, id }) => {
             icon: "success",
             confirmButtonColor: "#2b4168",
           });
-
+          
         } catch (error) {
           console.error("hubo un problema con la peticion, error");
           Swal.fire(
@@ -62,6 +61,8 @@ const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ onClick, id }) => {
             "Hubo un problema al eliminar el archivo",
             "error"
           );
+        }finally {
+          setFetchAgain(!fetchAgain);
         }
       }
     });
