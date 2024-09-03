@@ -62,7 +62,7 @@ const DeleteInvoice= ({ id }: { id: any }) => {
   };
 
   return (
-    <button title="Eliminar" onClick={handleClick}>
+    <button onClick={handleClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -71,6 +71,7 @@ const DeleteInvoice= ({ id }: { id: any }) => {
         stroke="currentColor"
         className="w-6 h-6 mx-auto hover:text-acent"
       >
+        <title>Eliminar Factura</title>
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
