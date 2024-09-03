@@ -7,7 +7,6 @@ import InvoiceDetail, {
 } from "@/components/DetailInvoice/DetailInvoice";
 import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
 import VoucherUpload from "@/components/invoice/VoucherUpload";
-import PreviewButton from "@/components/PreviewButton/PreviewButton";
 import DeleteInvoice from "@/components/InvoicesButton/ButtonDelete";
 import Link from "next/link";
 const BillingTable = () => {
@@ -34,18 +33,7 @@ const BillingTable = () => {
     setSelectedInvoice(null);
   };
 
-  const [invoices, setInvoices] = useState<Invoice[]>([
-    {
-      id: 1,
-      invoicePath: null,
-      invoiceNumber: "",
-      invoiceIssueDate: "",
-      invoiceDueDate: "",
-      invoiceAmount: "",
-      invoiceStatus: "",
-      overdueIndicator: false,
-    },
-  ]);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
   const { userData, loading } = useAuth();
  const fetchInvoices = async () => {
       try {
@@ -133,9 +121,9 @@ const BillingTable = () => {
                         />
                       </svg>
                     </button></Link>
-                    <DeleteInvoice  id={invoice.id} />
+                    <DeleteInvoice onClick={()=>fetchInvoices()} id={invoice.id} />
                     {/* boton de modal  */}
-                    <button onClick={() => handleOpenModal(invoice)}>
+                    <button title="vista previa" onClick={() => handleOpenModal(invoice)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -173,7 +161,7 @@ const BillingTable = () => {
                     )}
 
                     {/* voucher */}
-                    <button onClick={() => handleOpenModalVoucher(invoice)}>
+                    <button title="voucher" onClick={() => handleOpenModalVoucher(invoice)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

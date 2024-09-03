@@ -174,6 +174,7 @@ import { PATHROUTES } from "@/helpers/pathRoutes";
 import { useParams } from "next/navigation";
 import Preloader from "../preloader/Preloader";
 import { GetUserById, UpdateUser } from "@/helpers/auth.helper";
+import { useAuth } from "@/context/AuthContext";
 interface User {
   email: string;
   password: string;
@@ -196,7 +197,7 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
 
   const myAccount = Object.keys(params).length === 0;
 
-  const [userData, setUserData] = useState<User>({
+  const [userDataForm, setUserDataForm] = useState<User>({
     email: "",
     password: "",
     Names: "",
@@ -207,28 +208,28 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
     Domicilio: "",
   });
 
-  const [loading, setLoading] = useState<boolean>(true); // Estado de carga
+  const {loading, userData, setUserData} = useAuth();
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await GetUserById(userId.toString());
-        setUserData(res);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        // setLoading(false); // Termina la carga
-      }
-    };
 
-    fetchUser();
-  }, [userId]);
+
+    if(userData){
+      const {email, Names, LastName, Position} = userData;
+      const data ={
+        ...userDataForm,
+        email, Names, LastName, Position
+      }
+      setUserDataForm(data);
+      
+    }
+  
+  }, [userData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUserData((prevUser) => ({ ...prevUser, [name]: value }));
+    setUserDataForm((prevUser) => ({ ...prevUser, [name]: value }));
   };
 
   const handlePasswordVisibilityToggle = () => {
@@ -238,10 +239,12 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await UpdateUser(userData, userId.toString());
+      const res = await UpdateUser(userDataForm, userId.toString());
+      setUserData(res);
+      
       router.push(`${PATHROUTES.LIST}/${res.id}`);
-
       toast.success("Usuario actualizado exitosamente!");
+      
     } catch (error: any) {
       console.error("Error al actualizar el usuario:", error);
       toast.error(error.message);
@@ -286,9 +289,9 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
         )}
 
         <div className="col-span-1">
-        <Preloader />
-          {loading ? ( // Mostrar el preloader si está cargando
-            <Preloader />
+    
+          {loading ? ( 
+              <Preloader />
           ) : (
             <form className="form-apply" onSubmit={handleSubmit}>
               {[
@@ -314,7 +317,7 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
                           : "text"
                       }
                       name={field}
-                      value={userData[field as keyof User]}
+                      value={userDataForm[field as keyof User]}
                       onChange={handleInputChange}
                       placeholder={fieldLabels[field]}
                       // required
