@@ -35,9 +35,7 @@ const BillingTable = () => {
 
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const { userData, loading } = useAuth();
-
-  useEffect(() => {
-    const fetchInvoices = async () => {
+ const fetchInvoices = async () => {
       try {
         if (!loading) {
           const response = await GetInvoices(userData?.id);
@@ -47,6 +45,8 @@ const BillingTable = () => {
         console.error("Error fetching invoices", error);
       }
     };
+  useEffect(() => {
+   
     fetchInvoices();
   }, [userData?.id]);
 
@@ -102,15 +102,9 @@ const BillingTable = () => {
                     {invoice.invoiceDueDate}
                   </td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 flex space-x-4">
-<<<<<<< HEAD
-                    <button
-                    title="descargar"
-                    >
-=======
                     {/* <pre> {JSON.stringify(`process.env.NEXT_PUBLIC_API_URL ${invoice.invoicePath}`  , null, 2)} </pre> */}
                    <Link download href={`${process.env.NEXT_PUBLIC_API_URL}/${invoice.invoicePath}`}> <button>
 
->>>>>>> 4fa172d15a89decb18e9a45210b88c6c8578f87a
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -127,7 +121,7 @@ const BillingTable = () => {
                         />
                       </svg>
                     </button></Link>
-                    <DeleteInvoice id={invoice.id} />
+                    <DeleteInvoice onClick={fetchInvoices()} id={invoice.id} />
                     {/* boton de modal  */}
                     <button title="vista previa" onClick={() => handleOpenModal(invoice)}>
                       <svg
