@@ -15,7 +15,7 @@ export interface userPayload {
   email: string;
 }
 
-interface userdata{
+interface userdata {
   id: number;
   email: string;
   Names: string;
@@ -39,6 +39,7 @@ export interface AuthContextType {
   user: userPayload;
   setUser: (user: userPayload) => void;
   userData: userdata;
+  setUserData: (userData: userdata) => void;
   blocked: boolean;
   setBlocked: (blocked: boolean) => void;
   deliverableData: any;
@@ -46,6 +47,9 @@ export interface AuthContextType {
   allUsers: userdata[];
   setAllUsers: (allUser: any) => void;
   loading: boolean;
+  setLoading: (loading: boolean) => void;
+  fetchAgain: boolean;
+  setFetchAgain: (fetchAgain: any) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -59,7 +63,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [deliverableData, setDeliverableData] = useState<any>(null);
   const [allUsers, setAllUsers] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-
+  const [fetchAgain, setFetchAgain] = useState<boolean>(true);
+  console.log(userData);
+  
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -72,7 +78,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         }
         const data = await response.json();
         setLoading(false);
-        
+
         setAllUsers(data);
       } catch (error) {
         setLoading(false);
@@ -84,7 +90,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-    
     const session = sessionStorage.getItem("user");
     if (session) {
       setUser(JSON.parse(session));
@@ -92,25 +97,24 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-      const fetchUserID = async () => {
-
-        setLoading(true);
-        const res = await GetUserById(user?.id);
-        setUserData(res);
-        setLoading(false);
-      };
-      if(user) {
-        fetchUserID();
-      } 
+    const fetchUserID = async () => {
+      setLoading(true);
+      const res = await GetUserById(user?.id);
+      setUserData(res);
+      setLoading(false);
+    };
+    if (user) {
+      fetchUserID();
+    }
   }, [user]);
 
-  
   return (
     <AuthContext.Provider
       value={{
         user,
         setUser,
         userData,
+        setUserData,
         blocked,
         setBlocked,
         deliverableData,
@@ -118,6 +122,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         allUsers,
         setAllUsers: setAllUsers,
         loading,
+        setLoading,
+        fetchAgain,
+        setFetchAgain,
       }}
     >
       {children}

@@ -9,7 +9,7 @@ const DownloadDeliverable: React.FC<DownloadDeliverableProps> = ({
   const handleDownload = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${id}/${path}.${type}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${id}/`,
 
         {
           method: "GET",
@@ -48,6 +48,7 @@ const DownloadDeliverable: React.FC<DownloadDeliverableProps> = ({
       className="w-6 h-6 mx-auto hover:text-acent cursor-pointer"
       onClick={handleDownload}
     >
+      <title>Descargar</title>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

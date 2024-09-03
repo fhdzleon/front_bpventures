@@ -2,13 +2,11 @@
 
 import React, { useState } from "react";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
-import { PATHROUTES } from "@/helpers/pathRoutes";
+import { useAuth } from "@/context/AuthContext";
 
 const UploadDeliverable = () => {
   const token = Cookies.get("token");
-
-  const router = useRouter();
+  const { fetchAgain, setFetchAgain } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -24,8 +22,6 @@ const UploadDeliverable = () => {
       setFile(event.target.files[0]);
     }
   };
-
-  const [folders, setFolders] = useState([]); // Estado para almacenar las carpetas creadas
 
   const formDataFetch = new FormData();
   formDataFetch.append("name", formData.name);
@@ -66,12 +62,16 @@ const UploadDeliverable = () => {
     try {
       const url =
         Number(selectedOption) > 2
-          ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/`
-          : `${process.env.NEXT_PUBLIC_API_URL}/deliverables/no-file`;
-      //! CAMBIARAN LOS END POINT A /delivarbles/file , delivarables/folder y deliverable/link
+          ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/file`
+          : Number(selectedOption) === 2
+          ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/link`
+          : `${process.env.NEXT_PUBLIC_API_URL}/deliverables/folder`;
 
       const response = await fetch(url, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formDataFetch,
       });
 
@@ -84,6 +84,7 @@ const UploadDeliverable = () => {
     } catch (error) {
       console.error("Error", error);
     } finally {
+      setFetchAgain(!fetchAgain);
       setFormData({ name: "", description: "", category: "" });
       setIsModalOpen(false);
     }
@@ -91,7 +92,6 @@ const UploadDeliverable = () => {
 
   return (
     <div className="mt-5 flex justify-start">
-      {/* Botón que abre el modal */}
       <button
         className="flex items-center justify-center mb-3 bg-secundary hover:text-secundary hover:bg-acent text-white font-sans px-4 py-2 rounded-full"
         onClick={toggleModal}

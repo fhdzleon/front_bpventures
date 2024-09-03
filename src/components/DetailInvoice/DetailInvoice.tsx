@@ -12,9 +12,6 @@ invoiceStatus: string,
 overdueIndicator: boolean
 }
 
-
-
-
 interface InvoiceDetailProps {
   Invoice: Invoice;
 }

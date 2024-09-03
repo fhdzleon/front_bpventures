@@ -9,7 +9,7 @@ const Avatar = () => {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    setName(userData?.Names);
+    setName(userData?.Names || "");
   }, [userData]);
   return (
     <>
@@ -31,10 +31,9 @@ const Avatar = () => {
         </>
       ) : (
         <>
-        <div className="flex flex-col items-center justify-center mt-7">
-
-          <span className="loader"></span>
-        </div>
+          <div className="flex flex-col items-center justify-center mt-7">
+            <span className="loader"></span>
+          </div>
         </>
       )}
     </>

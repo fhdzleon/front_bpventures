@@ -4,10 +4,12 @@ import React from "react";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 const DeleteDeliverable = ({ id }: { id: any }) => {
   const token = Cookies.get("token");
   const router = useRouter();
+  const { setFetchAgain, fetchAgain } = useAuth();
 
   const handleClick = async () => {
     Swal.fire({
@@ -44,7 +46,7 @@ const DeleteDeliverable = ({ id }: { id: any }) => {
             text: "El archivo a sido eliminado",
             icon: "success",
             confirmButtonColor: "#2b4168",
-          }).finally(() => router.push(PATHROUTES.DELIVERABLES));
+          });
         } catch (error) {
           console.error("hubo un problema con la peticion, error");
           Swal.fire(
@@ -52,13 +54,16 @@ const DeleteDeliverable = ({ id }: { id: any }) => {
             "Hubo un problema al eliminar el archivo",
             "error"
           );
+        } finally {
+          setFetchAgain(!fetchAgain);
+          router.push(PATHROUTES.DELIVERABLES);
         }
       }
     });
   };
 
   return (
-    <button onClick={handleClick}>
+    <button onClick={handleClick}> 
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -67,6 +72,7 @@ const DeleteDeliverable = ({ id }: { id: any }) => {
         stroke="currentColor"
         className="w-6 h-6 mx-auto hover:text-acent"
       >
+        <title>Eliminar</title>
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
