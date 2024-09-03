@@ -16,7 +16,7 @@ interface InvoiceDetailProps {
   Invoice: Invoice;
 }
 
-const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
+const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }: { Invoice: Invoice}) => {
 
   const getInvoiceStatus = (invoiceStatus: string) => {
     switch (invoiceStatus.toLowerCase()) {
