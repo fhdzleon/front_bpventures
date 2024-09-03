@@ -11,6 +11,8 @@ import PermissionPanel from "./permissionpanel";
 import Cookies from "js-cookie";
 import { useAuth } from "@/context/AuthContext";
 import { fetchDeliverables } from "@/helpers/fetchDeliverables";
+import FileTableNew from "../permisosprueba/table";
+import PreviewViewDeliverable from "@/components/permisosprueba/PreviewButton";
 
 const DeliverablesList = () => {
   const { setDeliverableData, userData, deliverableData, loading, fetchAgain } =
