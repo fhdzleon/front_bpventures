@@ -10,7 +10,7 @@ const Avatar = () => {
 
   useEffect(() => {
     setName(userData?.Names || "");
-  }, [userData?.Names]);
+  }, [userData]);
   return (
     <>
       {!loading ? (
