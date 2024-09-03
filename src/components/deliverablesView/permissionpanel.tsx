@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { AuthContextType, useAuth } from "@/context/AuthContext";
 import Swal from "sweetalert2";
+import Select from 'react-select'
 
 interface permissionTypes {
   id: number;
@@ -163,14 +164,18 @@ export default function PermissionPanel({
   const filteredUser = allUsers?.find((user) =>
     user.Names.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
+  const userHandler = async (e : any) => {
+    setSearchQuery(e.value);
+  
+    // setNewUserId(e.value);
+  };
   return (
-    <div className="absolute top-0 left-0 bottom-0 z-10 transform -translate-x-full">
-      <div className="w-96 rounded-md m-2 bg-white p-4 shadow-lg border border-gray-300">
+    <div className="absolute top-0  left-0 md:-left-10 bottom-0 z-10 transform -translate-x-full">
+      <div className="w-[300px] md:w-[500px] rounded-md m-2 bg-white p-4 shadow-lg border border-gray-300">
         <div className="flex justify-end items-center mb-4">
           <button
             onClick={closePanel}
-            className="text-white text-right bg-secundary rounded-md hover:text-gray-700"
+            className="text-white text-right bg-secundary rounded-md hover:text-secundary hover:bg-white border border-secundary "
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -193,13 +198,35 @@ export default function PermissionPanel({
           <h4 className="text-md font-futura font-bold mb-2">
             Asignar Permisos a Nuevos Usuarios
           </h4>
-          <input
+          {/* <input
             type="text"
             placeholder="Buscar usuario..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="border p-2 rounded w-full"
           />
+           */}
+          
+          <Select 
+            id="users"
+            options={allUsers
+              .map((user) => (
+                  {key:user.id, 
+                  value:user.Names,
+                 label:user.Names}
+            ))
+              .sort((a, b) =>
+              a.label
+              .toString()
+              .toLowerCase()
+              .localeCompare(b.label.toString().toLowerCase())
+              )}
+             
+            onChange={userHandler}
+      
+          ></Select>
+
+
           {filteredUser ? (
             <div className="mt-2 flex items-center mb-2">
               <span className="mr-2">{filteredUser.Names}</span>
