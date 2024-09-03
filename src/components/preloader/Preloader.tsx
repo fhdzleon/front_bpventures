@@ -3,19 +3,14 @@ import React from "react";
 const Preloader: React.FC = () => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
-      <div
-        className="spinner-border animate-spin inline-block w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full"
-        role="status"
-      >
-        <span className="visually-hidden">Cargando...</span>
+      <div className="flex flex-col h-full items-center justify-center mt-7">
+        <span className="loader"></span>
       </div>
     </div>
   );
 };
 
 export default Preloader;
-
-
 
 // components/Preloader.tsx
 // import React from "react";
@@ -54,7 +49,6 @@ export default Preloader;
 // };
 
 // export default Preloader;
-
 
 // import Preloader from "../Preloader"; // Importa el preloader
 // const [loading, setLoading] = useState<boolean>(true); // Estado de carga

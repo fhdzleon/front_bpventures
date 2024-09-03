@@ -7,7 +7,6 @@ import InvoiceDetail, {
 } from "@/components/DetailInvoice/DetailInvoice";
 import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
 import VoucherUpload from "@/components/invoice/VoucherUpload";
-import PreviewButton from "@/components/PreviewButton/PreviewButton";
 import DeleteInvoice from "@/components/InvoicesButton/ButtonDelete";
 const BillingTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,18 +32,7 @@ const BillingTable = () => {
     setSelectedInvoice(null);
   };
 
-  const [invoices, setInvoices] = useState<Invoice[]>([
-    {
-      id: 1,
-      invoicePath: null,
-      invoiceNumber: "INV-001",
-      invoiceIssueDate: "30-08-2024",
-      invoiceDueDate: "15-09-2024",
-      invoiceAmount: "1500.00",
-      invoiceStatus: "Payed",
-      overdueIndicator: false,
-    },
-  ]);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
   const { userData, loading } = useAuth();
 
   useEffect(() => {
@@ -113,7 +101,9 @@ const BillingTable = () => {
                     {invoice.invoiceDueDate}
                   </td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 flex space-x-4">
-                    <button>
+                    <button
+                    title="descargar"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -131,7 +121,7 @@ const BillingTable = () => {
                     </button>
                     <DeleteInvoice id={invoice.id} />
                     {/* boton de modal  */}
-                    <button onClick={() => handleOpenModal(invoice)}>
+                    <button title="vista previa" onClick={() => handleOpenModal(invoice)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -169,7 +159,7 @@ const BillingTable = () => {
                     )}
 
                     {/* voucher */}
-                    <button onClick={() => handleOpenModalVoucher(invoice)}>
+                    <button title="voucher" onClick={() => handleOpenModalVoucher(invoice)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

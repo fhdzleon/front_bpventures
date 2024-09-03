@@ -63,7 +63,7 @@ const DeleteDeliverable = ({ id }: { id: any }) => {
   };
 
   return (
-    <button onClick={handleClick}>
+    <button title="Eliminar" onClick={handleClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

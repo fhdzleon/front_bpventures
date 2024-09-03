@@ -4,6 +4,7 @@ import React from "react";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { PATHROUTES } from "@/helpers/pathRoutes";
 
 const DeleteInvoice= ({ id }: { id: any }) => {
   const token = Cookies.get("token");
@@ -32,19 +33,22 @@ const DeleteInvoice= ({ id }: { id: any }) => {
               },
             }
           );
-
+          console.log(response);
+          
           if (!response.ok) {
             throw new Error("No se logro borrar el archivo");
           }
 
           const data = await response.json();
-
+          console.log(data);
+          
           Swal.fire({
             title: "Eliminado",
             text: "La factura a sido eliminado",
             icon: "success",
             confirmButtonColor: "#2b4168",
           });
+
         } catch (error) {
           console.error("hubo un problema con la peticion, error");
           Swal.fire(
@@ -58,7 +62,7 @@ const DeleteInvoice= ({ id }: { id: any }) => {
   };
 
   return (
-    <button onClick={handleClick}>
+    <button title="Eliminar" onClick={handleClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
