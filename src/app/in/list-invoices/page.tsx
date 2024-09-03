@@ -7,7 +7,7 @@ import InvoiceDetail, {
 } from "@/components/DetailInvoice/DetailInvoice";
 import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
 import VoucherUpload from "@/components/invoice/VoucherUpload";
-
+import PreviewButton from "@/components/PreviewButton/PreviewButton";
 const BillingTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenVoucher, setIsModalOpenVoucher] = useState(false);
@@ -222,6 +222,7 @@ const BillingTable = () => {
           <p className="p-6 text-gray-600">No se encontraron facturas.</p>
         )}
       </div>
+  
     </div>
   );
 };

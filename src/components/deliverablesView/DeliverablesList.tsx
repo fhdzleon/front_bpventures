@@ -10,7 +10,8 @@ import Image from "next/image";
 import PermissionPanel from "./permissionpanel";
 import Cookies from "js-cookie";
 import { useAuth } from "@/context/AuthContext";
-import FileTableNew from "../permisosprueba/table";
+import FileTableNew from "../permisosprueba/table"
+import PreviewViewDeliverable from "@/components/permisosprueba/PreviewButton"
 
 const DeliverablesList = () => {
   const { setDeliverableData, userData, deliverableData, loading } = useAuth();
@@ -231,7 +232,7 @@ const DeliverablesList = () => {
                                 path={deliverable.deliverablePath}
                                 type={deliverable.deliverableType}
                               />
-                            
+                      
 
 
                               <EditDeliverable
