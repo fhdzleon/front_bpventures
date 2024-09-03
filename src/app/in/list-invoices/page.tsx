@@ -33,11 +33,11 @@ const BillingTable = () => {
     setSelectedInvoice(null);
   };
 
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const { userData, loading } = useAuth();
 
-  useEffect(() => {
-    const fetchInvoices = async () => {
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+
+  const { userData, loading } = useAuth();
+ const fetchInvoices = async () => {
       try {
         if (!loading) {
           const response = await GetInvoices(userData?.id);
@@ -47,6 +47,8 @@ const BillingTable = () => {
         console.error("Error fetching invoices", error);
       }
     };
+  useEffect(() => {
+   
     fetchInvoices();
   }, [userData?.id]);
 
@@ -124,7 +126,7 @@ const BillingTable = () => {
                         />
                       </svg>
                     </button></Link>
-                    <DeleteInvoice id={invoice.id} />
+                    <DeleteInvoice onClick={fetchInvoices()} id={invoice.id} />
                     {/* boton de modal  */}
                     <button title="vista previa" onClick={() => handleOpenModal(invoice)}>
                       <svg
