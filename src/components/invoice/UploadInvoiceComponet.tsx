@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
 import ButtonUploadInvoice from './ButtonUploadInvoices';
+import { Toaster, toast } from "sonner";
+
 
 const invoiceStatuses = [
   { id: 1, name: 'Pendiente' },
@@ -49,15 +51,17 @@ export const UploadInvoiceComponet: React.FC < { userId: number }> = ({ userId }
 
       if (response.ok) {
         const result = await response.json();
-        alert('Invoice uploaded successfully!');
+        toast.success("Factura cargada correctamente");
         console.log(result);
       } else {
-        alert('Error uploading invoice');
+        const errorData = await response.json();
+        toast.error(errorData.message || 'Error al cargar la factura');
       }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while uploading the invoice.');
-    }
+      
+    } catch (error: any) {
+      console.error("Error al cargar la factura", error);
+      toast.error(error.message);
+    } 
     // const nuevaFactura = {
     //   numeroFactura,
     //   fechaEmision,
@@ -74,6 +78,7 @@ export const UploadInvoiceComponet: React.FC < { userId: number }> = ({ userId }
 
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
+      <Toaster richColors />
 
       <form className="form-apply" onSubmit={handleSubmit}>
         <h1 className="text-center text-[1.2rem] mb-6">Cargar Nueva Factura {userId}</h1>

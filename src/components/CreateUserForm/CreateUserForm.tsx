@@ -14,6 +14,7 @@ interface ICreateUser {
   Names: string;
   LastName: string;
   Position: string;
+  domain?: string; // Agregamos el campo para el dominio
 }
 
 const generateRandomPassword = (length: number = 12): string => {
@@ -59,9 +60,14 @@ export const CreateUserForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Captura el dominio actual
+    const currentDomain = window.location.origin;
+
     try {
-      const res =  await RegisterUser(formData);
-      router.push(`${PATHROUTES.LIST}/${res.id}`);
+      // Agrega el dominio actual a los datos del formulario
+      const res = await RegisterUser({ ...formData, domain: currentDomain });
+      // router.push(`${PATHROUTES.LIST}/${res.id}`);
 
       toast.success("¡Usuario registrado exitosamente!");
     } catch (error: any) {
@@ -96,7 +102,6 @@ export const CreateUserForm: React.FC = () => {
                 value={formData[field as keyof ICreateUser]}
                 onChange={handleChange}
                 placeholder={fieldLabels[field]}
-                // required
               />
               {field === "password" && (
                 <button type="button" onClick={handlePasswordVisibilityToggle} className="absolute inset-y-0 right-0 px-3 py-2 text-gray-500">
