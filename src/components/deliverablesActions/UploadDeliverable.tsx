@@ -23,8 +23,6 @@ const UploadDeliverable = () => {
     }
   };
 
-  const [folders, setFolders] = useState([]); // Estado para almacenar las carpetas creadas
-
   const formDataFetch = new FormData();
   formDataFetch.append("name", formData.name);
   formDataFetch.append("deliverableTypeId", selectedOption);
@@ -64,11 +62,16 @@ const UploadDeliverable = () => {
     try {
       const url =
         Number(selectedOption) > 2
-          ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/`
-          : `${process.env.NEXT_PUBLIC_API_URL}/deliverables/no-file`;
+          ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/file`
+          : Number(selectedOption) === 2
+          ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/link`
+          : `${process.env.NEXT_PUBLIC_API_URL}/deliverables/folder`;
 
       const response = await fetch(url, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formDataFetch,
       });
 
