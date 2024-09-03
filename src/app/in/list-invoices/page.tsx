@@ -34,7 +34,7 @@ const BillingTable = () => {
   };
 
   const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const { userData, loading } = useAuth();
+  const { userData, loading,fetchAgain } = useAuth();
  const fetchInvoices = async () => {
       try {
         if (!loading) {
@@ -48,7 +48,7 @@ const BillingTable = () => {
   useEffect(() => {
    
     fetchInvoices();
-  }, [userData?.id]);
+  }, [userData?.id, fetchAgain]);
 
   return (
     <div className="m-5  overflow-x-auto mt-5   rounded-lg">
@@ -121,7 +121,9 @@ const BillingTable = () => {
                         />
                       </svg>
                     </button></Link>
-                    {/* <DeleteInvoice onClick={()=>fetchInvoices()} id={invoice.id} /> */}
+
+                    <DeleteInvoice id={invoice.id} />
+
                     {/* boton de modal  */}
                     <button title="vista previa" onClick={() => handleOpenModal(invoice)}>
                       <svg
