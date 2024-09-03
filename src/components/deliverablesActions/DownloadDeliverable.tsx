@@ -1,17 +1,16 @@
 import React from "react";
 import DownloadDeliverableProps from "@/interfaces/downLoadProps";
 
-const DownloadDeliverable: React.FC<DownloadDeliverableProps> = () => {
+const DownloadDeliverable: React.FC<DownloadDeliverableProps> = ({
+  id,
+  path,
+  type,
+}) => {
   const handleDownload = async () => {
-    const imageUrl =
-      "https://templates.invoicehome.com/modelo-factura-es-puro-750px.png";
-    const link = document.createElement("a");
-    link.href = imageUrl;
-    link.download = "modelo-factura.png"; // Puedes cambiar el nombre del archivo si lo deseas
-    link.click();
-    /*  try {
+    try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${id}/`,
+
         {
           method: "GET",
           headers: {
@@ -36,7 +35,7 @@ const DownloadDeliverable: React.FC<DownloadDeliverableProps> = () => {
     } catch (error) {
       console.error("Error descargando el archivo:", error);
       alert("No se completo la descarga");
-    } */
+    }
   };
 
   return (
