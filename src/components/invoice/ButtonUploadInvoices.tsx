@@ -7,7 +7,7 @@ const ButtonUploadInvoice = ({ userId }: { userId: number }) => {
     return (
 
 
-        <div className="mt-5 flex justify-start">
+        <div className="m-5 flex justify-start">
             <Link href={`${PATHROUTES.UPLOAD_INVOICES}/${userId}`}> 
             <button
                 className="flex items-center justify-center bg-secundary hover:text-secundary hover:bg-acent text-white font-sans px-4 py-2 rounded-full"

@@ -219,7 +219,7 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
       } catch (error) {
         console.error("Error fetching user data:", error);
       } finally {
-        setLoading(false); // Termina la carga
+        // setLoading(false); // Termina la carga
       }
     };
 
@@ -286,6 +286,7 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
         )}
 
         <div className="col-span-1">
+        <Preloader />
           {loading ? ( // Mostrar el preloader si está cargando
             <Preloader />
           ) : (
