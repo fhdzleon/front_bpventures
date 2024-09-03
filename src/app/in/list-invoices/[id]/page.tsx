@@ -96,6 +96,7 @@ const DetailUser: React.FC<IdParams> = ({ params }) => {
   }
 
   return invoice ? (
+    //TODO: to be improve types
     <InvoiceDetail Invoice={invoice} />
   ) : (
     <div className="mt-10 flex flex-col justify-center text-center items-center">

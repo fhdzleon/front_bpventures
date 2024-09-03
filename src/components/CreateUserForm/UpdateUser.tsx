@@ -174,6 +174,7 @@ import { PATHROUTES } from "@/helpers/pathRoutes";
 import { useParams } from "next/navigation";
 import Preloader from "../preloader/Preloader";
 import { GetUserById, UpdateUser } from "@/helpers/auth.helper";
+import { useAuth } from "@/context/AuthContext";
 interface User {
   email: string;
   password: string;
@@ -207,7 +208,8 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
     Domicilio: "",
   });
 
-  const [loading, setLoading] = useState<boolean>(true); // Estado de carga
+  // const [loading, setLoading] = useState<boolean>(true); // Estado de carga
+  const {loading} = useAuth();
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const router = useRouter();
 
@@ -286,9 +288,9 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
         )}
 
         <div className="col-span-1">
-        <Preloader />
-          {loading ? ( // Mostrar el preloader si está cargando
-            <Preloader />
+    
+          {loading ? ( 
+              <Preloader />
           ) : (
             <form className="form-apply" onSubmit={handleSubmit}>
               {[

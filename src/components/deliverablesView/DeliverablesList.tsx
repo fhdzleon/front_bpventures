@@ -32,7 +32,7 @@ const DeliverablesList = () => {
 
   useEffect(() => {
     fetchDeliverables(
-      userData.id,
+      userData?.id,
       token,
       currentPage,
       itemsPerPage,
