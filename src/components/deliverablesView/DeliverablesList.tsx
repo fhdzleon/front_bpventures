@@ -10,9 +10,11 @@ import Image from "next/image";
 import PermissionPanel from "./permissionpanel";
 import Cookies from "js-cookie";
 import { useAuth } from "@/context/AuthContext";
+import { fetchDeliverables } from "@/helpers/fetchDeliverables";
 
 const DeliverablesList = () => {
-  const { setDeliverableData, userData, deliverableData, loading } = useAuth();
+  const { setDeliverableData, userData, deliverableData, loading, fetchAgain } =
+    useAuth();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentFolder, setCurrentFolder] = useState<string | null>(null);
@@ -27,31 +29,22 @@ const DeliverablesList = () => {
   };
 
   useEffect(() => {
-    const fetchDeliverables = async () => {
-      try {
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/deliverables/user/${
-          userData.id
-        }?page=${currentPage}&limit=${itemsPerPage}${
-          currentFolder ? `&parentId=${currentFolder}` : ""
-        }`;
-
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
-
-        setDeliverableData(data);
-      } catch (error) {
-        console.error("Error fetching deliverables", error);
-      }
-    };
-
-    fetchDeliverables();
-  }, [currentPage, setDeliverableData, token, userData?.id, currentFolder]);
+    fetchDeliverables(
+      userData.id,
+      token,
+      currentPage,
+      itemsPerPage,
+      currentFolder,
+      setDeliverableData
+    );
+  }, [
+    currentPage,
+    setDeliverableData,
+    token,
+    userData?.id,
+    fetchAgain,
+    currentFolder,
+  ]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
