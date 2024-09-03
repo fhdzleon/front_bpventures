@@ -9,6 +9,7 @@ import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
 import VoucherUpload from "@/components/invoice/VoucherUpload";
 import PreviewButton from "@/components/PreviewButton/PreviewButton";
 import DeleteInvoice from "@/components/InvoicesButton/ButtonDelete";
+import Link from "next/link";
 const BillingTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenVoucher, setIsModalOpenVoucher] = useState(false);
@@ -37,18 +38,16 @@ const BillingTable = () => {
     {
       id: 1,
       invoicePath: null,
-      invoiceNumber: "INV-001",
-      invoiceIssueDate: "30-08-2024",
-      invoiceDueDate: "15-09-2024",
-      invoiceAmount: "1500.00",
-      invoiceStatus: "Payed",
+      invoiceNumber: "",
+      invoiceIssueDate: "",
+      invoiceDueDate: "",
+      invoiceAmount: "",
+      invoiceStatus: "",
       overdueIndicator: false,
     },
   ]);
   const { userData, loading } = useAuth();
-
-  useEffect(() => {
-    const fetchInvoices = async () => {
+ const fetchInvoices = async () => {
       try {
         if (!loading) {
           const response = await GetInvoices(userData?.id);
@@ -58,6 +57,8 @@ const BillingTable = () => {
         console.error("Error fetching invoices", error);
       }
     };
+  useEffect(() => {
+   
     fetchInvoices();
   }, [userData?.id]);
 
@@ -113,7 +114,9 @@ const BillingTable = () => {
                     {invoice.invoiceDueDate}
                   </td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 flex space-x-4">
-                    <button>
+                    {/* <pre> {JSON.stringify(`process.env.NEXT_PUBLIC_API_URL ${invoice.invoicePath}`  , null, 2)} </pre> */}
+                   <Link download href={`${process.env.NEXT_PUBLIC_API_URL}/${invoice.invoicePath}`}> <button>
+
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -122,14 +125,15 @@ const BillingTable = () => {
                         stroke="currentColor"
                         className="w-6 h-6 mx-auto hover:text-acent"
                       >
+                        <title>Descargar Factura</title>
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           d="M12 9.75v6.75m0 0-3-3m3 3 3-3m-8.25 6a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z"
                         />
                       </svg>
-                    </button>
-                    <DeleteInvoice id={invoice.id} />
+                    </button></Link>
+                    <DeleteInvoice onClick={fetchInvoices()} id={invoice.id} />
                     {/* boton de modal  */}
                     <button onClick={() => handleOpenModal(invoice)}>
                       <svg
@@ -138,8 +142,9 @@ const BillingTable = () => {
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        className="size-6"
+                        className="w-6 h-6 mx-auto hover:text-acent"
                       >
+                        <title>Ver Factura</title>
                         <path
                           stroke-linecap="round"
                           stroke-linejoin="round"
@@ -151,7 +156,6 @@ const BillingTable = () => {
                           d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                         />
                       </svg>
-                
                     </button>
 
                     {isModalOpen && selectedInvoice && (
@@ -176,8 +180,9 @@ const BillingTable = () => {
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        className="size-6"
+                        className="size-6 w-6 h-6 mx-auto hover:text-acent"
                       >
+                        <title>Subir Comprobante</title>
                         <path
                           stroke-linecap="round"
                           stroke-linejoin="round"
@@ -196,7 +201,7 @@ const BillingTable = () => {
 
                           <button
                             onClick={handleCloseModalVoucher}
-                            className="mt-4 bg-secundary text-white px-4 py-2 rounded-full"
+                            className="mt-4  bg-secundary text-white px-4 py-2 rounded-full"
                           >
                             Cerrar
                           </button>
