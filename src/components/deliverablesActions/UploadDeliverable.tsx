@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import { useAuth } from "@/context/AuthContext";
 
 const UploadDeliverable = () => {
   const token = Cookies.get("token");
-
+  const { fetchAgain, setFetchAgain } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -65,7 +66,6 @@ const UploadDeliverable = () => {
         Number(selectedOption) > 2
           ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/`
           : `${process.env.NEXT_PUBLIC_API_URL}/deliverables/no-file`;
-      //! CAMBIARAN LOS END POINT A /delivarbles/file , delivarables/folder y deliverable/link
 
       const response = await fetch(url, {
         method: "POST",
@@ -81,6 +81,7 @@ const UploadDeliverable = () => {
     } catch (error) {
       console.error("Error", error);
     } finally {
+      setFetchAgain(!fetchAgain);
       setFormData({ name: "", description: "", category: "" });
       setIsModalOpen(false);
     }
