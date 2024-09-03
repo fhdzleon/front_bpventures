@@ -35,5 +35,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/in:path*"], // Definir rutas en las que aplicar el middleware
+  matcher: ["/in/:path*"], // Definir rutas en las que aplicar el middleware
 };
