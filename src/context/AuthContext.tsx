@@ -39,6 +39,7 @@ export interface AuthContextType {
   user: userPayload;
   setUser: (user: userPayload) => void;
   userData: userdata;
+  setUserData: (userData: userdata) => void;
   blocked: boolean;
   setBlocked: (blocked: boolean) => void;
   deliverableData: any;
@@ -46,6 +47,7 @@ export interface AuthContextType {
   allUsers: userdata[];
   setAllUsers: (allUser: any) => void;
   loading: boolean;
+  setLoading: (loading: boolean) => void;
   fetchAgain: boolean;
   setFetchAgain: (fetchAgain: any) => void;
 }
@@ -62,7 +64,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [allUsers, setAllUsers] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [fetchAgain, setFetchAgain] = useState<boolean>(true);
-
+  console.log(userData);
+  
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -111,6 +114,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         user,
         setUser,
         userData,
+        setUserData,
         blocked,
         setBlocked,
         deliverableData,
@@ -118,6 +122,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         allUsers,
         setAllUsers: setAllUsers,
         loading,
+        setLoading,
         fetchAgain,
         setFetchAgain,
       }}
