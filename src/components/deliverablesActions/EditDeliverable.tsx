@@ -86,6 +86,7 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
         className="w-6 h-6 mx-auto hover:text-accent hover:text-acent cursor-pointer"
         onClick={toggleModal}
       >
+        <title>Editar</title>
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
