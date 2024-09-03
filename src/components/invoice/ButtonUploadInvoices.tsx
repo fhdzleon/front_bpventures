@@ -1,13 +1,20 @@
 import Link from "next/link";
 import React from "react";
 import { PATHROUTES } from "@/helpers/pathRoutes";
+import { useAuth } from "@/context/AuthContext";
 
 const ButtonUploadInvoice = ({ userId }: { userId: number }) => {
+
+  const { userData } = useAuth();
+
 
     return (
 
 
         <div className="m-5 flex justify-start">
+        {userData?.isAdmin && (
+
+
             <Link href={`${PATHROUTES.UPLOAD_INVOICES}/${userId}`}> 
             <button
                 className="flex items-center justify-center bg-secundary hover:text-secundary hover:bg-acent text-white font-sans px-4 py-2 rounded-full"
@@ -30,6 +37,8 @@ const ButtonUploadInvoice = ({ userId }: { userId: number }) => {
                 <span>Subir Factura</span>
             </button>
             </Link>
+        )}
+
         </div>
 
     )
