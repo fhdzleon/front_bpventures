@@ -9,7 +9,7 @@ const DownloadDeliverable: React.FC<DownloadDeliverableProps> = ({
   const handleDownload = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${id}/${path}.${type}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${id}/`,
 
         {
           method: "GET",

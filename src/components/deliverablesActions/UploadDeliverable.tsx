@@ -2,13 +2,10 @@
 
 import React, { useState } from "react";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
-import { PATHROUTES } from "@/helpers/pathRoutes";
 
 const UploadDeliverable = () => {
   const token = Cookies.get("token");
 
-  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -91,7 +88,6 @@ const UploadDeliverable = () => {
 
   return (
     <div className="mt-5 flex justify-start">
-      {/* Botón que abre el modal */}
       <button
         className="flex items-center justify-center mb-3 bg-secundary hover:text-secundary hover:bg-acent text-white font-sans px-4 py-2 rounded-full"
         onClick={toggleModal}
