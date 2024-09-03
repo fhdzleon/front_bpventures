@@ -11,9 +11,9 @@ interface DeleteInvoiceProps {
   id: any; // o el tipo adecuado para `id`
 }
 
-const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ onClick, id }) => {
+const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ id }: { id: any }) => {
   const token = Cookies.get("token");
-  onClick();
+
   const router = useRouter();
 
   const handleClick = async () => {
