@@ -7,11 +7,11 @@ import { useRouter } from "next/navigation";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 
 interface DeleteInvoiceProps {
-  onClick: () => void;
+
   id: any; // o el tipo adecuado para `id`
 }
-
-const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ id }: { id: any }) => {
+// ({ id }: { id: any }) => {
+const DeleteInvoice: React.FC<DeleteInvoiceProps> = (  { id }: { id: any }) => {
   const token = Cookies.get("token");
 
   const router = useRouter();
