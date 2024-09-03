@@ -67,6 +67,7 @@ const DeleteInvoice= ({ id }: { id: any }) => {
         stroke="currentColor"
         className="w-6 h-6 mx-auto hover:text-acent"
       >
+        <title>Eliminar Factura</title>
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
