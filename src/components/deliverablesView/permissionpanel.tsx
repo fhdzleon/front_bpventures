@@ -2,10 +2,6 @@
 import { useState, useEffect } from "react";
 import { AuthContextType, useAuth } from "@/context/AuthContext";
 import Swal from "sweetalert2";
-//  estado global simulado para permisos PORQUE NECESITO DONDE GUARDAR
-// let simulatedPermissionsData = [
-//   { userId: 2, fileId: 1, permissionTypes: [''] },
-// ];
 
 interface permissionTypes {
   id: number;
@@ -31,6 +27,7 @@ export default function PermissionPanel({
   const [newUserId, setNewUserId] = useState<number | null>(null);
   const [agrupedPermissions, setAgrupedPermissions] = useState<any[]>([]);
   const { allUsers }: AuthContextType = useAuth();
+
   useEffect(() => {
     const permissionsMap = async () => {
       try {
@@ -48,7 +45,6 @@ export default function PermissionPanel({
 
         console.log(permissionsData);
         setUserPermissions(permissionsData);
-        // return permissionsData;
       } catch (error) {
         console.log(error);
       }
@@ -78,22 +74,20 @@ export default function PermissionPanel({
   }, [userPermissions]);
 
   const handlePermissionChange = (userId: number, permission: string) => {
+    setNewUserId(userId)
     setAgrupedPermissions(prevPermissions => {
-      // Buscar el usuario actual en la lista de permisos
       const userIndex = prevPermissions.findIndex(p => p.userId === userId);
       
       if (userIndex !== -1) {
-        // Usuario encontrado, actualizar permisos
         const updatedUserPermissions = { ...prevPermissions[userIndex] };
         const hasPermission = updatedUserPermissions.permissionTypes.includes(permission);
   
         if (hasPermission) {
-          updatedUserPermissions.permissionTypes = updatedUserPermissions.permissionTypes.filter((perm: string )=> perm !== permission);
+          updatedUserPermissions.permissionTypes = updatedUserPermissions.permissionTypes.filter((perm: string) => perm !== permission);
         } else {
           updatedUserPermissions.permissionTypes = [...updatedUserPermissions.permissionTypes, permission];
         }
   
-        // Actualizar el array con los permisos modificados
         const updatedPermissions = [
           ...prevPermissions.slice(0, userIndex),
           updatedUserPermissions,
@@ -102,7 +96,6 @@ export default function PermissionPanel({
   
         return updatedPermissions;
       } else {
-        // Usuario no encontrado, agregar nuevo usuario con permisos
         return [
           ...prevPermissions,
           { userId, permissionTypes: [permission] }
@@ -110,40 +103,33 @@ export default function PermissionPanel({
       }
     });
   };
-  console.log(agrupedPermissions);
 
-  const savePermissions =async () => {
-
+  const savePermissions = async () => {
     try {
       const permissionTypes = [
-        // Aquí debes definir o obtener la lista completa de tipos de permisos
-        {id:1, name:'owner'},
+        { id: 1, name: 'owner' },
         { id: 2, name: 'view' },
         { id: 3, name: 'edit' },
         { id: 4, name: 'delete' },
-        { id: 5, name: 'share Link' },
+  
       ];
   
       const transformPermissions = (permissions: any[]): any[] => {
-        // Crea un mapa de nombres de permisos a IDs
         const permissionTypeMap = new Map(permissionTypes.map(pt => [pt.name, pt.id]));
       
-        // Transforma los permisos agrupados en el formato requerido
         const transformedPermissions = permissions.flatMap(permission => 
           permission.permissionTypes.map((typeName: string) => ({
             userId: permission.userId,
-            permissionTypeId: permissionTypeMap.get(typeName) ?? -1 // Usa -1 si el tipo no se encuentra
+            permissionTypeId: permissionTypeMap.get(typeName) ?? -1
           }))
         );
       
         return transformedPermissions;
       };
       
-      // Ejemplo de uso con agrupedPermissions
       const permisosUpdated = transformPermissions(agrupedPermissions);
       console.log(permisosUpdated);
       
-      // Envía los datos al servidor
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/deliverables/permision/${fileId}`, {
         method: 'PUT',
         headers: {
@@ -158,7 +144,7 @@ export default function PermissionPanel({
   
       Swal.fire({
         title: "Permiso Guardado!",
-        text: "Permiso guardado para el archivo "+ fileId,
+        text: "Permiso guardado para el archivo " + fileId,
         icon: "success",
         confirmButtonColor: "#2b4168",
       });
@@ -171,22 +157,16 @@ export default function PermissionPanel({
       );
     }
           
-          closePanel();
-   
-
+    closePanel();
   };
-
-
-  
-
 
   const filteredUser = allUsers?.find((user) =>
     user.Names.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div className="absolute top-0 left-0 bottom-0  z-10 transform -translate-x-full">
-      <div className="w-96 rounded-md m-2  bg-white p-4 shadow-lg border border-gray-300">
+    <div className="absolute top-0 left-0 bottom-0 z-10 transform -translate-x-full">
+      <div className="w-96 rounded-md m-2 bg-white p-4 shadow-lg border border-gray-300">
         <div className="flex justify-end items-center mb-4">
           <button
             onClick={closePanel}
@@ -196,13 +176,13 @@ export default function PermissionPanel({
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               className="size-6"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M6 18L18 6M6 6l12 12"
               />
             </svg>
@@ -224,7 +204,7 @@ export default function PermissionPanel({
             <div className="mt-2 flex items-center mb-2">
               <span className="mr-2">{filteredUser.Names}</span>
               <button
-                onClick={() => setNewUserId(filteredUser.id)}
+                onClick={() => handlePermissionChange(filteredUser.id, "view")}
                 className="ml-4 bg-emerald-500 text-white px-2 py-1 rounded"
               >
                 Agregar
@@ -234,21 +214,21 @@ export default function PermissionPanel({
             <p className="text-gray-500">No se encontraron usuarios.</p>
           ) : null}
         </div>
-
-        {newUserId !== null && (
-          
+        {/* {newUserId !== null && ( */}
+        {/* {newUserId !== null && (
           <div className="mb-6">
             <h4 className="text-md font-semibold mb-2">
               Permisos para{" "}
               {allUsers.find((user) => user.id === newUserId)?.Names}
             </h4>
-            {["view", "edit", "delete", "share Link"].map((perm) => (
-              
+            {["view", "edit", "delete"].map((perm) => (
               <label key={perm} className="ml-2">
                 <input
                   type="checkbox"
                   checked={
-                    agrupedPermissions[newUserId]?.includes(perm)
+                    agrupedPermissions.find(
+                      (perm) => perm.userId === newUserId
+                    )?.permissionTypes.includes(perm) ?? false
                   }
                   onChange={() => handlePermissionChange(newUserId, perm)}
                 />
@@ -256,20 +236,22 @@ export default function PermissionPanel({
               </label>
             ))}
           </div>
-        )}
+        )} */}
 
-        <div className="mb-6  ">
+        {/* <div className="mb-6">
           <h4 className="text-md font-semibold mb-2">Permisos Actuales</h4>
-          {agrupedPermissions?.map((permission, index) => (
+          {agrupedPermissions.map((permission, index) => (
             <div key={index} className="flex items-center mb-2">
               <span className="mr-2">
                 {allUsers.find((user) => user.id === permission.userId)?.Names}
               </span>
-              {["view", "edit", "delete", "share Link"].map((perm) => (
+              {["view", "edit", "delete"].map((perm) => (
                 <label key={perm} className="ml-2">
                   <input
                     type="checkbox"
-                    checked={permission.permissionTypes.includes(perm)}
+                    checked={
+                      perm === "view" || permission.permissionTypes.includes(perm)
+                    }
                     onChange={() =>
                       handlePermissionChange(permission.userId, perm)
                     }
@@ -279,15 +261,60 @@ export default function PermissionPanel({
               ))}
             </div>
           ))}
-        </div>
+        </div> */}
 
-        <button
+        {/* <button
           onClick={savePermissions}
           className="bg-secundary font-futura text-white px-4 py-2 rounded"
         >
           Guardar
+        </button> */}
+         { (
+       <div className="mb-6 "> 
+          <h4 className="text-md font-semibold mb-2 ">Permisos Actuales</h4>
+          <table className="w-full border  border-gray-300">
+            <thead>
+              <tr className="bg-secundary">
+                <th className="border text-white border-gray-300 p-2">Usuario</th>
+                <th className="border text-white border-gray-300 p-2">Ver</th>
+                <th className="border text-white border-gray-300 p-2">Editar</th>
+                <th className="border text-white border-gray-300 p-2">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {agrupedPermissions.map((permission, index) => (
+                <tr key={index}>
+                  <td className="border border-gray-300 p-2">
+                    {allUsers.find((user) => user.id === permission.userId)?.Names}
+                  </td>
+                  {["view", "edit", "delete"].map((perm) => (
+                    <td key={perm} className="border border-gray-300 p-2 text-center">
+                      <input
+                        type="checkbox"
+                       
+                    checked={permission.permissionTypes.includes(perm)}
+                    onChange={() =>
+                      handlePermissionChange(permission.userId, perm)
+                    }
+                      />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+)}
+        <button
+          onClick={savePermissions}
+          className="bg-secundary text-white px-4 py-2 rounded"
+        >
+          Guardar
         </button>
       </div>
-    </div>
+      
+    
+      </div>
+   
   );
 }
