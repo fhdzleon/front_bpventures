@@ -133,7 +133,7 @@ const BillingTable = () => {
                         />
                       </svg>
                     </button></Link>
-                    <DeleteInvoice onClick={fetchInvoices()} id={invoice.id} />
+                    <DeleteInvoice  id={invoice.id} />
                     {/* boton de modal  */}
                     <button onClick={() => handleOpenModal(invoice)}>
                       <svg
