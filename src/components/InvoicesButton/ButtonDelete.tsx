@@ -13,6 +13,7 @@ interface DeleteInvoiceProps {
 
 const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ onClick, id }) => {
   const token = Cookies.get("token");
+  onClick();
   const router = useRouter();
 
   const handleClick = async () => {
