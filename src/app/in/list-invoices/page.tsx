@@ -38,18 +38,16 @@ const BillingTable = () => {
     {
       id: 1,
       invoicePath: null,
-      invoiceNumber: "INV-001",
-      invoiceIssueDate: "30-08-2024",
-      invoiceDueDate: "15-09-2024",
-      invoiceAmount: "1500.00",
-      invoiceStatus: "Payed",
+      invoiceNumber: "",
+      invoiceIssueDate: "",
+      invoiceDueDate: "",
+      invoiceAmount: "",
+      invoiceStatus: "",
       overdueIndicator: false,
     },
   ]);
   const { userData, loading } = useAuth();
-
-  useEffect(() => {
-    const fetchInvoices = async () => {
+ const fetchInvoices = async () => {
       try {
         if (!loading) {
           const response = await GetInvoices(userData?.id);
@@ -59,6 +57,8 @@ const BillingTable = () => {
         console.error("Error fetching invoices", error);
       }
     };
+  useEffect(() => {
+   
     fetchInvoices();
   }, [userData?.id]);
 
@@ -133,7 +133,7 @@ const BillingTable = () => {
                         />
                       </svg>
                     </button></Link>
-                    <DeleteInvoice id={invoice.id} />
+                    <DeleteInvoice onClick={fetchInvoices()} id={invoice.id} />
                     {/* boton de modal  */}
                     <button onClick={() => handleOpenModal(invoice)}>
                       <svg
