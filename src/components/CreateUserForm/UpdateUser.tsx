@@ -164,7 +164,7 @@
 
 // export default UpdateUserComponent;
 
-
+'use client'
 import React, { useEffect, useState } from "react";
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
