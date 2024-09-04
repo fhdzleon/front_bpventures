@@ -289,10 +289,6 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
         )}
 
         <div className="col-span-1">
-    
-          {loading ? ( 
-              <Preloader />
-          ) : (
             <form className="form-apply" onSubmit={handleSubmit}>
               {[
                 "email",
@@ -336,7 +332,6 @@ const UpdateUserComponent: React.FC<Props> = (props) => {
               ))}
               <Button type="submit">Guardar Cambios</Button>
             </form>
-          )}
         </div>
       </div>
     </div>
