@@ -52,6 +52,11 @@ import { GetInvoices } from "@/helpers/auth.helper";
 import { useAuth } from "@/context/AuthContext";
 
 export interface Invoice {
+  invoicePath: any;
+  invoiceDueDate: ReactNode;
+  invoiceIssueDate: ReactNode;
+  invoiceAmount: ReactNode;
+  invoiceNumber: ReactNode;
   id: number;
   amount: number;
   invoiceStatusId: number;
