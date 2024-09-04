@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
+import { Toaster, toast } from 'sonner';
 
 export interface Invoice {
   id: number;
@@ -62,16 +63,18 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
 
       if (response.ok) {
         const result = await response.json();
-        alert('Payment voucher uploaded successfully!');
+        toast.success("comprobante de pago cargado correctamente");
         setVoucherState(result);
       } else {
-        alert('Error uploading payment voucher');
+        const errorData = await response.json();
+        toast.error(errorData.message || 'Error al cargar el comprobante de pago');
       }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while uploading the payment voucher.');
+    } catch (error: any) {
+      console.error("Error al cargar el comprobante de pago", error);
+   toast.error(error.message);
     }
   };
+  
 
   const renderVoucherFile = () => {
     const fileExtension = voucherState.path.split('.').pop().toLowerCase();
@@ -110,6 +113,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
+       <Toaster richColors />
       {voucherState ? (
         <div className="voucher-detail-container mt-8 p-4 border rounded shadow">
           <h2 className="text-center text-[1.2rem] mb-4">Detalle del Comprobante de Pago</h2>
