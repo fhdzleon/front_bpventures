@@ -4,6 +4,9 @@ GET https://api.1rodemayo.com/invoices/
 ### Obtener facturas por usuario
 GET https://api.1rodemayo.com/invoices/2
 Content-Type: application/json
+### 
+DELETE  http://localhost:3000/invoices/2
+Content-Type: application/json
 
 ### Crear una nueva factura
 POST https://api.1rodemayo.com/invoices
