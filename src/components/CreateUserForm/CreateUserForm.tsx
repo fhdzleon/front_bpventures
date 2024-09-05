@@ -1,12 +1,10 @@
 "use client";
 import { RegisterUser } from "@/helpers/auth.helper";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Toaster, toast } from "sonner";
 import Button from "../FormComponent/Button";
 import "../../styles/form-style.css";
 import { useRouter } from "next/navigation";
-import { PATHROUTES } from "@/helpers/pathRoutes";
-
 
 interface ICreateUser {
   email: string;
@@ -36,14 +34,30 @@ export const CreateUserForm: React.FC = () => {
     Position: "",
   });
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
+
+    if (name === "email") {
+      // Verificar si el correo electrónico ya existe
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/check-email?email=${value}`);
+        const data = await response.json();
+        if (response.ok) {
+          setEmailError(data.exists ? 'Este correo electrónico ya está registrado.' : null);
+        } else {
+          setEmailError('Error al verificar el correo electrónico.');
+        }
+      } catch (error) {
+        setEmailError('Error de red.');
+      }
+    }
   };
 
   const handlePasswordGeneration = () => {
@@ -60,6 +74,11 @@ export const CreateUserForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (emailError) {
+      toast.error(emailError);
+      return;
+    }
 
     // Captura el dominio actual
     const currentDomain = window.location.origin;
@@ -113,6 +132,9 @@ export const CreateUserForm: React.FC = () => {
               <Button onClick={handlePasswordGeneration} type="button">
                 Generar Contraseña
               </Button>
+            )}
+            {field === "email" && emailError && (
+              <p className="text-red-500 mt-2">{emailError}</p>
             )}
           </div>
         ))}

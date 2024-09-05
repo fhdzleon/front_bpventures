@@ -2,9 +2,7 @@
 import React, { useState } from 'react';
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
-import ButtonUploadInvoice from './ButtonUploadInvoices';
 import { Toaster, toast } from "sonner";
-
 
 const invoiceStatuses = [
   { id: 1, name: 'Pendiente' },
@@ -12,14 +10,14 @@ const invoiceStatuses = [
   { id: 3, name: 'Anulada' },
 ];
 
-export const UploadInvoiceComponet: React.FC < { userId: number }> = ({ userId }: { userId: number }) => {
-  const [invoiceNumber, setInvoiceNumber] = useState('INV-123456');
-  const [issueDate, setIssueDate] = useState('2024-08-31');
-  const [dueDate, setDueDate] = useState('2024-09-15');
-  const [amount, setAmount] = useState(1500);
-  // const [userId, setUserId] = useState(1);
+export const UploadInvoiceComponet: React.FC<{ userId: number }> = ({ userId }) => {
+  const [invoiceNumber, setInvoiceNumber] = useState('');
+  const [issueDate, setIssueDate] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [amount, setAmount] = useState(0);
   const [invoiceStatusId, setInvoiceStatusId] = useState(invoiceStatuses[0].id);
   const [file, setFile] = useState<File | null>(null);
+  const [invoiceNumberExists, setInvoiceNumberExists] = useState(false);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -27,8 +25,31 @@ export const UploadInvoiceComponet: React.FC < { userId: number }> = ({ userId }
     }
   };
 
+  const handleInvoiceNumberBlur = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/check-invoice-number?invoiceNumber=${invoiceNumber}`);
+      if (response.ok) {
+        const data = await response.json();
+        setInvoiceNumberExists(data.exists);
+        if (data.exists) {
+          toast.error('Ya existe una factura con este número');
+        }
+      } else {
+        throw new Error('Error al verificar el número de factura');
+      }
+    } catch (error: any) {
+      console.error('Error al verificar el número de factura', error);
+      toast.error(error.message);
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    if (invoiceNumberExists) {
+      toast.error('No se puede cargar la factura porque el número ya existe');
+      return;
+    }
 
     const selectedStatus = invoiceStatuses.find(status => status.id === invoiceStatusId);
 
@@ -61,19 +82,7 @@ export const UploadInvoiceComponet: React.FC < { userId: number }> = ({ userId }
     } catch (error: any) {
       console.error("Error al cargar la factura", error);
       toast.error(error.message);
-    } 
-    // const nuevaFactura = {
-    //   numeroFactura,
-    //   fechaEmision,
-    //   fechaVencimiento,
-    //   monto,
-    //   idUser,
-    //   estadoFactura: selectedStatus, // Incluye el estado como un objeto {id, name}
-    //   comprobante,
-    // };
-
-    // console.log(nuevaFactura);
-    // // Aquí puedes enviar `nuevaFactura` a tu backend
+    }
   };
 
   return (
@@ -89,6 +98,7 @@ export const UploadInvoiceComponet: React.FC < { userId: number }> = ({ userId }
             id="numeroFactura"
             value={invoiceNumber}
             onChange={(e) => setInvoiceNumber(e.target.value)}
+            onBlur={handleInvoiceNumberBlur}
             className="input-apply"
             required
           />
@@ -104,7 +114,6 @@ export const UploadInvoiceComponet: React.FC < { userId: number }> = ({ userId }
             className="input-apply"
             required
           />
-
         </div>
         <div className="mb-4">
           <label className="label-apply">Fecha de Vencimiento:</label>
@@ -116,7 +125,6 @@ export const UploadInvoiceComponet: React.FC < { userId: number }> = ({ userId }
             className="input-apply"
             required
           />
-
         </div>
         <div className="mb-4">
           <label className="label-apply">Monto:</label>
@@ -129,20 +137,10 @@ export const UploadInvoiceComponet: React.FC < { userId: number }> = ({ userId }
             required
           />
         </div>
-        {/* <div className="mb-4">
-          <label className="block text-gray-700">ID Usuario:</label>
-          <input
-            type="text"
-            value={idUser}
-            onChange={(e) => setIdUser(e.target.value)}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-            required
-          />
-        </div> */}
         <div className="mb-4">
           <label className="label-apply">Estado de la Factura:</label>
           <select
-          id='estadoFactura'
+            id='estadoFactura'
             value={invoiceStatusId}
             onChange={(e) => setInvoiceStatusId(parseInt(e.target.value))}
             className="input-apply"
@@ -165,18 +163,9 @@ export const UploadInvoiceComponet: React.FC < { userId: number }> = ({ userId }
             className="input-apply"
           />
         </div>
-        
-        {/* <div className="flex justify-center w-3/4 mt-4"> */}
-          {/* <button
-            type="submit"
-            className="bg-secundary font-sans text-white font-bold py-2 px-4 rounded">
-            Guardar Factura
-          </button> */}
-          <Button type="submit">Guardar Factura</Button>
-        {/* </div> */}
-      </form>
 
-    
+        <Button type="submit">Guardar Factura</Button>
+      </form>
     </div>
   );
 };
