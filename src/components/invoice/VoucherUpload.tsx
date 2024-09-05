@@ -5,7 +5,7 @@ import { Toaster, toast } from 'sonner';
 
 export interface Invoice {
   id: number;
-  invoicePath: null;
+  invoicePath: string | null;
   invoiceNumber: string;
   invoiceIssueDate: string;
   invoiceDueDate: string;
@@ -63,7 +63,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
 
       if (response.ok) {
         const result = await response.json();
-        toast.success("comprobante de pago cargado correctamente");
+        toast.success("Comprobante de pago cargado correctamente");
         setVoucherState(result);
       } else {
         const errorData = await response.json();
@@ -71,39 +71,85 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
       }
     } catch (error: any) {
       console.error("Error al cargar el comprobante de pago", error);
-   toast.error(error.message);
+      toast.error(error.message);
     }
   };
-  
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${voucherState.id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        toast.success("Comprobante de pago eliminado correctamente");
+        setVoucherState(null); // Reinicia el estado para mostrar el formulario de carga nuevamente
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || 'Error al eliminar el comprobante de pago');
+      }
+    } catch (error: any) {
+      console.error("Error al eliminar el comprobante de pago", error);
+      toast.error(error.message);
+    }
+  };
 
   const renderVoucherFile = () => {
-    const fileExtension = voucherState.path.split('.').pop().toLowerCase();
+    if (!voucherState?.path) {
+      return <p>No hay archivo asociado.</p>;
+    }
+
+    const fileExtension = voucherState.path.split('.').pop()?.toLowerCase();
+    const fileUrl = `${process.env.NEXT_PUBLIC_API_URL}/${voucherState.path}`;
 
     if (fileExtension === 'pdf') {
       return (
-        <div className="mb-2">
+        <div className="mb-4">
           <strong>Archivo Comprobante:</strong>
-          <a href={`${process.env.NEXT_PUBLIC_API_URL}/${voucherState.path}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
-            Abrir PDF en otra ventana
+          <iframe
+            src={fileUrl}
+            title="Comprobante PDF"
+            className="w-full h-96 border-0"
+          />
+          <a
+            href={fileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline mt-2 block"
+          >
+            Ver PDF en Nueva Ventana
           </a>
         </div>
       );
     } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
       return (
-        <div className="mb-2">
+        <div className="mb-4">
           <strong>Previsualización de Comprobante:</strong>
           <img
-            src={`${process.env.NEXT_PUBLIC_API_URL}/${voucherState.path}`}
+            src={fileUrl}
             alt="Comprobante de Pago"
             className="mt-2 max-w-xs"
           />
+          <a
+            href={fileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline mt-2 block"
+          >
+            Ver Imagen en Nueva Ventana
+          </a>
         </div>
       );
     } else {
       return (
-        <div className="mb-2">
+        <div className="mb-4">
           <strong>Archivo Comprobante:</strong>
-          <a href={`${process.env.NEXT_PUBLIC_API_URL}/${voucherState.path}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+          <a
+            href={fileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline"
+          >
             Descargar archivo
           </a>
         </div>
@@ -113,7 +159,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
-       <Toaster richColors />
+      <Toaster richColors />
       {voucherState ? (
         <div className="voucher-detail-container mt-8 p-4 border rounded shadow">
           <h2 className="text-center text-[1.2rem] mb-4">Detalle del Comprobante de Pago</h2>
@@ -130,6 +176,9 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
             <strong>Factura Asociada:</strong> {voucherState.invoiceId.number}
           </div>
           {renderVoucherFile()}
+          <Button onClick={handleDelete} type="button" className="mt-4 bg-red-500 hover:bg-red-600 text-white">
+            Eliminar Comprobante
+          </Button>
         </div>
       ) : (
         <form className="form-apply" onSubmit={handleSubmit}>
