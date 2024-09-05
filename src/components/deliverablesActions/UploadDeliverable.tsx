@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { useAuth } from "@/context/AuthContext";
+import GoogleDrivePicker from "./GoogleDrivePicker";
 
 const UploadDeliverable = () => {
   const token = Cookies.get("token");
@@ -205,9 +206,7 @@ const UploadDeliverable = () => {
                 <h3 className="font-sans text-lg text-secundary">
                   Subir Archivo:
                 </h3>
-                <button className="font-sans bg-google p-2 rounded text-white mb-2">
-                  Importar desde Google Drive
-                </button>
+                <GoogleDrivePicker />
                 <p className="font-sans mb-2">
                   O selecciona un archivo desde tu PC.
                 </p>
