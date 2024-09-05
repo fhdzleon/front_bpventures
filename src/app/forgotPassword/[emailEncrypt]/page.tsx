@@ -10,6 +10,7 @@ const Page: React.FC = () => {
   const { emailEncrypt } = useParams();
   const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewPassword(e.target.value);
@@ -32,13 +33,17 @@ const Page: React.FC = () => {
       });
 
       if (response.ok) {
-        router.push(PATHROUTES.LOGIN);
+        setIsModalOpen(true); // Abre el modal si la solicitud fue exitosa
       } else {
         console.error("Failed to reset password");
       }
     } catch (error) {
       console.error("An error occurred:", error);
     }
+  };
+
+  const handleRedirect = () => {
+    router.push(PATHROUTES.LOGIN);
   };
 
   function decryptFromHex(encryptedHex: string, key: string) {
@@ -97,6 +102,22 @@ const Page: React.FC = () => {
             </form>
           </div>
         </div>
+
+        {/* Modal */}
+        {isModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+              <h2 className="text-lg font-semibold mb-4">Contraseña cambiada correctamente</h2>
+              <p className="mb-4">Ahora puedes iniciar sesión con tu nueva contraseña.</p>
+              <button
+                onClick={handleRedirect}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+              >
+                Iniciar Sesión
+              </button>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );

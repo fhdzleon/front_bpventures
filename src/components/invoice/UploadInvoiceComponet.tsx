@@ -18,6 +18,7 @@ export const UploadInvoiceComponet: React.FC<{ userId: number }> = ({ userId }) 
   const [invoiceStatusId, setInvoiceStatusId] = useState(invoiceStatuses[0].id);
   const [file, setFile] = useState<File | null>(null);
   const [invoiceNumberExists, setInvoiceNumberExists] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -25,21 +26,30 @@ export const UploadInvoiceComponet: React.FC<{ userId: number }> = ({ userId }) 
     }
   };
 
-  const handleInvoiceNumberBlur = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/check-invoice-number?invoiceNumber=${invoiceNumber}`);
-      if (response.ok) {
-        const data = await response.json();
-        setInvoiceNumberExists(data.exists);
-        if (data.exists) {
-          toast.error('Ya existe una factura con este número');
+  const handleInvoiceNumberChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newInvoiceNumber = e.target.value;
+    setInvoiceNumber(newInvoiceNumber);
+
+    if (newInvoiceNumber.length > 0) {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/check-invoice-number?invoiceNumber=${newInvoiceNumber}`);
+        if (response.ok) {
+          const data = await response.json();
+          setInvoiceNumberExists(data.exists);
+          if (data.exists) {
+            setErrorMessage('Ya existe una factura con este número');
+          } else {
+            setErrorMessage('');
+          }
+        } else {
+          throw new Error('Error al verificar el número de factura');
         }
-      } else {
-        throw new Error('Error al verificar el número de factura');
+      } catch (error: any) {
+        console.error('Error al verificar el número de factura', error);
+        setErrorMessage('Error al verificar el número de factura');
       }
-    } catch (error: any) {
-      console.error('Error al verificar el número de factura', error);
-      toast.error(error.message);
+    } else {
+      setErrorMessage('');
     }
   };
 
@@ -47,11 +57,9 @@ export const UploadInvoiceComponet: React.FC<{ userId: number }> = ({ userId }) 
     event.preventDefault();
 
     if (invoiceNumberExists) {
-      toast.error('No se puede cargar la factura porque el número ya existe');
+      setErrorMessage('No se puede cargar la factura porque el número ya existe');
       return;
     }
-
-    const selectedStatus = invoiceStatuses.find(status => status.id === invoiceStatusId);
 
     const formData = new FormData();
     formData.append('invoiceNumber', invoiceNumber);
@@ -90,18 +98,18 @@ export const UploadInvoiceComponet: React.FC<{ userId: number }> = ({ userId }) 
       <Toaster richColors />
 
       <form className="form-apply" onSubmit={handleSubmit}>
-        <h1 className="text-center text-[1.2rem] mb-6">Cargar Nueva Factura {userId}</h1>
+        <h1 className="text-center text-[1.2rem] mb-6">Cargar Nueva Factura{/*  {userId} */}</h1>
         <div className="mb-4">
           <label className="label-apply">Número de Factura:</label>
           <input
             type="text"
             id="numeroFactura"
             value={invoiceNumber}
-            onChange={(e) => setInvoiceNumber(e.target.value)}
-            onBlur={handleInvoiceNumberBlur}
+            onChange={handleInvoiceNumberChange}
             className="input-apply"
             required
           />
+          {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
         </div>
 
         <div className="mb-4">
@@ -160,7 +168,9 @@ export const UploadInvoiceComponet: React.FC<{ userId: number }> = ({ userId }) 
             type="file"
             id="cargadeFactura"
             onChange={handleFileChange}
+            accept=".pdf,image/*"  // Solo permite PDF y cualquier tipo de imagen
             className="input-apply"
+            required  // Hace que el campo sea obligatorio
           />
         </div>
 

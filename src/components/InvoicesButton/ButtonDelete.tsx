@@ -11,20 +11,20 @@ interface DeleteInvoiceProps {
   id: any; // o el tipo adecuado para `id`
 }
 
-const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({  id }) => {
+const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ id }) => {
   const token = Cookies.get("token");
   const router = useRouter();
-  const {fetchAgain, setFetchAgain} = useAuth();
+  const { fetchAgain, setFetchAgain } = useAuth();
 
   const handleClick = async () => {
     Swal.fire({
-      title: "¿Estas seguro?",
-      text: "Estas a punto de eliminar este archivo",
+      title: "¿Estás seguro?",
+      text: "Estás a punto de eliminar este archivo",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#2b4168",
       cancelButtonColor: "#5eba98",
-      confirmButtonText: "Si, eliminalo",
+      confirmButtonText: "Sí, elimínalo",
       cancelButtonText: "Cancelar",
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -39,29 +39,28 @@ const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({  id }) => {
               },
             }
           );
-        
-          
+
           if (!response.ok) {
-            throw new Error("No se logro borrar el archivo");
+            throw new Error("No se logró borrar el archivo");
           }
 
           const data = await response.json();
-          
+
           Swal.fire({
             title: "Eliminado",
-            text: "La factura a sido eliminado",
+            text: "La factura ha sido eliminada",
             icon: "success",
             confirmButtonColor: "#2b4168",
           });
-          
+
         } catch (error) {
-          console.error("hubo un problema con la peticion, error");
+          console.error("Hubo un problema con la petición", error);
           Swal.fire(
             "Error",
             "Hubo un problema al eliminar el archivo",
             "error"
           );
-        }finally {
+        } finally {
           setFetchAgain(!fetchAgain);
         }
       }
@@ -69,14 +68,14 @@ const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({  id }) => {
   };
 
   return (
-    <button onClick={handleClick}>
+    <button onClick={handleClick} className="hover:text-red-500">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        className="w-6 h-6 mx-auto hover:text-acent"
+        className="w-6 h-6 mx-auto"
       >
         <title>Eliminar Factura</title>
         <path
