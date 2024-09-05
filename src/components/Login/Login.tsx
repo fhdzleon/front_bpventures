@@ -119,7 +119,10 @@ export default function Login() {
           sessionStorage.setItem("user", JSON.stringify(json.userPayload));
           setUser(json.userPayload);
           toast.success("¡Inicio de sesión exitoso!");
-          router.push(PATHROUTES.HOME);
+          // router.push(PATHROUTES.HOME);
+          // window.location.href = PATHROUTES.HOME;
+          router.replace(PATHROUTES.HOME);
+
         }
       } catch (error) {
         toast.error("Error en el inicio de sesión. Verifica tus credenciales.");
