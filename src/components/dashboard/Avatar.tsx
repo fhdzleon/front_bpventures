@@ -15,7 +15,7 @@ const Avatar = () => {
     <>
       {!loading ? (
         <>
-          <div className="flex flex-col items-center justify-center mt-7">
+          <div className="md:flex flex-col hidden items-center justify-center mt-7">
             <Image
               src="https://i.postimg.cc/7hR9Z5NW/avatardashboard.png"
               alt="avatar"

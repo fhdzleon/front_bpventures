@@ -33,7 +33,7 @@ const UploadDeliverable = () => {
         alert(
           `Extensión inválida. Por favor, selecciona un archivo ${validExtensions[
             selectedOption
-          ].join(", ")}.`
+          ].join(", ")}. o cambia el tipo de archivo`
         );
         return false;
       }
