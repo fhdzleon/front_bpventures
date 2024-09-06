@@ -5,7 +5,7 @@ import { useState } from "react";
 import DeleteDeliverable from "../deliverablesActions/DeleteDeliverable";
 import DownloadDeliverable from "../deliverablesActions/DownloadDeliverable";
 import EditDeliverable from "../deliverablesActions/EditDeliverable";
-import deliverableMock from "@/helpers/deliverableData";
+import SortDeliverable from "../sortDeliverables/SortDeliverable";
 import Image from "next/image";
 import PermissionPanel from "./permissionpanel";
 import Cookies from "js-cookie";
@@ -87,10 +87,16 @@ const DeliverablesList = () => {
                   </th>
 
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
-                    Fecha de Creación
+                    <div className=" flex justify-evenly items-center">
+                      Fecha
+                      <SortDeliverable name="FECHA" />
+                    </div>
                   </th>
-                  <th className="py-3 px-4 w-1/6 font-sans text-center text-md ">
-                    Categorias
+                  <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
+                    <div className=" flex justify-evenly items-center">
+                      Categorias
+                      <SortDeliverable name="CATEGORIA" />
+                    </div>
                   </th>
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md ">
                     Acciones
