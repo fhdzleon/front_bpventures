@@ -5,7 +5,7 @@ import Link from "next/link";
 const ItemsAdminUser = () => {
   return (
     <div>
-      <div className="grid grid-cols-6 py-2 px-4 items-center ">
+      <div className="hidden md:grid grid-cols-6 py-2 px-4 items-center ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

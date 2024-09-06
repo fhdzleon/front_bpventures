@@ -30,6 +30,8 @@ const DeliverablesList = () => {
     setOpenPanel(openPanel === fileId ? null : fileId);
   };
 
+  console.log(deliverableData);
+
   useEffect(() => {
     fetchDeliverables(
       userData?.id,
@@ -82,20 +84,22 @@ const DeliverablesList = () => {
             <table className=" min-w-full divide-y divide-gray-300">
               <thead className="bg-secundary font-futura text-white">
                 <tr>
-                  <th className="py-3 px-4 w-2/6 font-sans text-center text-md first:">
-                    Nombre
+                  <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
+                    <div className=" flex justify-evenly items-center">
+                      Nombre:
+                      <SortDeliverable UserId={userData.id} column="name" />
+                    </div>
                   </th>
-
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
                     <div className=" flex justify-evenly items-center">
                       Fecha
-                      <SortDeliverable name="FECHA" />
+                      <SortDeliverable UserId={userData.id} column="date" />
                     </div>
                   </th>
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
                     <div className=" flex justify-evenly items-center">
                       Categorias
-                      <SortDeliverable name="CATEGORIA" />
+                      <SortDeliverable UserId={userData.id} column="category" />
                     </div>
                   </th>
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md ">

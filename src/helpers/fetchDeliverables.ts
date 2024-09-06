@@ -9,7 +9,7 @@ export const fetchDeliverables = async (
   try {
     const url = `${
       process.env.NEXT_PUBLIC_API_URL
-    }/deliverables/user/${userId}?page=${currentPage}&limit=100${
+    }/deliverables/user/${userId}?page=${currentPage}&limit=10${
       currentFolder ? `&parentId=${currentFolder}` : ""
     }`;
 
