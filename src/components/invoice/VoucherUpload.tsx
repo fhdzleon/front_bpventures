@@ -19,9 +19,9 @@ interface InvoiceDetailProps {
 }
 
 export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
-  const [invoiceNumber, setInvoiceNumber] = useState('INV-123456');
-  const [paymentDate, setPaymentDate] = useState('2024-09-01');
-  const [amount, setAmount] = useState(1500);
+  const [invoiceNumber, setInvoiceNumber] = useState('');
+  const [paymentDate, setPaymentDate] = useState('');
+  const [amount, setAmount] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [voucherState, setVoucherState] = useState<any>(null);
 

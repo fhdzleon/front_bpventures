@@ -6,6 +6,7 @@ import { PATHROUTES } from "@/helpers/pathRoutes";
 
 const Page: React.FC = () => {
   const [email, setEmail] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,13 +29,17 @@ const Page: React.FC = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        // router.push(PATHROUTES.LOGIN);
+        setIsModalOpen(true); // Abre el modal si la solicitud fue exitosa
       } else {
         console.error("Failed to reset password");
       }
     } catch (error) {
       console.error("An error occurred:", error);
     }
+  };
+
+  const handleRedirect = () => {
+    router.push(PATHROUTES.LOGIN);
   };
 
   return (
@@ -74,6 +79,25 @@ const Page: React.FC = () => {
             </form>
           </div>
         </div>
+
+        {/* Modal */}
+        {isModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+              <h2 className="text-lg font-semibold mb-4">Email enviado</h2>
+              <p className="mb-4 max-w-[30rem]">
+                Hemos enviado un enlace de restablecimiento de contraseña a tu correo electrónico <b> {email}</b>
+                <br />
+                <br />
+                Por favor, revisa tu bandeja de entrada y sigue las instrucciones para completar el proceso.
+              </p>
+
+              <button onClick={handleRedirect} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
+                Iniciar Sesión
+              </button>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
