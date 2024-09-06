@@ -1,136 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Botón</title>
+  </head>
+  <body>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: Arial, sans-serif;
-        }
+      .btn-custom {
+        margin-top: 1rem;
+        font-family: "Futura", sans-serif;
+        background-color: #2b4168;
+        color: white;
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        width: 100%;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0);
+        cursor: pointer;
+        max-width: 20em;
+        text-decoration: none;
+        font-size: 1em;
+        text-align: center;
+      }
 
-        .container {
-            display: flex;
-            height: 100vh;
-        }
+      .btn-custom:hover {
+        background-color: #1e2a44;
+      }
 
-        .left-side {
-            flex: 1;
-            background-image: url('./public/img/register-desktop-bg.svg');
-            background-size: cover;
-            background-position: right;
-            position: relative;
-        }
-
-        .right-side {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-form {
-            width: 80%;
-            max-width: 400px;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        .login-form h2 {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .login-form input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .login-form button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007BFF;
-            border: none;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .login-form button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Estilos para los adornos SVG */
-        .left-side .svg-adorno {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-        }
-
-        .left-side .svg-adorno:first-child {
-            top: 20px;
-            left: 20px;
-            width: 250px; /* Tamaño ajustado */
-            height: auto;
-        }
-
-        .left-side .svg-adorno:last-child {
-            position: absolute;
-            /* bottom: 5em; */
-            top: 18em;
-            left: 3em;
-            width: 500px; 
-            height: auto;
-
-        }
-        /* === Desktop... === */
-        @media (min-width: 40rem) {
-          /* body {
-            background-color: peru;
-          } */
-        }
-        /* === Desktop... === */
-        
-        /* === Mobile... === */
-        @media (max-width: 52rem) {
-            .left-side .svg-adorno:last-child{
-                display: none;
-            }
-        }
-        /* === Mobile... === */
-
-        .left-side img {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 150px; /* Tamaño del logo */
-            height: auto;
-        }
+      .btn-custom:focus {
+        box-shadow: 0 0 0 0.2rem rgba(43, 65, 104, 0.5);
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <div class="left-side">
-            <img class="svg-adorno" src="./public/img/logo-bpventures.svg" alt="Logo">
-            <!-- Adornos SVG -->
-            <img class="svg-adorno" src="./public/img/avatar.svg" alt="People">
-        </div>
-        <div class="right-side">
-            <div class="login-form">
-                <h2>Login</h2>
-                <input type="text" placeholder="Username" required>
-                <input type="password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </div>
-        </div>
-    </div>
-</body>
+    <a href="#" class="btn-custom">button</a>
+    <button type="button" class="btn-custom">Texto del botón</button>
+  </body>
 </html>
