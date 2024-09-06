@@ -26,6 +26,7 @@ const Logout = () => {
           className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer"
           onClick={clickHandler}
         >
+          <title>Cerrar sesión</title>
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
