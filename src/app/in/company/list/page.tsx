@@ -59,7 +59,7 @@ const CompanyTable: React.FC = () => {
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
       <Toaster richColors />
-      <div className="w-full max-w-4xl">
+      <div className="w-full">
         <h1 className="text-center text-[1.2rem] mb-6">Lista de Empresas</h1>
         {loading ? (
           <p className="text-center">Cargando empresas...</p>
@@ -86,8 +86,14 @@ const CompanyTable: React.FC = () => {
                       <Link href={`/in/company/${company.id}`}>
                         <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">Ver Detalles</button>
                       </Link>
-                      <Link href={`/in/company/edit/${company.id}`}>
+                      <Link href={`/in/company/${company.id}/edit`}>
                         <button className="bg-yellow-500 text-white px-2 py-1 rounded mr-2">Editar</button>
+                      </Link>
+                      <Link href={`/in/company/${company.id}/users`}>
+                        <button className="bg-green-500 text-white px-2 py-1 rounded mr-2">Ver Usuarios</button>
+                      </Link>
+                      <Link href={`/in/company/${company.id}/invoices`}>
+                        <button className="bg-purple-500 text-white px-2 py-1 rounded mr-2">Ver Facturas</button>
                       </Link>
                       <button
                         onClick={() => {
@@ -104,7 +110,7 @@ const CompanyTable: React.FC = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="text-center py-4">No hay empresas registradas.</td>
+                  <td colSpan={6} className="text-center py-4">No hay empresas registradas.</td>
                 </tr>
               )}
             </tbody>
