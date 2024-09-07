@@ -13,6 +13,8 @@ import { useAuth } from "@/context/AuthContext";
 import { fetchDeliverables } from "@/helpers/fetchDeliverables";
 import FileTableNew from "../permisosprueba/table";
 import PreviewViewDeliverable from "@/components/permisosprueba/PreviewButton";
+import SearchBar from "./Searchbar";
+
 
 const DeliverablesList = () => {
   const { setDeliverableData, userData, deliverableData, loading, fetchAgain } =
@@ -25,6 +27,9 @@ const DeliverablesList = () => {
   const itemsPerPage = 10;
   const token = Cookies.get("token");
   const [openPanel, setOpenPanel] = useState<number | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+
 
   const togglePanel = (fileId: number | null) => {
     setOpenPanel(openPanel === fileId ? null : fileId);
@@ -74,9 +79,15 @@ const DeliverablesList = () => {
     );
     setCurrentPage(1);
   };
+  
+
+
+
 
   return (
     <>
+   <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
       {!loading ? (
         <>
           <span className="font-mono ">{pathView}/</span>
@@ -370,3 +381,7 @@ const DeliverablesList = () => {
 };
 
 export default DeliverablesList;
+function setFilteredDeliverables(filtered: any) {
+  throw new Error("Function not implemented.");
+}
+
