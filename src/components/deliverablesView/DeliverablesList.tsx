@@ -231,9 +231,7 @@ const DeliverablesList = () => {
                               userData.isAdmin ? (
                                 <>
                                   <DownloadDeliverable
-                                    id={deliverable.id}
                                     path={deliverable.deliverablePath}
-                                    type={deliverable.deliverableType}
                                   />
                                   <EditDeliverable
                                     id={deliverable.id}
@@ -249,9 +247,7 @@ const DeliverablesList = () => {
                                     "view"
                                   ) && (
                                     <DownloadDeliverable
-                                      id={deliverable.id}
                                       path={deliverable.deliverablePath}
-                                      type={deliverable.deliverableType}
                                     />
                                   )}
 

@@ -1,41 +1,12 @@
 import React from "react";
 import DownloadDeliverableProps from "@/interfaces/downLoadProps";
 
-const DownloadDeliverable: React.FC<DownloadDeliverableProps> = ({
-  id,
-  path,
-  type,
-}) => {
-  const handleDownload = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${id}/`,
-
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/octet-stream",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Error al descargar el archivo");
-      }
-
-      const blob = await response.blob();
-      const urlObject = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = urlObject;
-      link.download = `${path}.${type}`;
-      link.click();
-
-      URL.revokeObjectURL(urlObject);
-    } catch (error) {
-      console.error("Error descargando el archivo:", error);
-      alert("No se completo la descarga");
-    }
+const DownloadDeliverable: React.FC<DownloadDeliverableProps> = ({ path }) => {
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = `${process.env.NEXT_PUBLIC_API_URL}/${path}`;
+    link.download = path;
+    link.click;
   };
 
   return (
