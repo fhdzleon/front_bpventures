@@ -2,24 +2,32 @@
 
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import { useAuth } from "@/context/AuthContext";
 
 interface SortDeliverableProps {
   column: string;
   UserId: any;
+  currentFolder: string | undefined | null;
 }
 
 const SortDeliverable: React.FC<SortDeliverableProps> = ({
   UserId,
   column,
+  currentFolder,
 }) => {
   const [order, setOrder] = useState<"ASC" | "DESC">("DESC");
   const token = Cookies.get("token");
+  const { setDeliverableData } = useAuth();
 
   const handleSort = async () => {
     const newOrder = order === "ASC" ? "DESC" : "ASC";
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/user/${UserId}?orderBy=${column}&orderOrientation=${newOrder}`,
+        `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/deliverables/user/${UserId}?orderBy=${column}&orderOrientation=${newOrder}${
+          currentFolder ? `&parentId=${currentFolder}` : ""
+        }`,
         {
           method: "GET",
           headers: {
@@ -33,10 +41,12 @@ const SortDeliverable: React.FC<SortDeliverableProps> = ({
       }
 
       const data = await response.json();
-      console.log(data);
+      /* console.log(data); */
 
       setOrder(newOrder);
-      console.log(newOrder);
+      setDeliverableData(data);
+
+      /*  console.log(newOrder); */
     } catch (error) {
       console.error("Hubo un problema con la solicitud de ordenamiento", error);
     }
