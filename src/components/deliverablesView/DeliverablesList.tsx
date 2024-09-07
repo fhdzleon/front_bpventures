@@ -11,8 +11,6 @@ import PermissionPanel from "./permissionpanel";
 import Cookies from "js-cookie";
 import { useAuth } from "@/context/AuthContext";
 import { fetchDeliverables } from "@/helpers/fetchDeliverables";
-import FileTableNew from "../permisosprueba/table";
-import PreviewViewDeliverable from "@/components/permisosprueba/PreviewButton";
 import SearchBar from "./Searchbar";
 
 
@@ -35,7 +33,7 @@ const DeliverablesList = () => {
     setOpenPanel(openPanel === fileId ? null : fileId);
   };
 
-  console.log(deliverableData);
+  /*   console.log(deliverableData); */
 
   useEffect(() => {
     fetchDeliverables(
@@ -98,19 +96,31 @@ const DeliverablesList = () => {
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
                     <div className=" flex justify-evenly items-center">
                       Nombre:
-                      <SortDeliverable UserId={userData.id} column="name" />
+                      <SortDeliverable
+                        UserId={userData.id}
+                        column="name"
+                        currentFolder={currentFolder}
+                      />
                     </div>
                   </th>
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
                     <div className=" flex justify-evenly items-center">
                       Fecha
-                      <SortDeliverable UserId={userData.id} column="date" />
+                      <SortDeliverable
+                        UserId={userData.id}
+                        column="date"
+                        currentFolder={currentFolder}
+                      />
                     </div>
                   </th>
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
                     <div className=" flex justify-evenly items-center">
                       Categorias
-                      <SortDeliverable UserId={userData.id} column="category" />
+                      <SortDeliverable
+                        UserId={userData.id}
+                        column="category"
+                        currentFolder={currentFolder}
+                      />
                     </div>
                   </th>
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md ">
@@ -176,6 +186,7 @@ const DeliverablesList = () => {
                                   alt="PDF"
                                   width={30}
                                   height={30}
+                                  className=" object-contain"
                                 />
                               </div>
                             ) : deliverable.deliverableType === "xls" ||
@@ -186,6 +197,7 @@ const DeliverablesList = () => {
                                   alt="XLS"
                                   width={30}
                                   height={30}
+                                  className=" object-contain"
                                 />
                               </div>
                             ) : deliverable.deliverableType === "doc" ? (
@@ -195,6 +207,7 @@ const DeliverablesList = () => {
                                   alt="DOC"
                                   width={30}
                                   height={30}
+                                  className=" object-contain"
                                 />
                               </div>
                             ) : deliverable.deliverableType === "jpg" ||
@@ -205,6 +218,7 @@ const DeliverablesList = () => {
                                   alt="DOC"
                                   width={30}
                                   height={30}
+                                  className=" object-contain"
                                 />
                               </div>
                             ) : (
@@ -214,6 +228,7 @@ const DeliverablesList = () => {
                                   alt="Otro Tipo"
                                   width={35}
                                   height={35}
+                                  className=" object-contain"
                                 />
                               </div>
                             )}
