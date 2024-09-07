@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { useAuth } from "@/context/AuthContext";
+import GoogleDrivePicker from "./GoogleDrivePicker";
 
 const UploadDeliverable = () => {
   const token = Cookies.get("token");
@@ -17,9 +18,37 @@ const UploadDeliverable = () => {
     category: "",
   });
 
+  const validateFileExtension = (file: File): boolean => {
+    const fileExtension = file.name.split(".").pop()?.toLowerCase();
+    const validExtensions: { [key: string]: string[] } = {
+      "3": ["pdf"],
+      "4": ["doc", "docx"],
+      "5": ["xls", "xlsx"],
+      "6": ["jpg", "jpeg"],
+      "7": ["png"],
+    };
+
+    if (selectedOption && validExtensions[selectedOption]) {
+      if (!validExtensions[selectedOption].includes(fileExtension || "")) {
+        alert(
+          `Extensión inválida. Por favor, selecciona un archivo ${validExtensions[
+            selectedOption
+          ].join(", ")}. o cambia el tipo de archivo`
+        );
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setFile(event.target.files[0]);
+      const selectedFile = event.target.files[0];
+      if (validateFileExtension(selectedFile)) {
+        setFile(selectedFile);
+      } else {
+        event.target.value = "";
+      }
     }
   };
 
@@ -133,12 +162,15 @@ const UploadDeliverable = () => {
                   Selecciona una opción
                 </option>
 
+                <option disabled className="font-bold">
+                  Nueva Carpeta
+                </option>
                 <option className="font-sans" value="1">
                   Carpeta
                 </option>
 
-                <option className="font-sans" value="2">
-                  Link
+                <option disabled className="font-bold">
+                  Nuevo Archivo
                 </option>
                 <option className="font-sans" value="3">
                   pdf
@@ -154,6 +186,13 @@ const UploadDeliverable = () => {
                 </option>
                 <option className="font-sans" value="7">
                   png
+                </option>
+
+                <option disabled className="font-bold">
+                  Nuevo Link
+                </option>
+                <option className="font-sans" value="2">
+                  Link
                 </option>
               </select>
 
@@ -205,17 +244,17 @@ const UploadDeliverable = () => {
                 <h3 className="font-sans text-lg text-secundary">
                   Subir Archivo:
                 </h3>
-                <button className="font-sans bg-google p-2 rounded text-white mb-2">
-                  Importar desde Google Drive
-                </button>
+                <GoogleDrivePicker />
                 <p className="font-sans mb-2">
                   O selecciona un archivo desde tu PC.
                 </p>
-                <input
-                  type="file"
-                  onChange={handleFileChange}
-                  className="mb-4 border-2"
-                />
+                <div className="relative">
+                  <input
+                    type="file"
+                    onChange={handleFileChange}
+                    className="w-full mb-4 border-2 overflow-auto"
+                  />
+                </div>
               </div>
             )}
 

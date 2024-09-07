@@ -5,7 +5,7 @@ import { useState } from "react";
 import DeleteDeliverable from "../deliverablesActions/DeleteDeliverable";
 import DownloadDeliverable from "../deliverablesActions/DownloadDeliverable";
 import EditDeliverable from "../deliverablesActions/EditDeliverable";
-import deliverableMock from "@/helpers/deliverableData";
+import SortDeliverable from "../sortDeliverables/SortDeliverable";
 import Image from "next/image";
 import PermissionPanel from "./permissionpanel";
 import Cookies from "js-cookie";
@@ -29,6 +29,8 @@ const DeliverablesList = () => {
   const togglePanel = (fileId: number | null) => {
     setOpenPanel(openPanel === fileId ? null : fileId);
   };
+
+  console.log(deliverableData);
 
   useEffect(() => {
     fetchDeliverables(
@@ -82,15 +84,23 @@ const DeliverablesList = () => {
             <table className=" min-w-full divide-y divide-gray-300">
               <thead className="bg-secundary font-futura text-white">
                 <tr>
-                  <th className="py-3 px-4 w-2/6 font-sans text-center text-md first:">
-                    Nombre
-                  </th>
-
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
-                    Fecha de Creación
+                    <div className=" flex justify-evenly items-center">
+                      Nombre:
+                      <SortDeliverable UserId={userData.id} column="name" />
+                    </div>
                   </th>
-                  <th className="py-3 px-4 w-1/6 font-sans text-center text-md ">
-                    Categorias
+                  <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
+                    <div className=" flex justify-evenly items-center">
+                      Fecha
+                      <SortDeliverable UserId={userData.id} column="date" />
+                    </div>
+                  </th>
+                  <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
+                    <div className=" flex justify-evenly items-center">
+                      Categorias
+                      <SortDeliverable UserId={userData.id} column="category" />
+                    </div>
                   </th>
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md ">
                     Acciones

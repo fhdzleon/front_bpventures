@@ -43,7 +43,7 @@ const DeleteDeliverable = ({ id }: { id: any }) => {
 
           Swal.fire({
             title: "Eliminado",
-            text: "El archivo a sido eliminado",
+            text: "El archivo ha sido eliminado",
             icon: "success",
             confirmButtonColor: "#2b4168",
           });
@@ -63,14 +63,14 @@ const DeleteDeliverable = ({ id }: { id: any }) => {
   };
 
   return (
-    <button onClick={handleClick}> 
+    <button onClick={handleClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        className="w-6 h-6 mx-auto hover:text-acent"
+        className="w-6 h-6 mx-auto hover:text-red-500"
       >
         <title>Eliminar</title>
         <path

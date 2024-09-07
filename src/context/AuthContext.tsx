@@ -16,6 +16,7 @@ export interface userPayload {
 }
 
 interface userdata {
+  admin: any;
   id: number;
   email: string;
   Names: string;

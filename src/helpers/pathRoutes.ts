@@ -9,4 +9,5 @@ export enum PATHROUTES {
   DELIVERABLES = "/in/deliverables",
   INVOICES = "/in/list-invoices",
   UPLOAD_INVOICES = "/in/upload-invoices",
+  UPDATE_INVOICES = "/in/update-invoice",
 }

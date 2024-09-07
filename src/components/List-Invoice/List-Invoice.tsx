@@ -7,11 +7,17 @@ import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
 import VoucherUpload from "@/components/invoice/VoucherUpload";
 import DeleteInvoice from "@/components/InvoicesButton/ButtonDelete";
 import Link from "next/link";
+import { PATHROUTES } from "@/helpers/pathRoutes";
+import InvoiceDownload from "@/components/InvoicesButton/Buttondowland"
+
 
 const BillingTableComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenVoucher, setIsModalOpenVoucher] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+
+
+
 
   const handleOpenModal = (invoice: Invoice) => {
     setSelectedInvoice(invoice);
@@ -77,25 +83,9 @@ const BillingTableComponent = () => {
                   <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.invoiceIssueDate}</td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.invoiceDueDate}</td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 flex space-x-4">
-                    <a
-                      href={`${process.env.NEXT_PUBLIC_API_URL}/${invoice.invoicePath}`}
-                      download={`${invoice.invoiceNumber}.pdf`} // Make sure to set the filename for the download
-                      className="hover:text-acent"
-                    >
-                      <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mx-auto">
-                          <title>Descargar Factura</title>
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 9.75v6.75m0 0-3-3m3 3 3-3m-8.25 6a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z"
-                          />
-                        </svg>
-                      </button>
-                    </a>
-
-                    <DeleteInvoice id={invoice.id} />
-
+                
+                    <InvoiceDownload Invoice={invoice} />
+ 
                     <button title="vista previa" onClick={() => handleOpenModal(invoice)}>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mx-auto hover:text-acent">
                         <title>Ver Factura</title>
@@ -153,12 +143,33 @@ const BillingTableComponent = () => {
                         </div>
                       </div>
                     )}
+
+                    {userData?.isAdmin && (
+                      <>
+                        {/* ========== EDITAR ========== */}
+                        <a href={`${PATHROUTES.UPDATE_INVOICES}/${invoice.id}`} className="hover:text-acent">
+                          <button>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                              <title>Editar Factura</title>
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                              />
+                            </svg>
+                          </button>
+                        </a>
+
+                        <DeleteInvoice id={invoice.id} />
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}
           </tbody>
         </table>
-
+   
+ 
         {invoices.length === 0 && <p className="p-6 text-gray-600">No se encontraron facturas.</p>}
       </div>
     </div>
