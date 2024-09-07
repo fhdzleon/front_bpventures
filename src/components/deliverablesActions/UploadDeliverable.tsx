@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { useAuth } from "@/context/AuthContext";
 import GoogleDrivePicker from "./GoogleDrivePicker";
+import Swal from "sweetalert2";
 
 const UploadDeliverable = () => {
   const token = Cookies.get("token");
@@ -30,11 +31,15 @@ const UploadDeliverable = () => {
 
     if (selectedOption && validExtensions[selectedOption]) {
       if (!validExtensions[selectedOption].includes(fileExtension || "")) {
-        alert(
-          `Extensión inválida. Por favor, selecciona un archivo ${validExtensions[
+        Swal.fire({
+          icon: "error",
+          title: "Extensión inválida",
+          text: `Por favor, selecciona un archivo ${validExtensions[
             selectedOption
-          ].join(", ")}. o cambia el tipo de archivo`
-        );
+          ].join(", ")} o cambia el tipo de archivo.`,
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "#2b4168",
+        });
         return false;
       }
     }
@@ -80,10 +85,14 @@ const UploadDeliverable = () => {
     });
   };
 
-  const handleCategoryChange = (event: any) => {
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedCategory = event.target.value;
+    setCategoryOption(selectedCategory);
     setFormData({
       ...formData,
-      category: event.target.value,
+      category: selectedCategory,
     });
   };
 
@@ -106,15 +115,28 @@ const UploadDeliverable = () => {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Archivo agregado con éxito");
+        Swal.fire({
+          icon: "success",
+          title: "Éxito",
+          text: "Archivo agregado con éxito",
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "#2b4168",
+        });
       } else {
-        alert("Error al subir el archivo");
+        Swal.fire({
+          icon: "error",
+          title: "Error al subir el archivo",
+          text: "",
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "#2b4168",
+        });
       }
     } catch (error) {
       console.error("Error", error);
     } finally {
       setFetchAgain(!fetchAgain);
       setFormData({ name: "", description: "", category: "" });
+      setCategoryOption("");
       setIsModalOpen(false);
     }
   };
@@ -227,13 +249,13 @@ const UploadDeliverable = () => {
                   Selecciona una categoría
                 </option>
                 <option className="font-sans" value="1">
-                  Pendientes
+                  Entregables Finalizados
                 </option>
                 <option className="font-sans" value="2">
-                  Terminados
+                  Borrador
                 </option>
                 <option className="font-sans" value="3">
-                  Revisión
+                  Entregables Parcial
                 </option>
               </select>
             </form>

@@ -36,10 +36,9 @@ const deliverableWidget = () => {
               Authorization: `Bearer ${token}`,
             },
           }
-
         );
         const data = await response.json();
-        console.log(data);
+        /* console.log(data); */
 
         setAllDeliverables(Array.isArray(data) ? data : []);
       } catch (error) {
