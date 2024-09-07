@@ -87,19 +87,19 @@ const DeliverablesList = () => {
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
                     <div className=" flex justify-evenly items-center">
                       Nombre:
-                      <SortDeliverable UserId={userData.id} column="name" />
+                      <SortDeliverable UserId={userData?.id} column="name" />
                     </div>
                   </th>
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
                     <div className=" flex justify-evenly items-center">
                       Fecha
-                      <SortDeliverable UserId={userData.id} column="date" />
+                      <SortDeliverable UserId={userData?.id} column="date" />
                     </div>
                   </th>
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md">
                     <div className=" flex justify-evenly items-center">
                       Categorias
-                      <SortDeliverable UserId={userData.id} column="category" />
+                      <SortDeliverable UserId={userData?.id} column="category" />
                     </div>
                   </th>
                   <th className="py-3 px-4 w-1/6 font-sans text-center text-md ">
