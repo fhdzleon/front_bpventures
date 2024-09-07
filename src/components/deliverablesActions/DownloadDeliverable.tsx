@@ -5,8 +5,10 @@ const DownloadDeliverable: React.FC<DownloadDeliverableProps> = ({ path }) => {
   const handleDownload = () => {
     const link = document.createElement("a");
     link.href = `${process.env.NEXT_PUBLIC_API_URL}/${path}`;
-    link.download = path;
-    link.click;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+
+    link.click();
   };
 
   return (
