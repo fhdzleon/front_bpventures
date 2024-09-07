@@ -1,7 +1,5 @@
 interface DownloadDeliverableProps {
-  id: any;
-  path: string;
-  type: string;
+  path: any;
 }
 
 export default DownloadDeliverableProps;
