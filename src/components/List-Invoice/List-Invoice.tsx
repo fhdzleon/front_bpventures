@@ -84,7 +84,7 @@ const BillingTableComponent = () => {
                   <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.invoiceDueDate}</td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 flex space-x-4">
                 
-                    <InvoiceDownload Invoice={invoice} />
+                  <InvoiceDownload userId={userData?.id || ""} invoiceId={invoice.id} />
  
                     <button title="vista previa" onClick={() => handleOpenModal(invoice)}>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mx-auto hover:text-acent">
@@ -160,7 +160,8 @@ const BillingTableComponent = () => {
                           </button>
                         </a>
 
-                        <DeleteInvoice id={invoice.id} />
+                        {userData.isAdmin && <DeleteInvoice id={invoice.id} />}
+
                       </>
                     )}
                   </td>
