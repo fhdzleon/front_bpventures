@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Toaster, toast } from "sonner";
-
+import Button from '@/components/FormComponent/Button';
+import "../../../../../styles/form-style.css";
 interface Company {
   name: string;
   cuit: string;
@@ -56,7 +57,7 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
 
       if (response.ok) {
         toast.success('Empresa actualizada correctamente');
-        router.push(`/in/company/${id}`); // Navegar de nuevo a los detalles
+        router.push(`/in/company/${id}`);
       } else {
         toast.error('Error al actualizar la empresa');
       }
@@ -79,48 +80,47 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
       <Toaster richColors />
-      <form className="w-full max-w-2xl" onSubmit={handleUpdate}>
-        <h1 className="text-center text-[1.5rem] mb-6">Editar Empresa</h1>
+
+      <form className="form-apply" onSubmit={handleUpdate}>
+        <h1 className="text-center text-[1.2rem] mb-6">Editar Empresa</h1>
 
         <div className="mb-4">
-          <label className="block">Razón Social:</label>
+          <label className="label-apply" htmlFor="name">Razón Social:</label>
           <input
             type="text"
+            id="name"
             value={company.name}
             onChange={(e) => setCompany({ ...company, name: e.target.value })}
-            className="w-full px-4 py-2 border rounded"
+            className="input-apply"
             required
           />
         </div>
 
         <div className="mb-4">
-          <label className="block">CUIT:</label>
+          <label className="label-apply" htmlFor="cuit">CUIT:</label>
           <input
             type="text"
+            id="cuit"
             value={company.cuit}
             onChange={(e) => setCompany({ ...company, cuit: e.target.value })}
-            className="w-full px-4 py-2 border rounded"
+            className="input-apply"
             required
           />
         </div>
 
         <div className="mb-4">
-          <label className="block">Dirección:</label>
+          <label className="label-apply" htmlFor="address">Dirección:</label>
           <input
             type="text"
+            id="address"
             value={company.address}
             onChange={(e) => setCompany({ ...company, address: e.target.value })}
-            className="w-full px-4 py-2 border rounded"
+            className="input-apply"
             required
           />
         </div>
 
-        <button
-          type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded"
-        >
-          Actualizar Empresa
-        </button>
+        <Button type="submit">Actualizar Empresa</Button>
       </form>
     </div>
   );

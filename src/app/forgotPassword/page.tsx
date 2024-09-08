@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 
+
 const Page: React.FC = () => {
   const [email, setEmail] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
@@ -72,8 +73,9 @@ const Page: React.FC = () => {
 
               <button
                 type="submit"
-                className="w-full text-secundary bg-white hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800"
-              >
+                // className="w-full text-secundary bg-white hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800"
+                className=" text-center bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex items-center">
+
                 Reiniciar Contraseña
               </button>
             </form>
