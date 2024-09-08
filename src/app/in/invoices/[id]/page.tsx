@@ -46,9 +46,9 @@
 // export default DetailUser;
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import InvoiceDetail from "../../../../components/DetailInvoice/DetailInvoice";
-import { GetInvoices } from "@/helpers/auth.helper";
+import { getInvoicesById } from "@/helpers/auth.helper";
 import { useAuth } from "@/context/AuthContext";
 
 export interface Invoice {
@@ -81,7 +81,7 @@ const DetailUser: React.FC<IdParams> = ({ params }) => {
       setLoading(true);
       try {
         const idUser = Number(params.id);
-        const invoices = await GetInvoices(userData.id);
+        const invoices = await getInvoicesById(userData.id);
 
         const oneinvoice = invoices.find((invoice: { id: number; }) => invoice.id === idUser);
         setInvoice(oneinvoice || null);
