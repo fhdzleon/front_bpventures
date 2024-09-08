@@ -53,15 +53,18 @@ import { useAuth } from "@/context/AuthContext";
 
 export interface Invoice {
   invoicePath: any;
-  invoiceDueDate: ReactNode;
-  invoiceIssueDate: ReactNode;
-  invoiceAmount: ReactNode;
-  invoiceNumber: ReactNode;
+  invoiceDueDate: string;
+  invoiceIssueDate:string;
+  invoiceAmount: string;
+  invoiceNumber: string;
   id: number;
   amount: number;
   invoiceStatusId: number;
   issueDate: string; 
   userId: number;
+  overdueIndicator: boolean;
+  invoiceStatus: string;
+
 }
 
 interface IdParams {
