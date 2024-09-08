@@ -1,8 +1,8 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
 import React, { useEffect, useState } from "react";
-import { getInvoicesById } from "@/helpers/auth.helper";
-import InvoiceDetail, { Invoice } from "@/components/DetailInvoice/DetailInvoice";
+import { getUserById } from "@/helpers/auth.helper";
+import InvoiceDetail, { InvoiceInterface } from "@/components/DetailInvoice/DetailInvoice";
 import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
 import VoucherUpload from "@/components/invoice/VoucherUpload";
 import DeleteInvoice from "@/components/InvoicesButton/ButtonDelete";
@@ -13,9 +13,9 @@ import InvoiceDownload from "@/components/InvoicesButton/Buttondowland";
 const BillingTableComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenVoucher, setIsModalOpenVoucher] = useState(false);
-  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  const [selectedInvoice, setSelectedInvoice] = useState<InvoiceInterface | null>(null);
 
-  const handleOpenModal = (invoice: Invoice) => {
+  const handleOpenModal = (invoice: InvoiceInterface) => {
     setSelectedInvoice(invoice);
     setIsModalOpen(true);
   };
@@ -25,7 +25,7 @@ const BillingTableComponent = () => {
     setSelectedInvoice(null);
   };
 
-  const handleOpenModalVoucher = (invoice: Invoice) => {
+  const handleOpenModalVoucher = (invoice: InvoiceInterface) => {
     setSelectedInvoice(invoice);
     setIsModalOpenVoucher(true);
   };
@@ -35,13 +35,13 @@ const BillingTableComponent = () => {
     setSelectedInvoice(null);
   };
 
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [invoices, setInvoices] = useState<InvoiceInterface[]>([]);
   const { userData, loading, fetchAgain } = useAuth();
 
   const fetchInvoices = async () => {
     try {
       if (!loading) {
-        const response = await getInvoicesById(userData?.id);
+        const response = await getUserById(userData?.id);
         setInvoices(response);
       }
     } catch (error) {
