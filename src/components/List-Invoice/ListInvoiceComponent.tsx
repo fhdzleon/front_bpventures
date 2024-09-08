@@ -9,8 +9,10 @@ import InvoiceDownload from "@/components/InvoicesButton/Buttondowland";
 import EyeIcon from "../icons/EyeIcon";
 import VoucherIcon from "../icons/UploadIcon";
 import EditIcon from "../icons/EditIcon";
+import PreloaderLoad from "../preloader/PreloaderLoad";
+import PreloaderAwait from "../preloader/PreloaderAwait";
 
-const ListInvoiceComponent = ({ invoicesData, isAdmin }: any) => {
+const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenVoucher, setIsModalOpenVoucher] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<InvoiceInterface | null>(null);
@@ -53,8 +55,12 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin }: any) => {
 
   return (
     <div className="m-5 overflow-x-auto mt-5 rounded-lg">
+      {/* <PreloaderLoad/> */}
+      {loading &&  <PreloaderAwait/>}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
+      <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Facturas: {userEmail}</h1>
       <div className="mt-4 overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
+
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
             <tr>
@@ -63,10 +69,10 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin }: any) => {
               <th className="py-3 px-4 font-futura text-left text-lg">Estado</th>
               <th className="py-3 px-4 font-futura text-left text-lg">Fecha de Emisión</th>
               <th className="py-3 px-4 font-futura text-left text-lg">Vencimiento</th>
+              <th className="py-3 px-4 font-futura text-left text-lg">Empresa</th>
               {isAdmin && (
                 <>
                   <th className="py-3 px-4 font-futura text-left text-lg">Usuario</th>
-                  <th className="py-3 px-4 font-futura text-left text-lg">Empresa</th>
                 </>
               )}
               <th className="py-3 px-4 font-futura text-left text-lg">Acciones</th>
@@ -83,10 +89,10 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin }: any) => {
                   </td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.issueDate}</td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.dueDate}</td>
+                  <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.company?.name}</td>
                   {isAdmin && (
                     <>
                       <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.user?.email}</td>
-                      <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.company?.name}</td>
                     </>
                   )}
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 flex space-x-4">

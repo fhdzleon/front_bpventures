@@ -34,6 +34,8 @@ interface userdata {
   modifiedAt: string;
   statusId: number;
   isAdmin: boolean;
+  companyId: number;
+  Empresa: string;
 }
 
 export interface AuthContextType {

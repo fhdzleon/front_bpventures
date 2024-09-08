@@ -2,7 +2,8 @@
 import React from "react";
 import Security from "@/components/Security2Fa/Security2Fa";
 import { useAuth } from "@/context/AuthContext";
-import UpdateUserComponent from "@/components/CreateUserForm/UpdateUser";
+import UpdateUserComponent from "@/components/Users/UpdateUser";
+
 const MyAccount = () => {
   const { loading, user } = useAuth();
   return (
@@ -12,8 +13,7 @@ const MyAccount = () => {
           <div className="grid-rows-5 ">
             <section className="grid-span-1 w-full p-5 rounded-xl  ">
               {/* <UpdateUser /> */}
-              <UpdateUserComponent  id={user?.id} />
-
+              <UpdateUserComponent id={user?.id} />
             </section>
             <hr />
             <section className="grid-span-1 w-full  rounded-xl ">

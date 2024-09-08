@@ -29,14 +29,8 @@ const DetailUser: React.FC<IdParams> = async ({ params }) => {
     <UserDetailView user={user} />
   ) : (
     <div className="mt-10 flex flex-col justify-center text-center items-center">
-      <h1 className="text-3xl font-futura mt-20 justify-center text-center text-amber-400 mb-4">
-        USUARIO NO ENCONTRADO
-      </h1>
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/132/132244.png"
-        alt=""
-        className="max-w-sm"
-      />
+      <h1 className="text-3xl font-futura mt-20 justify-center text-center text-amber-400 mb-4">USUARIO NO ENCONTRADO</h1>
+      <img src="https://cdn-icons-png.flaticon.com/512/132/132244.png" alt="" className="max-w-sm" />
     </div>
   );
 };

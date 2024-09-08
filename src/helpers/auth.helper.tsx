@@ -23,7 +23,7 @@ export const RegisterUser = async (userData: any) => {
   }
 };
 
-export const GetUserById = async (userId: string) => {
+export const GetUserById = async (userId: any) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
       method: "GET",

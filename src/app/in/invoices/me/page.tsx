@@ -49,16 +49,16 @@ const BillingTable = () => {
 
   return (
     <>
-      <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Facturas: {userData?.Names}</h1>
+      {/* <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Facturas: {userData?.Names}</h1> */}
       {/* ButtonUploadInvoice */}
 
-      <p>boton de prueba</p>
-      <pre>{JSON.stringify(userData?.id, null, 2)}</pre>
-      <ButtonUploadInvoice userId={userData?.id} />
+      {/* <p>boton de prueba</p> */}
+      {/* <pre>{JSON.stringify(userData?.id, null, 2)}</pre> */}
+      {/* <ButtonUploadInvoice userId={userData?.id} /> */}
 
       {/* <pre>{JSON.stringify(userData, null, 2)}</pre> */}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
-      <ListInvoiceComponent invoicesData={invoicesData} isAdmin={false} />
+      <ListInvoiceComponent invoicesData={invoicesData} isAdmin={false} userEmail={userData?.email} />
     </>
   );
 };

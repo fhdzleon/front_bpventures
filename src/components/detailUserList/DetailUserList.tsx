@@ -7,6 +7,7 @@ import { PATHROUTES } from "@/helpers/pathRoutes";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { UploadInvoiceUser } from "../InvoicesButton/UploadInvoiceUser";
+import BackButton from "../Buttons/BackButton";
 export interface User {
   id: number;
   email: string;
@@ -29,9 +30,7 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
         <section className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-4xl font-bold text-[#2B4168]  border-[#2B4168] pb-2">Detalles del Usuario</h1>
-            <Link href="/in/list">
-              <button className="bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex items-center">Volver</button>
-            </Link>
+            <BackButton/>
           </div>
         </section>
         <div className="bg-gradient-to-br bg-white p-8 rounded-lg shadow-lg">
@@ -64,9 +63,9 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
 
       <section className="mb-12">
         <div className="flex flex-wrap gap-6">
+          <EditUser />
           <BlockUser />
           <DeleteUser />
-          <EditUser />
         </div>
       </section>
 
