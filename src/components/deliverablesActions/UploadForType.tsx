@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 const UploadDeliverable = () => {
   const token = Cookies.get("token");
-  const { fetchAgain, setFetchAgain, deliverableData } = useAuth();
+  const { fetchAgain, setFetchAgain } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -19,30 +19,70 @@ const UploadDeliverable = () => {
     category: "",
   });
 
-  console.log(deliverableData);
+  const validateFileExtension = (file: File): boolean => {
+    const fileExtension = file.name.split(".").pop()?.toLowerCase();
+    const validExtensions: { [key: string]: string[] } = {
+      "3": ["pdf"],
+      "4": ["doc", "docx"],
+      "5": ["xls", "xlsx"],
+      "6": ["jpg", "jpeg"],
+      "7": ["png"],
+    };
+
+    if (selectedOption && validExtensions[selectedOption]) {
+      if (!validExtensions[selectedOption].includes(fileExtension || "")) {
+        Swal.fire({
+          icon: "error",
+          title: "Extensión inválida",
+          text: `Por favor, selecciona un archivo ${validExtensions[
+            selectedOption
+          ].join(", ")} o cambia el tipo de archivo.`,
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "#2b4168",
+        });
+        return false;
+      }
+    }
+    return true;
+  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setFile(event.target.files[0]);
+      const selectedFile = event.target.files[0];
+      if (validateFileExtension(selectedFile)) {
+        setFile(selectedFile);
+      } else {
+        event.target.value = "";
+      }
     }
   };
+
+  const formDataFetch = new FormData();
+  formDataFetch.append("name", formData.name);
+  formDataFetch.append("deliverableTypeId", selectedOption);
+  formDataFetch.append("deliverableCategoryId", categoryOption);
+  formDataFetch.append("isFolder", selectedOption === "1" ? "true" : "false");
+  if (file) {
+    formDataFetch.append("file", file);
+  }
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
   // Maneja el cambio de selección
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setSelectedOption(event.target.value);
   };
 
   // Maneja el cambio de los campos del formulario
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+  const handleInputChange = (event: { target: { name: any; value: any } }) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const handleCategoryChange = (
@@ -50,40 +90,13 @@ const UploadDeliverable = () => {
   ) => {
     const selectedCategory = event.target.value;
     setCategoryOption(selectedCategory);
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    setFormData({
+      ...formData,
       category: selectedCategory,
-    }));
+    });
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const verifyName = deliverableData.some(
-      (deliverable: any) =>
-        deliverable.deliverableName.toLowerCase() ===
-        formData.name.toLowerCase()
-    );
-    if (verifyName) {
-      Swal.fire({
-        icon: "warning",
-        title: "Nombre del archivo en uso",
-        text: " El nombre del archivo ya existe, elige otro",
-        confirmButtonText: "Aceptar",
-        confirmButtonColor: "#2b4168",
-      });
-      return;
-    }
-
-    const formDataFetch = new FormData();
-    formDataFetch.append("name", formData.name);
-    formDataFetch.append("deliverableTypeId", selectedOption);
-    formDataFetch.append("deliverableCategoryId", categoryOption);
-    formDataFetch.append("isFolder", selectedOption === "1" ? "true" : "false");
-    if (file) {
-      formDataFetch.append("file", file);
-    }
-
+  const handleSubmit = async () => {
     try {
       const url =
         Number(selectedOption) > 2
@@ -156,10 +169,7 @@ const UploadDeliverable = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white flex flex-col justify-center items-center space-y-5 rounded-lg p-8 shadow-lg w-full max-w-lg mx-4 sm:mx-auto">
             {/* Formulario Inicial */}
-            <form
-              className="flex flex-col w-3/4 space-y-3"
-              onSubmit={handleSubmit}
-            >
+            <form className="flex flex-col w-3/4 space-y-3">
               <label className="font-sans text-lg text-secundary">
                 ¿Qué deseas agregar?
               </label>
@@ -174,16 +184,37 @@ const UploadDeliverable = () => {
                   Selecciona una opción
                 </option>
 
+                <option disabled className="font-bold">
+                  Nueva Carpeta
+                </option>
                 <option className="font-sans" value="1">
-                  Nueva carpeta
+                  Carpeta
                 </option>
 
+                <option disabled className="font-bold">
+                  Nuevo Archivo
+                </option>
                 <option className="font-sans" value="3">
-                  Nuevo archivo
+                  pdf
+                </option>
+                <option className="font-sans" value="4">
+                  doc
+                </option>
+                <option className="font-sans" value="5">
+                  xls
+                </option>
+                <option className="font-sans" value="6">
+                  jpg
+                </option>
+                <option className="font-sans" value="7">
+                  png
                 </option>
 
+                <option disabled className="font-bold">
+                  Nuevo Link
+                </option>
                 <option className="font-sans" value="2">
-                  Nuevo link
+                  Link
                 </option>
               </select>
 
@@ -194,7 +225,6 @@ const UploadDeliverable = () => {
                 onChange={handleInputChange}
                 className="border border-1 font-sans py-2"
                 placeholder="Nombre"
-                required
               />
 
               <input
@@ -204,7 +234,6 @@ const UploadDeliverable = () => {
                 onChange={handleInputChange}
                 className="border border-1 font-sans py-2"
                 placeholder="Descripción"
-                required
               />
 
               <h3 className="font-sans text-lg text-secundary">
@@ -215,7 +244,6 @@ const UploadDeliverable = () => {
                 name="category"
                 value={formData.category}
                 onChange={handleCategoryChange}
-                required
               >
                 <option value="" disabled hidden>
                   Selecciona una categoría
@@ -230,66 +258,65 @@ const UploadDeliverable = () => {
                   Entregables Parcial
                 </option>
               </select>
+            </form>
 
-              {/* Vista condicional según la selección */}
-              {Number(selectedOption) > 2 && (
-                <div className=" space-y-5 mt-4">
-                  <h3 className="font-sans text-lg text-secundary">
-                    Subir Archivo:
-                  </h3>
-                  <GoogleDrivePicker />
-                  <p className="font-sans mb-2">
-                    O selecciona un archivo desde tu PC.
-                  </p>
-                  <div className="relative">
-                    <input
-                      type="file"
-                      onChange={handleFileChange}
-                      className="w-full mb-4 border-2 overflow-auto"
-                      required
-                    />
-                  </div>
-                </div>
-              )}
-
-              {selectedOption === "folder" && (
-                <div className="w-3/4 mt-4">
-                  <p className="font-sans mb-2">
-                    Se creará una carpeta con el nombre proporcionado.
-                  </p>
-                </div>
-              )}
-
-              {selectedOption === "2" && (
-                <div className="mt-4">
-                  <h3 className="font-sans text-lg text-secundary">
-                    Agregar Link:
-                  </h3>
+            {/* Vista condicional según la selección */}
+            {Number(selectedOption) > 2 && (
+              <div className="w-3/4 space-y-5 mt-4">
+                <h3 className="font-sans text-lg text-secundary">
+                  Subir Archivo:
+                </h3>
+                <GoogleDrivePicker />
+                <p className="font-sans mb-2">
+                  O selecciona un archivo desde tu PC.
+                </p>
+                <div className="relative">
                   <input
-                    type="url"
-                    name="link"
-                    placeholder="URL del Link"
-                    className="border border-1 font-sans py-2 w-full"
+                    type="file"
+                    onChange={handleFileChange}
+                    className="w-full mb-4 border-2 overflow-auto"
                   />
                 </div>
-              )}
-
-              <div className="flex justify-center mt-4">
-                <button
-                  className="bg-acent font-sans text-white font-bold py-2 px-4 rounded mr-2"
-                  onClick={toggleModal}
-                >
-                  Cancelar
-                </button>
-
-                <button
-                  type="submit"
-                  className="bg-secundary font-sans text-white font-bold py-2 px-4 rounded"
-                >
-                  Agregar
-                </button>
               </div>
-            </form>
+            )}
+
+            {selectedOption === "folder" && (
+              <div className="w-3/4 mt-4">
+                <p className="font-sans mb-2">
+                  Se creará una carpeta con el nombre proporcionado.
+                </p>
+              </div>
+            )}
+
+            {selectedOption === "2" && (
+              <div className="w-3/4 mt-4">
+                <h3 className="font-sans text-lg text-secundary">
+                  Agregar Link:
+                </h3>
+                <input
+                  type="url"
+                  name="link"
+                  placeholder="URL del Link"
+                  className="border border-1 font-sans py-2 w-full"
+                />
+              </div>
+            )}
+
+            <div className="flex justify-center w-3/4 mt-4">
+              <button
+                className="bg-acent font-sans text-white font-bold py-2 px-4 rounded mr-2"
+                onClick={toggleModal}
+              >
+                Cancelar
+              </button>
+
+              <button
+                onClick={handleSubmit}
+                className="bg-secundary font-sans text-white font-bold py-2 px-4 rounded"
+              >
+                Agregar
+              </button>
+            </div>
           </div>
         </div>
       )}
