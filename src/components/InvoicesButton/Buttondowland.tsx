@@ -117,36 +117,6 @@ const InvoiceDownload: React.FC<InvoiceButtonProps> = ({ userId, invoiceId }) =>
       // Limpiar
       link.remove();
       window.URL.revokeObjectURL(url);
-  
-      // // Obtener los detalles de la factura
-      // const { filePath, fileName } = await response.json();
-      
-      // const fileUrl = `${process.env.NEXT_PUBLIC_API_URL}/${filePath}`;
-      // // Descargar el archivo
-      // console.log(fileUrl);
-      
-      // // const fileResponse = await fetch(fileUrl, {
-      // //     method: 'GET',
-      // //     credentials: 'include',
-      // // });
-      // // console.log(fileResponse);
-      
-      // // if (!fileResponse.ok) {
-      // //     throw new Error('Failed to download file');
-      // // }
-
-      // const link = document.createElement('a');
-      // link.href = fileUrl;
-      // link.download = fileName; // Nombre del archivo que se descargará
-      // // Agregar el enlace al DOM
-      // document.body.appendChild(link);
-      
-      // // Simular un clic en el enlace
-      // link.click();
-      
-      // // Eliminar el enlace del DOM
-      // document.body.removeChild(link);
-      // console.log('File downloaded successfully');
 
   } catch (error) {
       console.error('Error downloading file:', error);
