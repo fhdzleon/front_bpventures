@@ -10,7 +10,7 @@ import Link from "next/link";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 import InvoiceDownload from "@/components/InvoicesButton/Buttondowland";
 
-const BillingTableComponent = () => {
+const ListInvoiceById = ({ id }: { id: number }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenVoucher, setIsModalOpenVoucher] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
@@ -41,7 +41,7 @@ const BillingTableComponent = () => {
   const fetchInvoices = async () => {
     try {
       if (!loading) {
-        const response = await getInvoicesById(userData?.id);
+        const response = await getInvoicesById(id);
         setInvoices(response);
       }
     } catch (error) {
@@ -51,12 +51,10 @@ const BillingTableComponent = () => {
 
   useEffect(() => {
     fetchInvoices();
-  }, [userData?.id, fetchAgain]);
+  }, [id, fetchAgain]);
 
   return (
     <div className="m-5 overflow-x-auto mt-5 rounded-lg">
-      <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Facturas: {userData?.Names}</h1>
-      <ButtonUploadInvoice userId={userData?.id} />
       <div className="mt-4 overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
@@ -79,7 +77,7 @@ const BillingTableComponent = () => {
                   <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.invoiceIssueDate}</td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.invoiceDueDate}</td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 flex space-x-4">
-                  <InvoiceDownload userId={userData?.id || ""} invoiceId={invoice.id} />
+                  <InvoiceDownload userId={id || ""} invoiceId={invoice.id} />
 
                     <button title="vista previa" onClick={() => handleOpenModal(invoice)}>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mx-auto hover:text-acent">
@@ -142,7 +140,7 @@ const BillingTableComponent = () => {
                     {userData?.isAdmin && (
                       <>
                         {/* ========== EDITAR ========== */}
-                        <a href={`${PATHROUTES.INVOICES}/${invoice.id}/edit`} className="hover:text-acent">
+                        {/* <a href={`${PATHROUTES.INVOICES}/${invoice.id}/edit`} className="hover:text-acent">
                           <button>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
                               <title>Editar Factura</title>
@@ -155,7 +153,7 @@ const BillingTableComponent = () => {
                           </button>
                         </a>
 
-                        {userData.isAdmin && <DeleteInvoice id={invoice.id} />}
+                        {userData.isAdmin && <DeleteInvoice id={invoice.id} />} */}
                       </>
                     )}
                   </td>
@@ -170,4 +168,4 @@ const BillingTableComponent = () => {
   );
 };
 
-export default BillingTableComponent;
+export default ListInvoiceById;

@@ -120,8 +120,8 @@ export default function Login() {
           setUser(json.userPayload);
           toast.success("¡Inicio de sesión exitoso!");
           // router.push(PATHROUTES.HOME);
-          // window.location.href = PATHROUTES.HOME;
-          router.replace(PATHROUTES.HOME);
+          window.location.href = PATHROUTES.HOME;
+          // router.replace(PATHROUTES.HOME);
 
         }
       } catch (error) {

@@ -82,8 +82,8 @@
 
 // export default InvoiceDownload;
 interface InvoiceButtonProps {
-  userId: string;        // Agregado para recibir el userId
-  invoiceId: string;     // ID de la factura
+  userId: any;        // Agregado para recibir el userId
+  invoiceId: any;     // ID de la factura
 }
 
 const InvoiceDownload: React.FC<InvoiceButtonProps> = ({ userId, invoiceId }) => {
