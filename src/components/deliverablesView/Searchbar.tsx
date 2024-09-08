@@ -1,14 +1,18 @@
-import { useAuth } from '@/context/AuthContext';
-import React, { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
+import { useAuth } from "@/context/AuthContext";
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 interface SearchBarProps {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
-  fetchdeliverable:  () => void;
+  fetchdeliverable: () => void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm, fetchdeliverable }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({
+  searchTerm,
+  setSearchTerm,
+  fetchdeliverable,
+}) => {
   const { deliverableData, setDeliverableData } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,22 +24,24 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm,
     setError(null);
 
     try {
-      const response = await fetch(`http://localhost:3000/deliverables/file/${name}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3000/deliverables/file/${name}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Error al buscar archivos');
+        throw new Error("Error al buscar archivos");
       }
 
       const data = await response.json();
 
-    
-      const deliverables = data?.map((item:any)=>{
+      const deliverables = data?.map((item: any) => {
         return {
           id: item.id,
           parentId: item.parentId,
@@ -44,17 +50,17 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm,
           deliverablePath: item.Path,
           deliverableType: item.deliverableType.name,
           deliverableCategory: item.deliverableCategory.name,
-          permissionTypes: item.permissions.map((permission:any) => permission.permissionType.name), 
-          lastDate: item.modifiedAt || item.createdAt
-        }
-        
-      })
-      console.log('deliverables', deliverables);
-      
-      
+          permissionTypes: item.permissions.map(
+            (permission: any) => permission.permissionType.name
+          ),
+          lastDate: item.modifiedAt || item.createdAt,
+        };
+      });
+      console.log("deliverables", deliverables);
+
       setDeliverableData(deliverables);
     } catch (err) {
-      console.error('Error al buscar archivos:', err);
+      console.error("Error al buscar archivos:", err);
       setError("Error al buscar archivos");
     } finally {
       setLoading(false);
@@ -71,11 +77,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm,
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    console.log('Término de búsqueda actualizado:', e.target.value);
+    console.log("Término de búsqueda actualizado:", e.target.value);
   };
 
   return (
-    <div className="flex mt-5 items-center">
+    <div className="flex my-3 items-center">
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
