@@ -17,6 +17,8 @@ export async function middleware(request: NextRequest) {
     
     if (response.ok) {
       return NextResponse.next();
+    }else {
+      return NextResponse.redirect(new URL("/not-allowed", request.url));
     }
   } catch (error) {
     console.error("Error en el middleware:", error);
