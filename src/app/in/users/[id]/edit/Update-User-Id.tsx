@@ -1,4 +1,4 @@
-import UpdateUserComponent from "@/components/CreateUserForm/UpdateUser";
+import UpdateUserComponent from "@/components/Users/UpdateUser";
 import React from "react";
 // import UpdateUserComponent from "@/components/CreateUserForm/UpdateUser";
 

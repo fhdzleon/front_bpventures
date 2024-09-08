@@ -23,7 +23,7 @@ export const RegisterUser = async (userData: any) => {
   }
 };
 
-export const GetUserById = async (userId: string) => {
+export const GetUserById = async (userId: any) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
       method: "GET",
@@ -153,10 +153,9 @@ export const getAllInvoices = async () => {
   }
 };
 
-
-export const getInvoicesById = async (userId: number) => {
+export const getUserById = async (userId: number) => {
   try {
-    const response = await fetch(`${apiURL}/invoices/${userId}`, {
+    const response = await fetch(`${apiURL}/users/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

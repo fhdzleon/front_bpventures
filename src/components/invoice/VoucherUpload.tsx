@@ -1,26 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
-import { Toaster, toast } from 'sonner';
-
-export interface Invoice {
-  id: number;
-  invoicePath: string | null;
-  invoiceNumber: string;
-  invoiceIssueDate: string;
-  invoiceDueDate: string;
-  invoiceAmount: string;
-  invoiceStatus: string;
-  overdueIndicator: boolean;
-}
+import { Toaster, toast } from "sonner";
 
 interface InvoiceDetailProps {
-  Invoice: Invoice;
+  Invoice: InvoiceInterface;
 }
 
 export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
-  const [invoiceNumber, setInvoiceNumber] = useState('');
-  const [paymentDate, setPaymentDate] = useState('');
+  const [invoiceNumber, setInvoiceNumber] = useState("");
+  const [paymentDate, setPaymentDate] = useState("");
   const [amount, setAmount] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [voucherState, setVoucherState] = useState<any>(null);
@@ -43,21 +32,43 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
     }
   };
 
+  const updateInvoiceStatus = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/invoices/status/1`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ invoiceStatusId: 2 }),
+      });
+
+      if (response.ok) {
+        toast.success("Estado de la factura actualizado a 'Revisión'");
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || "Error al actualizar el estado de la factura");
+      }
+    } catch (error: any) {
+      console.error("Error al actualizar el estado de la factura", error);
+      toast.error(error.message);
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append('number', invoiceNumber);
-    formData.append('paymentDate', paymentDate);
-    formData.append('amount', amount.toString());
-    formData.append('invoiceId', Invoice.id.toString());
+    formData.append("number", invoiceNumber);
+    formData.append("paymentDate", paymentDate);
+    formData.append("amount", amount.toString());
+    formData.append("invoiceId", Invoice.id.toString());
     if (file) {
-      formData.append('file', file);
+      formData.append("file", file);
     }
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers`, {
-        method: 'POST',
+        method: "POST",
         body: formData,
       });
 
@@ -65,9 +76,10 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
         const result = await response.json();
         toast.success("Comprobante de pago cargado correctamente");
         setVoucherState(result);
+        await updateInvoiceStatus(); // Actualiza el estado de la factura a "Revisión"
       } else {
         const errorData = await response.json();
-        toast.error(errorData.message || 'Error al cargar el comprobante de pago');
+        toast.error(errorData.message || "Error al cargar el comprobante de pago");
       }
     } catch (error: any) {
       console.error("Error al cargar el comprobante de pago", error);
@@ -78,7 +90,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
   const handleDelete = async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${voucherState.id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (response.ok) {
@@ -86,7 +98,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
         setVoucherState(null); // Reinicia el estado para mostrar el formulario de carga nuevamente
       } else {
         const errorData = await response.json();
-        toast.error(errorData.message || 'Error al eliminar el comprobante de pago');
+        toast.error(errorData.message || "Error al eliminar el comprobante de pago");
       }
     } catch (error: any) {
       console.error("Error al eliminar el comprobante de pago", error);
@@ -99,43 +111,28 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
       return <p>No hay archivo asociado.</p>;
     }
 
-    const fileExtension = voucherState.path.split('.').pop()?.toLowerCase();
+    const fileExtension = voucherState.path.split(".").pop()?.toLowerCase();
     const fileUrl = `${process.env.NEXT_PUBLIC_API_URL}/${voucherState.path}`;
 
-    if (fileExtension === 'pdf') {
+    if (fileExtension === "pdf") {
       return (
         <div className="mb-4">
+          <pre>{JSON.stringify(Invoice, null, 2)}</pre>
+
           <strong>Archivo Comprobante:</strong>
-          <iframe
-            src={fileUrl}
-            title="Comprobante PDF"
-            className="w-full h-96 border-0"
-          />
-          <a
-            href={fileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 underline mt-2 block"
-          >
+          <iframe src={fileUrl} title="Comprobante PDF" className="w-full h-96 border-0" />
+          <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline mt-2 block">
             Ver PDF en Nueva Ventana
           </a>
         </div>
       );
-    } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+    } else if (["jpg", "jpeg", "png", "gif"].includes(fileExtension)) {
       return (
         <div className="mb-4">
+          <pre>{JSON.stringify(Invoice, null, 2)}</pre>
           <strong>Previsualización de Comprobante:</strong>
-          <img
-            src={fileUrl}
-            alt="Comprobante de Pago"
-            className="mt-2 max-w-xs"
-          />
-          <a
-            href={fileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 underline mt-2 block"
-          >
+          <img src={fileUrl} alt="Comprobante de Pago" className="mt-2 max-w-xs" />
+          <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline mt-2 block">
             Ver Imagen en Nueva Ventana
           </a>
         </div>
@@ -143,13 +140,10 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
     } else {
       return (
         <div className="mb-4">
+          <pre>{JSON.stringify(Invoice, null, 2)}</pre>
+
           <strong>Archivo Comprobante:</strong>
-          <a
-            href={fileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 underline"
-          >
+          <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
             Descargar archivo
           </a>
         </div>
@@ -162,6 +156,8 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
       <Toaster richColors />
       {voucherState ? (
         <div className="voucher-detail-container mt-8 p-4 border rounded shadow">
+          <pre>{JSON.stringify(Invoice, null, 2)}</pre>
+
           <h2 className="text-center text-[1.2rem] mb-4">Detalle del Comprobante de Pago</h2>
           <div className="mb-2">
             <strong>Número de Comprobante:</strong> {voucherState.number}
@@ -182,41 +178,22 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
         </div>
       ) : (
         <form className="form-apply" onSubmit={handleSubmit}>
+          <pre>{JSON.stringify(Invoice, null, 2)}</pre>
+
           <h1 className="text-center text-[1.2rem] mb-6">Cargar Comprobante de Pago</h1>
           <div className="mb-4">
-            <label className="label-apply">Número de Factura:</label>
-            <input
-              type="text"
-              id="numeroFactura"
-              value={invoiceNumber}
-              onChange={(e) => setInvoiceNumber(e.target.value)}
-              className="input-apply"
-              required
-            />
+            <label className="label-apply">Número de Comprobante:</label>
+            <input type="text" id="numeroFactura" value={invoiceNumber} onChange={(e) => setInvoiceNumber(e.target.value)} className="input-apply" required />
           </div>
 
           <div className="mb-4">
             <label className="label-apply">Fecha de Pago:</label>
-            <input
-              type="date"
-              id="fechaPago"
-              value={paymentDate}
-              onChange={(e) => setPaymentDate(e.target.value)}
-              className="input-apply"
-              required
-            />
+            <input type="date" id="fechaPago" value={paymentDate} onChange={(e) => setPaymentDate(e.target.value)} className="input-apply" required />
           </div>
 
           <div className="mb-4">
             <label className="label-apply">Monto Pagado:</label>
-            <input
-              type="number"
-              id="montoPagado"
-              value={amount}
-              onChange={(e) => setAmount(parseFloat(e.target.value))}
-              className="input-apply"
-              required
-            />
+            <input type="number" id="montoPagado" value={amount} onChange={(e) => setAmount(parseFloat(e.target.value))} className="input-apply" required />
           </div>
 
           <div className="mb-4">

@@ -17,12 +17,15 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
   const [dueDate, setDueDate] = useState('');
   const [amount, setAmount] = useState(0);
   const [invoiceStatusId, setInvoiceStatusId] = useState(invoiceStatuses[0].id);
+  const [companyId, setCompanyId] = useState<number | null>(null);
+  const [companies, setCompanies] = useState<Array<{ id: number, name: string }>>([]);
   const [file, setFile] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
   const router = useRouter();
 
+  // Fetch invoice data
   useEffect(() => {
     const fetchInvoice = async () => {
       try {
@@ -34,6 +37,7 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
           setDueDate(data.dueDate);
           setAmount(data.amount);
           setInvoiceStatusId(data.invoiceStatus.id);
+          setCompanyId(data.companyId); // Set the company associated with the invoice
           setLoading(false);
         } else {
           throw new Error('Error al obtener los datos de la factura');
@@ -47,6 +51,25 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
 
     fetchInvoice();
   }, [invoiceId]);
+
+  // Fetch companies data
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/companies`);
+        if (response.ok) {
+          const data = await response.json();
+          setCompanies(data);
+        } else {
+          throw new Error('Error al obtener las empresas');
+        }
+      } catch (error: any) {
+        console.error('Error al obtener las empresas', error);
+      }
+    };
+
+    fetchCompanies();
+  }, []);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -63,6 +86,9 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
     formData.append('dueDate', dueDate);
     formData.append('amount', amount.toString());
     formData.append('invoiceStatusId', invoiceStatusId.toString());
+    if (companyId) {
+      formData.append('companyId', companyId.toString());
+    }
     if (file) {
       formData.append('file', file);
     }
@@ -74,14 +100,12 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
       });
 
       if (response.ok) {
-        const result = await response.json();
         toast.success("Factura actualizada correctamente");
-        // router.push('/invoices'); // Redirige a la página de facturas después de la actualización
+        // router.push('/invoices'); // Redirect to the invoices page after update
       } else {
         const errorData = await response.json();
         toast.error(errorData.message || 'Error al actualizar la factura');
       }
-      
     } catch (error: any) {
       console.error("Error al actualizar la factura", error);
       toast.error(error.message);
@@ -144,6 +168,7 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
                 required
               />
             </div>
+
             <div className="mb-4">
               <label className="label-apply">Estado de la Factura:</label>
               <select
@@ -156,6 +181,24 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
                 {invoiceStatuses.map((status) => (
                   <option key={status.id} value={status.id}>
                     {status.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label className="label-apply">Empresa:</label>
+              <select
+                id="empresa"
+                value={companyId || ''}
+                onChange={(e) => setCompanyId(parseInt(e.target.value))}
+                className="input-apply"
+                required
+              >
+                <option value="">Seleccione una empresa</option>
+                {companies.map((company) => (
+                  <option key={company.id} value={company.id}>
+                    {company.name}
                   </option>
                 ))}
               </select>

@@ -2,19 +2,29 @@
 
 import React from "react";
 
-export interface Invoice {
-  id: number;
-  invoicePath: string | null;
-  invoiceNumber: string;
-  invoiceIssueDate: string;
-  invoiceDueDate: string;
-  invoiceAmount: string;
-  invoiceStatus: string;
-  overdueIndicator: boolean;
-}
+// export interface Invoice {
+//   id: number;
+//   invoicePath: string | null;
+//   invoiceNumber: string;
+//   invoiceIssueDate: string;
+//   invoiceDueDate: string;
+//   invoiceAmount: string;
+//   invoiceStatus: string;
+//   overdueIndicator: boolean;
+// }
+// export interface InvoiceInterface {
+//   id: number;
+//   number: string;
+//   amount: number;
+//   invoiceStatus?: { name: string };
+//   issueDate: string;
+//   dueDate: string;
+//   user?: { email: string };
+//   company?: { name: string };
+// }
 
 interface InvoiceDetailProps {
-  Invoice: Invoice;
+  Invoice: InvoiceInterface;
 }
 
 const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
@@ -32,12 +42,12 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
   };
 
   const renderInvoiceFile = () => {
-    if (!Invoice.invoicePath) {
+    if (!Invoice.path) {
       return <p>No hay archivo asociado.</p>;
     }
 
-    const fileExtension = Invoice.invoicePath.split(".").pop()?.toLowerCase();
-    const fileUrl = `${process.env.NEXT_PUBLIC_API_URL}/${Invoice.invoicePath}`;
+    const fileExtension = Invoice.path.split(".").pop()?.toLowerCase();
+    const fileUrl = `${process.env.NEXT_PUBLIC_API_URL}/${Invoice.path}`;
 
     if (fileExtension === "pdf") {
       return (
@@ -104,21 +114,21 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
         <div className="space-y-4">
           <p className="text-lg">
             <span className="font-bold text-gray-700">Monto:</span>{" "}
-            {"$" + Invoice.invoiceAmount}
+            {"$" + Invoice.amount}
           </p>
           <p className="text-lg">
             <span className="font-bold text-gray-700">Fecha de Emisión:</span>{" "}
-            {Invoice.invoiceIssueDate}
+            {Invoice.issueDate}
           </p>
           <p className="text-lg">
             <span className="font-bold text-gray-700">
               Fecha de Vencimiento:
             </span>{" "}
-            {Invoice.invoiceDueDate}
+            {Invoice.dueDate}
           </p>
           <p className="text-lg">
             <span className="font-bold text-gray-700">Estado:</span>{" "}
-            {getInvoiceStatus(Invoice.invoiceStatus)}
+            {getInvoiceStatus(Invoice.invoiceStatus?.name || "")}
           </p>
           {renderInvoiceFile()}
         </div>

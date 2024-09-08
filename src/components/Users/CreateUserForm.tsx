@@ -6,6 +6,20 @@ import Button from "../FormComponent/Button";
 import "../../styles/form-style.css";
 import { useRouter } from "next/navigation";
 
+// Función para obtener empresas
+const getCompanies = async () => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/companies`);
+    if (!response.ok) {
+      throw new Error("Error al obtener las empresas");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
 interface ICreateUser {
   email: string;
   password: string;
@@ -13,6 +27,7 @@ interface ICreateUser {
   LastName: string;
   Position: string;
   domain?: string; // Agregamos el campo para el dominio
+  companyId?: number; // Agregamos el campo para el id de la empresa
 }
 
 const generateRandomPassword = (length: number = 12): string => {
@@ -35,7 +50,20 @@ export const CreateUserForm: React.FC = () => {
   });
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [companies, setCompanies] = useState<any[]>([]);
+  const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      const data = await getCompanies();
+      setCompanies(data);
+      if (data.length > 0) {
+        setSelectedCompanyId(data[0].id); // Set the first company as the default selected
+      }
+    };
+    fetchCompanies();
+  }, []);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -84,8 +112,8 @@ export const CreateUserForm: React.FC = () => {
     const currentDomain = window.location.origin;
 
     try {
-      // Agrega el dominio actual a los datos del formulario
-      const res = await RegisterUser({ ...formData, domain: currentDomain });
+      // Agrega el dominio actual y la empresa seleccionada a los datos del formulario
+      const res = await RegisterUser({ ...formData, domain: currentDomain, companyId: selectedCompanyId });
       // router.push(`${PATHROUTES.LIST}/${res.id}`);
 
       toast.success("¡Usuario registrado exitosamente!");
@@ -138,6 +166,27 @@ export const CreateUserForm: React.FC = () => {
             )}
           </div>
         ))}
+
+        {/* Campo para seleccionar empresa */}
+        <div className="mb-4">
+          <label htmlFor="companyId" className="label-apply">
+            Empresa
+          </label>
+          <select
+            id="companyId"
+            value={selectedCompanyId ?? ''}
+            onChange={(e) => setSelectedCompanyId(parseInt(e.target.value))}
+            className="input-apply"
+            required
+          >
+            {companies.map((company) => (
+              <option key={company.id} value={company.id}>
+                {company.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <Button type="submit">Crear Usuario</Button>
       </form>
     </div>
