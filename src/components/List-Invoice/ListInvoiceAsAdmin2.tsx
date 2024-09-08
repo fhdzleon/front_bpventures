@@ -1,7 +1,7 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
 import React, { useEffect, useState } from "react";
-import { getInvoicesById } from "@/helpers/auth.helper";
+import { getAllInvoices, getInvoicesById } from "@/helpers/auth.helper";
 import InvoiceDetail, { Invoice } from "@/components/DetailInvoice/DetailInvoice";
 import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
 import VoucherUpload from "@/components/invoice/VoucherUpload";
@@ -9,6 +9,9 @@ import DeleteInvoice from "@/components/InvoicesButton/ButtonDelete";
 import Link from "next/link";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 import InvoiceDownload from "@/components/InvoicesButton/Buttondowland";
+import EyeIcon from "../icons/EyeIcon";
+import VoucherIcon from "../icons/UploadIcon";
+import EditIcon from "../icons/EditIcon";
 
 const BillingTableComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,9 +39,95 @@ const BillingTableComponent = () => {
   };
 
   const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [invoicesAdmin, setInvoicesAdmin] = useState<any[]>([
+    {
+      id: 1,
+      number: "INV-0001",
+      path: "path/to/invoice1.pdf",
+      issueDate: "2024-01-01T00:00:00.000Z",
+      dueDate: "2024-02-01T00:00:00.000Z",
+      amount: "100.00",
+      createdAt: "2024-09-07T23:49:36.030Z",
+      updatedAt: null,
+      user: {
+        id: 1,
+        email: "user1@example.com",
+        password: "$2b$10$z2hbyUoyqwBl/GuG5upLuu4G5g1ahRwif2ee5OBWcYCzduHxcmy6K",
+        Names: "User1",
+        LastName: "LastName1",
+        Position: "Position1",
+        empresa: null,
+        cuit: null,
+        domicilio: null,
+        verifiedEmail: false,
+        mfaEnabled: false,
+        mfaBackupCodes: "",
+        mfaSecret: "",
+        mfaVerified: null,
+        createdAt: "2024-09-07T23:49:34.741Z",
+        modifiedAt: "2024-09-07T23:49:34.741Z",
+        statusId: 1,
+        isAdmin: true,
+      },
+      invoiceStatus: {
+        id: 1,
+        name: "Pending",
+        createdAt: "2024-09-07T23:49:35.967Z",
+        updatedAt: null,
+      },
+      company: {
+        id: 1,
+        name: "Company1",
+        address: "Address1",
+        cuit: "200000001",
+      },
+    },
+    {
+      id: 2,
+      number: "INV-0002",
+      path: "path/to/invoice2.pdf",
+      issueDate: "2024-02-01T00:00:00.000Z",
+      dueDate: "2024-03-01T00:00:00.000Z",
+      amount: "150.00",
+      createdAt: "2024-09-07T23:49:36.030Z",
+      updatedAt: null,
+      user: {
+        id: 2,
+        email: "user2@example.com",
+        password: "$2b$10$pU5RZspg7uvh.yqJbTzofeAnrBom3v01EmIViRDKlhXE09J92idMO",
+        Names: "User2",
+        LastName: "LastName2",
+        Position: "Position2",
+        empresa: null,
+        cuit: null,
+        domicilio: null,
+        verifiedEmail: false,
+        mfaEnabled: false,
+        mfaBackupCodes: "",
+        mfaSecret: "",
+        mfaVerified: null,
+        createdAt: "2024-09-07T23:49:34.804Z",
+        modifiedAt: "2024-09-07T23:49:34.804Z",
+        statusId: 1,
+        isAdmin: true,
+      },
+      invoiceStatus: {
+        id: 2,
+        name: "Payed",
+        createdAt: "2024-09-07T23:49:35.967Z",
+        updatedAt: null,
+      },
+      company: {
+        id: 2,
+        name: "Company2",
+        address: "Address2",
+        cuit: "200000002",
+      },
+    },
+  ]);
   const { userData, loading, fetchAgain } = useAuth();
 
-  const fetchInvoices = async () => {
+  const fetchInvoicesById = async () => {
     try {
       if (!loading) {
         const response = await getInvoicesById(userData?.id);
@@ -49,12 +138,25 @@ const BillingTableComponent = () => {
     }
   };
 
+  const fetchInvoices = async () => {
+    try {
+      if (!loading) {
+        const response = await getAllInvoices();
+        setInvoicesAdmin(response);
+      }
+    } catch (error) {
+      console.error("Error fetching invoices", error);
+    }
+  };
+
   useEffect(() => {
+    fetchInvoicesById();
     fetchInvoices();
   }, [userData?.id, fetchAgain]);
 
   return (
     <div className="m-5 overflow-x-auto mt-5 rounded-lg">
+      <pre>{JSON.stringify(invoicesAdmin, null, 2)}</pre>
       <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Facturas: {userData?.Names}</h1>
       <ButtonUploadInvoice userId={userData?.id} />
       <div className="mt-4 overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
@@ -79,18 +181,10 @@ const BillingTableComponent = () => {
                   <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.invoiceIssueDate}</td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700">{invoice.invoiceDueDate}</td>
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 flex space-x-4">
-                  <InvoiceDownload userId={userData?.id || ""} invoiceId={invoice.id} />
+                    <InvoiceDownload userId={userData?.id || ""} invoiceId={invoice.id} />
 
                     <button title="vista previa" onClick={() => handleOpenModal(invoice)}>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mx-auto hover:text-acent">
-                        <title>Ver Factura</title>
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                        />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                      </svg>
+                      <EyeIcon />
                     </button>
 
                     {isModalOpen && selectedInvoice && (
@@ -108,21 +202,7 @@ const BillingTableComponent = () => {
                     )}
 
                     <button title="voucher" onClick={() => handleOpenModalVoucher(invoice)}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        className="size-6 w-6 h-6 mx-auto hover:text-acent"
-                      >
-                        <title>Subir Comprobante</title>
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                        ></path>
-                      </svg>
+                      <VoucherIcon />
                     </button>
 
                     {isModalOpenVoucher && selectedInvoice && (
@@ -144,14 +224,7 @@ const BillingTableComponent = () => {
                         {/* ========== EDITAR ========== */}
                         <a href={`${PATHROUTES.INVOICES}/${invoice.id}/edit`} className="hover:text-acent">
                           <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
-                              <title>Editar Factura</title>
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                              />
-                            </svg>
+                              <EditIcon />
                           </button>
                         </a>
 

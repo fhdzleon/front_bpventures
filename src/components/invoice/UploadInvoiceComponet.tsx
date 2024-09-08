@@ -26,10 +26,7 @@ export const UploadInvoiceComponet: React.FC<{ userId: number }> = ({ userId }) 
     }
   };
 
-  const handleInvoiceNumberChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newInvoiceNumber = e.target.value;
-    setInvoiceNumber(newInvoiceNumber);
-
+  const checkInvoiceNumber = async (newInvoiceNumber: string) => {
     if (newInvoiceNumber.length > 0) {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/check-invoice-number?invoiceNumber=${newInvoiceNumber}`);
@@ -51,6 +48,16 @@ export const UploadInvoiceComponet: React.FC<{ userId: number }> = ({ userId }) 
     } else {
       setErrorMessage('');
     }
+  };
+
+  const handleInvoiceNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newInvoiceNumber = e.target.value;
+    setInvoiceNumber(newInvoiceNumber);
+    checkInvoiceNumber(newInvoiceNumber);  // Valida en cada cambio
+  };
+
+  const handleInvoiceNumberBlur = () => {
+    checkInvoiceNumber(invoiceNumber);  // Valida al perder el foco
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -82,6 +89,15 @@ export const UploadInvoiceComponet: React.FC<{ userId: number }> = ({ userId }) 
         const result = await response.json();
         toast.success("Factura cargada correctamente");
         console.log(result);
+
+        // Limpiar los campos del formulario después de una carga exitosa
+        setInvoiceNumber('');
+        setIssueDate('');
+        setDueDate('');
+        setAmount(0);
+        setInvoiceStatusId(invoiceStatuses[0].id);
+        setFile(null);
+        setErrorMessage('');
       } else {
         const errorData = await response.json();
         toast.error(errorData.message || 'Error al cargar la factura');
@@ -105,7 +121,8 @@ export const UploadInvoiceComponet: React.FC<{ userId: number }> = ({ userId }) 
             type="text"
             id="numeroFactura"
             value={invoiceNumber}
-            onChange={handleInvoiceNumberChange}
+            onChange={handleInvoiceNumberChange}  // Valida en cada cambio
+            onBlur={handleInvoiceNumberBlur}  // Valida al salir del campo
             className="input-apply"
             required
           />

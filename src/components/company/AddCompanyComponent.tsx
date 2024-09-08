@@ -5,26 +5,33 @@ import Button from "../FormComponent/Button";
 import { Toaster, toast } from "sonner";
 
 export const AddCompanyComponent: React.FC = () => {
-  const [companyName, setCompanyName] = useState('');
+  const [name, setName] = useState('');
   const [cuit, setCuit] = useState('');
+  const [address, setAddress] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!companyName || !cuit) {
+    // Validación simple de campos obligatorios
+    if (!name || !cuit || !address) {
       setErrorMessage('Todos los campos son obligatorios');
       return;
     }
 
-    const formData = new FormData();
-    formData.append('companyName', companyName);
-    formData.append('cuit', cuit);
+    const companyData = {
+      name,
+      address,
+      cuit: parseInt(cuit, 10), // Aseguramos que CUIT sea un número
+    };
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/companies`, {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(companyData),
       });
 
       if (response.ok) {
@@ -37,7 +44,7 @@ export const AddCompanyComponent: React.FC = () => {
       }
     } catch (error: any) {
       console.error("Error al añadir la empresa", error);
-      toast.error(error.message);
+      toast.error('Hubo un problema al añadir la empresa. Inténtalo de nuevo.');
     }
   };
 
@@ -49,24 +56,36 @@ export const AddCompanyComponent: React.FC = () => {
         <h1 className="text-center text-[1.2rem] mb-6">Añadir Empresa</h1>
 
         <div className="mb-4">
-          <label className="label-apply">Razón Social:</label>
+          <label className="label-apply" htmlFor="name">Razón Social:</label>
           <input
             type="text"
-            id="companyName"
-            value={companyName}
-            onChange={(e) => setCompanyName(e.target.value)}
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="input-apply"
             required
           />
         </div>
 
         <div className="mb-4">
-          <label className="label-apply">CUIT:</label>
+          <label className="label-apply" htmlFor="cuit">CUIT:</label>
           <input
-            type="text"
+            type="number"
             id="cuit"
             value={cuit}
             onChange={(e) => setCuit(e.target.value)}
+            className="input-apply"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="label-apply" htmlFor="address">Dirección:</label>
+          <input
+            type="text"
+            id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             className="input-apply"
             required
           />

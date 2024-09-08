@@ -11,6 +11,8 @@ import PermissionPanel from "./permissionpanel";
 import Cookies from "js-cookie";
 import { useAuth } from "@/context/AuthContext";
 import { fetchDeliverables } from "@/helpers/fetchDeliverables";
+import SearchBar from "./Searchbar";
+
 
 const DeliverablesList = () => {
   const { setDeliverableData, userData, deliverableData, loading, fetchAgain } =
@@ -23,6 +25,9 @@ const DeliverablesList = () => {
   const itemsPerPage = 10;
   const token = Cookies.get("token");
   const [openPanel, setOpenPanel] = useState<number | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+
 
   const togglePanel = (fileId: number | null) => {
     setOpenPanel(openPanel === fileId ? null : fileId);
@@ -48,6 +53,29 @@ const DeliverablesList = () => {
     currentFolder,
   ]);
 
+  const fetchDeliverables2 = async () =>{
+    await  fetchDeliverables(userData?.id, token, currentPage, itemsPerPage, currentFolder, setDeliverableData);
+  }
+
+  // const fetchDeliverables = (
+  //   userId: number | undefined,
+  //   token: string | undefined,
+  //   currentPage: number,
+  //   itemsPerPage: number,
+  //   currentFolder: string | null,
+  //   setDeliverableData: (data: any) => void
+  // ) => {
+  //   // Lógica para obtener los deliverables
+  //   console.log('Fetching deliverables with:', {
+  //     userId,
+  //     token,
+  //     currentPage,
+  //     itemsPerPage,
+  //     currentFolder,
+  //   });
+  //   // Simulación de API call
+  //   setDeliverableData(['deliverable1', 'deliverable2']);
+  // };
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
   };
@@ -73,8 +101,11 @@ const DeliverablesList = () => {
     setCurrentPage(1);
   };
 
+
   return (
     <>
+   <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} fetchdeliverable={fetchDeliverables2} />
+
       {!loading ? (
         <>
           <span className="font-mono ">{pathView}/</span>
@@ -86,7 +117,7 @@ const DeliverablesList = () => {
                     <div className=" flex justify-evenly items-center">
                       Nombre:
                       <SortDeliverable
-                        UserId={userData.id}
+                        UserId={userData?.id}
                         column="name"
                         currentFolder={currentFolder}
                       />
@@ -96,7 +127,7 @@ const DeliverablesList = () => {
                     <div className=" flex justify-evenly items-center">
                       Fecha
                       <SortDeliverable
-                        UserId={userData.id}
+                        UserId={userData?.id}
                         column="date"
                         currentFolder={currentFolder}
                       />
@@ -106,7 +137,7 @@ const DeliverablesList = () => {
                     <div className=" flex justify-evenly items-center">
                       Categorias
                       <SortDeliverable
-                        UserId={userData.id}
+                        UserId={userData?.id}
                         column="category"
                         currentFolder={currentFolder}
                       />
@@ -385,3 +416,7 @@ const DeliverablesList = () => {
 };
 
 export default DeliverablesList;
+function setFilteredDeliverables(filtered: any) {
+  throw new Error("Function not implemented.");
+}
+

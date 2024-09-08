@@ -12,7 +12,7 @@ const EditUser = () => {
   const { id } = useParams();
 
   const handleClick = () => {
-    router.push(`${PATHROUTES.UPDATE_USER}/${id}`);
+    router.push(`${PATHROUTES.USER}/${id}/edit`);
   };
 
   return (

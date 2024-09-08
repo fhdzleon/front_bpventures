@@ -1,43 +1,81 @@
-
-// const [searchTerm, setSearchTerm] = useState<string>("");
-// const filteredDeliverables = deliverableData?.filter((deliverable: { deliverableName: string; }) =>
-//   deliverable.deliverableName.toLowerCase().includes(searchTerm.toLowerCase())
-// );
-
-// <div>
-// <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
-
-// </div>
-//    {/* {filteredDeliverables && filteredDeliverables.length > 0 ? (
-//                   filteredDeliverables
-//                   .sort(
-//                           (a: any, b: any) =>
-//                             b.deliverableIsFolder - a.deliverableIsFolder
-//                         )
-//                         .map((deliverable: any) => ( */}
 import { useAuth } from '@/context/AuthContext';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 
 interface SearchBarProps {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
+  fetchdeliverable:  () => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
-  const { deliverableData } = useAuth();
+export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm, fetchdeliverable }) => {
+  const { deliverableData, setDeliverableData } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const token = Cookies.get("token");
+
+  const searchDeliverables = async (name: string) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`http://localhost:3000/deliverables/file/${name}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al buscar archivos');
+      }
+
+      const data = await response.json();
+
+    
+      const deliverables = data?.map((item:any)=>{
+        return {
+          id: item.id,
+          parentId: item.parentId,
+          deliverableName: item.name,
+          deliverableIsFolder: item.isFolder,
+          deliverablePath: item.Path,
+          deliverableType: item.deliverableType.name,
+          deliverableCategory: item.deliverableCategory.name,
+          permissionTypes: item.permissions.map((permission:any) => permission.permissionType.name), 
+          lastDate: item.modifiedAt || item.createdAt
+        }
+        
+      })
+      console.log('deliverables', deliverables);
+      
+      
+      setDeliverableData(deliverables);
+    } catch (err) {
+      console.error('Error al buscar archivos:', err);
+      setError("Error al buscar archivos");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (searchTerm) {
+      searchDeliverables(searchTerm);
+    } else {
+      fetchdeliverable();
+    }
+  }, [searchTerm]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+    console.log('Término de búsqueda actualizado:', e.target.value);
   };
-
-  const filteredDeliverables = deliverableData?.filter((deliverable: { deliverableName: string; }) =>
-    deliverable.deliverableName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <div className="flex mt-5 items-center">
-
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +93,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
         </svg>
       </div>
 
-
       <div>
         <input
           className="bg-slate-300 w-40 font-sans text-xs md:text-lg h-12 md:w-96 outline-none placeholder-secundary px-3"
@@ -66,7 +103,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
           onChange={handleSearchChange}
         />
       </div>
-
 
       <div>
         <svg
@@ -85,6 +121,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
         </svg>
       </div>
 
+      {loading && <p>Cargando...</p>}
+      {error && <p>Error: {error}</p>}
     </div>
   );
 };
