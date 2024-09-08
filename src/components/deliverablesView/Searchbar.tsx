@@ -5,9 +5,10 @@ import Cookies from 'js-cookie';
 interface SearchBarProps {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
+  fetchdeliverable:  () => void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm, fetchdeliverable }) => {
   const { deliverableData, setDeliverableData } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,10 +19,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
     setLoading(true);
     setError(null);
 
-    console.log(`Buscando archivos con el nombre: ${name}`);
-
     try {
-      const response = await fetch(`https://api.1rodemayo.com/deliverables/file/${name}`, {
+      const response = await fetch(`http://localhost:3000/deliverables/file/${name}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -29,17 +28,31 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
         },
       });
 
-      console.log('Respuesta de la API:', response);
-
       if (!response.ok) {
         throw new Error('Error al buscar archivos');
       }
 
       const data = await response.json();
-      console.log('Datos recibidos de la API:', data);
 
-  
-      setDeliverableData(data);
+    
+      const deliverables = data?.map((item:any)=>{
+        return {
+          id: item.id,
+          parentId: item.parentId,
+          deliverableName: item.name,
+          deliverableIsFolder: item.isFolder,
+          deliverablePath: item.Path,
+          deliverableType: item.deliverableType.name,
+          deliverableCategory: item.deliverableCategory.name,
+          permissionTypes: item.permissions.map((permission:any) => permission.permissionType.name), 
+          lastDate: item.modifiedAt || item.createdAt
+        }
+        
+      })
+      console.log('deliverables', deliverables);
+      
+      
+      setDeliverableData(deliverables);
     } catch (err) {
       console.error('Error al buscar archivos:', err);
       setError("Error al buscar archivos");
@@ -52,7 +65,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
     if (searchTerm) {
       searchDeliverables(searchTerm);
     } else {
-      setDeliverableData([]);
+      fetchdeliverable();
     }
   }, [searchTerm]);
 

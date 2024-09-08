@@ -1,32 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const token = request.cookies.get("token")?.value;
+  const token = request.cookies.get("token")?.value.slice(1,-1);
 
   if (!token) return NextResponse.redirect(new URL("/", request.url));
 
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/verifyToken`,
 
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (!token) {
-      throw new Error("Token no valido");
-    }
-    const data = await response.json();
-
-    if (data) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verifyToken`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    
+    if (response.ok) {
       return NextResponse.next();
-    } else {
-      return NextResponse.redirect(new URL("/not-allowed", request.url));
     }
   } catch (error) {
     console.error("Error en el middleware:", error);

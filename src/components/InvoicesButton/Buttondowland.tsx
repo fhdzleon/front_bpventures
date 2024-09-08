@@ -87,9 +87,70 @@ interface InvoiceButtonProps {
 }
 
 const InvoiceDownload: React.FC<InvoiceButtonProps> = ({ userId, invoiceId }) => {
-  const handleDownload = () => {
-    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/invoices/download/${userId}/${invoiceId}`;
-    window.open(apiUrl, "_blank"); 
+  const handleDownload = async () => {
+    try {
+      // Solicitar la información de la factura
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/download/${userId}/${invoiceId}`,{
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+          throw new Error('Failed to fetch invoice details');
+      }
+  
+    const contentDisposition = response.headers.get('Content-Disposition');
+  
+      
+    const fileName = contentDisposition
+      ? contentDisposition.split('filename=')[1].replace(/"/g, '')
+      : 'invoice.pdf'; 
+      console.log(fileName);
+      
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName; // Cambia el nombre del archivo si es necesario
+      document.body.appendChild(link);
+      link.click();
+  
+      // Limpiar
+      link.remove();
+      window.URL.revokeObjectURL(url);
+  
+      // // Obtener los detalles de la factura
+      // const { filePath, fileName } = await response.json();
+      
+      // const fileUrl = `${process.env.NEXT_PUBLIC_API_URL}/${filePath}`;
+      // // Descargar el archivo
+      // console.log(fileUrl);
+      
+      // // const fileResponse = await fetch(fileUrl, {
+      // //     method: 'GET',
+      // //     credentials: 'include',
+      // // });
+      // // console.log(fileResponse);
+      
+      // // if (!fileResponse.ok) {
+      // //     throw new Error('Failed to download file');
+      // // }
+
+      // const link = document.createElement('a');
+      // link.href = fileUrl;
+      // link.download = fileName; // Nombre del archivo que se descargará
+      // // Agregar el enlace al DOM
+      // document.body.appendChild(link);
+      
+      // // Simular un clic en el enlace
+      // link.click();
+      
+      // // Eliminar el enlace del DOM
+      // document.body.removeChild(link);
+      // console.log('File downloaded successfully');
+
+  } catch (error) {
+      console.error('Error downloading file:', error);
+  }
   };
 
   return (

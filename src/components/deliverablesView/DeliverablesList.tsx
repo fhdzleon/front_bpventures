@@ -53,6 +53,29 @@ const DeliverablesList = () => {
     currentFolder,
   ]);
 
+  const fetchDeliverables2 = async () =>{
+    await  fetchDeliverables(userData?.id, token, currentPage, itemsPerPage, currentFolder, setDeliverableData);
+  }
+
+  // const fetchDeliverables = (
+  //   userId: number | undefined,
+  //   token: string | undefined,
+  //   currentPage: number,
+  //   itemsPerPage: number,
+  //   currentFolder: string | null,
+  //   setDeliverableData: (data: any) => void
+  // ) => {
+  //   // Lógica para obtener los deliverables
+  //   console.log('Fetching deliverables with:', {
+  //     userId,
+  //     token,
+  //     currentPage,
+  //     itemsPerPage,
+  //     currentFolder,
+  //   });
+  //   // Simulación de API call
+  //   setDeliverableData(['deliverable1', 'deliverable2']);
+  // };
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
   };
@@ -77,14 +100,11 @@ const DeliverablesList = () => {
     );
     setCurrentPage(1);
   };
-  
-
-
 
 
   return (
     <>
-   <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+   <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} fetchdeliverable={fetchDeliverables2} />
 
       {!loading ? (
         <>

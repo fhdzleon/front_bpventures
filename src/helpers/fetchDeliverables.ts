@@ -21,7 +21,8 @@ export const fetchDeliverables = async (
       },
     });
     const data = await response.json();
-
+    console.log(data);
+    
     setDeliverableData(data);
   } catch (error) {
     console.error("Error fetching deliverables", error);
