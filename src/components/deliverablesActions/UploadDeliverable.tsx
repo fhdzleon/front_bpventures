@@ -6,7 +6,13 @@ import { useAuth } from "@/context/AuthContext";
 import GoogleDrivePicker from "./GoogleDrivePicker";
 import Swal from "sweetalert2";
 
-const UploadDeliverable = () => {
+interface UploadDeliverableProps {
+  currentFolder: string | null;
+}
+
+const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
+  currentFolder,
+}) => {
   const token = Cookies.get("token");
   const { fetchAgain, setFetchAgain, deliverableData } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -59,7 +65,7 @@ const UploadDeliverable = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const verifyName = deliverableData.some(
+    const verifyName = deliverableData?.some(
       (deliverable: any) =>
         deliverable.deliverableName.toLowerCase() ===
         formData.name.toLowerCase()
@@ -87,7 +93,9 @@ const UploadDeliverable = () => {
     try {
       const url =
         Number(selectedOption) > 2
-          ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/file`
+          ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/file${
+              currentFolder ? `&parentId=${currentFolder}` : ""
+            }`
           : Number(selectedOption) === 2
           ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/link`
           : `${process.env.NEXT_PUBLIC_API_URL}/deliverables/folder`;
@@ -131,7 +139,7 @@ const UploadDeliverable = () => {
   return (
     <div className="mt-5 flex justify-start">
       <button
-        className="flex items-center justify-center mb-3 bg-secundary hover:text-secundary hover:bg-acent text-white font-sans px-4 py-2 rounded-full"
+        className="flex items-center justify-center mb-3 bg-secundary hover:text-secundary hover:bg-acent text-white font-sans px-4 py-2 rounded-xl"
         onClick={toggleModal}
       >
         <svg
