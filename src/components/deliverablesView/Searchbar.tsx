@@ -41,13 +41,18 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
       const data = await response.json();
 
+      if(!data){
+        throw new Error("Error al buscar archivos");
+      }
+      
+    
       const deliverables = data?.map((item: any) => {
         return {
           id: item.id,
           parentId: item.parentId,
           deliverableName: item.name,
           deliverableIsFolder: item.isFolder,
-          deliverablePath: item.Path,
+          deliverablePath: item.path,
           deliverableType: item.deliverableType.name,
           deliverableCategory: item.deliverableCategory.name,
           permissionTypes: item.permissions.map(
@@ -56,7 +61,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           lastDate: item.modifiedAt || item.createdAt,
         };
       });
-      console.log("deliverables", deliverables);
+    
 
       setDeliverableData(deliverables);
     } catch (err) {

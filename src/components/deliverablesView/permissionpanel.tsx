@@ -19,6 +19,35 @@ interface PermissionPanelProps {
   closePanel: () => void;
 }
 
+interface User {
+  id: number;
+  email: string;
+  password: string;
+  Names: string;
+  LastName: string;
+  Position: string;
+  empresa: string | null;
+  cuit: string | null;
+  domicilio: string | null;
+  verifiedEmail: boolean;
+  mfaEnabled: boolean;
+  mfaBackupCodes: string;
+  mfaSecret: string;
+  mfaVerified: boolean | null;
+  createdAt: string; // Puede ser Date si prefieres
+  modifiedAt: string; // Puede ser Date si prefieres
+  statusId: number;
+  isAdmin: boolean;
+}
+
+interface Company {
+  id: number;
+  name: string;
+  address: string;
+  cuit: string;
+  users: User[];
+}
+
 export default function PermissionPanel({
   fileId,
   closePanel,
@@ -27,8 +56,11 @@ export default function PermissionPanel({
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [newUserId, setNewUserId] = useState<number | null>(null);
   const [agrupedPermissions, setAgrupedPermissions] = useState<any[]>([]);
-  const { allUsers }: AuthContextType = useAuth();
-
+  const { allUsers,userData }: AuthContextType = useAuth();
+  const [Companies, setCompanies] = useState<Company[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCompany, setSelectedCompany] = useState(null); 
+  const [selectedUser, setSelectedUser] = useState<any>(null);
   useEffect(() => {
     const permissionsMap = async () => {
       try {
@@ -41,10 +73,20 @@ export default function PermissionPanel({
             },
           }
         );
-
+        const companies = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/companies`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        
+        const companiesData = await companies.json();
         const permissionsData = await permissions.json();
-
+        
         console.log(permissionsData);
+        setCompanies(companiesData);
         setUserPermissions(permissionsData);
       } catch (error) {
         console.log(error);
@@ -73,6 +115,8 @@ export default function PermissionPanel({
 
     setAgrupedPermissions(groupedPermissionsArray);
   }, [userPermissions]);
+
+
 
   const handlePermissionChange = (userId: number, permission: string) => {
     setNewUserId(userId);
@@ -115,7 +159,6 @@ export default function PermissionPanel({
         { id: 1, name: "owner" },
         { id: 2, name: "view" },
         { id: 3, name: "edit" },
-        { id: 4, name: "delete" },
       ];
 
       const transformPermissions = (permissions: any[]): any[] => {
@@ -134,7 +177,6 @@ export default function PermissionPanel({
       };
 
       const permisosUpdated = transformPermissions(agrupedPermissions);
-      console.log(permisosUpdated);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/deliverables/permision/${fileId}`,
@@ -171,10 +213,20 @@ export default function PermissionPanel({
       user.Names.toLowerCase().includes(searchQuery.toLowerCase())
   );
   const userHandler = async (e: any) => {
-    setSearchQuery(e.value);
-
-    // setNewUserId(e.value);
+    const userId = e.value;
+    const user = allUsers?.find((user) => user.id === userId);
+    setSelectedUser(user);
   };
+
+  const handleCompany=  (event: any) => {
+    const companyId = event.value;
+    setSelectedCompany(companyId);
+  };
+  const empresa = Companies.find((company) =>
+    company.users.some((user:User) => user.id === userData?.id)
+  );
+  
+  const isAdmin = userData?.isAdmin;
   return (
     <div className="absolute top-0  left-0 md:-left-10 bottom-0 z-10 transform -translate-x-full">
       <div className="w-[300px] md:w-[500px] rounded-md m-2 bg-white p-4 shadow-lg border border-gray-300">
@@ -204,22 +256,39 @@ export default function PermissionPanel({
           <h4 className="text-md font-futura font-bold mb-2">
             Asignar Permisos a Nuevos Usuarios
           </h4>
-          {/* <input
-            type="text"
-            placeholder="Buscar usuario..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="border p-2 rounded w-full"
-          />
-           */}
+          
+          {isAdmin ? (
+      <>
+      <div className="flex flex-row gap-3 justify-center w-full">
 
+        <Select
+          placeholder="Seleccione una empresa"
+          className="w-full"
+          id="companies"
+          options={Companies.map((company) => ({
+            key: company.id,
+            value: company.id,
+            label: company.name,
+          })).sort((a, b) =>
+            a.label
+              .toString()
+              .toLowerCase()
+              .localeCompare(b.label.toString().toLowerCase())
+          )}
+          onChange={handleCompany}
+        />
+
+        {selectedCompany && Companies  && (
           <Select
+          className="w-full"
             id="users"
-            options={allUsers
+            placeholder="Seleccione un usuario"
+            options={Companies?.find((company) => company.id === selectedCompany)
+              .users
               .filter((user) => !user.isAdmin)
               .map((user) => ({
                 key: user.id,
-                value: user.Names,
+                value: user.id,
                 label: user.Names,
               }))
               .sort((a, b) =>
@@ -229,13 +298,50 @@ export default function PermissionPanel({
                   .localeCompare(b.label.toString().toLowerCase())
               )}
             onChange={userHandler}
-          ></Select>
+          />
+        )}
+      </div>
+      </>
+    ) : (
+      <>
+      <div className="flex flex-row justify-center w-full gap-3">
 
-          {filteredUser ? (
+      <Select
+      className="w-full"
+      id="companies"
+      value={empresa ? { key: empresa.id, value: empresa.id, label: empresa.name } : undefined} // Establecer el valor seleccionado
+      isDisabled={true} // Deshabilitado para clientes
+      />
+      
+      <Select
+        className="w-full"
+        placeholder="Seleccione un usuario"
+        id="users"
+        options={Companies.flatMap((company) =>
+          company.users.filter((user) => !user.isAdmin).map((user) => ({
+            key: user.id,
+            value: user.id,
+            label: user.Names,
+          }))
+        ).sort((a, b) =>
+          a.label
+            .toString()
+            .toLowerCase()
+            .localeCompare(b.label.toString().toLowerCase())
+        )}
+        onChange={userHandler}
+      />
+      </div>
+      </>
+      
+      // Selector de usuarios directamente para clientes
+    )}
+
+          {selectedUser ? (
             <div className="mt-2 flex items-center mb-2">
-              <span className="mr-2">{filteredUser.Names}</span>
+              <span className="mr-2">{selectedUser.Names}</span>
               <button
-                onClick={() => handlePermissionChange(filteredUser.id, "view")}
+                onClick={() => handlePermissionChange(selectedUser.id, "view")}
                 className="ml-4 bg-emerald-500 text-white px-2 py-1 rounded"
               >
                 Agregar
@@ -245,61 +351,7 @@ export default function PermissionPanel({
             <p className="text-gray-500">No se encontraron usuarios.</p>
           ) : null}
         </div>
-        {/* {newUserId !== null && ( */}
-        {/* {newUserId !== null && (
-          <div className="mb-6">
-            <h4 className="text-md font-semibold mb-2">
-              Permisos para{" "}
-              {allUsers.find((user) => user.id === newUserId)?.Names}
-            </h4>
-            {["view", "edit", "delete"].map((perm) => (
-              <label key={perm} className="ml-2">
-                <input
-                  type="checkbox"
-                  checked={
-                    agrupedPermissions.find(
-                      (perm) => perm.userId === newUserId
-                    )?.permissionTypes.includes(perm) ?? false
-                  }
-                  onChange={() => handlePermissionChange(newUserId, perm)}
-                />
-                {perm}
-              </label>
-            ))}
-          </div>
-        )} */}
-
-        {/* <div className="mb-6">
-          <h4 className="text-md font-semibold mb-2">Permisos Actuales</h4>
-          {agrupedPermissions.map((permission, index) => (
-            <div key={index} className="flex items-center mb-2">
-              <span className="mr-2">
-                {allUsers.find((user) => user.id === permission.userId)?.Names}
-              </span>
-              {["view", "edit", "delete"].map((perm) => (
-                <label key={perm} className="ml-2">
-                  <input
-                    type="checkbox"
-                    checked={
-                      perm === "view" || permission.permissionTypes.includes(perm)
-                    }
-                    onChange={() =>
-                      handlePermissionChange(permission.userId, perm)
-                    }
-                  />
-                  {perm}
-                </label>
-              ))}
-            </div>
-          ))}
-        </div> */}
-
-        {/* <button
-          onClick={savePermissions}
-          className="bg-secundary font-futura text-white px-4 py-2 rounded"
-        >
-          Guardar
-        </button> */}
+      
         {
           <div className="mb-6 ">
             <h4 className="text-md font-semibold mb-2 ">Permisos Actuales</h4>
@@ -312,9 +364,6 @@ export default function PermissionPanel({
                   <th className="border text-white border-gray-300 p-2">Ver</th>
                   <th className="border text-white border-gray-300 p-2">
                     Editar
-                  </th>
-                  <th className="border text-white border-gray-300 p-2">
-                    Eliminar
                   </th>
                 </tr>
               </thead>
@@ -335,7 +384,7 @@ export default function PermissionPanel({
                             ?.Names
                         }
                       </td>
-                      {["view", "edit", "delete"].map((perm) => (
+                      {["view", "edit"].map((perm) => (
                         <td
                           key={perm}
                           className="border border-gray-300 p-2 text-center"
