@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 const BlockUser = () => {
   const { blocked, setBlocked } = useAuth();
   const { id } = useParams();

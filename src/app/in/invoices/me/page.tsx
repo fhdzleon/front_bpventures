@@ -2,7 +2,7 @@
 import BillingTableComponent from "@/components/List-Invoice/List-Invoice";
 import ListInvoiceComponent from "@/components/List-Invoice/ListInvoiceComponent";
 import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 import { getAllInvoices, getUserById } from "@/helpers/auth.helper";
 import { useEffect, useState } from "react";
 

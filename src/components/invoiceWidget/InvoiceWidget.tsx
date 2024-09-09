@@ -2,7 +2,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 
 export interface Deliverable {
   id: number;

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 import CreateUserForm from "@/components/Users/CreateUserForm";
 const CreateUser = () => {
   const { loading } = useAuth();

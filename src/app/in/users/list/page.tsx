@@ -1,7 +1,7 @@
 "use client";
 
 import UsersListComponent from "@/components/Users/UsersListComponent";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 
 export const UsersList = () => {
   const { allUsers, setAllUsers, loading } = useAuth();

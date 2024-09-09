@@ -1,7 +1,7 @@
 "use client";
 
 import UsersListComponent from "@/components/Users/UsersListComponent";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 // import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";

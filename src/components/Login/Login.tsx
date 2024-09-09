@@ -5,7 +5,7 @@ import { useState, ChangeEvent, FormEvent, useEffect, useRef } from "react";
 import { ValidateLogin } from "../../helpers/authErrors";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
-import { AuthContextType, useAuth } from "../../context/AuthContext-1";
+import { AuthContextType, useAuth } from "../../context/AuthContext";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 import Link from "next/link";
 

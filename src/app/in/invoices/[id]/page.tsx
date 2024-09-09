@@ -3,7 +3,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import InvoiceDetail from "../../../../components/DetailInvoice/DetailInvoice";
 import { getUserById } from "@/helpers/auth.helper";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 
 export interface Invoice {
   invoicePath: any;

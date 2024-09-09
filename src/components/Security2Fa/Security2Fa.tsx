@@ -2,7 +2,7 @@
 import { useState } from "react";
 import SecurityButton from "../buttonSecurity/ButtonSecurity";
 import Cookies from "js-cookie";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SecuritySettings() {
   const [is2FAEnabled, setIs2FAEnabled] = useState(false);

@@ -5,7 +5,7 @@ import DeleteUser from "../adminUsersActions/DeleteUser";
 import BlockUser from "../adminUsersActions/BlockUser";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 import { UploadInvoiceUser } from "../InvoicesButton/UploadInvoiceUser";
 import BackButton from "../Buttons/BackButton";
 export interface User {

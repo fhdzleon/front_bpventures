@@ -34,8 +34,6 @@ interface userdata {
   modifiedAt: string;
   statusId: number;
   isAdmin: boolean;
-  companyId: number;
-  Empresa: string;
 }
 
 export interface AuthContextType {
@@ -67,6 +65,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [allUsers, setAllUsers] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [fetchAgain, setFetchAgain] = useState<boolean>(true);
+  /*   console.log(userData); */
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -80,6 +79,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         }
         const data = await response.json();
         setLoading(false);
+
         setAllUsers(data);
       } catch (error) {
         setLoading(false);
@@ -91,9 +91,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-    const localStorageUser = localStorage.getItem("user");
-    if (localStorageUser) {
-      setUser(JSON.parse(localStorageUser));
+    const session = sessionStorage.getItem("user");
+    if (session) {
+      setUser(JSON.parse(session));
     }
   }, []);
 
@@ -109,14 +109,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, [user]);
 
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    } else {
-      localStorage.removeItem("user");
-    }
-  }, [user]);
-
   return (
     <AuthContext.Provider
       value={{
@@ -129,7 +121,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         deliverableData,
         setDeliverableData,
         allUsers,
-        setAllUsers,
+        setAllUsers: setAllUsers,
         loading,
         setLoading,
         fetchAgain,

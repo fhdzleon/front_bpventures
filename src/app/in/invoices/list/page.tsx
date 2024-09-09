@@ -1,7 +1,7 @@
 "use client";
 import BillingTableComponent from "@/components/List-Invoice/List-Invoice";
 import ListInvoiceComponent from "@/components/List-Invoice/ListInvoiceComponent";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 import { getAllInvoices } from "@/helpers/auth.helper";
 import { useEffect, useState } from "react";
 

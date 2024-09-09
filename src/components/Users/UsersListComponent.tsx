@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, ReactNode } from "react";
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 
 export interface User {

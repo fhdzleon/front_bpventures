@@ -9,7 +9,7 @@ import SortDeliverable from "../sortDeliverables/SortDeliverable";
 import Image from "next/image";
 import PermissionPanel from "./permissionpanel";
 import Cookies from "js-cookie";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 import { fetchDeliverables } from "@/helpers/fetchDeliverables";
 import SearchBar from "./Searchbar";
 import getDeliverableExtension from "@/helpers/getDeliverableExtension";

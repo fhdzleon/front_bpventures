@@ -6,7 +6,7 @@ import ItemsSideBarTop from "./ItemsSideBarTop";
 import ItemsSidebarBot from "./ItemsSidebarBot";
 import ItemsAdminUser from "./ItemsAdminUser";
 import Logout from "./Logout";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 
 import Avatar from "./Avatar";
 

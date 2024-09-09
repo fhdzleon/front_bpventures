@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { PATHROUTES } from "@/helpers/pathRoutes";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 
 interface DeleteInvoiceProps {
   id: any; // o el tipo adecuado para `id`

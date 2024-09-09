@@ -8,7 +8,7 @@ import { PATHROUTES } from "@/helpers/pathRoutes";
 import { useParams } from "next/navigation";
 import PreloaderLoad from "../preloader/PreloaderLoad";
 import { GetUserById, UpdateUser } from "@/helpers/auth.helper";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 
 // Función para obtener empresas
 const getCompanies = async () => {

@@ -1,5 +1,5 @@
 "use client";
-import { useAuth } from "@/context/AuthContext-1";
+import { useAuth } from "@/context/AuthContext";
 import React, { useEffect, useState } from "react";
 import { getUserById } from "@/helpers/auth.helper";
 import InvoiceDetail, {
