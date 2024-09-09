@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Toaster, toast } from "sonner";
 
+  import FilterInput from '@/components/Search/Search'; 
 interface Company {
   id: number;
   name: string;
@@ -12,7 +13,13 @@ interface Company {
 
 const CompanyTable: React.FC = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
+  const [filter, setFilter] = useState(''); 
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState(1);
+ 
+  const itemsPerPage = 5; 
+
+
 
   const fetchCompanies = async () => {
     try {
@@ -20,6 +27,7 @@ const CompanyTable: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         setCompanies(data);
+
         setLoading(false);
       } else {
         toast.error('Error al cargar las empresas');
@@ -29,6 +37,9 @@ const CompanyTable: React.FC = () => {
       toast.error('Error al cargar las empresas');
     }
   };
+
+ 
+
 
   const handleDelete = async (id: number) => {
     try {
@@ -52,13 +63,32 @@ const CompanyTable: React.FC = () => {
     fetchCompanies();
   }, []);
 
+  
+  const indexOfLastCompany = currentPage * itemsPerPage;
+  const indexOfFirstCompany = indexOfLastCompany - itemsPerPage;
+  const currentCompanies = companies.slice(indexOfFirstCompany, indexOfLastCompany);
+  const totalPages = Math.ceil(companies.length / itemsPerPage);
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
+  };
+
+  const filteredCompanies = companies.filter(company =>
+    company.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
+    <div>
     <div className="container mx-auto p-6 w-4/5 font-futura">
       <Toaster richColors />
       <h1 className="text-4xl font-futura mb-6 text-secundary">
         Lista de Empresas
       </h1>
+      <FilterInput filter={filter} onFilterChange={setFilter} />
 
       {loading ? (
         <p className="text-center">Cargando empresas...</p>
@@ -75,8 +105,8 @@ const CompanyTable: React.FC = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {companies.length > 0 ? (
-                companies.map((company) => (
+            {filteredCompanies.length > 0 ? (
+        filteredCompanies.map((company) => (
                   <tr key={company.id} className="hover:bg-gray-50 transition-colors duration-200">
                     <td className="py-4 px-6 font-futura text-sm text-gray-900">
                       {company.id}
@@ -195,9 +225,39 @@ const CompanyTable: React.FC = () => {
               )}
             </tbody>
           </table>
-        </div>
+        
+
+
+     
+      
+   
+ </div>
+
+ 
       )}
-    </div>
+   <div className=" flex justify-between mt-4 ">
+            <button
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 bg-gray-200 text-black rounded ${currentPage === 1 ? 'cursor-not-allowed opacity-50' : ''}`}
+            >
+              Anterior
+            </button>
+            <p className="text-sm">
+              Página {currentPage} de {totalPages}
+            </p>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 bg-gray-200 text-black rounded ${currentPage === totalPages ? 'cursor-not-allowed opacity-50' : ''}`}
+            >
+              Siguiente
+            </button>
+          </div>
+  </div>
+   
+   </div>
+   
   );
 };
 
