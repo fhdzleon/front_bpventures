@@ -52,6 +52,7 @@ const CompanyTable: React.FC = () => {
     fetchCompanies();
   }, []);
 
+
   return (
     <div className="container mx-auto p-6 w-4/5 font-futura">
       <Toaster richColors />

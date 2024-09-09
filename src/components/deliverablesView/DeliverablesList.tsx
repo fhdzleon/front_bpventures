@@ -108,7 +108,8 @@ const DeliverablesList = () => {
     );
     setCurrentPage(1);
   };
-
+  console.log(deliverableData);
+  
   return (
     <>
       <UploadDeliverable currentFolder={currentFolder} />
