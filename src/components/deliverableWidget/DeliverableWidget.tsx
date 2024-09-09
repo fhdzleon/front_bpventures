@@ -78,13 +78,13 @@ const deliverableWidget = () => {
                 <td className="py-4 px-6 font-sans text-sm text-gray-900">
                   {deliverable.deliverableName}
                 </td>
-                <td className="py-4 px-6 font-sans text-sm text-gray-700">
+                <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
                   {deliverable.deliverableType}
                 </td>
                 <td className="py-4 px-6 font-sans text-sm text-gray-700">
                   {deliverable.permissionType}
                 </td>
-                <td className="py-4 px-6 font-sans text-sm text-gray-700">
+                <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
                   {deliverable.lastDate}
                 </td>
               </tr>
