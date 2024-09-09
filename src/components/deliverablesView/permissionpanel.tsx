@@ -306,12 +306,12 @@ export default function PermissionPanel({
       <>
       <div className="flex flex-row justify-center w-full gap-3">
 
-       <Select
-       className="w-full"
+      <Select
+      className="w-full"
       id="companies"
       value={empresa ? { key: empresa.id, value: empresa.id, label: empresa.name } : undefined} // Establecer el valor seleccionado
       isDisabled={true} // Deshabilitado para clientes
-    />
+      />
       
       <Select
         className="w-full"
