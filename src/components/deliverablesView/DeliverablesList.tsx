@@ -105,7 +105,8 @@ const DeliverablesList = () => {
     );
     setCurrentPage(1);
   };
-
+  console.log(deliverableData);
+  
   return (
     <>
       <SearchBar
