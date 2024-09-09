@@ -7,7 +7,9 @@ const BillingTable = () => {
   const { userData } = useAuth();
   return (
     <>
-      <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Facturas: {userData?.Names}</h1>
+      <h1 className="text-4xl font-futura mb-6 text-secundary">
+        Lista de Facturas: {userData?.Names}
+      </h1>
       <ListInvoiceById id={userData?.id} />
     </>
   );

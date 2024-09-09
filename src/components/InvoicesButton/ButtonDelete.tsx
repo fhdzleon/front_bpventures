@@ -52,7 +52,6 @@ const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ id }) => {
             icon: "success",
             confirmButtonColor: "#2b4168",
           });
-
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
           Swal.fire(

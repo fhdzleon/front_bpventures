@@ -22,7 +22,9 @@ const BillingTable: React.FC<IdParams> = ({ params }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/companies/${companyId}`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/companies/${companyId}`
+        );
         if (response.ok) {
           const data = await response.json();
           setInvoicesData(data.invoices);
@@ -42,8 +44,12 @@ const BillingTable: React.FC<IdParams> = ({ params }) => {
 
   return (
     <>
-    {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
-      <ListInvoiceComponent invoicesData={invoicesData} isAdmin={false} companyName={companyName} />
+      {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
+      <ListInvoiceComponent
+        invoicesData={invoicesData}
+        isAdmin={false}
+        companyName={companyName}
+      />
     </>
   );
 };

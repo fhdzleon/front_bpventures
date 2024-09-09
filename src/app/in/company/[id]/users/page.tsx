@@ -33,7 +33,9 @@ const ListUsersByCompany: React.FC<IdParams> = ({ params }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/companies/${companyId}`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/companies/${companyId}`
+        );
         if (response.ok) {
           const data = await response.json();
           setUsersData(data.users);
@@ -56,7 +58,13 @@ const ListUsersByCompany: React.FC<IdParams> = ({ params }) => {
       {/* <pre>{JSON.stringify(usersData, null, 2)}</pre> */}
       {/* <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Usuarios: {companyName}</h1> */}
 
-      <UsersListComponent allUsers={usersData} setAllUsers={setAllUsers} loading={loading} isCompany={true} companyName={companyName} />
+      <UsersListComponent
+        allUsers={usersData}
+        setAllUsers={setAllUsers}
+        loading={loading}
+        isCompany={true}
+        companyName={companyName}
+      />
     </>
   );
 };

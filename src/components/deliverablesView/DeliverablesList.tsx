@@ -1,5 +1,5 @@
 "use client";
-
+//Cambios
 import React, { useEffect } from "react";
 import { useState } from "react";
 import DeleteDeliverable from "../deliverablesActions/DeleteDeliverable";
@@ -177,9 +177,10 @@ const DeliverablesList = () => {
                     </td>
                   </tr>
                 )}
-                {deliverableData && deliverableData.length > 0 ? (
+                {Array.isArray(deliverableData) &&
+                deliverableData?.length > 0 ? (
                   deliverableData
-                    .sort(
+                    ?.sort(
                       (a: any, b: any) =>
                         b.deliverableIsFolder - a.deliverableIsFolder
                     )
@@ -279,7 +280,7 @@ const DeliverablesList = () => {
                                   />
                                 </div>
                               ) : (
-                                <div className="flex flex-col items-center">
+                                <div className="flex mr-4  justify-end">
                                   <Image
                                     src="https://i.postimg.cc/wx2drb9L/fileicon.png"
                                     alt="Otro Tipo"

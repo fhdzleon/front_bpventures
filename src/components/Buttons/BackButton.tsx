@@ -5,7 +5,8 @@ const BackButton = () => {
   };
 
   return (
-    <button onClick={handleBackClick} className="bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex items-center">
+    <button onClick={handleBackClick}
+     className="bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex items-center">
       Volver
     </button>
   );
