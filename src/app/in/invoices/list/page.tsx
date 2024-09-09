@@ -1,7 +1,7 @@
 "use client";
 import BillingTableComponent from "@/components/List-Invoice/List-Invoice";
 import ListInvoiceComponent from "@/components/List-Invoice/ListInvoiceComponent";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext-1";
 import { getAllInvoices } from "@/helpers/auth.helper";
 import { useEffect, useState } from "react";
 
@@ -49,7 +49,9 @@ const BillingTable = () => {
 
   return (
     <>
-      <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Facturas</h1>
+      <h1 className="text-4xl font-futura mb-6 text-secundary">
+        Lista de Facturas
+      </h1>
       <pre>{JSON.stringify(userData?.isAdmin, null, 2)}</pre>
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
       <ListInvoiceComponent invoicesData={invoicesData} isAdmin={true} />

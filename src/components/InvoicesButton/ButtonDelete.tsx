@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { PATHROUTES } from "@/helpers/pathRoutes";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext-1";
 
 interface DeleteInvoiceProps {
   id: any; // o el tipo adecuado para `id`
@@ -52,7 +52,6 @@ const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ id }) => {
             icon: "success",
             confirmButtonColor: "#2b4168",
           });
-
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
           Swal.fire(

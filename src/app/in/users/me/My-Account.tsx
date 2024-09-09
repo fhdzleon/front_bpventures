@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Security from "@/components/Security2Fa/Security2Fa";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext-1";
 import UpdateUserComponent from "@/components/Users/UpdateUser";
 
 const MyAccount = () => {

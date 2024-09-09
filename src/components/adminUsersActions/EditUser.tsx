@@ -3,7 +3,7 @@
 import React from "react";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext-1";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 
 const EditUser = () => {

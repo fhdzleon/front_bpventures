@@ -9,7 +9,7 @@ import SortDeliverable from "../sortDeliverables/SortDeliverable";
 import Image from "next/image";
 import PermissionPanel from "./permissionpanel";
 import Cookies from "js-cookie";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext-1";
 import { fetchDeliverables } from "@/helpers/fetchDeliverables";
 import SearchBar from "./Searchbar";
 import getDeliverableExtension from "@/helpers/getDeliverableExtension";
@@ -176,9 +176,10 @@ const DeliverablesList = () => {
                     </td>
                   </tr>
                 )}
-                {deliverableData && deliverableData.length > 0 ? (
+                {Array.isArray(deliverableData) &&
+                deliverableData?.length > 0 ? (
                   deliverableData
-                    .sort(
+                    ?.sort(
                       (a: any, b: any) =>
                         b.deliverableIsFolder - a.deliverableIsFolder
                     )

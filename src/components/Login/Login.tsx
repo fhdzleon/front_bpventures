@@ -5,7 +5,7 @@ import { useState, ChangeEvent, FormEvent, useEffect, useRef } from "react";
 import { ValidateLogin } from "../../helpers/authErrors";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
-import { AuthContextType, useAuth } from "../../context/AuthContext";
+import { AuthContextType, useAuth } from "../../context/AuthContext-1";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 import Link from "next/link";
 
@@ -46,18 +46,17 @@ export default function Login() {
   const handleChange = (e: ChangeEvent<HTMLInputElement>, index?: number) => {
     const { name, value } = e.target;
     const newOtp = [...otp];
-    if(index){
+    if (index) {
       newOtp[index] = e.target.value;
       // Move to next input if not last input
       if (e.target.value.length === 1 && index < 5) {
         inputsRef.current[index + 1]?.focus();
       }
-  
+
       // Handle backspace to move to previous input
       if (e.target.value.length === 0 && index > 0) {
         inputsRef.current[index - 1]?.focus();
       }
-
     }
 
     setOtp(newOtp);
@@ -122,7 +121,6 @@ export default function Login() {
           // router.push(PATHROUTES.HOME);
           window.location.href = PATHROUTES.HOME;
           // router.replace(PATHROUTES.HOME);
-
         }
       } catch (error) {
         toast.error("Error en el inicio de sesión. Verifica tus credenciales.");
