@@ -109,16 +109,18 @@ const DeliverablesList = () => {
     setCurrentPage(1);
   };
   console.log(deliverableData);
-  
+
   return (
     <>
-      <UploadDeliverable currentFolder={currentFolder} />
-      <FilterDeliverableForBussines />
-      <SearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        fetchdeliverable={fetchDeliverables2}
-      />
+      <div className="flex items-center space-x-4">
+        <SearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          fetchdeliverable={fetchDeliverables2}
+        />
+        <FilterDeliverableForBussines />
+        <UploadDeliverable currentFolder={currentFolder} />
+      </div>
 
       {!loading ? (
         <>

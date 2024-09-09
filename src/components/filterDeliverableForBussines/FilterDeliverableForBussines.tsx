@@ -40,7 +40,7 @@ const FilterDeliverableForBussines = () => {
           <select
             name="company"
             id="company"
-            className="py-2 font-sans bg-secundary rounded-xl text-white px-4"
+            className="py-2 font-sans h-12 bg-secundary rounded-xl text-white px-4"
           >
             <option value="">Selecciona una empresa</option>
             {bussinesData.map((company) => (

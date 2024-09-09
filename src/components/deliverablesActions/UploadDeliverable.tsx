@@ -137,9 +137,9 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
   };
 
   return (
-    <div className="mt-5 flex justify-start">
+    <div className="flex justify-start">
       <button
-        className="flex items-center justify-center mb-3 bg-secundary hover:text-secundary hover:bg-acent text-white font-sans px-4 py-2 rounded-xl"
+        className="flex items-center h-12 justify-center   bg-secundary hover:text-secundary hover:bg-acent text-white font-sans px-4  rounded-xl"
         onClick={toggleModal}
       >
         <svg
