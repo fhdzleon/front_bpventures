@@ -8,8 +8,12 @@ export const UsersList = () => {
 
   return (
     <>
-    {/* <pre>{JSON.stringify(allUsers, null, 2)}</pre> */}
-      <UsersListComponent allUsers={allUsers} setAllUsers={setAllUsers} loading={loading} />
+      {/* <pre>{JSON.stringify(allUsers, null, 2)}</pre> */}
+      <UsersListComponent
+        allUsers={allUsers}
+        setAllUsers={setAllUsers}
+        loading={loading}
+      />
     </>
   );
 };

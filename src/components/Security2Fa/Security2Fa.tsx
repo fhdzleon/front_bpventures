@@ -9,10 +9,10 @@ export default function SecuritySettings() {
   const [qrCode, setQrCode] = useState<string | undefined>("");
   const [secret, setSecret] = useState<string | undefined>("");
   const [view, setView] = useState<"qr" | "secret">("qr");
- 
+
   const token = Cookies.get("token");
-  const {userData} = useAuth();
-  
+  const { userData } = useAuth();
+
   const handleGenerateQRCode = async () => {
     try {
       if (!token) {
@@ -76,7 +76,6 @@ export default function SecuritySettings() {
               correspondiente.
             </p>
           </div>
-          
         </section>
         <div className="col-span-1 md:place-self-center md:mt-20  ">
           {is2FAEnabled ? (
@@ -116,14 +115,13 @@ export default function SecuritySettings() {
             </div>
           ) : userData?.mfaEnabled ? (
             <button>Cuenta Autenticada</button>
-          
           ) : (
             <button
-            onClick={handleGenerateQRCode}
-            className="bg-[#2B4168] font-futura text-white py-2 px-4 rounded-full shadow hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
-          >
-            Habilitar Autenticación de Dos Factores
-          </button>
+              onClick={handleGenerateQRCode}
+              className="bg-[#2B4168] font-futura text-white py-2 px-4 rounded-full shadow hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+            >
+              Habilitar Autenticación de Dos Factores
+            </button>
           )}
         </div>
         <SecurityButton />

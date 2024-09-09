@@ -1,5 +1,5 @@
 "use client";
-
+//Cambios
 import React, { useEffect } from "react";
 import { useState } from "react";
 import DeleteDeliverable from "../deliverablesActions/DeleteDeliverable";
@@ -176,9 +176,10 @@ const DeliverablesList = () => {
                     </td>
                   </tr>
                 )}
-                {deliverableData && deliverableData.length > 0 ? (
+                {Array.isArray(deliverableData) &&
+                deliverableData?.length > 0 ? (
                   deliverableData
-                    .sort(
+                    ?.sort(
                       (a: any, b: any) =>
                         b.deliverableIsFolder - a.deliverableIsFolder
                     )

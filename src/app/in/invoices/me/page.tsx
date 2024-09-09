@@ -58,7 +58,11 @@ const BillingTable = () => {
 
       {/* <pre>{JSON.stringify(userData, null, 2)}</pre> */}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
-      <ListInvoiceComponent invoicesData={invoicesData} isAdmin={false} userEmail={userData?.email} />
+      <ListInvoiceComponent
+        invoicesData={invoicesData}
+        isAdmin={false}
+        userEmail={userData?.email}
+      />
     </>
   );
 };

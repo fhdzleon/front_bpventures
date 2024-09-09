@@ -29,22 +29,29 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
       <section className="mb-12">
         <section className="mb-12">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-4xl font-bold text-[#2B4168]  border-[#2B4168] pb-2">Detalles del Usuario</h1>
-            <BackButton/>
+            <h1 className="text-4xl font-bold text-[#2B4168]  border-[#2B4168] pb-2">
+              Detalles del Usuario
+            </h1>
+            <BackButton />
           </div>
         </section>
         <div className="bg-gradient-to-br bg-white p-8 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-futura text-[#2B4168] mb-8">Información del Usuario</h2>
+          <h2 className="text-3xl font-futura text-[#2B4168] mb-8">
+            Información del Usuario
+          </h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-4">
               <p className="text-lg">
-                <strong className="font-futura">ID de Usuario:</strong> {user.id}
+                <strong className="font-futura">ID de Usuario:</strong>{" "}
+                {user.id}
               </p>
               <p className="text-lg">
-                <strong className="font-futura">Nombre Completo:</strong> {user.Names} {user.LastName}
+                <strong className="font-futura">Nombre Completo:</strong>{" "}
+                {user.Names} {user.LastName}
               </p>
               <p className="text-lg">
-                <strong className="font-futura">Correo Electrónico:</strong> {user.email}
+                <strong className="font-futura">Correo Electrónico:</strong>{" "}
+                {user.email}
               </p>
               <p className="text-lg">
                 <strong className="font-futura">Cargo:</strong> {user.Position}
@@ -54,7 +61,13 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
               <p className="text-lg">
                 <strong className="font-futura">Estado de la Cuenta:</strong>
                 {"  "}
-                <span className={`p-2 m-3 font-futura inline-block rounded-full text-white ${!blocked ? "bg-green-500" : "bg-red-500"}`}>{!blocked ? "Activo" : "Bloqueado"}</span>
+                <span
+                  className={`p-2 m-3 font-futura inline-block rounded-full text-white ${
+                    !blocked ? "bg-green-500" : "bg-red-500"
+                  }`}
+                >
+                  {!blocked ? "Activo" : "Bloqueado"}
+                </span>
               </p>
             </div>
           </div>
@@ -70,12 +83,21 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
       </section>
 
       <section className=" bg-gradient-to-br  bg-white p-8 rounded-lg shadow-lg">
-        <h2 className=" mt-19 text-3xl  text-left font-futura text-[#2B4168] ">Información de Facturación</h2>
+        <h2 className=" mt-19 text-3xl  text-left font-futura text-[#2B4168] ">
+          Información de Facturación
+        </h2>
         <div className="flex">
           <Link href={PATHROUTES.INVOICES}>
             <button className="flex m-8  text-white font-futura  p-2 rounded-full bg-[#2B4168] hover:bg-acent ">
               {" "}
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 mx-auto hover:text-acent">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 mx-auto hover:text-acent"
+              >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
