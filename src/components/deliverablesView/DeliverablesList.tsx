@@ -278,7 +278,7 @@ const DeliverablesList = () => {
                                   />
                                 </div>
                               ) : (
-                                <div className="flex flex-col items-center">
+                                <div className="flex mr-4  justify-end">
                                   <Image
                                     src="https://i.postimg.cc/wx2drb9L/fileicon.png"
                                     alt="Otro Tipo"
