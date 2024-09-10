@@ -262,13 +262,13 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
                   Selecciona una categoría
                 </option>
                 <option className="font-sans" value="1">
-                  Entregables Finalizados
+                  Archivo Final
                 </option>
                 <option className="font-sans" value="2">
-                  Borrador
+                  Archivo Parcial
                 </option>
                 <option className="font-sans" value="3">
-                  Entregables Parcial
+                  Borrador
                 </option>
               </select>
 

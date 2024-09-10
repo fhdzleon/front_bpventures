@@ -84,7 +84,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   return (
-    <div className="flex my-3 items-center">
+    <div className="flex my-3 items-center relative">
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +102,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         </svg>
       </div>
 
-      <div>
+      <div className="relative">
         <input
           className="bg-slate-300 w-40 font-sans text-xs md:text-lg h-12 md:w-96 outline-none rounded-r-2xl placeholder-secundary px-3"
           type="text"
@@ -111,10 +111,17 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           value={searchTerm}
           onChange={handleSearchChange}
         />
+        {searchTerm && loading && (
+          <span className="absolute top-14 left-3 text-sm text-gray-500">
+            Cargando...
+          </span>
+        )}
+        {searchTerm && error && (
+          <span className="absolute top-14 left-3 text-sm text-red-500">
+            Error: {error}
+          </span>
+        )}
       </div>
-
-      {loading && <p>Cargando...</p>}
-      {error && <p>Error: {error}</p>}
     </div>
   );
 };
