@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Toaster, toast } from "sonner";
+import { PATHROUTES } from '@/helpers/pathRoutes';
 
+  import FilterInput from '@/components/Search/Search'; 
 interface Company {
   id: number;
   name: string;
@@ -12,7 +14,13 @@ interface Company {
 
 const CompanyTable: React.FC = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
+  const [filter, setFilter] = useState(''); 
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState(1);
+ 
+  const itemsPerPage = 5; 
+
+
 
   const fetchCompanies = async () => {
     try {
@@ -20,6 +28,7 @@ const CompanyTable: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         setCompanies(data);
+
         setLoading(false);
       } else {
         toast.error('Error al cargar las empresas');
@@ -29,6 +38,9 @@ const CompanyTable: React.FC = () => {
       toast.error('Error al cargar las empresas');
     }
   };
+
+ 
+
 
   const handleDelete = async (id: number) => {
     try {
@@ -52,13 +64,32 @@ const CompanyTable: React.FC = () => {
     fetchCompanies();
   }, []);
 
+  
+  const indexOfLastCompany = currentPage * itemsPerPage;
+  const indexOfFirstCompany = indexOfLastCompany - itemsPerPage;
+  const currentCompanies = companies.slice(indexOfFirstCompany, indexOfLastCompany);
+  const totalPages = Math.ceil(companies.length / itemsPerPage);
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
+  };
+
+  const filteredCompanies = companies.filter(company =>
+    company.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
+    <div>
     <div className="container mx-auto p-6 w-4/5 font-futura">
       <Toaster richColors />
       <h1 className="text-4xl font-futura mb-6 text-secundary">
         Lista de Empresas
       </h1>
+      <FilterInput filter={filter} onFilterChange={setFilter} />
 
       {loading ? (
         <p className="text-center">Cargando empresas...</p>
@@ -75,14 +106,16 @@ const CompanyTable: React.FC = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {companies.length > 0 ? (
-                companies.map((company) => (
+            {filteredCompanies.length > 0 ? (
+        filteredCompanies.map((company) => (
                   <tr key={company.id} className="hover:bg-gray-50 transition-colors duration-200">
                     <td className="py-4 px-6 font-futura text-sm text-gray-900">
                       {company.id}
                     </td>
-                    <td className="py-4 px-6 font-futura text-sm text-gray-900">
+                    <td className="py-4 px-6 font-futura text-sm text-gray-900" >
+                    <Link href={`/in/company/${company.id}`}>
                       {company.name}
+                    </Link>
                     </td>
                     <td className="py-4 px-6 font-futura text-sm text-gray-700">
                       {company.cuit}
@@ -97,7 +130,11 @@ const CompanyTable: React.FC = () => {
 
                         <Link href={`/in/company/${company.id}`}>
                           {/* <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">Ver Detalles</button> */}
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-blue-500 hover:text-blue-700 cursor-pointer">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            strokeWidth="1.5" stroke="currentColor"
+                            className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+
+                          >
                             <title>Ver Detalles</title>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                           </svg>
@@ -105,7 +142,11 @@ const CompanyTable: React.FC = () => {
 
                         <Link href={`/in/company/${company.id}/edit`}>
                           <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor"
+                              className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+
+                            >
                               <title>Editar Empresa</title>
                               <path
                                 stroke-linecap="round"
@@ -126,7 +167,7 @@ const CompanyTable: React.FC = () => {
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            className="size-8 hover:scale-125 md:hover:scale-100 md:size-6 col-start-2 md:col-start-1 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer"
+                            className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
                           >
                             <title>Ver Usuarios</title>
                             <path
@@ -144,7 +185,8 @@ const CompanyTable: React.FC = () => {
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+                            className="size-8 hover:scale-125 hover:text-green-500 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+
                           >
                             <title>Facturación</title>
                             <path
@@ -163,8 +205,11 @@ const CompanyTable: React.FC = () => {
                               handleDelete(company.id);
                             }
                           }}
-                          className=" text-secundary hover:text-red-500 px-2 py-1 rounded flex justify-center items-center"
+                          // className=" text-secundary hover:text-red-500 px-2 py-1 rounded flex justify-center items-center"
+                          className="size-8 hover:scale-125 hover:text-red-500 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+
                         >
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -187,6 +232,7 @@ const CompanyTable: React.FC = () => {
                     </td>
 
                   </tr>
+                  
                 ))
               ) : (
                 <tr>
@@ -195,9 +241,39 @@ const CompanyTable: React.FC = () => {
               )}
             </tbody>
           </table>
-        </div>
+        
+
+
+     
+      
+   
+ </div>
+
+ 
       )}
-    </div>
+   <div className=" flex justify-between mt-4 ">
+            <button
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 bg-gray-200 text-black rounded ${currentPage === 1 ? 'cursor-not-allowed opacity-50' : ''}`}
+            >
+              Anterior
+            </button>
+            <p className="text-sm">
+              Página {currentPage} de {totalPages}
+            </p>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 bg-gray-200 text-black rounded ${currentPage === totalPages ? 'cursor-not-allowed opacity-50' : ''}`}
+            >
+              Siguiente
+            </button>
+          </div>
+  </div>
+   
+   </div>
+   
   );
 };
 
