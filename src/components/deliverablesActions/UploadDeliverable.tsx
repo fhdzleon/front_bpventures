@@ -8,10 +8,12 @@ import Swal from "sweetalert2";
 
 interface UploadDeliverableProps {
   currentFolder: string | null;
+  parentId: any;
 }
 
 const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
   currentFolder,
+  parentId,
 }) => {
   const token = Cookies.get("token");
   const { fetchAgain, setFetchAgain, deliverableData } = useAuth();
@@ -23,9 +25,10 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
     name: "",
     description: "",
     category: "",
+    link: "",
   });
 
-  console.log(deliverableData);
+  /* console.log(deliverableData); */
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -81,32 +84,62 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
       return;
     }
 
-    const formDataFetch = new FormData();
-    formDataFetch.append("name", formData.name);
-    formDataFetch.append("deliverableTypeId", selectedOption);
-    formDataFetch.append("deliverableCategoryId", categoryOption);
-    formDataFetch.append("isFolder", selectedOption === "1" ? "true" : "false");
-    if (file) {
-      formDataFetch.append("file", file);
-    }
+    let body;
+    let headers: HeadersInit = {
+      Authorization: `Bearer ${token}`,
+    };
 
+    if (selectedOption > "2" && file) {
+      const formDataFetch = new FormData();
+      formDataFetch.append("name", formData.name);
+      formDataFetch.append("deliverableTypeId", selectedOption);
+      formDataFetch.append("deliverableCategoryId", categoryOption);
+      formDataFetch.append(
+        "isFolder",
+        selectedOption === "1" ? "true" : "false"
+      );
+
+      if (currentFolder !== null && currentFolder !== undefined) {
+        formDataFetch.append("parentId", parentId);
+      }
+
+      formDataFetch.append("file", file);
+
+      body = formDataFetch;
+    } else {
+      // Manejo de JSON cuando selectedOption es 2 o menos
+      const jsonData = {
+        name: formData.name,
+        deliverableTypeId: selectedOption,
+        deliverableCategoryId: categoryOption,
+        parentId:
+          currentFolder !== null && currentFolder !== undefined
+            ? parentId
+            : null,
+        path:
+          formData.link !== null && selectedOption === "2"
+            ? formData.link
+            : null,
+      };
+
+      body = JSON.stringify(jsonData);
+      headers["Content-Type"] = "application/json";
+    }
     try {
       const url =
         Number(selectedOption) > 2
-          ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/file${
-              currentFolder ? `&parentId=${currentFolder}` : ""
-            }`
+          ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/file`
           : Number(selectedOption) === 2
           ? `${process.env.NEXT_PUBLIC_API_URL}/deliverables/link`
           : `${process.env.NEXT_PUBLIC_API_URL}/deliverables/folder`;
 
       const response = await fetch(url, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formDataFetch,
+        headers,
+        body,
       });
+
+      /* console.log(formDataFetch); */
 
       if (response.ok) {
         const result = await response.json();
@@ -130,7 +163,7 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
       console.error("Error", error);
     } finally {
       setFetchAgain(!fetchAgain);
-      setFormData({ name: "", description: "", category: "" });
+      setFormData({ name: "", description: "", category: "", link: "" });
       setCategoryOption("");
       setIsModalOpen(false);
     }
@@ -276,6 +309,8 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
                   <input
                     type="url"
                     name="link"
+                    value={formData.link}
+                    onChange={handleInputChange}
                     placeholder="URL del Link"
                     className="border border-1 font-sans py-2 w-full"
                   />
