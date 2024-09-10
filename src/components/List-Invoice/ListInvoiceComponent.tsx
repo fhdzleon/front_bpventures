@@ -11,6 +11,7 @@ import VoucherIcon from "../icons/UploadIcon";
 import EditIcon from "../icons/EditIcon";
 import PreloaderLoad from "../preloader/PreloaderLoad";
 import PreloaderAwait from "../preloader/PreloaderAwait";
+import FilterInput from "../Search/Search";
 
 const ListInvoiceComponent = ({
   invoicesData,
@@ -22,6 +23,11 @@ const ListInvoiceComponent = ({
   const [isModalOpenVoucher, setIsModalOpenVoucher] = useState(false);
   const [selectedInvoice, setSelectedInvoice] =
     useState<InvoiceInterface | null>(null);
+    const [filter, setFilter] = useState('');
+    const [currentPage, setCurrentPage] = useState(1); 
+    const [itemsPerPage] = useState(5); 
+    const totalPages = Math.ceil(invoicesData.length / itemsPerPage); 
+  
   const { userData, loading, fetchAgain } = useAuth();
 
   const handleOpenModal = (invoice: InvoiceInterface) => {
@@ -59,14 +65,33 @@ const ListInvoiceComponent = ({
     }
   };
 
+  const indexOfLastInvoice = currentPage * itemsPerPage;
+  const indexOfFirstInvoice = indexOfLastInvoice - itemsPerPage;
+ 
+  const filteredInvoices = invoicesData.filter((invoice: InvoiceInterface) =>
+    invoice.number.toLowerCase().includes(filter.toLowerCase())
+  );
+
+
+  const currentInvoices = filteredInvoices.slice(indexOfFirstInvoice, indexOfLastInvoice);
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
   return (
-    <div className="m-5 overflow-x-auto mt-5 rounded-lg">
+    <div className="m-5 overflow-x-auto max-h-screen mt-5 rounded-lg">
       {/* <PreloaderLoad/> */}
       {loading && <PreloaderAwait />}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
-      <h1 className="text-4xl font-futura mb-6 text-secundary">
+      {/* <h1 className="text-4xl font-futura mb-6 text-secundary">
         Lista de Facturas: {userEmail}
-      </h1>
+      </h1> */}
+      <FilterInput filter={filter} onFilterChange={setFilter} />
       <div className="mt-4 overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
@@ -100,8 +125,8 @@ const ListInvoiceComponent = ({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {invoicesData &&
-              invoicesData.map((invoice: InvoiceInterface) => (
+          {currentInvoices.length > 0 ? (
+              currentInvoices.map((invoice: InvoiceInterface) => (
                 <tr
                   key={invoice.id}
                   className="hover:bg-gray-50 transition-colors duration-200"
@@ -215,13 +240,44 @@ const ListInvoiceComponent = ({
                     )}
                   </td>
                 </tr>
-              ))}
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={7} className="py-4 px-6 text-gray-600 text-center">
+                      No se encontraron facturas.
+                    </td>
+                  </tr>
+              )}
           </tbody>
         </table>
+
+        
 
         {invoicesData.length === 0 && (
           <p className="p-6 text-gray-600">No se encontraron facturas.</p>
         )}
+      </div>
+       {/* Paginación */}
+       <div className="flex justify-between items-center mt-4">
+        <button
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50"
+        >
+          Anterior
+        </button>
+
+        <span>
+          Página {currentPage} de {totalPages}
+        </span>
+
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50"
+        >
+          Siguiente
+        </button>
       </div>
     </div>
   );
