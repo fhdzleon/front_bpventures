@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Toaster, toast } from "sonner";
+import { PATHROUTES } from '@/helpers/pathRoutes';
 
 interface Company {
   id: number;
@@ -81,8 +82,10 @@ const CompanyTable: React.FC = () => {
                     <td className="py-4 px-6 font-futura text-sm text-gray-900">
                       {company.id}
                     </td>
-                    <td className="py-4 px-6 font-futura text-sm text-gray-900">
+                    <td className="py-4 px-6 font-futura text-sm text-gray-900" >
+                    <Link href={`/in/company/${company.id}`}>
                       {company.name}
+                    </Link>
                     </td>
                     <td className="py-4 px-6 font-futura text-sm text-gray-700">
                       {company.cuit}
@@ -97,7 +100,11 @@ const CompanyTable: React.FC = () => {
 
                         <Link href={`/in/company/${company.id}`}>
                           {/* <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">Ver Detalles</button> */}
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-blue-500 hover:text-blue-700 cursor-pointer">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            strokeWidth="1.5" stroke="currentColor"
+                            className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+
+                          >
                             <title>Ver Detalles</title>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                           </svg>
@@ -105,7 +112,11 @@ const CompanyTable: React.FC = () => {
 
                         <Link href={`/in/company/${company.id}/edit`}>
                           <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor"
+                              className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+
+                            >
                               <title>Editar Empresa</title>
                               <path
                                 stroke-linecap="round"
@@ -126,7 +137,7 @@ const CompanyTable: React.FC = () => {
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            className="size-8 hover:scale-125 md:hover:scale-100 md:size-6 col-start-2 md:col-start-1 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer"
+                            className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
                           >
                             <title>Ver Usuarios</title>
                             <path
@@ -144,7 +155,8 @@ const CompanyTable: React.FC = () => {
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+                            className="size-8 hover:scale-125 hover:text-green-500 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+
                           >
                             <title>Facturación</title>
                             <path
@@ -163,8 +175,11 @@ const CompanyTable: React.FC = () => {
                               handleDelete(company.id);
                             }
                           }}
-                          className=" text-secundary hover:text-red-500 px-2 py-1 rounded flex justify-center items-center"
+                          // className=" text-secundary hover:text-red-500 px-2 py-1 rounded flex justify-center items-center"
+                          className="size-8 hover:scale-125 hover:text-red-500 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+
                         >
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -187,6 +202,7 @@ const CompanyTable: React.FC = () => {
                     </td>
 
                   </tr>
+                  
                 ))
               ) : (
                 <tr>
@@ -197,7 +213,14 @@ const CompanyTable: React.FC = () => {
           </table>
         </div>
       )}
+
+
+
     </div>
+      
+
+    
+    
   );
 };
 
