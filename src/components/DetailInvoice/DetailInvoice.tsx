@@ -23,6 +23,7 @@ import React from "react";
 //   company?: { name: string };
 // }
 
+
 interface InvoiceDetailProps {
   Invoice: InvoiceInterface;
 }

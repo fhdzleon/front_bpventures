@@ -1,5 +1,4 @@
 "use client";
-import BillingTableComponent from "@/components/List-Invoice/List-Invoice";
 import ListInvoiceComponent from "@/components/List-Invoice/ListInvoiceComponent";
 import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
 import { useAuth } from "@/context/AuthContext";
@@ -42,6 +41,8 @@ const BillingTable: React.FC<IdParams> = ({ params }) => {
     fetchUsers();
   }, [companyId]);
 
+  const titleInvoicesList = `Lista de Facturas de: ${companyName}`
+
   return (
     <>
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
@@ -49,6 +50,7 @@ const BillingTable: React.FC<IdParams> = ({ params }) => {
         invoicesData={invoicesData}
         isAdmin={false}
         companyName={companyName}
+        titleInvoicesList={titleInvoicesList}
       />
     </>
   );

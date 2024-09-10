@@ -5,6 +5,7 @@ import { Toaster, toast } from "sonner";
 import { PATHROUTES } from '@/helpers/pathRoutes';
 
   import FilterInput from '@/components/Search/Search'; 
+import { ButtonAdd } from '@/components/Buttons/ButtonAdd';
 interface Company {
   id: number;
   name: string;
@@ -84,7 +85,9 @@ const CompanyTable: React.FC = () => {
 
   return (
     <div>
-    <div className="container mx-auto p-6 w-4/5 font-futura">
+    <div className="container mx-auto px-6 w-4/5 font-futura">
+      <ButtonAdd children="Agregar empresa" hrefString="/in/company/create" />
+
       <Toaster richColors />
       <h1 className="text-4xl font-futura mb-6 text-secundary">
         Lista de Empresas
@@ -128,7 +131,7 @@ const CompanyTable: React.FC = () => {
                     <td className="py-4 px-6 font-futura text-sm text-gray-700">
                       <div className="flex space-x-2">
 
-                        <Link href={`/in/company/${company.id}`}>
+                        <Link href={`/in/company/${company.id}/details`}>
                           {/* <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">Ver Detalles</button> */}
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             strokeWidth="1.5" stroke="currentColor"

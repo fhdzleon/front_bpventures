@@ -6,6 +6,7 @@ export enum PATHROUTES {
   CREATE_USER = "/in/users/create",
   UPDATE_USER = "/in/users/edit",
   MY_ACCOUNT = "/in/users/me",
+  COMPANY = "/in/company",
   LIST_COMPANY = "/in/company/list",
   CREATE_COMPANY = "/in/company/create",
   UPDATE_COMPANY = "/in/company/update",

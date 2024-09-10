@@ -52,7 +52,7 @@ export const UsersListComponent = ({
   return (
     <>
       {!loading ? (
-        <div className="container mx-auto p-6 w-4/5 font-futura">
+        <div className="container mx-auto px-6  w-4/5 font-futura">
           <h1 className="text-4xl font-futura mb-6 text-secundary">
             Lista de Usuarios: {companyName}
           </h1>
@@ -126,7 +126,7 @@ export const UsersListComponent = ({
                     </td>
                     <td className="py-4 px-6 font-futura text-sm text-gray-700">
                       <Link
-                        href={`${PATHROUTES.USER}/${user.id}`}
+                        href={`${PATHROUTES.USER}/${user.id}/details`}
                         className="text-black hover:text-blue-700"
                       >
                         Ver Usuario
