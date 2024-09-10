@@ -6,7 +6,7 @@ export const fetchDeliverables = async (
   currentFolder: string | null,
   setDeliverableData: { (deliverableData: any): void; (arg0: any): void }
 ) => {
-  console.log("ID", userId);
+  /*   console.log("ID", userId); */
 
   try {
     const url = `${
@@ -15,7 +15,7 @@ export const fetchDeliverables = async (
       currentFolder ? `&parentId=${currentFolder}` : ""
     }`;
 
-    console.log(url);
+    /* console.log(url); */
 
     const response = await fetch(url, {
       method: "GET",
@@ -25,7 +25,7 @@ export const fetchDeliverables = async (
       },
     });
     const data = await response.json();
-    console.log(data);
+    /*    console.log(data); */
 
     setDeliverableData(data);
   } catch (error) {
