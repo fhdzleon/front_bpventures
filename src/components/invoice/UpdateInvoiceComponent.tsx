@@ -22,6 +22,7 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
   const [file, setFile] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(true);
+  const [path, setPath] = useState('');
 
   const router = useRouter();
 
@@ -38,6 +39,7 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
           setAmount(data.amount);
           setInvoiceStatusId(data.invoiceStatus.id);
           setCompanyId(data.companyId); // Set the company associated with the invoice
+          setPath(data.path);
           setLoading(false);
         } else {
           throw new Error('Error al obtener los datos de la factura');
@@ -115,6 +117,7 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
       <Toaster richColors />
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
 
       <form className="form-apply" onSubmit={handleSubmit}>
         <h1 className="text-center text-[1.2rem] mb-6">Actualizar Factura</h1>

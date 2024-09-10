@@ -1,6 +1,4 @@
 import UpdateInvoiceComponent from "@/components/invoice/UpdateInvoiceComponent";
-import {UploadInvoiceComponet} from "@/components/invoice/UploadInvoiceComponet";
-import {VoucherUpload} from "@/components/invoice/VoucherUpload";
 import React from "react";
 
 interface IdParams {
