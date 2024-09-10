@@ -49,10 +49,10 @@ const BillingTable = () => {
 
   return (
     <>
-      <h1 className="text-4xl font-futura mb-6 text-secundary">
+      {/* <h1 className="text-4xl font-futura mb-6 text-secundary">
         Lista de Facturas
       </h1>
-      <pre>{JSON.stringify(userData?.isAdmin, null, 2)}</pre>
+      <pre>{JSON.stringify(userData?.isAdmin, null, 2)}</pre> */}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
       <ListInvoiceComponent invoicesData={invoicesData} isAdmin={true} />
     </>
