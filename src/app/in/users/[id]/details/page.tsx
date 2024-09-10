@@ -1,7 +1,7 @@
 import React from "react";
 
-import UserDetailView from "../../../../components/detailUserList/DetailUserList";
-import { FunctionFetch } from "../../../../helpers/fetchUserList";
+import UserDetailView from "../../../../../components/Users/DetailUserList";
+import { FunctionFetch } from "../../../../../helpers/fetchUserList";
 
 export interface User {
   id: number;

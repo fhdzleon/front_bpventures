@@ -1,5 +1,4 @@
 "use client";
-import BillingTableComponent from "@/components/List-Invoice/List-Invoice";
 import ListInvoiceComponent from "@/components/List-Invoice/ListInvoiceComponent";
 import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
 import { useAuth } from "@/context/AuthContext";
@@ -47,6 +46,8 @@ const BillingTable = () => {
     fetchInvoices();
   }, [fetchAgain, userData?.id]);
 
+  const titleInvoicesList = `Lista de Facturas de: ${userData?.Names}`
+
   return (
     <>
       {/* <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Facturas: {userData?.Names}</h1> */}
@@ -62,6 +63,7 @@ const BillingTable = () => {
         invoicesData={invoicesData}
         isAdmin={false}
         userEmail={userData?.email}
+        titleInvoicesList={titleInvoicesList}
       />
     </>
   );

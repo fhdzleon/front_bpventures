@@ -19,6 +19,7 @@ const ListInvoiceComponent = ({
   isAdmin,
   companyName,
   userEmail,
+  titleInvoicesList,
 }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenVoucher, setIsModalOpenVoucher] = useState(false);
@@ -74,8 +75,11 @@ const ListInvoiceComponent = ({
   const indexOfFirstInvoice = indexOfLastInvoice - itemsPerPage;
 
   const filteredInvoices = invoicesData.filter((invoice: InvoiceInterface) =>
-    invoice.number.toLowerCase().includes(filter.toLowerCase())
-  );
+  invoice.number && typeof invoice.number === "string"
+    ? invoice.number.toLowerCase().includes(filter.toLowerCase())
+    : false
+);
+
 
   const currentInvoices = filteredInvoices.slice(
     indexOfFirstInvoice,
@@ -95,9 +99,9 @@ const ListInvoiceComponent = ({
       {/* <PreloaderLoad/> */}
       {loading && <PreloaderAwait />}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
-      {/* <h1 className="text-4xl font-futura mb-6 text-secundary">
-        Lista de Facturas: {userEmail}
-      </h1> */}
+      <h1 className="text-4xl font-futura mb-6 text-secundary">
+        {titleInvoicesList}
+      </h1>
       <FilterInput filter={filter} onFilterChange={setFilter} />
       <div className="mt-4 o bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
@@ -116,9 +120,14 @@ const ListInvoiceComponent = ({
               <th className="py-3 px-4 font-futura text-left text-lg">
                 Vencimiento
               </th>
-              <th className="py-3 px-4 font-futura text-left text-lg">
-                Empresa
-              </th>
+
+              {!companyName && (
+                <>
+                <th className="py-3 px-4 font-futura text-left text-lg">
+                  Empresa
+                </th>
+                </>
+              )}
               {isAdmin && (
                 <>
                   <th className="py-3 px-4 font-futura text-left text-lg">
@@ -160,9 +169,14 @@ const ListInvoiceComponent = ({
                   <td className="py-4 px-6 font-futura text-sm text-gray-700">
                     {invoice.dueDate}
                   </td>
-                  <td className="py-4 px-6 font-futura text-sm text-gray-700">
-                    {invoice.company?.name}
-                  </td>
+
+                  {!companyName && (
+                    <>
+                      <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                        {invoice.company?.name}
+                      </td>
+                    </>
+                  )}
                   {isAdmin && (
                     <>
                       <td className="py-4 px-6 font-futura text-sm text-gray-700">
