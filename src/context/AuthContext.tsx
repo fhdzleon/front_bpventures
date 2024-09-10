@@ -97,6 +97,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       setUser(JSON.parse(localStorageUser));
     }
   }, []);
+  console.log(user);
 
   useEffect(() => {
     const fetchUserID = async () => {

@@ -6,12 +6,16 @@ export const fetchDeliverables = async (
   currentFolder: string | null,
   setDeliverableData: { (deliverableData: any): void; (arg0: any): void }
 ) => {
+  console.log("ID", userId);
+
   try {
     const url = `${
       process.env.NEXT_PUBLIC_API_URL
     }/deliverables/user/${userId}?page=${currentPage}&limit=10${
       currentFolder ? `&parentId=${currentFolder}` : ""
     }`;
+
+    console.log(url);
 
     const response = await fetch(url, {
       method: "GET",

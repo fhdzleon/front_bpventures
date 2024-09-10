@@ -1,5 +1,5 @@
 "use client";
-//Cambios
+
 import React, { useEffect } from "react";
 import { useState } from "react";
 import DeleteDeliverable from "../deliverablesActions/DeleteDeliverable";
@@ -13,6 +13,8 @@ import { useAuth } from "@/context/AuthContext";
 import { fetchDeliverables } from "@/helpers/fetchDeliverables";
 import SearchBar from "./Searchbar";
 import getDeliverableExtension from "@/helpers/getDeliverableExtension";
+import UploadDeliverable from "../deliverablesActions/UploadDeliverable";
+import FilterDeliverableForBussines from "../filterDeliverableForBussines/FilterDeliverableForBussines";
 
 const DeliverablesList = () => {
   const { setDeliverableData, userData, deliverableData, loading, fetchAgain } =
@@ -32,6 +34,7 @@ const DeliverablesList = () => {
   };
 
   /*   console.log(deliverableData); */
+  console.log("datos", userData);
 
   useEffect(() => {
     fetchDeliverables(
@@ -106,14 +109,18 @@ const DeliverablesList = () => {
     setCurrentPage(1);
   };
   console.log(deliverableData);
-  
+
   return (
     <>
-      <SearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        fetchdeliverable={fetchDeliverables2}
-      />
+      <div className="flex items-center space-x-4">
+        <SearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          fetchdeliverable={fetchDeliverables2}
+        />
+        <FilterDeliverableForBussines />
+        <UploadDeliverable currentFolder={currentFolder} />
+      </div>
 
       {!loading ? (
         <>
