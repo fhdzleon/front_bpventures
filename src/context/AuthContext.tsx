@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [allUsers, setAllUsers] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [fetchAgain, setFetchAgain] = useState<boolean>(true);
-  
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -96,7 +96,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       setUser(JSON.parse(localStorageUser));
     }
   }, []);
-  console.log(user);
+  /*   console.log(user); */
 
   useEffect(() => {
     const fetchUserID = async () => {
