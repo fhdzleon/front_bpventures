@@ -68,10 +68,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [fetchAgain, setFetchAgain] = useState<boolean>(true);
 
-<<<<<<< HEAD
-  
-=======
->>>>>>> 42ee51000b4ebd11ab675f084762e9577219fe58
   useEffect(() => {
     const fetchUsers = async () => {
       try {
