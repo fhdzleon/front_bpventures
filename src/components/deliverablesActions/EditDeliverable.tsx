@@ -2,30 +2,38 @@ import React, { useState } from "react";
 import EditDeliverableProps from "@/interfaces/editDeliverablesProps";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-import { useRouter } from "next/navigation";
-import { PATHROUTES } from "@/helpers/pathRoutes";
+import { useAuth } from "@/context/AuthContext";
 
 const EditDeliverable: React.FC<EditDeliverableProps> = ({
   id,
+  type,
   name,
+  path,
   description,
   category,
 }) => {
-  const router = useRouter();
+  const { fetchAgain, setFetchAgain } = useAuth();
   const token = Cookies.get("token");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name,
+    path,
     description,
     category,
   });
-
+  const [file, setFile] = useState<File | null>(null);
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
   };
 
   const handleClick = async () => {
@@ -41,16 +49,48 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/deliverables/${id}`,
-            {
-              method: "PATCH",
-              headers: {
-                "content-type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
+          let response;
+
+          if (type === "Link") {
+            const jsonData = {
+              name: formData.name,
+              category: formData.category,
+              description: formData.description,
+              path: formData.path,
+            };
+
+            response = await fetch(
+              `${process.env.NEXT_PUBLIC_API_URL}/deliverables/link/${id}`,
+              {
+                method: "PUT",
+                headers: {
+                  "content-type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(jsonData),
+              }
+            );
+          } else {
+            const formDataToSend = new FormData();
+            formDataToSend.append("name", formData.name);
+            formDataToSend.append("category", formData.category);
+            formDataToSend.append("description", formData.description);
+
+            if (file) {
+              formDataToSend.append("file", file);
             }
-          );
+
+            response = await fetch(
+              `${process.env.NEXT_PUBLIC_API_URL}/deliverables/file/${id}`,
+              {
+                method: "PUT",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+                body: formDataToSend,
+              }
+            );
+          }
 
           if (!response.ok) {
             throw new Error("No se logro actualizar el archivo");
@@ -59,11 +99,14 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
           const data = await response.json();
 
           Swal.fire({
-            title: "Eliminado",
+            title: "Actualizado",
             text: "El archivo ha sido actualizado",
             icon: "success",
             confirmButtonColor: "#2b4168",
-          }).finally(() => router.push(PATHROUTES.DELIVERABLES));
+          }).finally(() => {
+            setFetchAgain(!fetchAgain);
+            setIsModalOpen(false);
+          });
         } catch (error) {
           console.error("hubo un problema con la peticion, error");
           Swal.fire(
@@ -96,15 +139,22 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg p-8 shadow-lg w-full max-w-lg mx-4 sm:mx-auto space-y-5">
+          <div className="bg-white rounded-lg p-8 shadow-lg w-full max-w-lg mx-4 sm:mx-auto space-y-7">
             <form className="flex flex-col  space-y-3">
-              <h3 className="text-secundary text-xl mb-2 text-center font-sans  text-secondary">
-                Edición de Archivo
-              </h3>
+              {type === "Link" ? (
+                <h3 className="text-secundary text-xl mb-2 text-center font-sans  text-secondary">
+                  Edición de Link
+                </h3>
+              ) : (
+                <h3 className="text-secundary text-xl mb-2 text-center font-sans  text-secondary">
+                  Edición de Archivo
+                </h3>
+              )}
 
               <label className="font-sans" htmlFor="name">
-                Nombre del Archivo:
+                Nombre:
               </label>
+
               <input
                 type="text"
                 name="name"
@@ -113,6 +163,35 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
                 className="border py-2 font-sans text-slate-400"
                 placeholder="Nombre"
               />
+
+              {type === "Link" && (
+                <>
+                  <label className="font-sans" htmlFor="name">
+                    URL:
+                  </label>
+                  <input
+                    type="text"
+                    name="path"
+                    value={formData.path}
+                    onChange={handleInputChange}
+                    className="border py-2 font-sans text-slate-400"
+                    placeholder="URL"
+                  />
+                </>
+              )}
+
+              {type !== "Link" && (
+                <div className=" space-y-4">
+                  <label className="font-sans  " htmlFor="">
+                    Actualizar archivo desde tu PC (opcional) :
+                  </label>
+                  <input
+                    type="file"
+                    className="font-sans w-full overflow-auto border-2"
+                    onChange={handleFileChange}
+                  />
+                </div>
+              )}
             </form>
             <div className="flex justify-center mt-4">
               <button
