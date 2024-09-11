@@ -319,17 +319,16 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
 
               <div className="flex justify-center mt-4">
                 <button
-                  className="bg-acent font-sans text-white font-bold py-2 px-4 rounded mr-2"
+                  type="submit"
+                  className="bg-secundary font-sans text-white font-bold py-2 px-4 mr-2 rounded"
+                >
+                  Agregar
+                </button>
+                <button
+                  className="bg-acent font-sans text-white font-bold py-2 px-4 rounded "
                   onClick={toggleModal}
                 >
                   Cancelar
-                </button>
-
-                <button
-                  type="submit"
-                  className="bg-secundary font-sans text-white font-bold py-2 px-4 rounded"
-                >
-                  Agregar
                 </button>
               </div>
             </form>

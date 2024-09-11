@@ -376,11 +376,17 @@ const DeliverablesList = () => {
                                   <>
                                     {deliverable.permissionTypes?.includes(
                                       "view"
-                                    ) && (
-                                      <DownloadDeliverable
-                                        path={deliverable.deliverablePath}
-                                      />
-                                    )}
+                                    ) &&
+                                      (deliverable.deliverableType !==
+                                      "Link" ? (
+                                        <DownloadDeliverable
+                                          path={deliverable.deliverablePath}
+                                        />
+                                      ) : (
+                                        <LinkDeliverable
+                                          path={deliverable.deliverablePath}
+                                        />
+                                      ))}
 
                                     {deliverable.permissionTypes?.includes(
                                       "edit"

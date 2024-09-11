@@ -195,17 +195,16 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
             </form>
             <div className="flex justify-center mt-4">
               <button
-                className="bg-acent font-sans text-white font-bold py-2 px-4 rounded mr-2"
+                onClick={handleClick}
+                className="bg-secundary font-sans text-white font-bold py-2 px-4 mr-2 rounded"
+              >
+                Actualizar
+              </button>
+              <button
+                className="bg-acent font-sans text-white font-bold py-2 px-4 rounded "
                 onClick={toggleModal}
               >
                 Cancelar
-              </button>
-
-              <button
-                onClick={handleClick}
-                className="bg-secundary font-sans text-white font-bold py-2 px-4 rounded"
-              >
-                Actualizar
               </button>
             </div>
           </div>
