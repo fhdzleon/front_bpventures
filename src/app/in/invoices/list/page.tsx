@@ -1,5 +1,5 @@
 "use client";
-import BillingTableComponent from "@/components/List-Invoice/List-Invoice";
+import { ButtonAdd } from "@/components/Buttons/ButtonAdd";
 import ListInvoiceComponent from "@/components/List-Invoice/ListInvoiceComponent";
 import { useAuth } from "@/context/AuthContext";
 import { getAllInvoices } from "@/helpers/auth.helper";
@@ -47,6 +47,8 @@ const BillingTable = () => {
     }
   }, [loading, fetchAgain]);
 
+  const titleInvoicesList = `Lista de todas las facturas`;
+
   return (
     <>
       {/* <h1 className="text-4xl font-futura mb-6 text-secundary">
@@ -54,7 +56,8 @@ const BillingTable = () => {
       </h1>
       <pre>{JSON.stringify(userData?.isAdmin, null, 2)}</pre> */}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
-      <ListInvoiceComponent invoicesData={invoicesData} isAdmin={true} />
+      {/* <ButtonAdd children="Cargar Facturas" /> */}
+      <ListInvoiceComponent invoicesData={invoicesData} isAdmin={true} titleInvoicesList={titleInvoicesList} />
     </>
   );
 };

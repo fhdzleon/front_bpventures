@@ -1,5 +1,6 @@
 "use client";
 
+import { ButtonAdd } from "@/components/Buttons/ButtonAdd";
 import UsersListComponent from "@/components/Users/UsersListComponent";
 import { useAuth } from "@/context/AuthContext";
 
@@ -9,11 +10,12 @@ export const UsersList = () => {
   return (
     <>
       {/* <pre>{JSON.stringify(allUsers, null, 2)}</pre> */}
-      <UsersListComponent
-        allUsers={allUsers}
-        setAllUsers={setAllUsers}
-        loading={loading}
-      />
+      <div className="container mx-auto px-6  w-4/5 font-futura ">
+        <ButtonAdd children="Agregar usuario" hrefString="/in/users/create"
+         />
+      </div>
+
+      <UsersListComponent allUsers={allUsers} setAllUsers={setAllUsers} loading={loading} />
     </>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactNode, useEffect, useState } from "react";
-import InvoiceDetail from "../../../../components/DetailInvoice/DetailInvoice";
+import InvoiceDetail from "../../../../../components/DetailInvoice/DetailInvoice";
 import { getUserById } from "@/helpers/auth.helper";
 import { useAuth } from "@/context/AuthContext";
 
@@ -17,7 +17,9 @@ export interface Invoice {
   issueDate: string;
   userId: number;
   overdueIndicator: boolean;
-  invoiceStatus: string;
+  invoiceStatus: any;
+  number: string;
+  dueDate: string;
 }
 
 interface IdParams {

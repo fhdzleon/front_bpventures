@@ -87,7 +87,7 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
           Información de Facturación
         </h2>
         <div className="flex">
-          <Link href={PATHROUTES.INVOICES}>
+          <Link href={`${PATHROUTES.USER}/${user.id}/invoices`}>
             <button className="flex m-8  text-white font-futura  p-2 rounded-full bg-[#2B4168] hover:bg-acent ">
               {" "}
               <svg

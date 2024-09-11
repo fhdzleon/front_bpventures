@@ -14,37 +14,42 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
 }) => {
   const { fetchAgain, setFetchAgain } = useAuth();
   const token = Cookies.get("token");
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name,
-    path,
+    path, // This will be used for the file if the type is 'File'
     description,
     category,
   });
-  const [file, setFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); // State for the new file
+
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
+  // Handle input change for name, description, and category
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle file selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+      setSelectedFile(e.target.files[0]);
     }
   };
 
+  // Function to submit the changes
   const handleClick = async () => {
     Swal.fire({
-      title: "¿Estas seguro?",
-      text: "Estas a punto de actualizar este archivo",
+      title: "¿Estás seguro?",
+      text: "Estás a punto de actualizar este archivo",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#2b4168",
       cancelButtonColor: "#5eba98",
-      confirmButtonText: "Si, actualizalo",
+      confirmButtonText: "Sí, actualízalo",
       cancelButtonText: "Cancelar",
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -52,6 +57,7 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
           let response;
 
           if (type === "Link") {
+            // JSON payload for a link
             const jsonData = {
               name: formData.name,
               category: formData.category,
@@ -64,20 +70,22 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
               {
                 method: "PUT",
                 headers: {
-                  "content-type": "application/json",
+                  "Content-Type": "application/json",
                   Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(jsonData),
               }
             );
-          } else {
+          } else if (type === "File") {
+            // Handle file update with FormData
             const formDataToSend = new FormData();
             formDataToSend.append("name", formData.name);
             formDataToSend.append("category", formData.category);
             formDataToSend.append("description", formData.description);
 
-            if (file) {
-              formDataToSend.append("file", file);
+            // If a new file was selected, append it to the form data
+            if (selectedFile) {
+              formDataToSend.append("file", selectedFile);
             }
 
             response = await fetch(
@@ -93,7 +101,7 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
           }
 
           if (!response.ok) {
-            throw new Error("No se logro actualizar el archivo");
+            throw new Error("No se logró actualizar el archivo");
           }
 
           const data = await response.json();
@@ -108,7 +116,7 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
             setIsModalOpen(false);
           });
         } catch (error) {
-          console.error("hubo un problema con la peticion, error");
+          console.error("Hubo un problema con la petición", error);
           Swal.fire(
             "Error",
             "Hubo un problema al actualizar el archivo",
@@ -118,6 +126,7 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
       }
     });
   };
+
   return (
     <>
       <svg
@@ -133,79 +142,74 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931ZM16.862 4.487L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.651 2.65l-1.687 1.688M4.5 19.5v-3.75a2.25 2.25 0 0 1 .659-1.591L16.876 2.44a1.875 1.875 0 0 1 2.65 2.65L7.81 16.659a2.25 2.25 0 0 1-1.591.659H2.25v-3.75z"
         />
       </svg>
 
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg p-8 shadow-lg w-full max-w-lg mx-4 sm:mx-auto space-y-7">
-            <form className="flex flex-col  space-y-3">
-              {type === "Link" ? (
-                <h3 className="text-secundary text-xl mb-2 text-center font-sans  text-secondary">
-                  Edición de Link
-                </h3>
-              ) : (
-                <h3 className="text-secundary text-xl mb-2 text-center font-sans  text-secondary">
-                  Edición de Archivo
-                </h3>
-              )}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg max-w-lg w-full">
+            <h2 className="text-xl font-bold mb-4">Editar archivo</h2>
 
-              <label className="font-sans" htmlFor="name">
-                Nombre:
-              </label>
+            <div className="space-y-4">
+              {/* Input for name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
 
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="border py-2 font-sans text-slate-400"
-                placeholder="Nombre"
-              />
+              {/* Select for category */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Categoría
+                </label>
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                >
+                  <option value="1">Archivo Final</option>
+                  <option value="2">Archivo Parcial</option>
+                  <option value="3">Borrador</option>
+                </select>
+              </div>
 
-              {type === "Link" && (
-                <>
-                  <label className="font-sans" htmlFor="name">
-                    URL:
-                  </label>
-                  <input
-                    type="text"
-                    name="path"
-                    value={formData.path}
-                    onChange={handleInputChange}
-                    className="border py-2 font-sans text-slate-400"
-                    placeholder="URL"
-                  />
-                </>
-              )}
-
-              {type !== "Link" && (
-                <div className=" space-y-4">
-                  <label className="font-sans  " htmlFor="">
-                    Actualizar archivo desde tu PC (opcional) :
+              {/* File input for new file */}
+              {type === "File" && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Subir nuevo archivo (opcional)
                   </label>
                   <input
                     type="file"
-                    className="font-sans w-full overflow-auto border-2"
                     onChange={handleFileChange}
+                    className="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 focus:outline-none"
                   />
                 </div>
               )}
-            </form>
-            <div className="flex justify-center mt-4">
+            </div>
+
+            <div className="mt-4 flex justify-end">
               <button
-                className="bg-acent font-sans text-white font-bold py-2 px-4 rounded mr-2"
+                className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
                 onClick={toggleModal}
               >
                 Cancelar
               </button>
-
               <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-md"
                 onClick={handleClick}
-                className="bg-secundary font-sans text-white font-bold py-2 px-4 rounded"
               >
-                Actualizar
+                Guardar cambios
               </button>
             </div>
           </div>
