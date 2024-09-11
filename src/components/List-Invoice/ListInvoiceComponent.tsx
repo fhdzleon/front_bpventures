@@ -93,9 +93,9 @@ const ListInvoiceComponent = ({
   const handlePreviousPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
-
+console.log(invoicesData,"invoices")
   return (
-    <div className="m-5 max-h-screen mt-5 rounded-lg">
+    <div className="m-5 max-h-screen  mt-5 rounded-lg">
       {/* <PreloaderLoad/> */}
       {loading && <PreloaderAwait />}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
@@ -103,7 +103,7 @@ const ListInvoiceComponent = ({
         {titleInvoicesList}
       </h1>
       <FilterInput filter={filter} onFilterChange={setFilter} />
-      <div className="mt-4 o bg-white shadow-lg rounded-lg border border-gray-300">
+      <div className="mt-4 bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
             <tr>
@@ -185,17 +185,22 @@ const ListInvoiceComponent = ({
                     </>
                   )}
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 flex space-x-4">
-                    <InvoiceDownload
+                  <InvoiceDownload
                       userId={userData?.id || ""}
                       invoiceId={invoice.id}
                     />
-
-                    <button
+                   { invoicesData.permissions.permissionType.name.includes(
+                                      "view"
+                                    ) && (
+                                     <button
                       title="vista previa"
                       onClick={() => handleOpenModal(invoice)}
                     >
                       <EyeIcon />
                     </button>
+                                    )}
+
+                    
 
                     {isModalOpen && selectedInvoice && (
                       <div
