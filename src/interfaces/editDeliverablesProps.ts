@@ -3,6 +3,8 @@ interface EditDeliverableProps {
   name: string;
   description: string;
   category: string;
+  path: string;
+  type: string;
 }
 
 export default EditDeliverableProps;
