@@ -365,8 +365,10 @@ const DeliverablesList = () => {
                                     <EditDeliverable
                                       id={deliverable.id}
                                       name={deliverable.deliverableName}
-                                      description="Aqui debia haber una descripcion"
-                                      category={deliverable.deliverableCategory}
+                                      description={""}
+                                      category={""}
+                                      path={deliverable.deliverablePath}
+                                      type={deliverable.deliverableType}
                                     />
                                     <DeleteDeliverable id={deliverable.id} />
                                   </>
@@ -390,6 +392,8 @@ const DeliverablesList = () => {
                                         category={
                                           deliverable.deliverableCategory
                                         }
+                                        path={deliverable.deliverablePath}
+                                        type={deliverable.deliverableType}
                                       />
                                     )}
 

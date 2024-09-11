@@ -10,6 +10,7 @@ export enum PATHROUTES {
   LIST_COMPANY = "/in/company/list",
   CREATE_COMPANY = "/in/company/create",
   UPDATE_COMPANY = "/in/company/update",
+  DELETE_COMPANY = "/in/company/list",
   MAITENANCE = "/in/maitenance",
   DELIVERABLES = "/in/deliverables",
   INVOICES = "/in/invoices",
