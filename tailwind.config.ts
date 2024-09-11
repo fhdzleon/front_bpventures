@@ -23,6 +23,11 @@ const config: Config = {
         futura: ['"Futura Md BT"', "sans"],
       },
     },
+   
+      darkMode:  'media', 
+      theme: {
+        extend: {},
+      },
   },
   plugins: [],
 };
