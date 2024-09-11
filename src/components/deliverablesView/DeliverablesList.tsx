@@ -15,6 +15,7 @@ import SearchBar from "./Searchbar";
 import getDeliverableExtension from "@/helpers/getDeliverableExtension";
 import UploadDeliverable from "../deliverablesActions/UploadDeliverable";
 import FilterDeliverableForBussines from "../filterDeliverableForBussines/FilterDeliverableForBussines";
+import LinkDeliverable from "../deliverablesActions/LinkDeliverable";
 
 const DeliverablesList = () => {
   const { setDeliverableData, userData, deliverableData, loading, fetchAgain } =
@@ -126,7 +127,7 @@ const DeliverablesList = () => {
       </div>
 
       {!loading ? (
-        <>
+        <div className="mt-4">
           <span className="font-mono ">{pathView}/</span>
           <div className=" bg-white shadow-lg rounded-lg border border-gray-300">
             <table className=" min-w-full divide-y divide-gray-300">
@@ -352,14 +353,22 @@ const DeliverablesList = () => {
                                   "owner"
                                 ) || userData.isAdmin ? (
                                   <>
-                                    <DownloadDeliverable
-                                      path={deliverable.deliverablePath}
-                                    />
+                                    {deliverable.deliverableType !== "Link" ? (
+                                      <DownloadDeliverable
+                                        path={deliverable.deliverablePath}
+                                      />
+                                    ) : (
+                                      <LinkDeliverable
+                                        path={deliverable.deliverablePath}
+                                      />
+                                    )}
                                     <EditDeliverable
                                       id={deliverable.id}
                                       name={deliverable.deliverableName}
-                                      description="Aqui debia haber una descripcion"
-                                      category={deliverable.deliverableCategory}
+                                      description={""}
+                                      category={""}
+                                      path={deliverable.deliverablePath}
+                                      type={deliverable.deliverableType}
                                     />
                                     <DeleteDeliverable id={deliverable.id} />
                                   </>
@@ -383,6 +392,8 @@ const DeliverablesList = () => {
                                         category={
                                           deliverable.deliverableCategory
                                         }
+                                        path={deliverable.deliverablePath}
+                                        type={deliverable.deliverableType}
                                       />
                                     )}
 
@@ -472,7 +483,7 @@ const DeliverablesList = () => {
               </button>
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <>
           <div className="flex  flex-col items-center justify-center mt-7">

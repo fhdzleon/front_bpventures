@@ -262,13 +262,13 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
                   Selecciona una categoría
                 </option>
                 <option className="font-sans" value="1">
-                  Entregables Finalizados
+                  Archivo Final
                 </option>
                 <option className="font-sans" value="2">
-                  Borrador
+                  Archivo Parcial
                 </option>
                 <option className="font-sans" value="3">
-                  Entregables Parcial
+                  Borrador
                 </option>
               </select>
 
@@ -278,9 +278,9 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
                   <h3 className="font-sans text-lg text-secundary">
                     Subir Archivo:
                   </h3>
-                  <GoogleDrivePicker />
+                  {/*  <GoogleDrivePicker /> */}
                   <p className="font-sans mb-2">
-                    O selecciona un archivo desde tu PC.
+                    Selecciona un archivo desde tu PC.
                   </p>
                   <div className="relative">
                     <input
