@@ -17,6 +17,7 @@ export const UsersList = () => {
 
       <UsersListComponent allUsers={allUsers} setAllUsers={setAllUsers} loading={loading} />
     </>
+    
   );
 };
 export default UsersList;
