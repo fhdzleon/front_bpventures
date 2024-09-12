@@ -164,7 +164,7 @@ export const getUserById = async (userId: number) => {
     });
 
     if (response.ok) {
-      console.log(await response.json())
+      // console.log(await response.json())
       return response.json();
     } else {
       const errorData = await response.json();
