@@ -15,6 +15,7 @@
     "react-dom": "^18",
     "react-google-drive-picker": "^1.2.2",
     "react-select": "^5.8.0",
+    "socket.io-client": "^4.7.5",
     "sonner": "^1.5.0",
     "sweetalert2": "^11.12.4"
   },
