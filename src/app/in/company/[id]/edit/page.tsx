@@ -78,8 +78,15 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
   }
 
   return (
-    <div className="flex justify-center items-center w-full min-h-screen">
+  
+    <div className="flex flex-col justify-start items-center w-full min-h-screen">
       <Toaster richColors />
+      <button
+        onClick={() => router.back()}
+        className="bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 self-start ml-4 mt-4"
+      >
+        Volver
+      </button>
 
       <form className="form-apply" onSubmit={handleUpdate}>
         <h1 className="text-center text-[1.2rem] mb-6">Editar Empresa</h1>
@@ -122,6 +129,7 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
 
         <Button type="submit">Actualizar Empresa</Button>
       </form>
+
     </div>
   );
 };

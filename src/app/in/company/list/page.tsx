@@ -137,8 +137,10 @@ const handleNextPage = () => {
                         <div className="flex space-x-2">
 
                           <Link href={`/in/company/${company.id}/details`}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mx-auto hover:text-acent">
-                            <title>Ver Detalles</title>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"
+                              className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+                            >
+                              <title>Ver Detalles</title>
                               <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -146,17 +148,9 @@ const handleNextPage = () => {
                               />
                               <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
-                            {/* <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">Ver Detalles</button>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                              strokeWidth="1.5" stroke="currentColor"
-                              className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
-
-                            >
-                              
-                              <title>Ver Detalles</title>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg> */}
                           </Link>
+                       
+
 
                           <Link href={`/in/company/${company.id}/edit`}>
                             <button>
@@ -173,7 +167,7 @@ const handleNextPage = () => {
                                 />
                               </svg>
                             </button>
-                            {/* <button className="bg-yellow-500 text-white px-2 py-1 rounded mr-2">Editar</button> */}
+
                           </Link>
 
 
