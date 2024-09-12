@@ -52,7 +52,7 @@ export const UsersListComponent = ({
   return (
     <>
       {!loading ? (
-        <div className="container mx-auto px-6  w-4/5 font-futura">
+        <div className="container mx-auto px-6  w-4/5 md:max-w-full  font-futura">
           <h1 className="text-4xl font-futura mb-6 text-secundary">
             Lista de Usuarios: {companyName}
           </h1>

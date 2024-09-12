@@ -1,4 +1,10 @@
 interface InvoiceInterface {
+  permissionTypes: any;
+  invoiceType: string;
+  invoicePath: any;
+  invoiceCategory: any;
+  invoiceName: any;
+  permissions: any;
   id: number;
   number: string;
   amount: number;

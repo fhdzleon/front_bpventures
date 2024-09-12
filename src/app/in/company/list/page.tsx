@@ -69,32 +69,35 @@ const CompanyTable: React.FC = () => {
 
 
   const indexOfLastCompany = currentPage * itemsPerPage;
-  const indexOfFirstCompany = indexOfLastCompany - itemsPerPage;
-  const currentCompanies = companies.slice(indexOfFirstCompany, indexOfLastCompany);
-  const totalPages = Math.ceil(companies.length / itemsPerPage);
+const indexOfFirstCompany = indexOfLastCompany - itemsPerPage;
 
-  const handlePreviousPage = () => {
-    setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
-  };
 
-  const handleNextPage = () => {
-    setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
-  };
+const filteredCompanies = companies.filter(company =>
+  company.name.toLowerCase().includes(filter.toLowerCase())
+);
 
-  const filteredCompanies = companies.filter(company =>
-    company.name.toLowerCase().includes(filter.toLowerCase())
-  );
 
+const currentCompanies = filteredCompanies.slice(indexOfFirstCompany, indexOfLastCompany);
+const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
+
+const handlePreviousPage = () => {
+  setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+};
+
+const handleNextPage = () => {
+  setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
+};
   return (
     <div>
       <div className="container mx-auto px-6 w-4/5 font-futura">
-        <ButtonAdd children="Agregar empresa" hrefString="/in/company/create" />
+        {/* <ButtonAdd children="Agregar empresa" hrefString="/in/company/create" /> */}
 
         <Toaster richColors />
         <h1 className="text-4xl font-futura mb-6 text-secundary">
           Lista de Empresas
         </h1>
         <FilterInput filter={filter} onFilterChange={setFilter} />
+        <ButtonAdd children="Agregar empresa" hrefString="/in/company/create" />
 
         {loading ? (
           <p className="text-center">Cargando empresas...</p>
@@ -111,8 +114,8 @@ const CompanyTable: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredCompanies.length > 0 ? (
-                  filteredCompanies.map((company) => (
+              {currentCompanies.length > 0 ? (
+                currentCompanies.map((company) => (
                     <tr key={company.id} className="hover:bg-gray-50 transition-colors duration-200">
                       <td className="py-4 px-6 font-futura text-sm text-gray-900">
                         {company.id}
@@ -134,16 +137,20 @@ const CompanyTable: React.FC = () => {
                         <div className="flex space-x-2">
 
                           <Link href={`/in/company/${company.id}/details`}>
-                            {/* <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">Ver Detalles</button> */}
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                              strokeWidth="1.5" stroke="currentColor"
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"
                               className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
-
                             >
                               <title>Ver Detalles</title>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                              />
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
                           </Link>
+                       
+
 
                           <Link href={`/in/company/${company.id}/edit`}>
                             <button>
@@ -160,7 +167,7 @@ const CompanyTable: React.FC = () => {
                                 />
                               </svg>
                             </button>
-                            {/* <button className="bg-yellow-500 text-white px-2 py-1 rounded mr-2">Editar</button> */}
+
                           </Link>
 
 
