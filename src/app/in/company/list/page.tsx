@@ -69,22 +69,24 @@ const CompanyTable: React.FC = () => {
 
 
   const indexOfLastCompany = currentPage * itemsPerPage;
-  const indexOfFirstCompany = indexOfLastCompany - itemsPerPage;
-  const currentCompanies = companies.slice(indexOfFirstCompany, indexOfLastCompany);
-  const totalPages = Math.ceil(companies.length / itemsPerPage);
+const indexOfFirstCompany = indexOfLastCompany - itemsPerPage;
 
-  const handlePreviousPage = () => {
-    setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
-  };
 
-  const handleNextPage = () => {
-    setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
-  };
+const filteredCompanies = companies.filter(company =>
+  company.name.toLowerCase().includes(filter.toLowerCase())
+);
 
-  const filteredCompanies = companies.filter(company =>
-    company.name.toLowerCase().includes(filter.toLowerCase())
-  );
 
+const currentCompanies = filteredCompanies.slice(indexOfFirstCompany, indexOfLastCompany);
+const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
+
+const handlePreviousPage = () => {
+  setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+};
+
+const handleNextPage = () => {
+  setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
+};
   return (
     <div>
       <div className="container mx-auto px-6 w-4/5 font-futura">
@@ -112,8 +114,8 @@ const CompanyTable: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredCompanies.length > 0 ? (
-                  filteredCompanies.map((company) => (
+              {currentCompanies.length > 0 ? (
+                currentCompanies.map((company) => (
                     <tr key={company.id} className="hover:bg-gray-50 transition-colors duration-200">
                       <td className="py-4 px-6 font-futura text-sm text-gray-900">
                         {company.id}
