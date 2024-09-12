@@ -45,6 +45,18 @@ const BillingTable: React.FC<IdParams> = ({ params }) => {
 
   return (
     <>
+       <button
+        onClick={() => window.history.back()} // Alternativa usando window.history.back()
+        className="bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 mb-4"
+      >
+        Volver
+      </button>
+     {/* <button
+        onClick={() => router.back()} // Uso correcto de router.back()
+        className="bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 mb-4"
+      >
+        Volver
+      </button> */}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
       <ListInvoiceComponent
         invoicesData={invoicesData}
