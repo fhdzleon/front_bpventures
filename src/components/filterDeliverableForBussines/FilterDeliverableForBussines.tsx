@@ -44,7 +44,7 @@ const FilterDeliverableForBussines = () => {
           >
             <option value="">Selecciona una empresa</option>
             {bussinesData.map((company) => (
-              <option key={company.id} value={company.name}>
+              <option key={company.id} value={company.id}>
                 {company.name}
               </option>
             ))}
