@@ -42,7 +42,7 @@ const DeliverablesList = () => {
       userData?.id,
       token,
       currentPage,
-      itemsPerPage,
+      /* itemsPerPage, */
       currentFolder,
       setDeliverableData
     );
@@ -60,7 +60,7 @@ const DeliverablesList = () => {
       userData?.id,
       token,
       currentPage,
-      itemsPerPage,
+      /* itemsPerPage, */
       currentFolder,
       setDeliverableData
     );
@@ -119,7 +119,12 @@ const DeliverablesList = () => {
           setSearchTerm={setSearchTerm}
           fetchdeliverable={fetchDeliverables2}
         />
-        <FilterDeliverableForBussines />
+        <FilterDeliverableForBussines
+          userId={userData.id}
+          token={token}
+          currentPage={currentPage}
+          currentFolder={currentFolder}
+        />
         <UploadDeliverable
           currentFolder={currentFolder}
           parentId={currentFolder}

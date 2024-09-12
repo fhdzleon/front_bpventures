@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { fetchDeliverables } from "@/helpers/fetchDeliverables";
 
 interface Company {
   id: number;
@@ -10,9 +11,21 @@ interface Company {
   address: string;
 }
 
-const FilterDeliverableForBussines = () => {
+interface FilterProps {
+  userId: number;
+  token: any;
+  currentPage: any;
+  currentFolder: any;
+}
+
+const FilterDeliverableForBussines: React.FC<FilterProps> = ({
+  userId,
+  token,
+  currentPage,
+  currentFolder,
+}) => {
   const [bussinesData, setBussinesData] = useState<Company[]>([]);
-  const { userData } = useAuth();
+  const { userData, setDeliverableData } = useAuth();
 
   useEffect(() => {
     const fetchCompanys = async () => {
@@ -33,6 +46,24 @@ const FilterDeliverableForBussines = () => {
     fetchCompanys();
   }, []);
 
+  const handleFilter = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const companyId = Number(event.target.value);
+
+    try {
+      await fetchDeliverables(
+        userId,
+        token,
+        currentPage,
+        currentFolder,
+        setDeliverableData,
+        undefined,
+        companyId
+      );
+    } catch (error) {
+      throw new Error("Error al filtrar las empresas");
+    }
+  };
+
   return (
     <>
       {userData?.isAdmin && (
@@ -41,8 +72,9 @@ const FilterDeliverableForBussines = () => {
             name="company"
             id="company"
             className="py-2 font-sans h-12 bg-secundary rounded-xl text-white px-4"
+            onChange={handleFilter}
           >
-            <option value="">Selecciona una empresa</option>
+            <option value="">Todas las empresas</option>
             {bussinesData.map((company) => (
               <option key={company.id} value={company.id}>
                 {company.name}
