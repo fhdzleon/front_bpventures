@@ -4,77 +4,64 @@ import ButtonUploadInvoice from "@/components/invoice/ButtonUploadInvoices";
 import { useAuth } from "@/context/AuthContext";
 import { getAllInvoices, getUserById } from "@/helpers/auth.helper";
 import { useEffect, useState } from "react";
-
 const BillingTable = () => {
-  // const [invoicesAdmin, setInvoicesAdmin] = useState<any[]>([{}]);
   const [invoicesData, setInvoicesData] = useState<any[]>([]);
-
-  const [invoicesData2, setInvoicesData2] = useState([]);
+  const [invoicesData2, setInvoicesData2] = useState<any[]>([]);
   const { userData, loading, fetchAgain } = useAuth();
 
   const fetchInvoices = async () => {
     try {
-      if (!loading) {
-        const response = await getUserById(userData?.id);
-        // const response = await getUserById(3);
+      if (userData?.id) {
+        const response = await getUserById(userData.id);
         setInvoicesData(response.invoices);
-        console.log(response.json())
+        console.log(response);
       }
     } catch (error) {
       console.error("Error fetching invoices", error);
     }
   };
-  console.log(invoicesData,"invoicedata")
-  
 
   const fetchInvoices2 = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/invoices/user/${userData.id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-
-      setInvoicesData2(data);
+      if (userData?.id) {
+        const response = await fetch(
+          `http://localhost:3000/invoices/user/${userData.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        setInvoicesData2(data);
+      }
     } catch (error) {
       console.log("Error fetching invoices", error);
     }
   };
 
   useEffect(() => {
-    if(userData?.isAdmin) fetchInvoices();
-
-    if(!userData?.isAdmin) fetchInvoices2();
-
+    if (userData?.id) {
+      if (userData.isAdmin) {
+        fetchInvoices();
+      } else {
+        fetchInvoices2();
+      }
+    }
   }, [fetchAgain, userData?.id]);
-  
-  
-  console.log(invoicesData);
-  console.log(invoicesData2);
 
-  const titleInvoicesList = `Lista de Facturas de: ${userData?.Names}`;
+  console.log(invoicesData, "data1");
+  console.log([invoicesData2 ], "data2");
+
+  const titleInvoicesList = `Lista de Facturas de: ${userData?.Names || 'Usuario'}`;
 
   return (
     <>
-      {/* <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Facturas: {userData?.Names}</h1> */}
-      {/* ButtonUploadInvoice */}
-
-      {/* <p>boton de prueba</p> */}
-      {/* <pre>{JSON.stringify(userData?.id, null, 2)}</pre> */}
-      {/* <ButtonUploadInvoice userId={userData?.id} /> */}
-
-      {/* <pre>{JSON.stringify(userData, null, 2)}</pre> */}
-      {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
-
       <ListInvoiceComponent
-        invoicesData={userData?.isAdmin ?  invoicesData: invoicesData2}
-        isAdmin={false}
-        userEmail={userData?.email}
+        invoicesData={userData?.isAdmin ? invoicesData : [invoicesData2] }
+        isAdmin={userData?.isAdmin || false}
+        userEmail={userData?.email || ''}
         titleInvoicesList={titleInvoicesList}
       />
     </>
