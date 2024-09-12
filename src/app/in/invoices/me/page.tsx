@@ -7,33 +7,17 @@ import { useEffect, useState } from "react";
 
 const BillingTable = () => {
   // const [invoicesAdmin, setInvoicesAdmin] = useState<any[]>([{}]);
-  const [invoicesData, setInvoicesData] = useState<any[]>([
-    {
-      id: 1,
-      number: "INV-0001",
-      path: "path/to/invoice1.pdf",
-      issueDate: "2023-12-31",
-      dueDate: "2024-01-31",
-      amount: "100.00",
-      user: {
-        id: 1,
-        email: "user1@example.com",
-        isAdmin: true,
-      },
-      invoiceStatus: {
-        name: "Pending",
-      },
-      company: {
-        name: "Company1",
-      },
-    },
-  ]);
+  const [invoicesData, setInvoicesData] = useState<any[]>([]);
+
+  const [invoicesData2, setInvoicesData2] = useState([]);
   const { userData, loading, fetchAgain } = useAuth();
 
   const fetchInvoices = async () => {
     try {
       if (!loading) {
         const response = await getUserById(userData?.id);
+        console.log(response);
+
         // const response = await getUserById(3);
         setInvoicesData(response.invoices);
       }
@@ -42,11 +26,37 @@ const BillingTable = () => {
     }
   };
 
-  useEffect(() => {
-    fetchInvoices();
-  }, [fetchAgain, userData?.id]);
+  const fetchInvoices2 = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/invoices/user/${userData.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
 
-  const titleInvoicesList = `Lista de Facturas de: ${userData?.Names}`
+      setInvoicesData2(data);
+    } catch (error) {
+      console.log("Error fetching invoices", error);
+    }
+  };
+
+  useEffect(() => {
+    if(userData?.isAdmin) fetchInvoices();
+
+    if(!userData?.isAdmin) fetchInvoices2();
+
+  }, [fetchAgain, userData?.id]);
+  
+  
+  console.log(invoicesData);
+  console.log(invoicesData2);
+
+  const titleInvoicesList = `Lista de Facturas de: ${userData?.Names}`;
 
   return (
     <>
@@ -59,8 +69,9 @@ const BillingTable = () => {
 
       {/* <pre>{JSON.stringify(userData, null, 2)}</pre> */}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
+
       <ListInvoiceComponent
-        invoicesData={invoicesData}
+        invoicesData={userData?.isAdmin ?  invoicesData: invoicesData2}
         isAdmin={false}
         userEmail={userData?.email}
         titleInvoicesList={titleInvoicesList}
