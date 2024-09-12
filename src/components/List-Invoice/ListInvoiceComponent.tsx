@@ -75,11 +75,13 @@ const ListInvoiceComponent = ({
   const indexOfLastInvoice = currentPage * itemsPerPage;
   const indexOfFirstInvoice = indexOfLastInvoice - itemsPerPage;
 
-  const filteredInvoices = invoicesData.filter((invoice: InvoiceInterface) =>
-    invoice.number && typeof invoice.number === "string"
-      ? invoice.number.toLowerCase().includes(filter.toLowerCase())
-      : false
-  );
+  console.log(invoicesData);
+  
+  const filteredInvoices = invoicesData?.filter((invoice: InvoiceInterface) =>
+  invoice.number && typeof invoice.number === "string"
+    ? invoice.number.toLowerCase().includes(filter.toLowerCase())
+    : false
+);
 
   const currentInvoices = filteredInvoices.slice(
     indexOfFirstInvoice,
