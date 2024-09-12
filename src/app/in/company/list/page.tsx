@@ -114,8 +114,8 @@ const handleNextPage = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredCompanies.length > 0 ? (
-                  filteredCompanies.map((company) => (
+              {currentCompanies.length > 0 ? (
+                currentCompanies.map((company) => (
                     <tr key={company.id} className="hover:bg-gray-50 transition-colors duration-200">
                       <td className="py-4 px-6 font-futura text-sm text-gray-900">
                         {company.id}

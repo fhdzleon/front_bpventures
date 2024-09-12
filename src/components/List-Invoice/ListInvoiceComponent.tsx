@@ -13,6 +13,7 @@ import PreloaderLoad from "../preloader/PreloaderLoad";
 import PreloaderAwait from "../preloader/PreloaderAwait";
 import FilterInput from "../Search/Search";
 import PermissionPanel from "./PanelPermissionInvoices";
+import Notifications from "../ButtonAlerts/ButtonAlerts";
 
 const ListInvoiceComponent = ({
   invoicesData,
@@ -75,11 +76,10 @@ const ListInvoiceComponent = ({
   const indexOfFirstInvoice = indexOfLastInvoice - itemsPerPage;
 
   const filteredInvoices = invoicesData.filter((invoice: InvoiceInterface) =>
-  invoice.number && typeof invoice.number === "string"
-    ? invoice.number.toLowerCase().includes(filter.toLowerCase())
-    : false
-);
-
+    invoice.number && typeof invoice.number === "string"
+      ? invoice.number.toLowerCase().includes(filter.toLowerCase())
+      : false
+  );
 
   const currentInvoices = filteredInvoices.slice(
     indexOfFirstInvoice,
@@ -93,7 +93,7 @@ const ListInvoiceComponent = ({
   const handlePreviousPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
-console.log(invoicesData,"invoices")
+  console.log(invoicesData, "invoices");
   return (
     <div className="m-5 max-h-screen  mt-5 rounded-lg">
       {/* <PreloaderLoad/> */}
@@ -123,9 +123,9 @@ console.log(invoicesData,"invoices")
 
               {!companyName && (
                 <>
-                <th className="py-3 px-4 font-futura text-left text-lg">
-                  Empresa
-                </th>
+                  <th className="py-3 px-4 font-futura text-left text-lg">
+                    Empresa
+                  </th>
                 </>
               )}
               {isAdmin && (
@@ -169,7 +169,6 @@ console.log(invoicesData,"invoices")
                   <td className="py-4 px-6 font-futura text-sm text-gray-700">
                     {invoice.dueDate}
                   </td>
-
                   {!companyName && (
                     <>
                       <td className="py-4 px-6 font-futura text-sm text-gray-700">
@@ -185,22 +184,17 @@ console.log(invoicesData,"invoices")
                     </>
                   )}
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 flex space-x-4">
-                  <InvoiceDownload
+                    <InvoiceDownload
                       userId={userData?.id || ""}
                       invoiceId={invoice.id}
                     />
-                   { invoicesData.permissions.permissionType.name.includes(
-                                      "view"
-                                    ) && (
-                                     <button
+
+                    <button
                       title="vista previa"
                       onClick={() => handleOpenModal(invoice)}
                     >
                       <EyeIcon />
                     </button>
-                                    )}
-
-                    
 
                     {isModalOpen && selectedInvoice && (
                       <div

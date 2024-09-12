@@ -36,11 +36,14 @@ const BillingTable = () => {
         const response = await getUserById(userData.id);
         // const response = await getUserById(3);
         setInvoicesData(response.invoices);
+        console.log(response.json())
       }
     } catch (error) {
       console.error("Error fetching invoices", error);
     }
   };
+  console.log(invoicesData,"invoicedata")
+  
 
   useEffect(() => {
     fetchInvoices();

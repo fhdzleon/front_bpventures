@@ -134,7 +134,7 @@ export const UpdatePermission = async (permission: any, Deliverable: number) => 
 // src/helpers/auth.helper.tsx
 export const getAllInvoices = async () => {
   try {
-    const response = await fetch(`${apiURL}/invoices`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -142,6 +142,7 @@ export const getAllInvoices = async () => {
     });
 
     if (response.ok) {
+      console.log(await response.json)
       return response.json();
     } else {
       const errorData = await response.json();
@@ -155,7 +156,7 @@ export const getAllInvoices = async () => {
 
 export const getUserById = async (userId: number) => {
   try {
-    const response = await fetch(`${apiURL}/users/${userId}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -163,6 +164,7 @@ export const getUserById = async (userId: number) => {
     });
 
     if (response.ok) {
+      console.log(await response.json())
       return response.json();
     } else {
       const errorData = await response.json();

@@ -179,6 +179,7 @@ export default function PermissionPanel({
       };
 
       const permisosUpdated = transformPermissions(agrupedPermissions);
+      console.log(permisosUpdated,"datos que se enviaran")
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/invoices/permision/${fileId}`,
