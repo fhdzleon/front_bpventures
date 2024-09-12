@@ -6,36 +6,15 @@ import { getAllInvoices } from "@/helpers/auth.helper";
 import { useEffect, useState } from "react";
 
 const BillingTable = () => {
-  // const [invoicesAdmin, setInvoicesAdmin] = useState<any[]>([{}]);
-  const [invoicesData, setInvoicesData] = useState<any[]>([
-    {
-      id: 1,
-      number: "INV-0001",
-      path: "path/to/invoice1.pdf",
-      issueDate: "2023-12-31",
-      dueDate: "2024-01-31",
-      amount: "100.00",
-      user: {
-        id: 1,
-        email: "user1@example.com",
-        isAdmin: true,
-      },
-      invoiceStatus: {
-        name: "Pending",
-      },
-      company: {
-        name: "Company1",
-      },
-    },
-  ]);
+  const [invoicesData, setInvoicesData] = useState<any[]>([]);
+
+  const [selectedCompany, setSelectedCompany] = useState<string>(""); // Estado para la empresa seleccionada
   const { userData, loading, fetchAgain } = useAuth();
 
   const fetchInvoices = async () => {
     try {
-      // if (!loading) {
       const response = await getAllInvoices();
       setInvoicesData(response);
-      // }
     } catch (error) {
       console.error("Error fetching invoices", error);
     }
@@ -47,17 +26,33 @@ const BillingTable = () => {
     }
   }, [loading, fetchAgain]);
 
-  const titleInvoicesList = `Lista de todas las facturas`;
+  const titleInvoicesList = `Lista de facturas para ${selectedCompany || "todas las empresas"}`;
+
+  // Obtener la lista de empresas únicas
+  const companies = Array.from(new Set(invoicesData.map((invoice) => invoice.company.name)));
+
+  // Filtrar facturas según la empresa seleccionada
+  const filteredInvoices = selectedCompany ? invoicesData.filter((invoice) => invoice.company.name === selectedCompany) : invoicesData;
 
   return (
     <>
-      {/* <h1 className="text-4xl font-futura mb-6 text-secundary">
-        Lista de Facturas
-      </h1>
-      <pre>{JSON.stringify(userData?.isAdmin, null, 2)}</pre> */}
-      {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
-      {/* <ButtonAdd children="Cargar Facturas" /> */}
-      <ListInvoiceComponent invoicesData={invoicesData} isAdmin={true} titleInvoicesList={titleInvoicesList} />
+      
+      <div className="m-5 max-h-screen  mt-5 rounded-lg">
+      <h1 className="text-4xl font-futura mb-6 text-secundary">{titleInvoicesList}</h1>
+        <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
+
+        <select id="companySelect" value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)} className="border border-gray-300 p-2 rounded">
+          <option value="">Todas las empresas</option>
+          {companies.map((company, index) => (
+            <option key={index} value={company}>
+              {company}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Lista de facturas filtradas */}
+      <ListInvoiceComponent invoicesData={filteredInvoices} isAdmin={true}  />
     </>
   );
 };
