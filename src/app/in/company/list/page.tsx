@@ -1,13 +1,16 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Toaster, toast } from "sonner";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import Swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.min.css';
+import  "../../../../styles/style.css";
 
 
-import FilterInput from '@/components/Search/Search';
-import { ButtonAdd } from '@/components/Buttons/ButtonAdd';
+import FilterInput from "@/components/Search/Search";
+import { ButtonAdd } from "@/components/Buttons/ButtonAdd";
 
-import DeleteCompany from './DeleteCompany';
+import DeleteCompany from "./DeleteCompany";
+import PreloaderAwait from "@/components/preloader/PreloaderAwait";
 interface Company {
   id: number;
   name: string;
@@ -17,13 +20,11 @@ interface Company {
 
 const CompanyTable: React.FC = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 5;
-
-
 
   const fetchCompanies = async () => {
     try {
@@ -31,73 +32,58 @@ const CompanyTable: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         setCompanies(data);
-
         setLoading(false);
       } else {
-        toast.error('Error al cargar las empresas');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al cargar las empresas',
+        });
       }
     } catch (error: any) {
       console.error("Error al obtener empresas", error);
-      toast.error('Error al cargar las empresas');
-    }
-  };
-
-
-
-
-  const handleDelete = async (id: number) => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/companies/${id}`, {
-        method: 'DELETE',
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al cargar las empresas',
+        customClass: {
+          confirmButton: 'custom-ok-button',
+        },
       });
-
-      if (response.ok) {
-        toast.success('Empresa eliminada correctamente');
-        fetchCompanies();
-      } else {
-        toast.error('Error al eliminar la empresa');
-      }
-    } catch (error: any) {
-      console.error("Error al eliminar empresa", error);
-      toast.error('Error al eliminar la empresa');
     }
   };
+
 
   useEffect(() => {
     fetchCompanies();
   }, []);
 
-
   const indexOfLastCompany = currentPage * itemsPerPage;
-const indexOfFirstCompany = indexOfLastCompany - itemsPerPage;
+  const indexOfFirstCompany = indexOfLastCompany - itemsPerPage;
 
+  const filteredCompanies = companies.filter((company) => company.name.toLowerCase().includes(filter.toLowerCase()));
 
-const filteredCompanies = companies.filter(company =>
-  company.name.toLowerCase().includes(filter.toLowerCase())
-);
+  const currentCompanies = filteredCompanies.slice(indexOfFirstCompany, indexOfLastCompany);
+  const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
 
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+  };
 
-const currentCompanies = filteredCompanies.slice(indexOfFirstCompany, indexOfLastCompany);
-const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
-
-const handlePreviousPage = () => {
-  setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
-};
-
-const handleNextPage = () => {
-  setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
-};
+  const handleNextPage = () => {
+    setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
+  };
   return (
     <div>
-      <div className="container mx-auto px-6 w-4/5 font-futura">
+    {loading && <PreloaderAwait />}
+
+      <div className="m-5 max-h-screen mt-5 rounded-lg font-futura">
         {/* <ButtonAdd children="Agregar empresa" hrefString="/in/company/create" /> */}
 
-        <Toaster richColors />
-        <h1 className="text-4xl font-futura mb-6 text-secundary">
-          Lista de Empresas
-        </h1>
+        {/* <Toaster richColors /> */}
+        <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Empresas</h1>
+        <ButtonAdd children="Agregar Empresa" hrefString="/in/company/create" />
         <FilterInput filter={filter} onFilterChange={setFilter} />
-        <ButtonAdd children="Agregar empresa" hrefString="/in/company/create" />
 
         {loading ? (
           <p className="text-center">Cargando empresas...</p>
@@ -114,30 +100,26 @@ const handleNextPage = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-              {currentCompanies.length > 0 ? (
-                currentCompanies.map((company) => (
+                {currentCompanies.length > 0 ? (
+                  currentCompanies.map((company) => (
                     <tr key={company.id} className="hover:bg-gray-50 transition-colors duration-200">
+                      <td className="py-4 px-6 font-futura text-sm text-gray-900">{company.id}</td>
                       <td className="py-4 px-6 font-futura text-sm text-gray-900">
-                        {company.id}
+                        <Link href={`/in/company/${company.id}`}>{company.name}</Link>
                       </td>
-                      <td className="py-4 px-6 font-futura text-sm text-gray-900" >
-                        <Link href={`/in/company/${company.id}`}>
-                          {company.name}
-                        </Link>
-                      </td>
-                      <td className="py-4 px-6 font-futura text-sm text-gray-700">
-                        {company.cuit}
-                      </td>
-                      <td className="py-4 px-6 font-futura text-sm text-gray-700">
-                        {company.address}
-                      </td>
+                      <td className="py-4 px-6 font-futura text-sm text-gray-700">{company.cuit}</td>
+                      <td className="py-4 px-6 font-futura text-sm text-gray-700">{company.address}</td>
 
                       {/* <td className="py-4 px-6 font-futura text-sm text-gray-700"> */}
                       <td className="py-4 px-6 font-futura text-sm text-gray-700">
                         <div className="flex space-x-2">
-
                           <Link href={`/in/company/${company.id}/details`}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth="1.5"
+                              stroke="currentColor"
                               className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
                             >
                               <title>Ver Detalles</title>
@@ -149,15 +131,16 @@ const handleNextPage = () => {
                               <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
                           </Link>
-                       
-
 
                           <Link href={`/in/company/${company.id}/edit`}>
                             <button>
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor"
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
                                 className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
-
                               >
                                 <title>Editar Empresa</title>
                                 <path
@@ -167,9 +150,7 @@ const handleNextPage = () => {
                                 />
                               </svg>
                             </button>
-
                           </Link>
-
 
                           <Link href={`/in/company/${company.id}/users`}>
                             {/* <button className="bg-green-500 text-white px-2 py-1 rounded mr-2">Ver Usuarios</button> */}
@@ -198,7 +179,6 @@ const handleNextPage = () => {
                               stroke-width="1.5"
                               stroke="currentColor"
                               className="size-8 hover:scale-125 hover:text-green-500 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
-
                             >
                               <title>Facturación</title>
                               <path
@@ -213,37 +193,26 @@ const handleNextPage = () => {
                           <button>
                             <DeleteCompany id={company.id} fetchCompanies={fetchCompanies} />
                           </button>
-
-
-
                         </div>
                       </td>
-
                     </tr>
-
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={5} className="text-center py-4">No hay empresas registradas.</td>
+                    <td colSpan={5} className="text-center py-4">
+                      No hay empresas registradas.
+                    </td>
                   </tr>
                 )}
               </tbody>
             </table>
-
-
-
-
-
-
           </div>
-
-
         )}
         <div className=" flex justify-between mt-4 ">
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className={`px-4 py-2 bg-gray-200 text-black rounded ${currentPage === 1 ? 'cursor-not-allowed opacity-50' : ''}`}
+            className={`px-4 py-2 bg-gray-200 text-black rounded ${currentPage === 1 ? "cursor-not-allowed opacity-50" : ""}`}
           >
             Anterior
           </button>
@@ -253,15 +222,13 @@ const handleNextPage = () => {
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className={`px-4 py-2 bg-gray-200 text-black rounded ${currentPage === totalPages ? 'cursor-not-allowed opacity-50' : ''}`}
+            className={`px-4 py-2 bg-gray-200 text-black rounded ${currentPage === totalPages ? "cursor-not-allowed opacity-50" : ""}`}
           >
             Siguiente
           </button>
         </div>
       </div>
-
     </div>
-
   );
 };
 

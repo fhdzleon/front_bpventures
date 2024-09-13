@@ -4,10 +4,10 @@ import "../../styles/style.css";
 import { useState, ChangeEvent, FormEvent, useEffect, useRef } from "react";
 import { ValidateLogin } from "../../helpers/authErrors";
 import { useRouter } from "next/navigation";
-import { Toaster, toast } from "sonner";
 import { AuthContextType, useAuth } from "../../context/AuthContext";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 export default function Login() {
   const router = useRouter();
@@ -84,6 +84,7 @@ export default function Login() {
 
     setRemember(!formData.remember);
   };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -117,14 +118,28 @@ export default function Login() {
           document.cookie = `token=${tokenCookie};`;
           localStorage.setItem("user", JSON.stringify(json.userPayload));
           setUser(json.userPayload);
-          toast.success("¡Inicio de sesión exitoso!");
+
+          // toast.success("¡Inicio de sesión exitoso!");
+          Swal.fire({
+            icon: "success",
+            title: "¡Inicio de sesión exitoso!",
+            text: "Redirigiendo...",
+            timer: 1500,
+            showConfirmButton: false,
+          }).then(() => {
+            window.location.href = PATHROUTES.HOME;
+          });
+  
           // router.push(PATHROUTES.HOME);
-          window.location.href = PATHROUTES.HOME;
+          // window.location.href = PATHROUTES.HOME;
           // router.replace(PATHROUTES.HOME);
         }
       } catch (error) {
-        toast.error("Error en el inicio de sesión. Verifica tus credenciales.");
-      }
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error en el inicio de sesión. Verifica tus credenciales.",
+        });      }
     } else if (step === 2) {
       // Step 2: Validate the 2FA code
       try {
@@ -153,17 +168,26 @@ export default function Login() {
 
         localStorage.setItem("user", JSON.stringify(json.userPayload));
         setUser(json.userPayload);
-        toast.success("¡Inicio de sesión exitoso!");
-        router.push(PATHROUTES.HOME);
+        Swal.fire({
+          icon: "success",
+          title: "¡Inicio de sesión exitoso!",
+          text: "Redirigiendo...",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          router.push(PATHROUTES.HOME);
+        });
       } catch (error) {
-        toast.error("Error en la verificación 2FA. Verifica tu código.");
-      }
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error en la verificación 2FA. Verifica tu código.",
+        });      }
     }
   };
 
   return (
     <div className=" relative min-h-screen flex items-center justify-center">
-      <Toaster richColors />
       <div className=" flex">
         <div className=" h-screen w-full"></div>
         <div className="bg-white"></div>

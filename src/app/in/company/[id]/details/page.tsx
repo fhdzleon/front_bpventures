@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Toaster, toast } from "sonner";
-import { PATHROUTES } from '@/helpers/pathRoutes';
-import Link from 'next/link';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { PATHROUTES } from "@/helpers/pathRoutes";
+import Link from "next/link";
+import Swal from 'sweetalert2';
+import '../../../../../styles/style.css';
 
 interface Company {
   id: number;
@@ -33,13 +34,25 @@ const CompanyDetails: React.FC<IdParams> = ({ params }) => {
         setCompany(data);
         setLoading(false);
       } else {
-        toast.error('Error al cargar los detalles de la empresa');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al cargar los detalles de la empresa',
+        });
       }
     } catch (error: any) {
       console.error("Error al obtener detalles de la empresa", error);
-      toast.error('Error al cargar los detalles');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al cargar los detalles',
+        customClass: {
+          confirmButton: 'custom-ok-button',
+        },
+      });
     }
   };
+  
 
   // Llama a la función para obtener los detalles al cargar el componente
   useEffect(() => {
@@ -59,17 +72,16 @@ const CompanyDetails: React.FC<IdParams> = ({ params }) => {
   return (
     <div className="m-3 max-w-4xl mx-auto p-8  rounded-xl font-sans">
 
-      <Toaster richColors />
-
-      <button onClick={() => router.back()}
-        className="bg-[#2B4168] text-white mt-5 mb-5 py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex items-center">
+      <button
+        onClick={() => router.back()}
+        className="bg-[#2B4168] text-white mt-5 mb-5 py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex items-center"
+      >
         Volver
       </button>
 
       <section className="mb-12">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-4xl font-bold text-[#2B4168] border-[#2B4168] pb-2">Detalles de la Empresa</h1>
-          {/* <BackButton /> */}
         </div>
       </section>
 
@@ -80,7 +92,7 @@ const CompanyDetails: React.FC<IdParams> = ({ params }) => {
             <p className="text-lg">
               <strong className="font-futura">ID de Empresa:</strong> {company.id}
             </p>
-            <p className="text-lg" >
+            <p className="text-lg">
               <strong className="font-futura">Razón Social:</strong> {company.name}
             </p>
             <p className="text-lg">
@@ -94,22 +106,12 @@ const CompanyDetails: React.FC<IdParams> = ({ params }) => {
       </div>
 
       <section className=" bg-gradient-to-br  bg-white p-8 rounded-lg shadow-lg">
-
-        <h2 className=" mt-19 text-3xl  text-left font-futura text-[#2B4168] ">
-          Información de Facturación
-        </h2>
+        <h2 className=" mt-19 text-3xl  text-left font-futura text-[#2B4168] ">Información de Facturación</h2>
         <div className="flex">
           <Link href={`/in/company/${company.id}/invoices`}>
             <button className="flex m-8  text-white font-futura  p-2 rounded-full bg-[#2B4168] hover:bg-acent ">
               {" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="w-6 h-6 mx-auto hover:text-acent"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 mx-auto hover:text-acent">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -119,40 +121,8 @@ const CompanyDetails: React.FC<IdParams> = ({ params }) => {
               Ver Facturas
             </button>
           </Link>
-
-          {/* <Link href={PATHROUTES.INVOICES}>
-          <button className="flex m-8  text-white font-futura  p-2 rounded-full bg-[#2B4168] hover:bg-acent ">
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-              />
-            </svg>   Cargar Factura
-          </button>
-          </Link> */}
-      
         </div>
-        {/* {userInvoices.length > 0 ? (
-          userInvoices.map(invoice => (
-            <InvoiceDetail key={invoice.id} Invoice={invoice} />
-          ))
-        ) : (
-          <p>No hay facturas disponibles para este usuario.</p>
-        )} */}
       </section>
-
-
-
-
     </div>
   );
 };

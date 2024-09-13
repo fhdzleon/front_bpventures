@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
-import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Swal from 'sweetalert2';
 
 const invoiceStatuses = [
   { id: 1, name: "Pendiente" },
-  { id: 2, name: "Pagada" },
-  { id: 3, name: "Anulada" },
+  { id: 2, name: "Revisar" },
+  { id: 3, name: "Pagada" },
+  { id: 4, name: "Anulada" },
 ];
 
 const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) => {
@@ -81,7 +82,7 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+  
     const formData = new FormData();
     formData.append("invoiceNumber", invoiceNumber);
     formData.append("issueDate", issueDate);
@@ -94,25 +95,38 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
     if (file) {
       formData.append("file", file);
     }
-
+  
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/${invoiceId}`, {
         method: "PATCH",
         body: formData,
       });
-
+  
       if (response.ok) {
-        toast.success("Factura actualizada correctamente");
-        // router.push('/invoices'); // Redirect to the invoices page after update
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: 'Factura actualizada correctamente',
+        });
+        // router.push('/invoices'); // Redirigir a la página de facturas después de la actualización
       } else {
         const errorData = await response.json();
-        toast.error(errorData.message || "Error al actualizar la factura");
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorData.message || 'Error al actualizar la factura',
+        });
       }
     } catch (error: any) {
       console.error("Error al actualizar la factura", error);
-      toast.error(error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un problema al actualizar la factura. Inténtalo de nuevo.',
+      });
     }
   };
+  
 
     // Check if the file is a PDF or an image
     const isImage = (filePath: string) => {
@@ -129,7 +143,6 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
     return (
       <div className="flex justify-center items-center w-full min-h-screen">
         {/* <pre>{JSON.stringify({  companyId }, null, 2)}</pre> */}
-        <Toaster richColors />
         <form className="form-apply" onSubmit={handleSubmit}>
           <h1 className="text-center text-[1.2rem] mb-6">Actualizar Factura</h1>
           {loading ? (
