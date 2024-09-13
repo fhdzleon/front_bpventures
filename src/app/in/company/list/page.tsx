@@ -38,6 +38,8 @@ const CompanyTable: React.FC = () => {
           icon: 'error',
           title: 'Error',
           text: 'Error al cargar las empresas',
+          confirmButtonText: "error",
+          confirmButtonColor: "#2b4168",
         });
       }
     } catch (error: any) {
@@ -46,9 +48,8 @@ const CompanyTable: React.FC = () => {
         icon: 'error',
         title: 'Error',
         text: 'Error al cargar las empresas',
-        customClass: {
-          confirmButton: 'custom-ok-button',
-        },
+        confirmButtonText: "Aceptar",
+          confirmButtonColor: "#2b4168",
       });
     }
   };

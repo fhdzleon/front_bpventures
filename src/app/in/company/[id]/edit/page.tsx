@@ -40,6 +40,8 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
           icon: 'error',
           title: 'Error',
           text: 'Error al cargar los detalles de la empresa',
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "#2b4168",
         });
       }
     } catch (error: any) {
@@ -48,6 +50,8 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
         icon: 'error',
         title: 'Error',
         text: 'Error al cargar los detalles',
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "#2b4168",
       });
     }
   };
@@ -69,6 +73,8 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
           icon: 'success',
           title: 'Actualizado',
           text: 'Empresa actualizada correctamente',
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "#2b4168",
         });
         // router.push(`/in/company/${id}`);
       } else {
@@ -76,6 +82,8 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
           icon: 'error',
           title: 'Error',
           text: 'Error al actualizar la empresa',
+          confirmButtonText: "Error",
+          confirmButtonColor: "#2b4168",
         });
       }
     } catch (error: any) {
@@ -84,6 +92,8 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
         icon: 'error',
         title: 'Error',
         text: 'Error al actualizar la empresa',
+        confirmButtonText: "error",
+        confirmButtonColor: "#2b4168",
       });
     }
   };

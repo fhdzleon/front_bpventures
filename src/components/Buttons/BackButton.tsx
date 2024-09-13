@@ -1,3 +1,4 @@
+"use client";
 const BackButton = () => {
   const handleBackClick = () => {
     // Regresa a la página anterior en el historial
