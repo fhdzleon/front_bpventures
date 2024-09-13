@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.min.css';
+import  "../../../../styles/style.css";
+
 
 import FilterInput from "@/components/Search/Search";
 import { ButtonAdd } from "@/components/Buttons/ButtonAdd";
@@ -43,6 +46,9 @@ const CompanyTable: React.FC = () => {
         icon: 'error',
         title: 'Error',
         text: 'Error al cargar las empresas',
+        customClass: {
+          confirmButton: 'custom-ok-button',
+        },
       });
     }
   };
@@ -71,13 +77,13 @@ const CompanyTable: React.FC = () => {
     <div>
     {loading && <PreloaderAwait />}
 
-      <div className="container mx-auto px-6 w-4/5 font-futura">
+      <div className="m-5 max-h-screen mt-5 rounded-lg font-futura">
         {/* <ButtonAdd children="Agregar empresa" hrefString="/in/company/create" /> */}
 
         {/* <Toaster richColors /> */}
         <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Empresas</h1>
+        <ButtonAdd children="Agregar Empresa" hrefString="/in/company/create" />
         <FilterInput filter={filter} onFilterChange={setFilter} />
-        <ButtonAdd children="Agregar empresa" hrefString="/in/company/create" />
 
         {loading ? (
           <p className="text-center">Cargando empresas...</p>

@@ -14,3 +14,8 @@
     transform: translateY(-50%);
   }
 }
+.custom-ok-button {
+  background-color: #2B4168 !important; /* Azul */
+  color: white !important;
+}
+
