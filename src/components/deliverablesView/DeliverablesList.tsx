@@ -476,7 +476,8 @@ const DeliverablesList = () => {
           </div>
 
           <div>
-            <div className="flex justify-between items-center mt-4">
+            {/* PAGINACION DE MOMENTO NO IMPLEMENTADA - BACK DEBERIA MANDAR EL TOTAL PAGES */}
+            {/*  <div className="flex justify-between items-center mt-4">
               <button
                 onClick={handlePreviusPage}
                 disabled={currentPage === 1}
@@ -494,7 +495,7 @@ const DeliverablesList = () => {
               >
                 Siguiente
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       ) : (
