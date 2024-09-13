@@ -103,6 +103,9 @@ const ListInvoiceComponent = ({
     );
   };
   console.log(invoicesData, "invoices");
+  const closePanel = () => {
+    setOpenPanel(null);
+  };
   return (
     <div className="m-5 max-h-screen  mt-5 rounded-lg">
       {/* <PreloaderLoad/> */}
@@ -112,7 +115,7 @@ const ListInvoiceComponent = ({
         {titleInvoicesList}
       </h1>
       <FilterInput filter={filter} onFilterChange={setFilter} />
-      <div className="mt-4 bg-white shadow-lg rounded-lg border border-gray-300">
+      <div className="overflow-auto mt-4 bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
             <tr>
@@ -306,10 +309,11 @@ const ListInvoiceComponent = ({
                       )
                     )}
                   </td>{" "}
+                  
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 relative">
                     {userData?.isAdmin && ( 
                       <>
-                        <button
+                        <button type="button"
                           onClick={() => togglePanel(invoice.id)} 
                           className="w-6 h-6 mx-auto hover:text-acent"
                         >
@@ -337,7 +341,7 @@ const ListInvoiceComponent = ({
                         {openPanel === invoice.id && ( // Aquí se usa openPanel en lugar de setOpenPanel
                           <PermissionPanel
                             fileId={invoice.id} // Asegúrate de pasar el id correcto
-                            closePanel={() => setOpenPanel(null)}
+                             closePanel={() => setOpenPanel(null)}
                           />
                         )}
                       </>
