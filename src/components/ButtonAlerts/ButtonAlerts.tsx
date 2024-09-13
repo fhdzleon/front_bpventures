@@ -140,3 +140,41 @@ const Notifications = () => {
 };
 
 export default Notifications;
+
+// import React, { useEffect, useState } from 'react';
+// import { io } from 'socket.io-client';
+
+// const socket = io('http://localhost:83'); // Conéctate al servidor WebSocket en el puerto 83
+
+// const PermissionsComponent = () => {
+//   const [permissions, setPermissions] = useState([]);
+
+//   useEffect(() => {
+//     // Escucha el evento de 'permissionsUpdate'
+//     socket.on('permissionsUpdate', (data) => {
+//       console.log('Received permissions update:', data);
+//       // Actualiza el estado con los permisos recibidos
+//       setPermissions(data.permissions);
+//     });
+
+//     // Cleanup para desconectar el socket cuando el componente se desmonta
+//     return () => {
+//       socket.off('permissionsUpdate');
+//     };
+//   }, []);
+
+//   return (
+//     <div>
+//       <h3>Permissions</h3>
+//       <ul>
+//         {permissions.map((permission, index) => (
+//           <li key={index}>
+//             User: {permission.userId}, Permission Type: {permission.permissionType.name}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
+
+// export default PermissionsComponent;
