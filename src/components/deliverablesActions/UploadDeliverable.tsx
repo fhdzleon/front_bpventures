@@ -68,11 +68,16 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const verifyName = deliverableData?.some(
-      (deliverable: any) =>
-        deliverable.deliverableName.toLowerCase() ===
-        formData.name.toLowerCase()
-    );
+    const isDeliverableDataAvailable =
+      Array.isArray(deliverableData) && deliverableData.length > 0;
+
+    const verifyName =
+      isDeliverableDataAvailable &&
+      deliverableData?.some(
+        (deliverable: any) =>
+          deliverable.deliverableName.toLowerCase() ===
+          formData.name.toLowerCase()
+      );
     if (verifyName) {
       Swal.fire({
         icon: "warning",

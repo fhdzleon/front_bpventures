@@ -98,7 +98,7 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
         <h1 className="text-4xl font-futura mb-6 text-secundary">{titleInvoicesList}</h1>
       )}
       <FilterInput filter={filter} onFilterChange={setFilter} />
-      <div className="mt-4 bg-white shadow-lg rounded-lg border border-gray-300">
+      <div className="overflow-auto mt-4 bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
             <tr>
@@ -212,6 +212,7 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
                       )
                     )}
                   </td>{" "}
+                  
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 relative">
                     {userData?.isAdmin && (
                       <>
@@ -228,7 +229,7 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
                         {openPanel === invoice.id && ( // Aquí se usa openPanel en lugar de setOpenPanel
                           <PermissionPanel
                             fileId={invoice.id} // Asegúrate de pasar el id correcto
-                            closePanel={() => setOpenPanel(null)}
+                             closePanel={() => setOpenPanel(null)}
                           />
                         )}
                       </>

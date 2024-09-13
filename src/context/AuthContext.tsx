@@ -36,6 +36,7 @@ interface userdata {
   isAdmin: boolean;
   companyId: number;
   Empresa: string;
+  imgProfile: string | null;
 }
 
 export interface AuthContextType {

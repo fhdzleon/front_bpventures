@@ -39,8 +39,8 @@ const Sidebar = () => {
         {userData?.isAdmin && <ItemsAdminUser />}
 
         <div className="mt-10">
-          <Logout />
           <Avatar />
+          <Logout />
         </div>
       </div>
     </div>
