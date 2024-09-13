@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 import Link from "next/link";
 import Swal from 'sweetalert2';
+import '../../../../../styles/style.css';
 
 interface Company {
   id: number;
@@ -45,6 +46,9 @@ const CompanyDetails: React.FC<IdParams> = ({ params }) => {
         icon: 'error',
         title: 'Error',
         text: 'Error al cargar los detalles',
+        customClass: {
+          confirmButton: 'custom-ok-button',
+        },
       });
     }
   };
