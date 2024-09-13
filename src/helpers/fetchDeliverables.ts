@@ -2,20 +2,29 @@ export const fetchDeliverables = async (
   userId: number,
   token: string | undefined,
   currentPage: number,
-  itemsPerPage: number,
   currentFolder: string | null,
-  setDeliverableData: { (deliverableData: any): void; (arg0: any): void }
+  setDeliverableData: { (deliverableData: any): void; (arg0: any): void },
+  itemsPerPage?: any,
+  companyId?: any
 ) => {
   /*   console.log("ID", userId); */
 
   try {
-    const url = `${
+    let url = `${
       process.env.NEXT_PUBLIC_API_URL
-    }/deliverables/user/${userId}?page=${currentPage}&limit=10${
-      currentFolder ? `&parentId=${currentFolder}` : ""
+    }/deliverables/user/${userId}?page=${currentPage}&limit=${
+      itemsPerPage || 100
     }`;
 
-    /* console.log(url); */
+    if (currentFolder) {
+      url += `&parentId=${currentFolder}`;
+    }
+
+    if (companyId) {
+      url += `&companyId=${companyId}`;
+    }
+
+    console.log("Fetching deliverables with URL:", url);
 
     const response = await fetch(url, {
       method: "GET",
