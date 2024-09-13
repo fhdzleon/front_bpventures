@@ -14,5 +14,6 @@ interface InvoiceInterface {
   user?: { email: string };
   company?: { name: string };
   path?: string;
+  voucher?: any;
 
 }

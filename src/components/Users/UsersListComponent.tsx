@@ -3,6 +3,7 @@ import React, { useState, useEffect, ReactNode } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { PATHROUTES } from "@/helpers/pathRoutes";
+import PreloaderAwait from "../preloader/PreloaderAwait";
 
 export interface User {
   look: ReactNode;
@@ -51,6 +52,7 @@ export const UsersListComponent = ({
 
   return (
     <>
+    {loading && <PreloaderAwait />}
       {!loading ? (
         <div className="container mx-auto px-6  w-4/5 md:max-w-full  font-futura">
           <h1 className="text-4xl font-futura mb-6 text-secundary">

@@ -1,10 +1,10 @@
 "use client";
 import { RegisterUser } from "@/helpers/auth.helper";
 import React, { useState, useEffect } from "react";
-import { Toaster, toast } from "sonner";
 import Button from "../FormComponent/Button";
 import "../../styles/form-style.css";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 // Función para obtener empresas
 const getCompanies = async () => {
@@ -102,26 +102,44 @@ export const CreateUserForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
     if (emailError) {
-      toast.error(emailError);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: emailError,
+      });
       return;
     }
-
+  
     // Captura el dominio actual
     const currentDomain = window.location.origin;
-
+  
     try {
       // Agrega el dominio actual y la empresa seleccionada a los datos del formulario
       const res = await RegisterUser({ ...formData, domain: currentDomain, companyId: selectedCompanyId });
-      // router.push(`${PATHROUTES.LIST}/${res.id}`);
-
-      toast.success("¡Usuario registrado exitosamente!");
+  
+      Swal.fire({
+        icon: "success",
+        title: "¡Usuario registrado exitosamente!",
+        text: "Redirigiendo...",
+        timer: 1500,
+        showConfirmButton: false,
+      }).then(() => {
+        // Redirigir después de mostrar el mensaje
+        // router.push(`${PATHROUTES.LIST}/${res.id}`);
+        // window.location.href = `${PATHROUTES.LIST}/${res.id}`;
+      });
     } catch (error: any) {
       console.error("Error al registrar usuario:", error);
-      toast.error(error.message);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message || "Hubo un error al registrar el usuario.",
+      });
     }
   };
+  
 
   const fieldLabels: { [key: string]: string } = {
     email: "Correo electrónico",
@@ -133,7 +151,6 @@ export const CreateUserForm: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
-      <Toaster richColors />
       <form className="form-apply" onSubmit={handleSubmit}>
         <h2 className="text-center text-[1.2rem] mb-6">Creación de Usuario</h2>
         {Object.keys(formData).map((field, index) => (

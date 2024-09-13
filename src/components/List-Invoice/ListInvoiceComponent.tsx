@@ -15,7 +15,8 @@ import FilterInput from "../Search/Search";
 import PermissionPanel from "./PanelPermissionInvoices";
 import Notifications from "../ButtonAlerts/ButtonAlerts";
 
-const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, titleInvoicesList }: any) => {
+
+const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, titleInvoicesList, fetchInvoices }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenVoucher, setIsModalOpenVoucher] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<InvoiceInterface | null>(null);
@@ -67,8 +68,6 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
 
   const indexOfLastInvoice = currentPage * itemsPerPage;
   const indexOfFirstInvoice = indexOfLastInvoice - itemsPerPage;
-
-  console.log(invoicesData);
 
   const filteredInvoices = invoicesData?.filter((invoice: InvoiceInterface) =>
     invoice.number && typeof invoice.number === "string" ? invoice.number.toLowerCase().includes(filter.toLowerCase()) : false
@@ -183,7 +182,7 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
                           className="bg-white p-6 rounded-lg shadow-lg max-w-2xl sm:max-w-lg md:max-w-xl lg:max-w-2xl overflow-y-auto h-screen"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <VoucherUpload Invoice={selectedInvoice as InvoiceInterface} />
+                          <VoucherUpload Invoice={selectedInvoice as InvoiceInterface} fetchInvoices={fetchInvoices} />
                           <button onClick={handleCloseModalVoucher} className="mt-4 bg-secundary text-white px-4 py-2 rounded-full">
                             Cerrar
                           </button>

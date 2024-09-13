@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "@/styles/form-style.css";
-import { Toaster, toast } from "sonner";
 import Button from "@/components/FormComponent/Button";
+import Swal from "sweetalert2";
 
 const invoiceStatuses = [
   { id: 1, name: "Pendiente" },
@@ -82,7 +82,11 @@ export const UploadInvoice: React.FC = () => {
     event.preventDefault();
 
     if (invoiceNumberExists) {
-      setErrorMessage("No se puede cargar la factura porque el número ya existe");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se puede cargar la factura porque el número ya existe",
+      });
       return;
     }
 
@@ -108,7 +112,11 @@ export const UploadInvoice: React.FC = () => {
 
       if (response.ok) {
         const result = await response.json();
-        toast.success("Factura cargada correctamente");
+        Swal.fire({
+          icon: "success",
+          title: "Éxito",
+          text: "Factura cargada correctamente",
+        });
         console.log(result);
 
         // Limpiar los campos del formulario después de una carga exitosa
@@ -122,17 +130,25 @@ export const UploadInvoice: React.FC = () => {
         setErrorMessage("");
       } else {
         const errorData = await response.json();
-        toast.error(errorData.message || "Error al cargar la factura");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: errorData.message || "Error al cargar la factura",
+        });
       }
     } catch (error: any) {
       console.error("Error al cargar la factura", error);
-      toast.error(error.message);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message || "Error al cargar la factura",
+      });
     }
   };
 
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
-      <Toaster richColors />
+     
 
       <form className="form-apply" onSubmit={handleSubmit}>
         <h1 className="text-center text-[1.2rem] mb-6">Cargar Nueva Factura{/*  {userId} */}</h1>
