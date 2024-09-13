@@ -15,13 +15,13 @@ const Avatar = () => {
     <>
       {!loading ? (
         <>
-          <div className="md:flex flex-col hidden items-center justify-center mt-7">
+          <div className="md:flex flex-col hidden items-center justify-center mt-7 ">
             <Image
-              src="https://i.postimg.cc/7hR9Z5NW/avatardashboard.png"
+              src={userData?.imgProfile || 'https://i.postimg.cc/7hR9Z5NW/avatardashboard.png'}
               alt="avatar"
               height={400}
               width={160}
-              className="mb-4" // Margen inferior para espaciar la imagen del texto
+              className="mb-4 rounded-full" // Margen inferior para espaciar la imagen del texto
             />
             <h1 className="text-secundary font-bold text-lg mb-1">
               Bienvenido
