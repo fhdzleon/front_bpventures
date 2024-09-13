@@ -47,16 +47,12 @@ const invoiceWidget = () => {
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-sans text-white">
             <tr>
-              <th className="py-3 px-6  text-left text-lg">
-                Numero de factura
-              </th>
+              <th className="py-3 px-6  text-left text-lg">Factura</th>
               <th className="py-3 px-6 font-sans text-left text-lg">Monto</th>
               <th className="py-3 px-6 font-sans text-left text-lg">Estado</th>
+              <th className="py-3 px-6 font-sans text-left text-lg">Emisión</th>
               <th className="py-3 px-6 font-sans text-left text-lg">
-                Fecha de emision
-              </th>
-              <th className="py-3 px-6 font-sans text-left text-lg">
-                Fecha de vencimiento
+                Vencimiento
               </th>
             </tr>
           </thead>
@@ -66,19 +62,19 @@ const invoiceWidget = () => {
                 key={invoice.id}
                 className="hover:bg-gray-50 transition-colors duration-200"
               >
-                <td className="py-4 px-6 font-futura text-sm text-gray-900">
+                <td className="py-4 px-6 font-sans text-sm text-gray-900">
                   {invoice.invoiceNumber}
                 </td>
-                <td className="py-4 px-6 font-futura text-sm text-gray-700">
-                  {invoice.invoiceAmount}
+                <td className="py-4 px-6 font-sans text-sm text-gray-700">
+                  ${invoice.invoiceAmount}
                 </td>
-                <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                <td className="py-4 px-6 font-sans text-sm text-gray-700">
                   {invoice.invoiceStatus}
                 </td>
-                <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                <td className="py-4 px-6 font-sans text-sm text-gray-700">
                   {invoice.invoiceIssueDate}
                 </td>
-                <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                <td className="py-4 px-6 font-sans text-sm text-gray-700">
                   {invoice.invoiceDueDate}
                 </td>
               </tr>

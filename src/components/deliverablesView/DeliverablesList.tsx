@@ -204,6 +204,7 @@ const DeliverablesList = () => {
                       const extension = !deliverable.deliverableIsFolder
                         ? getDeliverableExtension(deliverable.deliverablePath)
                         : null;
+
                       return (
                         <tr
                           key={deliverable.id}
@@ -350,6 +351,7 @@ const DeliverablesList = () => {
                           <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
                             {deliverable.deliverableCategory}
                           </td>
+
                           {!deliverable.deliverableIsFolder && (
                             <td>
                               <div className="grid grid-cols-3 justify-center justify-items-center">
@@ -375,7 +377,6 @@ const DeliverablesList = () => {
                                       path={deliverable.deliverablePath}
                                       type={deliverable.deliverableType}
                                     />
-
                                     <DeleteDeliverable id={deliverable.id} />
                                   </>
                                 ) : (
@@ -400,7 +401,7 @@ const DeliverablesList = () => {
                                       <EditDeliverable
                                         id={deliverable.id}
                                         name={deliverable.deliverableName}
-                                        description="Aqui debia haber una descripcion"
+                                        description="Aquí debia haber una descripcion"
                                         category={
                                           deliverable.deliverableCategory
                                         }
