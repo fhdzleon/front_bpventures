@@ -242,8 +242,8 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
                 placeholder="Nombre"
                 required
               />
-
-              <input
+              {/* INPUT DESCRIPTION NO NECESARIO EN ESTA VERSION */}
+              {/*     <input
                 type="text"
                 name="description"
                 value={formData.description}
@@ -251,7 +251,7 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
                 className="border border-1 font-sans py-2"
                 placeholder="Descripción"
                 required
-              />
+              /> */}
 
               <h3 className="font-sans text-lg text-secundary">
                 Elije la categoría:
