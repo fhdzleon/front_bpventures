@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
-import { Toaster, toast } from "sonner";
+import Swal from 'sweetalert2';
 
 const invoiceStatuses = [
   { id: 1, name: "Pendiente" },
@@ -80,12 +80,12 @@ export const UploadInvoiceComponent: React.FC<{ userId: number }> = ({ userId })
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+  
     if (invoiceNumberExists) {
       setErrorMessage("No se puede cargar la factura porque el número ya existe");
       return;
     }
-
+  
     const formData = new FormData();
     formData.append("invoiceNumber", invoiceNumber);
     formData.append("issueDate", issueDate);
@@ -99,18 +99,22 @@ export const UploadInvoiceComponent: React.FC<{ userId: number }> = ({ userId })
     if (file) {
       formData.append("file", file);
     }
-
+  
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, {
         method: "POST",
         body: formData,
       });
-
+  
       if (response.ok) {
         const result = await response.json();
-        toast.success("Factura cargada correctamente");
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: 'Factura cargada correctamente',
+        });
         console.log(result);
-
+  
         // Limpiar los campos del formulario después de una carga exitosa
         setInvoiceNumber("");
         setIssueDate("");
@@ -122,17 +126,25 @@ export const UploadInvoiceComponent: React.FC<{ userId: number }> = ({ userId })
         setErrorMessage("");
       } else {
         const errorData = await response.json();
-        toast.error(errorData.message || "Error al cargar la factura");
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorData.message || "Error al cargar la factura",
+        });
       }
     } catch (error: any) {
       console.error("Error al cargar la factura", error);
-      toast.error(error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un problema al cargar la factura. Inténtalo de nuevo.',
+      });
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
-      <Toaster richColors />
 
       <form className="form-apply" onSubmit={handleSubmit}>
         <h1 className="text-center text-[1.2rem] mb-6">Cargar Nueva Factura{/*  {userId} */}</h1>

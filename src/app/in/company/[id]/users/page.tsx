@@ -3,9 +3,9 @@
 import UsersListComponent from "@/components/Users/UsersListComponent";
 import { useAuth } from "@/context/AuthContext";
 // import { useRouter } from "next/router";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import Swal from 'sweetalert2';
 
 interface User {
   id: number;
@@ -34,29 +34,35 @@ const ListUsersByCompany: React.FC<IdParams> = ({ params }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/companies/${companyId}`
-        );
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/companies/${companyId}`);
         if (response.ok) {
           const data = await response.json();
           setUsersData(data.users);
           setCompanyName(data.name);
           // setLoading(false);
         } else {
-          toast.error("Error al cargar los usuarios");
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al cargar los usuarios',
+          });
         }
       } catch (error: any) {
         console.error("Error al obtener usuarios", error);
-        toast.error("Error al cargar los usuarios");
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al cargar los usuarios',
+        });
       }
     };
 
     fetchUsers();
   }, [companyId]);
 
+
   return (
     <>
-
       {/* <pre>{JSON.stringify(usersData, null, 2)}</pre> */}
       {/* <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Usuarios: {companyName}</h1> */}
       {/* <button
@@ -65,20 +71,16 @@ const ListUsersByCompany: React.FC<IdParams> = ({ params }) => {
       >
         Volver
       </button> */}
-      <button
-        onClick={() => window.history.back()} // Alternativa usando window.history.back()
-        className="bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 mb-4"
-      >
-        Volver
-      </button>
+      <div className="container mx-auto px-6  w-4/5 md:max-w-full font-futura mt-4">
+        <button
+          onClick={() => window.history.back()} // Alternativa usando window.history.back()
+          className="bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 mb-4"
+        >
+          Volver
+        </button>
+      </div>
 
-      <UsersListComponent
-        allUsers={usersData}
-        setAllUsers={setAllUsers}
-        loading={loading}
-        isCompany={true}
-        companyName={companyName}
-      />
+      <UsersListComponent allUsers={usersData} setAllUsers={setAllUsers} loading={loading} isCompany={true} companyName={companyName} />
     </>
   );
 };
