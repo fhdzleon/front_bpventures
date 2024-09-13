@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Toaster, toast } from "sonner";
+import Swal from 'sweetalert2';
+
 import Button from '@/components/FormComponent/Button';
 import "../../../../../styles/form-style.css";
 interface Company {
@@ -35,11 +36,19 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
         setCompany(data);
         setLoading(false);
       } else {
-        toast.error('Error al cargar los detalles de la empresa');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al cargar los detalles de la empresa',
+        });
       }
     } catch (error: any) {
       console.error("Error al obtener detalles de la empresa", error);
-      toast.error('Error al cargar los detalles');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al cargar los detalles',
+      });
     }
   };
 
@@ -56,16 +65,29 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
       });
 
       if (response.ok) {
-        toast.success('Empresa actualizada correctamente');
-        router.push(`/in/company/${id}`);
+        Swal.fire({
+          icon: 'success',
+          title: 'Actualizado',
+          text: 'Empresa actualizada correctamente',
+        });
+        // router.push(`/in/company/${id}`);
       } else {
-        toast.error('Error al actualizar la empresa');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al actualizar la empresa',
+        });
       }
     } catch (error: any) {
       console.error("Error al actualizar empresa", error);
-      toast.error('Error al actualizar la empresa');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al actualizar la empresa',
+      });
     }
   };
+
 
   useEffect(() => {
     if (id) {
@@ -80,7 +102,7 @@ const EditCompany: React.FC<IdParams> = ({ params }) => {
   return (
   
     <div className="flex flex-col justify-start items-center w-full min-h-screen">
-      <Toaster richColors />
+      {/* <Toaster richColors /> */}
       <button
         onClick={() => router.back()}
         className="bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 self-start ml-4 mt-4"
