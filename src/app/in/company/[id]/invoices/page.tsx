@@ -32,6 +32,8 @@ const BillingTable: React.FC<IdParams> = ({ params }) => {
             icon: 'error',
             title: 'Error',
             text: 'Error al cargar los usuarios',
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "#2b4168",
           });
         }
       } catch (error: any) {
@@ -40,6 +42,8 @@ const BillingTable: React.FC<IdParams> = ({ params }) => {
           icon: 'error',
           title: 'Error',
           text: 'Error al cargar los usuarios',
+          confirmButtonText: "error",
+          confirmButtonColor: "#2b4168",
         });
       }
     };

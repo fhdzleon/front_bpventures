@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "@/styles/form-style.css";
 import Button from "@/components/FormComponent/Button";
 import Swal from "sweetalert2";
+import BackButton from "@/components/Buttons/BackButton";
 
 const invoiceStatuses = [
   { id: 1, name: "Pendiente" },
@@ -147,9 +148,14 @@ export const UploadInvoice: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full min-h-screen">
-     
+    <div className="relative w-full min-h-screen">
+    {/* Contenedor para el botón de retroceso */}
+    <div className="absolute top-0 left-0 m-4">
+      <BackButton />
+    </div>
 
+    {/* Contenedor principal */}
+    <div className="flex justify-center items-center w-full min-h-screen">
       <form className="form-apply" onSubmit={handleSubmit}>
         <h1 className="text-center text-[1.2rem] mb-6">Cargar Nueva Factura{/*  {userId} */}</h1>
         <div className="mb-4">
@@ -216,6 +222,7 @@ export const UploadInvoice: React.FC = () => {
         <Button type="submit">Guardar Factura</Button>
       </form>
     </div>
+  </div>
   );
 };
 

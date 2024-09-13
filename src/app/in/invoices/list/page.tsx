@@ -37,32 +37,32 @@ const BillingTable = () => {
 
   return (
     <div className="m-5 max-h-screen mt-5 rounded-lg">
-  <h1 className="text-4xl font-futura mb-6 text-secundary">{titleInvoicesList}</h1>
+      <h1 className="text-4xl font-futura mb-6 text-secundary">{titleInvoicesList}</h1>
 
-  {/* Contenedor con flexbox para alinear elementos en una fila */}
-  <div className="flex items-center mb-4 space-x-4">
-    <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
-    {/* Desplegable de empresas */}
-    <select
-      id="companySelect"
-      value={selectedCompany}
-      onChange={(e) => setSelectedCompany(e.target.value)}
-      className="border border-gray-300 p-2 rounded"
-    >
-      <option value="">Todas las empresas</option>
-      {companies.map((company, index) => (
-        <option key={index} value={company}>
-          {company}
-        </option>
-      ))}
-    </select>
+      {/* Contenedor con flexbox para alinear elementos en una fila */}
+      <div className="flex items-center mb-4 space-x-4">
+        <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
+        {/* Desplegable de empresas */}
+        <select
+          id="companySelect"
+          value={selectedCompany}
+          onChange={(e) => setSelectedCompany(e.target.value)}
+          className="border border-gray-300 p-2 rounded"
+        >
+          <option value="">Todas las empresas</option>
+          {companies.map((company, index) => (
+            <option key={index} value={company}>
+              {company}
+            </option>
+          ))}
+        </select>
 
-    {/* Botón Agregar Factura */}
-  </div>
+        {/* Botón Agregar Factura */}
+      </div>
 
-  {/* Lista de facturas filtradas */}
-  <ListInvoiceComponent invoicesData={filteredInvoices} isAdmin={true} />
-</div>
+      {/* Lista de facturas filtradas */}
+      <ListInvoiceComponent invoicesData={filteredInvoices} isAdmin={true} />
+    </div>
 
   );
 };

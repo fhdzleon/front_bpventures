@@ -38,6 +38,8 @@ const CompanyDetails: React.FC<IdParams> = ({ params }) => {
           icon: 'error',
           title: 'Error',
           text: 'Error al cargar los detalles de la empresa',
+          confirmButtonText: "error",
+          confirmButtonColor: "#2b4168",
         });
       }
     } catch (error: any) {
@@ -46,9 +48,8 @@ const CompanyDetails: React.FC<IdParams> = ({ params }) => {
         icon: 'error',
         title: 'Error',
         text: 'Error al cargar los detalles',
-        customClass: {
-          confirmButton: 'custom-ok-button',
-        },
+        confirmButtonText: "error",
+        confirmButtonColor: "#2b4168",
       });
     }
   };

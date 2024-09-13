@@ -28,11 +28,11 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
     <div className="m-3 max-w-4xl mx-auto p-8 bg-gray-100 shadow-xl rounded-xl font-sans">
       <section className="mb-12">
         <section className="mb-12">
+            <BackButton />
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-4xl font-bold text-[#2B4168]  border-[#2B4168] pb-2">
               Detalles del Usuario
             </h1>
-            <BackButton />
           </div>
         </section>
         <div className="bg-gradient-to-br bg-white p-8 rounded-lg shadow-lg">
