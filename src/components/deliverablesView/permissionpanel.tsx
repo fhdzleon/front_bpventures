@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { AuthContextType, useAuth } from "@/context/AuthContext";
 import Swal from "sweetalert2";
 import Select from "react-select";
+import ReactDOM from "react-dom";
 
 interface permissionTypes {
   id: number;
@@ -227,9 +228,9 @@ export default function PermissionPanel({
   );
   
   const isAdmin = userData?.isAdmin;
-  return (
-    <div className="absolute top-0  left-0 md:-left-10 bottom-0 z-10 transform -translate-x-full">
-      <div className="w-[300px] md:w-[500px] rounded-md m-2 bg-white p-4 shadow-lg border border-gray-300">
+  return ReactDOM.createPortal (
+    <div className={`absolute top-  bottom-0 z-50  isPanelOpen ? 'translate-x-0' : '-translate-x-full'; right-2`}>
+       <div className="w-[300px] md:w-[500px] rounded-md m-2 bg-white p-4 shadow-lg border border-gray-300 max-h-96 overflow-y-auto">
         <div className="flex justify-end items-center mb-4">
           <button
             onClick={closePanel}
@@ -411,6 +412,7 @@ export default function PermissionPanel({
           Guardar
         </button>
       </div>
-    </div>
+    </div>,
+     document.body
   );
 }

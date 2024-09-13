@@ -134,7 +134,7 @@ const DeliverablesList = () => {
       {!loading ? (
         <div className="mt-4">
           <span className="font-mono ">{pathView}/</span>
-          <div className=" bg-white shadow-lg rounded-lg border border-gray-300">
+          <div className=" bg-white overflow-auto  shadow-lg rounded-lg border border-gray-300">
             <table className=" min-w-full divide-y divide-gray-300">
               <thead className="bg-secundary font-futura text-white">
                 <tr>
