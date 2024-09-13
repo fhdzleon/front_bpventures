@@ -45,8 +45,8 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
   };
 
   return (
-    <div className="bg-white shadow-md border border-1 rounded-lg p-10 mb-4">
-      <div className="flex items-center justify-between">
+    <div className="bg-white shadow-md border border-1 rounded-lg py-7 px-10 mb-4">
+      <div className="flex flex-col md:flex-row items-center justify-between">
         <h3 className="text-lg font-semibold text-gray-700">
           Notificación {impactedUser ? "de Permiso" : "de Acción"}
         </h3>

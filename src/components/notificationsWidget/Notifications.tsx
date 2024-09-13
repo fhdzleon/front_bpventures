@@ -6,7 +6,7 @@ const Notifications: React.FC = () => {
   return (
     <div className="px-10">
       <h2 className="text-4xl font-futura mb-6 text-secundary">
-        Notificaciones
+        Actividad reciente
       </h2>
       <div className="space-y-4">
         {usersData.map((notification, index) => (
