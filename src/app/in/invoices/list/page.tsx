@@ -35,13 +35,19 @@ const BillingTable = () => {
   const filteredInvoices = selectedCompany ? invoicesData.filter((invoice) => invoice.company.name === selectedCompany) : invoicesData;
 
   return (
-    <>
-      
-      <div className="m-5 max-h-screen  mt-5 rounded-lg">
+    <div className="m-5 max-h-screen mt-5 rounded-lg">
       <h1 className="text-4xl font-futura mb-6 text-secundary">{titleInvoicesList}</h1>
-        <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
 
-        <select id="companySelect" value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)} className="border border-gray-300 p-2 rounded">
+      {/* Contenedor con flexbox para alinear elementos en una fila */}
+      <div className="flex items-center mb-4 space-x-4">
+        
+        {/* Desplegable de empresas */}
+        <select
+          id="companySelect"
+          value={selectedCompany}
+          onChange={(e) => setSelectedCompany(e.target.value)}
+          className="border border-gray-300 p-2 rounded"
+        >
           <option value="">Todas las empresas</option>
           {companies.map((company, index) => (
             <option key={index} value={company}>
@@ -49,11 +55,39 @@ const BillingTable = () => {
             </option>
           ))}
         </select>
+
+        {/* Botón Agregar Factura */}
+        <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
       </div>
 
       {/* Lista de facturas filtradas */}
-      <ListInvoiceComponent invoicesData={filteredInvoices} isAdmin={true}  />
-    </>
+      <ListInvoiceComponent invoicesData={filteredInvoices} isAdmin={true} />
+    </div>
+
+    // <div className="m-5 max-h-screen  mt-5 rounded-lg">
+
+    //   <div className="m-5 max-h-screen  mt-5 rounded-lg">
+    //   <h1 className="text-4xl font-futura mb-6 text-secundary">{titleInvoicesList}</h1>
+    //     <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
+
+    //     <div className="mb-4">
+    //     {/* <label className="label-apply">Empresa:</label> */}
+    //     <select id="companySelect" value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)} className="border border-gray-300 p-2 rounded">
+    //       <option value="">Todas las empresas</option>
+    //       {companies.map((company, index) => (
+    //         <option key={index} value={company}>
+    //           {company}
+    //         </option>
+    //       ))}
+    //     </select>
+    //     </div>
+
+    //   </div>
+
+
+    //   {/* Lista de facturas filtradas */}
+    //   <ListInvoiceComponent invoicesData={filteredInvoices} isAdmin={true}  />
+    // </div>
   );
 };
 
