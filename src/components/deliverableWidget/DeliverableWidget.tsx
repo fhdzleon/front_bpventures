@@ -17,6 +17,7 @@ export interface Deliverable {
   deliverableType: string;
   permissionType: string;
   deliverablePath: string;
+  deliverableCategory: string;
   lastDate: string;
   deliverableIsFolder: boolean;
 }
@@ -61,12 +62,17 @@ const DeliverableWidget = () => {
             <tr>
               <th className="py-3 px-6 font-sans text-left text-lg">Nombre</th>
               <th className="py-3 px-6 font-sans text-center text-lg">
+                Categoria
+              </th>
+              <th className="py-3 px-6 font-sans text-center text-lg">
                 Última modificación
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {allDeliverables.map((deliverable) => {
+              console.log(allDeliverables);
+
               const extension = !deliverable.deliverableIsFolder
                 ? getDeliverableExtension(deliverable.deliverablePath)
                 : null;
@@ -157,6 +163,9 @@ const DeliverableWidget = () => {
                       )}
                       <span>{deliverable.deliverableName}</span>
                     </div>
+                  </td>
+                  <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
+                    {deliverable.deliverableCategory}
                   </td>
                   <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
                     {deliverable.lastDate}
