@@ -42,7 +42,7 @@ const DeliverablesList = () => {
       userData?.id,
       token,
       currentPage,
-      itemsPerPage,
+      /* itemsPerPage, */
       currentFolder,
       setDeliverableData
     );
@@ -60,7 +60,7 @@ const DeliverablesList = () => {
       userData?.id,
       token,
       currentPage,
-      itemsPerPage,
+      /* itemsPerPage, */
       currentFolder,
       setDeliverableData
     );
@@ -109,7 +109,7 @@ const DeliverablesList = () => {
     );
     setCurrentPage(1);
   };
-  /*   console.log(deliverableData); */
+  console.log(deliverableData);
 
   return (
     <>
@@ -119,7 +119,12 @@ const DeliverablesList = () => {
           setSearchTerm={setSearchTerm}
           fetchdeliverable={fetchDeliverables2}
         />
-        <FilterDeliverableForBussines />
+        <FilterDeliverableForBussines
+          userId={userData.id}
+          token={token}
+          currentPage={currentPage}
+          currentFolder={currentFolder}
+        />
         <UploadDeliverable
           currentFolder={currentFolder}
           parentId={currentFolder}
@@ -199,6 +204,7 @@ const DeliverablesList = () => {
                       const extension = !deliverable.deliverableIsFolder
                         ? getDeliverableExtension(deliverable.deliverablePath)
                         : null;
+
                       return (
                         <tr
                           key={deliverable.id}
@@ -345,6 +351,7 @@ const DeliverablesList = () => {
                           <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
                             {deliverable.deliverableCategory}
                           </td>
+
                           {!deliverable.deliverableIsFolder && (
                             <td>
                               <div className="grid grid-cols-3 justify-center justify-items-center">
@@ -394,7 +401,7 @@ const DeliverablesList = () => {
                                       <EditDeliverable
                                         id={deliverable.id}
                                         name={deliverable.deliverableName}
-                                        description="Aqui debia haber una descripcion"
+                                        description="Aquí debia haber una descripcion"
                                         category={
                                           deliverable.deliverableCategory
                                         }
