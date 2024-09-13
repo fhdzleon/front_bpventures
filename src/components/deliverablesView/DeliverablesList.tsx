@@ -109,7 +109,7 @@ const DeliverablesList = () => {
     );
     setCurrentPage(1);
   };
-  /*   console.log(deliverableData); */
+  console.log(deliverableData);
 
   return (
     <>
@@ -375,6 +375,7 @@ const DeliverablesList = () => {
                                       path={deliverable.deliverablePath}
                                       type={deliverable.deliverableType}
                                     />
+
                                     <DeleteDeliverable id={deliverable.id} />
                                   </>
                                 ) : (
