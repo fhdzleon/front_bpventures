@@ -67,7 +67,10 @@ const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ id }) => {
   };
 
   return (
-    <button onClick={handleClick} className="hover:text-red-500">
+    <button onClick={handleClick} 
+    className="size-8 hover:scale-125 hover:text-red-500 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
