@@ -4,7 +4,9 @@ import AddCompanyComponent from "@/components/company/AddCompanyComponent";
 const AddCompanyPage = () => {
   return (
     <div>
-      <BackButton />
+      <div className="flex justify-between items-center m-6">
+        <BackButton />
+      </div>
       <AddCompanyComponent />
     </div>
   );

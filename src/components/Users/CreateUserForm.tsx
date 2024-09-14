@@ -136,6 +136,8 @@ export const CreateUserForm: React.FC = () => {
         icon: "error",
         title: "Error",
         text: error.message || "Hubo un error al registrar el usuario.",
+        confirmButtonColor: "#2b4168",
+        confirmButtonText: "Entendido",
       });
     }
   };

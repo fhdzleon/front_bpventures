@@ -49,7 +49,13 @@ const DeleteCompany = ({ id, fetchCompanies }: { id: number; fetchCompanies: () 
           console.error("Hubo un problema con la petición", error);
 
           // Mostramos el mensaje de error proveniente del backend
-          Swal.fire("Error", error.message, "error");
+          Swal.fire({
+            title: "Error",
+            text: error.message,
+            icon: "error",
+            confirmButtonColor: "#2b4168",
+            confirmButtonText: "Entendido",
+          });
         }
       }
     });
