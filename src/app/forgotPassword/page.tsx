@@ -81,7 +81,7 @@ const Page: React.FC = () => {
             
               <div className="flex justify-center">
                 <button
-                  onClick={handleRedirect}
+                  type="submit"
                   className="text-center bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-xxl hover:bg-[#4a9c80] transition duration-300 flex items-center border border-white dark:border-white dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800"
                 >
                   Reiniciar Contraseña

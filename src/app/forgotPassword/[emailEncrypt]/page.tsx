@@ -93,12 +93,14 @@ const Page: React.FC = () => {
                   </button>
                 </div>
               </div>
-              <button
-                type="submit"
-                className=" text-center bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-xxl hover:bg-[#4a9c80] transition duration-300 flex items-center border border-white dark:border-white dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800">
-                {/* className="w-full text-secundary bg-white hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800" */}
-                Resetear Contraseña
-              </button>
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className="text-center bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-xxl hover:bg-[#4a9c80] transition duration-300 flex items-center border border-white dark:border-white dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800"
+                >
+                  Resetear Contraseña
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -109,12 +111,14 @@ const Page: React.FC = () => {
             <div className="bg-white p-6 rounded-lg shadow-lg text-center">
               <h2 className="text-lg font-semibold mb-4">Contraseña cambiada correctamente</h2>
               <p className="mb-4">Ahora puedes iniciar sesión con tu nueva contraseña.</p>
+              <div className="flex justify-center">
               <button
                 onClick={handleRedirect}
                 // className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
                 className=" text-center bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-xxl hover:bg-[#4a9c80] transition duration-300 flex items-center border border-white dark:border-white dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800">
                 Iniciar Sesión
               </button>
+              </div>
             </div>
           </div>
         )}
