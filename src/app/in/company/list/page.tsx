@@ -79,9 +79,7 @@ const CompanyTable: React.FC = () => {
     {loading && <PreloaderAwait />}
 
       <div className="m-5 max-h-screen mt-5 rounded-lg font-futura">
-        {/* <ButtonAdd children="Agregar empresa" hrefString="/in/company/create" /> */}
-
-        {/* <Toaster richColors /> */}
+    
         <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Empresas</h1>
         <ButtonAdd children="Agregar Empresa" hrefString="/in/company/create" />
         <FilterInput filter={filter} onFilterChange={setFilter} />
