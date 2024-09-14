@@ -54,12 +54,12 @@ const BillingTable = () => {
   console.log(invoicesData, "data1");
   console.log([invoicesData2 ], "data2");
 
-  const titleInvoicesList = `Lista de Facturas de: ${userData?.Names || 'Usuario'}`;
+  const titleInvoicesList = `Lista de Facturas de ${userData?.Names || 'Usuario'}`;
 
   return (
     <>
       <ListInvoiceComponent
-        invoicesData={userData?.isAdmin ? invoicesData : [invoicesData2] }
+        invoicesData={userData?.isAdmin ? invoicesData : invoicesData2 }
         isAdmin={userData?.isAdmin || false}
         userEmail={userData?.email || ''}
         titleInvoicesList={titleInvoicesList}
