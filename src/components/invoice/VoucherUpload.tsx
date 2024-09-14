@@ -51,8 +51,6 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
           icon: 'success',
           title: 'Éxito',
           text: "Estado de la factura actualizado a 'Revisión'",
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: '#2b4168',
         });
       } else {
         const errorData = await response.json();
@@ -60,8 +58,6 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
           icon: 'error',
           title: 'Error',
           text: errorData.message || "Error al actualizar el estado de la factura",
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#2b4168',
         });
       }
     } catch (error: any) {
@@ -70,8 +66,6 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
         icon: 'error',
         title: 'Error',
         text: error.message,
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#2b4168',
       });
     }
   };
@@ -100,8 +94,6 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
           icon: 'success',
           title: 'Éxito',
           text: "Comprobante de pago cargado correctamente",
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#2b4168',
         });
         setVoucherState(result);
         await updateInvoiceStatus(); // Actualiza el estado de la factura a "Revisión"
@@ -111,8 +103,6 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
           icon: 'error',
           title: 'Error',
           text: errorData.message || "Error al cargar el comprobante de pago",
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#2b4168',
         });
       }
     } catch (error: any) {
@@ -121,8 +111,6 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
         icon: 'error',
         title: 'Error',
         text: error.message,
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#2b4168',
       });
     }
   };
@@ -138,8 +126,6 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
           icon: 'success',
           title: 'Éxito',
           text: "Comprobante de pago eliminado correctamente",
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#2b4168',
         });
         setVoucherState(null); // Reinicia el estado para mostrar el formulario de carga nuevamente
       } else {
@@ -148,8 +134,6 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
           icon: 'error',
           title: 'Error',
           text: errorData.message || "Error al eliminar el comprobante de pago",
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#2b4168',
         });
       }
     } catch (error: any) {
@@ -158,8 +142,6 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
         icon: 'error',
         title: 'Error',
         text: error.message,
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#2b4168',
       });
     }
   };

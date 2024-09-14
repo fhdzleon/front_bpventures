@@ -36,28 +36,32 @@ const BillingTable = () => {
   const filteredInvoices = selectedCompany ? invoicesData.filter((invoice) => invoice.company.name === selectedCompany) : invoicesData;
 
   return (
-    <div className="m-5 max-h-screen mt-5 rounded-lg">
-      <h1 className="text-4xl font-futura mb-6 text-secundary">{titleInvoicesList}</h1>
+    <>
+      <div className="m-5  bg-white">
+        <h1 className="text-4xl font-futura text-secondary">{titleInvoicesList}</h1>
 
-      {/* Contenedor con flexbox para alinear elementos en una fila */}
-      <div className="flex items-center mb-4 space-x-4">
-        <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
-        {/* Desplegable de empresas */}
-        <select id="companySelect" value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)} className="border border-gray-300 p-2 rounded">
-          <option value="">Todas las empresas</option>
-          {companies.map((company, index) => (
-            <option key={index} value={company}>
-              {company}
-            </option>
-          ))}
-        </select>
+        <div className="flex justify-between items-center ">
+          <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
 
-        {/* Botón Agregar Factura */}
+          <select
+            id="companySelect"
+            value={selectedCompany}
+            onChange={(e) => setSelectedCompany(e.target.value)}
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+          >
+            <option value="">Todas las empresas</option>
+            {companies.map((company, index) => (
+              <option key={index} value={company}>
+                {company}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* Lista de facturas filtradas */}
       <ListInvoiceComponent invoicesData={filteredInvoices} isAdmin={true} fetchInvoices={fetchInvoices} />
-    </div>
+    </>
   );
 };
 
