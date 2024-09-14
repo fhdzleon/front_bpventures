@@ -4,9 +4,7 @@ import EditUser from "../adminUsersActions/EditUser";
 import DeleteUser from "../adminUsersActions/DeleteUser";
 import BlockUser from "../adminUsersActions/BlockUser";
 import { PATHROUTES } from "@/helpers/pathRoutes";
-import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { UploadInvoiceUser } from "../InvoicesButton/UploadInvoiceUser";
 import BackButton from "../Buttons/BackButton";
 export interface User {
   id: number;
@@ -25,10 +23,13 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
   const { blocked } = useAuth();
 
   return (
-    <div className="m-3 max-w-4xl mx-auto p-8 bg-gray-100 shadow-xl rounded-xl font-sans">
+    <>
+    <div className="m-0 max-w-4xl mx-auto p-5 bg-gray-100 shadow-xl rounded-xl font-sans">
+      <div className="mb-12">
+        <BackButton />
+      </div>
       <section className="mb-12">
         <section className="mb-12">
-            <BackButton />
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-4xl font-bold text-[#2B4168]  border-[#2B4168] pb-2">
               Detalles del Usuario
@@ -107,19 +108,12 @@ const UserDetailView: React.FC<UserDetailViewProps> = ({ user }) => {
               Ver Facturacion del Usuario
             </button>
           </Link>
-          <Link href={`${PATHROUTES.INVOICES}/${user.id}/create`}>
-            <UploadInvoiceUser />
-          </Link>{" "}
+
         </div>
-        {/* {userInvoices.length > 0 ? (
-          userInvoices.map(invoice => (
-            <InvoiceDetail key={invoice.id} Invoice={invoice} />
-          ))
-        ) : (
-          <p>No hay facturas disponibles para este usuario.</p>
-        )} */}
       </section>
     </div>
+    </>
+
   );
 };
 

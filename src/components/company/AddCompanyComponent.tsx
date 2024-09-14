@@ -19,6 +19,8 @@ export const AddCompanyComponent: React.FC = () => {
         icon: 'error',
         title: 'Error',
         text: 'Todos los campos son obligatorios',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#2b4168',
       });
       return;
     }
@@ -44,6 +46,8 @@ export const AddCompanyComponent: React.FC = () => {
           icon: 'success',
           title: 'Éxito',
           text: 'Empresa añadida correctamente',
+          timer: 1500,
+          showConfirmButton: false,
         });
         console.log(result);
       } else {
@@ -52,6 +56,8 @@ export const AddCompanyComponent: React.FC = () => {
           icon: 'error',
           title: 'Error',
           text: errorData.message || 'Error al añadir la empresa',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#2b4168',
         });
       }
     } catch (error: any) {
@@ -60,6 +66,8 @@ export const AddCompanyComponent: React.FC = () => {
         icon: 'error',
         title: 'Error',
         text: 'Hubo un problema al añadir la empresa. Inténtalo de nuevo.',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#2b4168',
       });
     }
   };

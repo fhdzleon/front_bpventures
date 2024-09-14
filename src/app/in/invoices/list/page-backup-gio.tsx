@@ -27,7 +27,7 @@ const BillingTable = () => {
     }
   }, [loading, fetchAgain]);
 
-  const titleInvoicesList = `Lista de facturas para ${selectedCompany || "todas las empresas"}`;
+  const titleInvoicesList = `Lista de Facturas para ${selectedCompany || "todas las Empresas"}`;
 
   // Obtener la lista de empresas únicas
   const companies = Array.from(new Set(invoicesData.map((invoice) => invoice?.company?.name)));
@@ -43,7 +43,12 @@ const BillingTable = () => {
       <div className="flex items-center mb-4 space-x-4">
         <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
         {/* Desplegable de empresas */}
-        <select id="companySelect" value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)} className="border border-gray-300 p-2 rounded">
+        <select
+          id="companySelect"
+          value={selectedCompany}
+          onChange={(e) => setSelectedCompany(e.target.value)}
+          className="border border-gray-300 p-2 rounded"
+        >
           <option value="">Todas las empresas</option>
           {companies.map((company, index) => (
             <option key={index} value={company}>
@@ -56,8 +61,9 @@ const BillingTable = () => {
       </div>
 
       {/* Lista de facturas filtradas */}
-      <ListInvoiceComponent invoicesData={filteredInvoices} isAdmin={true} fetchInvoices={fetchInvoices} />
+      <ListInvoiceComponent invoicesData={filteredInvoices} isAdmin={true} />
     </div>
+
   );
 };
 

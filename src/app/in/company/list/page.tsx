@@ -49,7 +49,7 @@ const CompanyTable: React.FC = () => {
         title: 'Error',
         text: 'Error al cargar las empresas',
         confirmButtonText: "Aceptar",
-          confirmButtonColor: "#2b4168",
+        confirmButtonColor: "#2b4168",
       });
     }
   };
