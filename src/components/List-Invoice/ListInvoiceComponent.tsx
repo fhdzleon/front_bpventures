@@ -177,7 +177,7 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
                     </button>
 
                     {isModalOpenVoucher && selectedInvoice && (
-                      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" onClick={handleCloseModalVoucher}>
+                      <div className="fixed inset-0 flex items-center justify-center bg-black z-50" onClick={handleCloseModalVoucher}>
                         <div
                           className="bg-white p-6 rounded-lg shadow-lg max-w-2xl sm:max-w-lg md:max-w-xl lg:max-w-2xl overflow-y-auto h-screen"
                           onClick={(e) => e.stopPropagation()}
@@ -218,7 +218,7 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
                         <button onClick={() => togglePanel(invoice.id)}
                           className="w-6 h-6 mx-auto hover:text-acent">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                              className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+                            className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
 
                           >
                             <path
@@ -251,22 +251,23 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
           </tbody>
         </table>
 
-        {invoicesData.length === 0 && <p className="p-6 text-gray-600">No se encontraron facturas.</p>}
+        {/* {invoicesData.length === 0 && <p className="p-6 text-gray-600">No se encontraron facturas.</p>} */}
       </div>
-      {/* Paginación */}
-      <div className="flex justify-between items-center mt-4">
-        <button onClick={handlePreviousPage} disabled={currentPage === 1} className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50">
-          Anterior
-        </button>
-
-        <span>
-          Página {currentPage} de {totalPages}
-        </span>
-
-        <button onClick={handleNextPage} disabled={currentPage === totalPages} className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50">
+      {filteredInvoices.length > 0 && (
+        <div className="pagination-container flex justify-between items-center mt-4">
+          {/* Paginación */}
+          <button onClick={handlePreviousPage} disabled={currentPage === 1} className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50">
+            Anterior
+          </button>
+          <span>
+            Página {currentPage} de {totalPages}
+          </span>
+          <button onClick={handleNextPage} disabled={currentPage === totalPages} className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50">
           Siguiente
-        </button>
-      </div>
+          </button>
+        </div>
+      )}
+
     </div>
   );
 };
