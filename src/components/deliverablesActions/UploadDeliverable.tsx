@@ -155,6 +155,25 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
           confirmButtonText: "Aceptar",
           confirmButtonColor: "#2b4168",
         });
+      } else if (response.status === 400) {
+        const errorData = await response.json();
+        if (errorData.message.includes("already exists")) {
+          Swal.fire({
+            icon: "warning",
+            title: "Error de conflicto",
+            text: "El nombre del archivo ya existe en la base de datos. Por favor, utiliza otro diferente.",
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "#2b4168",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error al subir el archivo",
+            text: errorData.message,
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "#2b4168",
+          });
+        }
       } else {
         Swal.fire({
           icon: "error",
@@ -166,6 +185,13 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
       }
     } catch (error) {
       console.error("Error", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error de red",
+        text: "Hubo un problema al conectarse con el servidor.",
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "#2b4168",
+      });
     } finally {
       setFetchAgain(!fetchAgain);
       setFormData({ name: "", description: "", category: "", link: "" });
