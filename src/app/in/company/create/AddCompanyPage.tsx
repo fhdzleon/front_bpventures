@@ -8,6 +8,7 @@ const AddCompanyPage = () => {
         <BackButton />
       </div>
       <AddCompanyComponent />
+      
     </div>
   );
 };
