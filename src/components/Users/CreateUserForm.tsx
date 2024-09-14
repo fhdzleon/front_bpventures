@@ -108,6 +108,8 @@ export const CreateUserForm: React.FC = () => {
         icon: "error",
         title: "Error",
         text: emailError,
+        confirmButtonColor: "#2b4168",
+        confirmButtonText: "Entendido",
       });
       return;
     }

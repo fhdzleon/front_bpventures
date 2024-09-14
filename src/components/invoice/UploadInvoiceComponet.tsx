@@ -112,6 +112,8 @@ export const UploadInvoiceComponent: React.FC<{ userId: number }> = ({ userId })
           icon: 'success',
           title: 'Éxito',
           text: 'Factura cargada correctamente',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#2b4168',
         });
         console.log(result);
   
@@ -130,6 +132,8 @@ export const UploadInvoiceComponent: React.FC<{ userId: number }> = ({ userId })
           icon: 'error',
           title: 'Error',
           text: errorData.message || "Error al cargar la factura",
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#2b4168',
         });
       }
     } catch (error: any) {
@@ -138,6 +142,8 @@ export const UploadInvoiceComponent: React.FC<{ userId: number }> = ({ userId })
         icon: 'error',
         title: 'Error',
         text: 'Hubo un problema al cargar la factura. Inténtalo de nuevo.',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#2b4168',
       });
     }
   };

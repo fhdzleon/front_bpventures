@@ -87,6 +87,8 @@ export const UploadInvoice: React.FC = () => {
         icon: "error",
         title: "Error",
         text: "No se puede cargar la factura porque el número ya existe",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#2b4168",
       });
       return;
     }
@@ -117,6 +119,8 @@ export const UploadInvoice: React.FC = () => {
           icon: "success",
           title: "Éxito",
           text: "Factura cargada correctamente",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#2b4168",          
         });
         console.log(result);
 
@@ -135,6 +139,8 @@ export const UploadInvoice: React.FC = () => {
           icon: "error",
           title: "Error",
           text: errorData.message || "Error al cargar la factura",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#2b4168",
         });
       }
     } catch (error: any) {
@@ -143,6 +149,8 @@ export const UploadInvoice: React.FC = () => {
         icon: "error",
         title: "Error",
         text: error.message || "Error al cargar la factura",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#2b4168",
       });
     }
   };

@@ -19,6 +19,8 @@ export const AddCompanyComponent: React.FC = () => {
         icon: 'error',
         title: 'Error',
         text: 'Todos los campos son obligatorios',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#2b4168',
       });
       return;
     }

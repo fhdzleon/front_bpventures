@@ -30,7 +30,7 @@ const BillingTable = () => {
   const titleInvoicesList = `Lista de Facturas para ${selectedCompany || "todas las Empresas"}`;
 
   // Obtener la lista de empresas únicas
-  const companies = Array.from(new Set(invoicesData.map((invoice) => invoice.company.name)));
+  const companies = Array.from(new Set(invoicesData.map((invoice) => invoice?.company?.name)));
 
   // Filtrar facturas según la empresa seleccionada
   const filteredInvoices = selectedCompany ? invoicesData.filter((invoice) => invoice.company.name === selectedCompany) : invoicesData;

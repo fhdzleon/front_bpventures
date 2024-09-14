@@ -82,7 +82,7 @@ export const UsersListComponent = ({
                 {paginatedUsers.map((user) => (
                   <tr key={user.id} className="hover:bg-gray-50 transition-colors duration-200">
                     <td className="py-4 px-6 font-futura text-sm text-gray-900">
-                      <Link href={`${PATHROUTES.USER}/${user.id}`} className="text-black hover:text-blue-700">
+                      <Link href={`${PATHROUTES.USER}/${user.id}/details`} className="text-black hover:text-blue-700">
                         {user.Names} {user.LastName}
                       </Link>
                     </td>

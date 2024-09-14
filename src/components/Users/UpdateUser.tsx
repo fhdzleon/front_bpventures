@@ -131,6 +131,8 @@ const UpdateUserComponent: React.FC<Props> = ({ id }) => {
         icon: "error",
         title: "Error al actualizar el usuario",
         text: error.message || "Hubo un problema al intentar actualizar el usuario.",
+        confirmButtonColor: "#2b4168",
+        confirmButtonText: "Entendido",
       });
     }
   };

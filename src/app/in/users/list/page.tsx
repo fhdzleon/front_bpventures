@@ -9,13 +9,6 @@ export const UsersList = () => {
 
   return (
     <div>
-      {/* <pre>{JSON.stringify(allUsers, null, 2)}</pre> */}
-      
-      {/* <div className="container mx-auto px-6  w-4/5 font-futura ">
-        <ButtonAdd children="Agregar usuario" hrefString="/in/users/create"
-         />
-      </div> */}
-
       <UsersListComponent allUsers={allUsers} setAllUsers={setAllUsers} loading={loading} />
     </div>
     
