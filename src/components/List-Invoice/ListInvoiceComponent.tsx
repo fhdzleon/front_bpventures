@@ -86,14 +86,14 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
     return invoice.permissions && Array.isArray(invoice.permissions) && invoice.permissions.some((p) => p.permissionType.name === permission);
   };
 
-  
-  
+
+
   return (
     <div className="m-5 max-h-screen  mt-5 rounded-lg">
       {/* <PreloaderLoad/> */}
       {loading && <PreloaderAwait />}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
-      {titleInvoicesList && (        
+      {titleInvoicesList && (
         <h1 className="text-4xl font-futura mb-6 text-secundary">{titleInvoicesList}</h1>
       )}
       <FilterInput filter={filter} onFilterChange={setFilter} />
@@ -211,12 +211,16 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
                       )
                     )}
                   </td>{" "}
-                  
+
                   <td className="py-4 px-6 font-futura text-sm text-gray-700 relative">
                     {userData?.isAdmin && (
                       <>
-                        <button onClick={() => togglePanel(invoice.id)} className="w-6 h-6 mx-auto hover:text-acent">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                        <button onClick={() => togglePanel(invoice.id)}
+                          className="w-6 h-6 mx-auto hover:text-acent">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                              className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+
+                          >
                             <path
                               stroke-linecap="round"
                               stroke-linejoin="round"
@@ -224,11 +228,12 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
                             />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                           </svg>
+
                         </button>
                         {openPanel === invoice.id && ( // Aquí se usa openPanel en lugar de setOpenPanel
                           <PermissionPanel
                             fileId={invoice.id} // Asegúrate de pasar el id correcto
-                             closePanel={() => setOpenPanel(null)}
+                            closePanel={() => setOpenPanel(null)}
                           />
                         )}
                       </>
