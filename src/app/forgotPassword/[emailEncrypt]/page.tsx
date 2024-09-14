@@ -87,16 +87,16 @@ const Page: React.FC = () => {
                   <button
                     type="button"
                     onClick={togglePasswordVisibility}
-                    className="absolute right-0 pr-3 flex items-center h-full text-sm leading-5 text-gray-500"
-                  >
+                    // className="absolute right-0 pr-3 flex items-center h-full text-sm leading-5 text-gray-500"
+                    className=" text-center bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-xxl hover:bg-[#4a9c80] transition duration-300 flex items-center border border-white dark:border-white dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800">
                     {showPassword ? "Ocultar" : "Mostrar"}
                   </button>
                 </div>
               </div>
               <button
                 type="submit"
-                className="w-full text-secundary bg-white hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800"
-              >
+                className=" text-center bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-xxl hover:bg-[#4a9c80] transition duration-300 flex items-center border border-white dark:border-white dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800">
+                {/* className="w-full text-secundary bg-white hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800" */}
                 Resetear Contraseña
               </button>
             </form>
@@ -111,8 +111,8 @@ const Page: React.FC = () => {
               <p className="mb-4">Ahora puedes iniciar sesión con tu nueva contraseña.</p>
               <button
                 onClick={handleRedirect}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
-              >
+                // className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+                className=" text-center bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-xxl hover:bg-[#4a9c80] transition duration-300 flex items-center border border-white dark:border-white dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800">
                 Iniciar Sesión
               </button>
             </div>
