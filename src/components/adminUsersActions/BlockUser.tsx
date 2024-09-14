@@ -46,11 +46,13 @@ const BlockUser = () => {
           });
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
-          Swal.fire(
-            "Error",
-            "Hubo un problema al bloquear el usuario.",
-            "error"
-          );
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un problema al bloquear el usuario.",
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "#2b4168",
+          });
         }
       }
     });
@@ -92,11 +94,13 @@ const BlockUser = () => {
           });
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
-          Swal.fire(
-            "Error",
-            "Hubo un problema al desbloquear el usuario.",
-            "error"
-          );
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un problema al desbloquear el usuario.",
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "#2b4168",
+          });
         }
       }
     });

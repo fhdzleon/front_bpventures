@@ -47,7 +47,7 @@ const FilterDeliverableForBussines: React.FC<FilterProps> = ({
   }, []);
 
   const handleFilter = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const companyId = Number(event.target.value);
+    const companyId = event.target.value ? Number(event.target.value) : null;
 
     try {
       await fetchDeliverables(

@@ -337,7 +337,12 @@ export default function Login() {
                     {[0, 1, 2, 3, 4, 5].map((index) => (
                       <input
                         key={index}
-                        ref={(el) => (inputsRef.current[index] = el)}
+                        // ref={(el) => (inputsRef.current[index] = el)}
+                        ref={(el) => {
+                          if (el) {
+                            inputsRef.current[index] = el;
+                          }
+                        }}
                         type="text"
                         maxLength={1}
                         value={otp[index]}

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 import Link from "next/link";
 import Swal from 'sweetalert2';
+import '../../../../../styles/style.css';
 
 interface Company {
   id: number;
@@ -37,6 +38,8 @@ const CompanyDetails: React.FC<IdParams> = ({ params }) => {
           icon: 'error',
           title: 'Error',
           text: 'Error al cargar los detalles de la empresa',
+          confirmButtonText: "error",
+          confirmButtonColor: "#2b4168",
         });
       }
     } catch (error: any) {
@@ -45,6 +48,8 @@ const CompanyDetails: React.FC<IdParams> = ({ params }) => {
         icon: 'error',
         title: 'Error',
         text: 'Error al cargar los detalles',
+        confirmButtonText: "error",
+        confirmButtonColor: "#2b4168",
       });
     }
   };

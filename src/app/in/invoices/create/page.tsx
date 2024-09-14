@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "@/styles/form-style.css";
 import Button from "@/components/FormComponent/Button";
 import Swal from "sweetalert2";
+import BackButton from "@/components/Buttons/BackButton";
 
 const invoiceStatuses = [
   { id: 1, name: "Pendiente" },
@@ -86,6 +87,8 @@ export const UploadInvoice: React.FC = () => {
         icon: "error",
         title: "Error",
         text: "No se puede cargar la factura porque el número ya existe",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#2b4168",
       });
       return;
     }
@@ -116,6 +119,8 @@ export const UploadInvoice: React.FC = () => {
           icon: "success",
           title: "Éxito",
           text: "Factura cargada correctamente",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#2b4168",          
         });
         console.log(result);
 
@@ -134,6 +139,8 @@ export const UploadInvoice: React.FC = () => {
           icon: "error",
           title: "Error",
           text: errorData.message || "Error al cargar la factura",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#2b4168",
         });
       }
     } catch (error: any) {
@@ -142,14 +149,21 @@ export const UploadInvoice: React.FC = () => {
         icon: "error",
         title: "Error",
         text: error.message || "Error al cargar la factura",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#2b4168",
       });
     }
   };
 
   return (
-    <div className="flex justify-center items-center w-full min-h-screen">
-     
+    <div className="relative w-full min-h-screen">
+    {/* Contenedor para el botón de retroceso */}
+    <div className="absolute top-0 left-0 m-4">
+      <BackButton />
+    </div>
 
+    {/* Contenedor principal */}
+    <div className="flex justify-center items-center w-full min-h-screen">
       <form className="form-apply" onSubmit={handleSubmit}>
         <h1 className="text-center text-[1.2rem] mb-6">Cargar Nueva Factura{/*  {userId} */}</h1>
         <div className="mb-4">
@@ -216,6 +230,7 @@ export const UploadInvoice: React.FC = () => {
         <Button type="submit">Guardar Factura</Button>
       </form>
     </div>
+  </div>
   );
 };
 

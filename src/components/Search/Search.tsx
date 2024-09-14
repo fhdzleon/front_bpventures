@@ -1,8 +1,11 @@
-// FilterInput.js
-// FilterInput.js
 import React from 'react';
 
-const FilterInput = ({ filter, onFilterChange }) => {
+interface FilterInputProps {
+  filter: string;
+  onFilterChange: (value: string) => void;
+}
+
+const FilterInput = ({ filter, onFilterChange }: FilterInputProps) => {
   return (
     <div className="flex my-3 items-center">
       <div>

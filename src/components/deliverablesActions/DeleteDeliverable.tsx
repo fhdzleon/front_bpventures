@@ -49,11 +49,13 @@ const DeleteDeliverable = ({ id }: { id: any }) => {
           });
         } catch (error) {
           console.error("hubo un problema con la peticion, error");
-          Swal.fire(
-            "Error",
-            "Hubo un problema al eliminar el archivo",
-            "error"
-          );
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un problema al eliminar el archivo.",
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "#2b4168",
+          });
         } finally {
           setFetchAgain(!fetchAgain);
           router.push(PATHROUTES.DELIVERABLES);

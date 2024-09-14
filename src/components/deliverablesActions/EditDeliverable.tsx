@@ -109,11 +109,13 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
           });
         } catch (error) {
           console.error("hubo un problema con la peticion, error");
-          Swal.fire(
-            "Error",
-            "Hubo un problema al actualizar el archivo",
-            "error"
-          );
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un problema al actualizar el archivo.",
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "#2b4168",
+          });
         }
       }
     });

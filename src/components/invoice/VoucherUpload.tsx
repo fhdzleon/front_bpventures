@@ -212,7 +212,8 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
             <strong>Factura Asociada:</strong> {voucherState.invoiceId.number}
           </div>
           {renderVoucherFile()}
-          <Button onClick={handleDelete} type="button" className="mt-4 bg-red-500 hover:bg-red-600 text-white">
+          <Button onClick={handleDelete} type="button"
+           className="mt-4 bg-red-500 hover:bg-red-600 text-white">
             Eliminar Comprobante
           </Button>
         </div>

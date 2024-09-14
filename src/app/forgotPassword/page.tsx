@@ -78,11 +78,15 @@ const Page: React.FC = () => {
 
                 Reiniciar Contraseña
               </button> */}
-              <button
-                type="submit"
-                className=" text-center bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-xxl hover:bg-[#4a9c80] transition duration-300 flex items-center border border-white dark:border-white dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800">
-                Reiniciar Contraseña
-              </button>
+            
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className="text-center bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-xxl hover:bg-[#4a9c80] transition duration-300 flex items-center border border-white dark:border-white dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800"
+                >
+                  Reiniciar Contraseña
+                </button>
+              </div>
 
             </form>
           </div>
@@ -100,9 +104,14 @@ const Page: React.FC = () => {
                 Por favor, revisa tu bandeja de entrada y sigue las instrucciones para completar el proceso.
               </p>
 
-              <button onClick={handleRedirect} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
-                Iniciar Sesión
-              </button>
+              <div className="flex justify-center">
+                <button
+                  onClick={handleRedirect}
+                  className="text-center bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-xxl hover:bg-[#4a9c80] transition duration-300 flex items-center border border-white dark:border-white dark:bg-primary-600 dark:hover:text-white dark:hover:bg-slate-400 dark:focus:ring-primary-800"
+                >
+                  Iniciar Sesión
+                </button>
+              </div>
             </div>
           </div>
         )}

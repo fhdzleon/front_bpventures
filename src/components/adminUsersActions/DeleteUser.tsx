@@ -51,29 +51,29 @@ const DeleteUser = () => {
           }).finally(() => router.push(PATHROUTES.LIST));
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
-          Swal.fire(
-            "Error",
-            "Hubo un problema al eliminar el usuario.",
-            "error"
-          );
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un problema al eliminar al usuario.",
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "#2b4168",
+          });
         }
       }
     });
   };
 
   return (
-<div>
-  <button
-    onClick={handleClick}
-    className="flex space-x-2 bg-secundary px-4 py-1 rounded-full text-white transition duration-300 hover:bg-red-600"
-  >
-    <DeleteIcon />
-    <p className="font-futura">Eliminar</p>
-  </button>
-</div>
+    <div>
+      <button
+        onClick={handleClick}
+        className="flex space-x-2 bg-secundary px-4 py-1 rounded-full text-white transition duration-300 hover:bg-red-600"
+      >
+        <DeleteIcon />
+        <p className="font-futura">Eliminar</p>
+      </button>
+    </div>
   );
-  
-  
 };
 
 export default DeleteUser;
