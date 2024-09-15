@@ -10,6 +10,7 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const [step, setStep] = useState(1); // 1: Login Step, 2: 2FA Step
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -273,29 +274,37 @@ export default function Login() {
                     )}
                   </div>
 
-                  <div className="mb-9">
-                    <label
-                      className="font-futura block text-left text-gray-700 text-sm font-bold mb-2"
-                      htmlFor="password"
-                    >
-                      Contraseña
-                    </label>
-                    <input
-                      className=" relative font-futura border-[0.5px] border-gray-300 appearance-none  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent"
-                      id="password"
-                      name="password"
-                      type="password"
-                      placeholder="Ingresa tu password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      onFocus={handleFocus}
-                    />
-                    {activeField === "password" && errors.password && (
-                      <p className="absolute text-red-500 text-xs italic mt-1">
-                        {errors.password}
-                      </p>
-                    )}
-                  </div>
+                  <div className="mb-9 relative">
+  <label
+    className="font-futura block text-left text-gray-700 text-sm font-bold mb-2"
+    htmlFor="password"
+  >
+    Contraseña
+  </label>
+  <input
+    className="relative font-futura border-[0.5px] border-gray-300 appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent " // Añade un padding derecho extra para el botón
+    id="password"
+    name="password"
+    type={showPassword ? "text" : "password"}
+    placeholder="Ingresa tu password"
+    value={formData.password}
+    onChange={handleChange}
+    onFocus={handleFocus}
+  />
+  <button
+    type="button"
+    className="absolute inset-y-12 right-0 flex items-center pr-3 text-sm leading-5 text-gray-500 opacity-0 hover:opacity-100 bg-transparent hover:bg-white transition duration-300"
+    onClick={() => setShowPassword(!showPassword)}
+  >
+    {showPassword ? "Ocultar" : "Mostrar"}
+  </button>
+  {activeField === "password" && errors.password && (
+    <p className="absolute text-red-500 text-xs italic mt-1">
+      {errors.password}
+    </p>
+  )}
+</div>
+
                   {/* Remember me checkbox */}
                   <div className="mb-6 flex items-center justify-between">
                     <div className="mb-[0.125rem] block min-h-[1.5rem] ps-[1.5rem]">
