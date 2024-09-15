@@ -38,7 +38,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
 
   const updateInvoiceStatus = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/invoices/status/${Invoice?.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/status/${Invoice?.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

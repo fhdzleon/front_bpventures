@@ -109,7 +109,7 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
 
 
   return (
-    <div className="m-5 max-h-screen  mt-5 rounded-lg">
+    <div className=" max-h-screen mt-5 rounded-lg">
       {/* <PreloaderLoad/> */}
       {loading && <PreloaderAwait />}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
