@@ -52,12 +52,13 @@ const BillingTable = () => {
     }
   }, [fetchAgain, userData?.id]);
 
-  const titleInvoicesList = `Lista de Facturas de: ${userData?.Names || 'Usuario'}`;
+  const titleInvoicesList = `Lista de Facturas de ${userData?.Names || 'Usuario'}`;
 
   return (
     <>
     {/* <pre>{JSON.stringify(invoicesData2, null, 2)}</pre> */}
       <ListInvoiceComponent
+        invoicesData={userData?.isAdmin ? invoicesData : invoicesData2 }
         invoicesData={userData?.isAdmin ? invoicesData : invoicesData2 }
         isAdmin={userData?.isAdmin || false}
         userEmail={userData?.email || ''}

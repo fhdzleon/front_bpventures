@@ -14,6 +14,7 @@ import PreloaderAwait from "../preloader/PreloaderAwait";
 import FilterInput from "../Search/Search";
 import PermissionPanel from "./PanelPermissionInvoices";
 import Notifications from "../ButtonAlerts/ButtonAlerts";
+import { useSocket } from "@/context/WebSocket";
 
 
 const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, titleInvoicesList, fetchInvoices }: any) => {
@@ -25,8 +26,27 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
   const [itemsPerPage] = useState(5);
   const totalPages = Math.ceil(invoicesData.length / itemsPerPage);
   const [openPanel, setOpenPanel] = useState<number | null>(null);
+  const socket = useSocket();
 
   const { userData, loading, fetchAgain } = useAuth();
+
+  // useEffect(() => {
+  //   // Escuchar el evento de factura pendiente
+  //   socket.on("pendingInvoice", (pendingInvoice) => {
+  //     alert(`Factura pendiente: ${pendingInvoice.number}, monto: ${pendingInvoice.amount}`);
+  //   });
+
+  //   // Escuchar el evento de factura vencida
+  //   socket.on("overdueInvoice", (overdueInvoice) => {
+  //     alert(`¡Factura vencida!: ${overdueInvoice.number}, monto: ${overdueInvoice.amount}`);
+  //   });
+
+  //   // Limpieza al desmontar el componente
+  //   return () => {
+  //     socket.off("pendingInvoice");
+  //     socket.off("overdueInvoice");
+  //   };
+  // }, [socket]);
 
   const togglePanel = (fileId: number | null) => {
     setOpenPanel(openPanel === fileId ? null : fileId);
@@ -101,7 +121,7 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
             <tr>
-              <th className="py-3 px-4 font-futura text-left text-lg"># Factura</th>
+              <th className="py-3 px-4 font-futura text-left text-lg"> Factura</th>
               <th className="py-3 px-4 font-futura text-left text-lg">Monto</th>
               <th className="py-3 px-4 font-futura text-left text-lg">Estado</th>
               <th className="py-3 px-4 font-futura text-left text-lg">Emisión</th>
