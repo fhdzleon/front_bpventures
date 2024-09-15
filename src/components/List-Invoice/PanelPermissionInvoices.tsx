@@ -233,8 +233,8 @@ export default function PermissionPanel({
   
   const isAdmin = userData?.isAdmin;
   return ReactDOM.createPortal (
-<div className={`absolute   top- bottom-0 z-50  isPanelOpen ? 'translate-x-0' : '-translate-x-full'; right-2 `}>
-      <div className="w-[300px] md:w-[500px] rounded-md m-2 bg-white p-4 shadow-lg border border-gray-300 max-h-96 overflow-y-auto">
+<div className={`absolute top-[210px] bottom-0 right-5 z-50 isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+<div className="w-[300px] md:w-[500px] rounded-md m-2 bg-white p-4 shadow-lg border border-gray-300 max-h-96 overflow-y-auto">
         <div className="flex justify-end items-center mb-4">
           <button type="button"
             onClick={closePanel}
@@ -367,9 +367,7 @@ export default function PermissionPanel({
                     Usuario
                   </th>
                   <th className="border text-white border-gray-300 p-2">Ver</th>
-                  <th className="border text-white border-gray-300 p-2">
-                    Editar
-                  </th>
+                  
                 </tr>
               </thead>
               <tbody>
@@ -383,13 +381,13 @@ export default function PermissionPanel({
                   })
                   .map((permission, index) => (
                     <tr key={index}>
-                      <td className="border border-gray-300 p-2">
+                      <td className="border text-center border-gray-300 p-2">
                         {
                           allUsers.find((user) => user.id === permission.userId)
                             ?.Names
                         }
                       </td>
-                      {["view", "edit"].map((perm) => (
+                      {["view"].map((perm) => (
                         <td
                           key={perm}
                           className="border border-gray-300 p-2 text-center"
