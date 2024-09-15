@@ -362,7 +362,7 @@ const DeliverablesList = () => {
                                   <>
                                     {deliverable.deliverableType !== "Link" ? (
                                       <DownloadDeliverable
-                                        path={deliverable.deliverablePath}
+                                        deliverableId={deliverable.id}
                                       />
                                     ) : (
                                       <LinkDeliverable
@@ -387,7 +387,7 @@ const DeliverablesList = () => {
                                       (deliverable.deliverableType !==
                                       "Link" ? (
                                         <DownloadDeliverable
-                                          path={deliverable.deliverablePath}
+                                          deliverableId={deliverable.id}
                                         />
                                       ) : (
                                         <LinkDeliverable

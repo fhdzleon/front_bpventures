@@ -1,5 +1,5 @@
 interface DownloadDeliverableProps {
-  path: any;
+  deliverableId: any;
 }
 
 export default DownloadDeliverableProps;

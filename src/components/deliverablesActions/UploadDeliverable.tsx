@@ -20,6 +20,7 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [inputError, setInputError] = useState("");
   const [categoryOption, setCategoryOption] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -45,9 +46,25 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
     setSelectedOption(event.target.value);
   };
 
-  // Maneja el cambio de los campos del formulario
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+
+    const trimmedValue = value.trim();
+
+    const validName = /^[a-zA-Z0-9À-ÿ'_-]+$/;
+
+    if (name === "name") {
+      if (trimmedValue === "") {
+        setInputError("El nombre no puede estar vacío.");
+      } else if (trimmedValue.length < 3 || trimmedValue.length > 90) {
+        setInputError("El nombre debe tener entre 3 y 90 caracteres.");
+      } else if (!validName.test(trimmedValue)) {
+        setInputError("El nombre contiene caracteres no permitidos.");
+      } else {
+        setInputError("");
+      }
+    }
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
@@ -174,6 +191,16 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
             confirmButtonColor: "#2b4168",
           });
         }
+      } else if (response.status === 413) {
+        const errorData = await response.json();
+
+        Swal.fire({
+          icon: "warning",
+          title: "Error de archivo",
+          text: "El archivo exede el tamaño permitido.",
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "#2b4168",
+        });
       } else {
         Swal.fire({
           icon: "error",
@@ -268,6 +295,9 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
                 placeholder="Nombre"
                 required
               />
+              {inputError && (
+                <span className="text-red-500 text-sm">{inputError}</span>
+              )}
               {/* INPUT DESCRIPTION NO NECESARIO EN ESTA VERSION */}
               {/*     <input
                 type="text"
