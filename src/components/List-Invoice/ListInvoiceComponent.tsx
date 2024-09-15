@@ -109,7 +109,7 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
 
 
   return (
-    <div className="m-5 max-h-screen  mt-5 rounded-lg">
+    <div className=" max-h-screen mt-5 rounded-lg">
       {/* <PreloaderLoad/> */}
       {loading && <PreloaderAwait />}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
@@ -179,15 +179,15 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
                     )}
 
                     {isModalOpen && selectedInvoice && (
-                      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" onClick={handleCloseModal}>
+                      <div className="fixed inset-0 flex items-center justify-center bg-secundary z-50" onClick={handleCloseModal}>
                         <div
                           className="bg-white p-6 rounded-lg shadow-lg max-w-2xl sm:max-w-lg md:max-w-xl lg:max-w-2xl overflow-y-auto h-screen"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <InvoiceDetail Invoice={selectedInvoice as InvoiceInterface} />
-                          <button onClick={handleCloseModal} className="mt-4 bg-secundary text-white px-4 py-2 rounded-full">
+                          <button onClick={handleCloseModal} className="mt-4 bg-secundary text-white px-4 py-2 rounded-full flex ml-auto">
                             Cerrar
                           </button>
+                          <InvoiceDetail Invoice={selectedInvoice as InvoiceInterface} />
                         </div>
                       </div>
                     )}
@@ -197,15 +197,15 @@ const ListInvoiceComponent = ({ invoicesData, isAdmin, companyName, userEmail, t
                     </button>
 
                     {isModalOpenVoucher && selectedInvoice && (
-                      <div className="fixed inset-0 flex items-center justify-center bg-black z-50" onClick={handleCloseModalVoucher}>
+                      <div className="fixed inset-0 flex items-center justify-center bg-secundary ml-0 z-50" onClick={handleCloseModalVoucher}>
                         <div
                           className="bg-white p-6 rounded-lg shadow-lg max-w-2xl sm:max-w-lg md:max-w-xl lg:max-w-2xl overflow-y-auto h-screen"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <VoucherUpload Invoice={selectedInvoice as InvoiceInterface} fetchInvoices={fetchInvoices} />
-                          <button onClick={handleCloseModalVoucher} className="mt-4 bg-secundary text-white px-4 py-2 rounded-full">
+                          <button onClick={handleCloseModalVoucher} className="mt-4 bg-secundary text-white px-4 py-2 rounded-full flex ml-auto">
                             Cerrar
                           </button>
+                          <VoucherUpload Invoice={selectedInvoice as InvoiceInterface} fetchInvoices={fetchInvoices} />
                         </div>
                       </div>
                     )}

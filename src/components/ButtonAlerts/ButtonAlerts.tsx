@@ -12,7 +12,7 @@ const Notifications = () => {
   const userId = userData?.isAdmin? 'Admin': userData?.id
   // const [showAll, setShowAll] = useState(false); // Nuevo estado para controlar si se muestran todas las notificaciones
   useEffect(() => {
-    const socket = io('http://localhost:3000', {
+    const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`, {
       query: { userId: userId }, // Pasa el userId cuando te conectas
     });
 

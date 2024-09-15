@@ -25,7 +25,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
     try {
       const response = await fetch(
-        `http://localhost:3000/deliverables/file/${name}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/file/${name}`,
         {
           method: "GET",
           headers: {

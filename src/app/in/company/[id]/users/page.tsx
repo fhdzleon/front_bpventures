@@ -75,7 +75,7 @@ const ListUsersByCompany: React.FC<IdParams> = ({ params }) => {
       >
         Volver
       </button> */}
-      <div className="container mx-auto px-6  w-4/5 md:max-w-full font-futura mt-4">
+      <div className="m-5 max-h-screen mt-5 rounded-lg font-futura">
         <button
           onClick={() => window.history.back()} // Alternativa usando window.history.back()
           className="bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 mb-4"

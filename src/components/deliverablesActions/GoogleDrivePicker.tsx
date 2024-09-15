@@ -24,7 +24,7 @@ function GoogleDrivePicker() {
           
           try {
             // Enviar el ID del archivo al backend para que lo descargue
-            const response = await fetch('http://localhost:3000/deliverables/uploadGoogleFile', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/deliverables/uploadGoogleFile`, {
               method: 'POST',
               headers: {
                 Authorization: `Bearer ${Token}`,

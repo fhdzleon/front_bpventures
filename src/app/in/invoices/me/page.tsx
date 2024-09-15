@@ -25,7 +25,7 @@ const BillingTable = () => {
     try {
       if (userData?.id) {
         const response = await fetch(
-          `http://localhost:3000/invoices/user/${userData.id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/invoices/user/${userData.id}`,
           {
             method: "GET",
             headers: {
@@ -51,20 +51,18 @@ const BillingTable = () => {
     }
   }, [fetchAgain, userData?.id]);
 
-  console.log(invoicesData, "data1");
-  console.log([invoicesData2 ], "data2");
-
   const titleInvoicesList = `Lista de Facturas de ${userData?.Names || 'Usuario'}`;
 
   return (
-    <>
+    <div className="m-5 max-h-screen mt-5 rounded-lg">
+    {/* <pre>{JSON.stringify(invoicesData2, null, 2)}</pre> */}
       <ListInvoiceComponent
         invoicesData={userData?.isAdmin ? invoicesData : invoicesData2 }
         isAdmin={userData?.isAdmin || false}
         userEmail={userData?.email || ''}
         titleInvoicesList={titleInvoicesList}
       />
-    </>
+    </div>
   );
 };
 

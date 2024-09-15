@@ -1,28 +1,7 @@
 // src/components/DetailInvoice/DetailInvoice.tsx
 
 import React from "react";
-
-// export interface Invoice {
-//   id: number;
-//   invoicePath: string | null;
-//   invoiceNumber: string;
-//   invoiceIssueDate: string;
-//   invoiceDueDate: string;
-//   invoiceAmount: string;
-//   invoiceStatus: string;
-//   overdueIndicator: boolean;
-// }
-// export interface InvoiceInterface {
-//   id: number;
-//   number: string;
-//   amount: number;
-//   invoiceStatus?: { name: string };
-//   issueDate: string;
-//   dueDate: string;
-//   user?: { email: string };
-//   company?: { name: string };
-// }
-
+import ButtonComponent from "../Buttons/ButtonComponent";
 
 interface InvoiceDetailProps {
   Invoice: InvoiceInterface;
@@ -59,12 +38,11 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
             title="Factura PDF"
             className="w-full h-96 border-0"
           />
-          <button
-            onClick={() => window.open(fileUrl, "_blank")}
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+          <span onClick={() => window.open(fileUrl, "_blank")}
+            className="mt-5 flex"
           >
-            Ver en Nueva Ventana
-          </button>
+            <ButtonComponent text="Ver en Nueva Ventana"  />
+          </span>
         </div>
       );
     } else if (
@@ -108,7 +86,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
 
   return (
     <section className="mb-12 p-4 bg-white rounded-xl  m-4">
-      <div className="p-6 bg-gradient-to-r from-blue-50 to-blue-50 rounded-xl ">
+      <div className="p-6">
         <h2 className="text-2xl font-semibold text-[#2B4168] mb-4">
           Información de Facturación
         </h2>
@@ -127,10 +105,10 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ Invoice }) => {
             </span>{" "}
             {Invoice.dueDate}
           </p>
-          <p className="text-lg">
+          {/* <p className="text-lg">
             <span className="font-bold text-gray-700">Estado:</span>{" "}
-            {getInvoiceStatus(Invoice.invoiceStatus?.name || "")}
-          </p>
+            {getInvoiceStatus(Invoice?.invoiceStatus?.name ?? '')}
+          </p> */}
           {renderInvoiceFile()}
         </div>
       </div>
