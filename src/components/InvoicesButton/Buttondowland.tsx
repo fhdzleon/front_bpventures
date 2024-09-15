@@ -81,46 +81,58 @@
 // };
 
 // export default InvoiceDownload;
+
+import Cookies from "js-cookie";
+
 interface InvoiceButtonProps {
-  userId: any;        // Agregado para recibir el userId
-  invoiceId: any;     // ID de la factura
+  userId: any; // Agregado para recibir el userId
+  invoiceId: any; // ID de la factura
 }
 
-const InvoiceDownload: React.FC<InvoiceButtonProps> = ({ userId, invoiceId }) => {
+const InvoiceDownload: React.FC<InvoiceButtonProps> = ({
+  userId,
+  invoiceId,
+}) => {
+  const token = Cookies.get("token");
+
   const handleDownload = async () => {
     try {
       // Solicitar la información de la factura
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/download/${userId}/${invoiceId}`,{
-        method: 'GET',
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/invoices/download/${invoiceId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
-          throw new Error('Failed to fetch invoice details');
+        throw new Error("Failed to fetch invoice details");
       }
-  
-    const contentDisposition = response.headers.get('Content-Disposition');
-  
-      
-    const fileName = contentDisposition
-      ? contentDisposition.split('filename=')[1].replace(/"/g, '')
-      : 'invoice.pdf'; 
+
+      const contentDisposition = response.headers.get("Content-Disposition");
+
+      const fileName = contentDisposition
+        ? contentDisposition.split("filename=")[1].replace(/"/g, "")
+        : "invoice.pdf";
       console.log(fileName);
-      
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
       link.download = fileName; // Cambia el nombre del archivo si es necesario
       document.body.appendChild(link);
       link.click();
-  
+
       // Limpiar
       link.remove();
       window.URL.revokeObjectURL(url);
-
-  } catch (error) {
-      console.error('Error downloading file:', error);
-  }
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
   };
 
   return (
@@ -132,7 +144,7 @@ const InvoiceDownload: React.FC<InvoiceButtonProps> = ({ userId, invoiceId }) =>
         strokeWidth="1.5"
         stroke="currentColor"
         className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
-        >
+      >
         <title>Descargar</title>
         <path
           strokeLinecap="round"
@@ -145,4 +157,3 @@ const InvoiceDownload: React.FC<InvoiceButtonProps> = ({ userId, invoiceId }) =>
 };
 
 export default InvoiceDownload;
-

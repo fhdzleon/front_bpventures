@@ -92,7 +92,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="size-8 bg-slate-300 h-12 px-1 rounded-l-2xl"
+          className="size-8 bg-gray-200 h-12 px-1 rounded-l-2xl"
         >
           <path
             strokeLinecap="round"
@@ -104,7 +104,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
       <div className="relative">
         <input
-          className="bg-slate-300 w-40 font-sans text-xs md:text-lg h-12 md:w-96 outline-none rounded-r-2xl placeholder-secundary px-3"
+          className="bg-gray-200 w-40 font-sans text-xs md:text-lg h-12 md:w-96 outline-none rounded-r-2xl placeholder-secundary px-3"
           type="text"
           placeholder="Buscar por nombre de archivo"
           aria-label="Buscar por nombre de archivo"

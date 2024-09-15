@@ -1,15 +1,56 @@
 import React from "react";
 import DownloadDeliverableProps from "@/interfaces/downLoadProps";
+import Cookies from "js-cookie";
 
-const DownloadDeliverable: React.FC<DownloadDeliverableProps> = ({ path }) => {
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = `${process.env.NEXT_PUBLIC_API_URL}/${path}`;
-    link.target = "_blank";
-    /* link.download = true; */
-    link.rel = "noopener noreferrer";
+const DownloadDeliverable: React.FC<DownloadDeliverableProps> = ({
+  deliverableId,
+}) => {
+  const token = Cookies.get("token");
 
-    link.click();
+  const extractFileName = (contentDisposition: string | null): string => {
+    if (contentDisposition) {
+      const fileNameMatch = contentDisposition.split("filename=")[1];
+      return fileNameMatch ? fileNameMatch.replace(/"/g, "") : "file.pdf";
+    }
+
+    return "file.pdf";
+  };
+  console.log(extractFileName);
+
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/deliverables/download/${deliverableId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch deliverable details");
+      }
+
+      const contentDisposition = response.headers.get("Content-Disposition");
+      const fileName = extractFileName(contentDisposition);
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
   };
 
   return (

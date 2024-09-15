@@ -71,7 +71,7 @@ const FilterDeliverableForBussines: React.FC<FilterProps> = ({
           <select
             name="company"
             id="company"
-            className="py-2 font-sans h-12 bg-secundary rounded-xl text-white px-4"
+            className="py-2 font-sans h-12 text-secundary  rounded-xl  px-4"
             onChange={handleFilter}
           >
             <option value="">Todas las empresas</option>
