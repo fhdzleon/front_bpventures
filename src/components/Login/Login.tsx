@@ -127,18 +127,15 @@ export default function Login() {
             timer: 1500,
             showConfirmButton: false,
           }).then(() => {
-            window.location.href = PATHROUTES.HOME;
+            router.push(PATHROUTES.HOME);
           });
-  
-          // router.push(PATHROUTES.HOME);
-          // window.location.href = PATHROUTES.HOME;
-          // router.replace(PATHROUTES.HOME);
         }
       } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Error",
           text: "Error en el inicio de sesión. Verifica tus credenciales.",
+          confirmButtonColor: "#2b4168",
         });      }
     } else if (step === 2) {
       // Step 2: Validate the 2FA code
@@ -182,6 +179,7 @@ export default function Login() {
           icon: "error",
           title: "Error",
           text: "Error en la verificación 2FA. Verifica tu código.",
+          confirmButtonColor: "#2b4168",
         });      }
     }
   };

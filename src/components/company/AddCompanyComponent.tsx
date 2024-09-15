@@ -48,6 +48,7 @@ export const AddCompanyComponent: React.FC = () => {
           text: 'Empresa añadida correctamente',
           timer: 1500,
           showConfirmButton: false,
+          confirmButtonColor: "#2b4168",
         });
         console.log(result);
       } else {

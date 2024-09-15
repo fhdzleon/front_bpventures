@@ -104,7 +104,7 @@ const CompanyTable: React.FC = () => {
                     <tr key={company.id} className="hover:bg-gray-50 transition-colors duration-200">
                       <td className="py-4 px-6 font-futura text-sm text-gray-900">{company.id}</td>
                       <td className="py-4 px-6 font-futura text-sm text-gray-900">
-                        <Link href={`/in/company/${company.id}`}>{company.name}</Link>
+                        {company.name}
                       </td>
                       <td className="py-4 px-6 font-futura text-sm text-gray-700">{company.cuit}</td>
                       <td className="py-4 px-6 font-futura text-sm text-gray-700">{company.address}</td>

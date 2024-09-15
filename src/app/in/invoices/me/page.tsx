@@ -25,6 +25,7 @@ const BillingTable = () => {
     try {
       if (userData?.id) {
         const response = await fetch(
+          // `http://localhost:3000/invoices/user/${userData.id}`,
           `http://localhost:3000/invoices/user/${userData.id}`,
           {
             method: "GET",
@@ -51,15 +52,13 @@ const BillingTable = () => {
     }
   }, [fetchAgain, userData?.id]);
 
-  console.log(invoicesData, "data1");
-  console.log([invoicesData2 ], "data2");
-
   const titleInvoicesList = `Lista de Facturas de: ${userData?.Names || 'Usuario'}`;
 
   return (
     <>
+    {/* <pre>{JSON.stringify(invoicesData2, null, 2)}</pre> */}
       <ListInvoiceComponent
-        invoicesData={userData?.isAdmin ? invoicesData : [invoicesData2] }
+        invoicesData={userData?.isAdmin ? invoicesData : invoicesData2 }
         isAdmin={userData?.isAdmin || false}
         userEmail={userData?.email || ''}
         titleInvoicesList={titleInvoicesList}

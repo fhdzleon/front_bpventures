@@ -107,6 +107,7 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
           icon: 'success',
           title: 'Éxito',
           text: 'Factura actualizada correctamente',
+          confirmButtonColor: "#2b4168",
         });
         // router.push('/invoices'); // Redirigir a la página de facturas después de la actualización
       } else {
@@ -115,6 +116,7 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
           icon: 'error',
           title: 'Error',
           text: errorData.message || 'Error al actualizar la factura',
+          confirmButtonColor: "#2b4168",
         });
       }
     } catch (error: any) {
@@ -123,6 +125,7 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
         icon: 'error',
         title: 'Error',
         text: 'Hubo un problema al actualizar la factura. Inténtalo de nuevo.',
+        confirmButtonColor: "#2b4168",
       });
     }
   };

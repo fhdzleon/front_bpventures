@@ -56,7 +56,7 @@ export const UsersListComponent = ({
       {!loading ? (
         <div className="m-5 max-h-screen mt-5 rounded-lg font-futura">
           <h1 className="text-4xl font-futura mb-6 text-secundary">
-            Lista de Usuarios: {companyName}
+            Lista de Usuarios {companyName && `: ${companyName}`}  
           </h1>
 
           <ButtonAdd children="Agregar usuario" hrefString="/in/users/create" />
@@ -82,9 +82,7 @@ export const UsersListComponent = ({
                 {paginatedUsers.map((user) => (
                   <tr key={user.id} className="hover:bg-gray-50 transition-colors duration-200">
                     <td className="py-4 px-6 font-futura text-sm text-gray-900">
-                      <Link href={`${PATHROUTES.USER}/${user.id}/details`} className="text-black hover:text-blue-700">
                         {user.Names} {user.LastName}
-                      </Link>
                     </td>
                     <td className="py-4 px-6 font-futura text-sm text-gray-700">{user.email}</td>
                     <td className="py-4 px-6 font-futura text-sm text-gray-700">{user.Position}</td>
@@ -107,7 +105,7 @@ export const UsersListComponent = ({
                           stroke="currentColor"
                           className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
                         >
-                          <title>Ver Usuario</title>
+                          <title>Ver detalle del usuario</title>
                           <path stroke-linecap="round"
                             stroke-linejoin="round"
                             d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
