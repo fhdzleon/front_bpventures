@@ -8,7 +8,7 @@ const Notifications: React.FC = () => {
       <h2 className="text-4xl font-futura mb-6 text-secundary">
         Actividad reciente
       </h2>
-      <div className="space-y-4">
+      <div className="space-y-0">
         {usersData.map((notification, index) => (
           <NotificationCard
             key={index}
