@@ -16,7 +16,26 @@ export const usersData = [
     invoice: {
       number: "INV-0001",
     },
-    createdAt: "2024-09-01T08:30:00Z",
+    createdAt: "2024-09-16T20:35:00Z",
+  },
+  {
+    note: "Nota adicional sobre el permiso.",
+    notificationType: {
+      name: "Otorgar permiso de lectura a la factura",
+    },
+    impactedUser: {
+      Names: "Ana",
+      LastName: "Gómez",
+    },
+    triggerUser: {
+      Names: "Carlos",
+      LastName: "Martínez",
+    },
+    deliverable: null,
+    invoice: {
+      number: "INV-0001",
+    },
+    createdAt: "2024-09-16T17:15:00Z",
   },
   {
     note: "Nota adicional sobre el permiso.",
@@ -35,7 +54,7 @@ export const usersData = [
     invoice: {
       number: "INV-0002",
     },
-    createdAt: "2024-09-01T09:00:00Z",
+    createdAt: "2024-09-16T09:11:00Z",
   },
   {
     note: "Nota adicional sobre el permiso.",
@@ -55,7 +74,7 @@ export const usersData = [
       path: "folder_a",
     },
     invoice: null,
-    createdAt: "2024-09-01T09:30:00Z",
+    createdAt: "2024-09-12T09:30:00Z",
   },
   {
     note: "Nota adicional sobre el permiso.",
@@ -75,7 +94,7 @@ export const usersData = [
       path: "folder_b",
     },
     invoice: null,
-    createdAt: "2024-09-01T10:00:00Z",
+    createdAt: "2024-09-09T10:00:00Z",
   },
   {
     note: "Nota adicional sobre la acción.",
@@ -91,7 +110,7 @@ export const usersData = [
     invoice: {
       number: "INV-0003",
     },
-    createdAt: "2024-09-01T10:30:00Z",
+    createdAt: "2024-08-30T10:30:00Z",
   },
   {
     note: "Nota adicional sobre la acción.",
@@ -108,7 +127,7 @@ export const usersData = [
       path: "folder_c",
     },
     invoice: null,
-    createdAt: "2024-09-01T11:00:00Z",
+    createdAt: "2024-08-26T11:00:00Z",
   },
   {
     note: "Nota adicional sobre la acción.",
@@ -124,7 +143,7 @@ export const usersData = [
     invoice: {
       number: "INV-0004",
     },
-    createdAt: "2024-09-01T11:30:00Z",
+    createdAt: "2024-08-14T11:30:00Z",
   },
   {
     note: "Nota adicional sobre la acción.",
