@@ -58,8 +58,8 @@ export const UsersListComponent = ({
           <h1 className="text-4xl font-futura mb-6 text-secundary">
             Lista de Usuarios {companyName && `: ${companyName}`}
           </h1>
-
-          <ButtonAdd children="Agregar usuario" hrefString="/in/users/create" />
+          <ButtonAdd hrefString="/in/users/create">Agregar Usuario</ButtonAdd>
+          {/* <ButtonAdd children="Agregar usuario" hrefString="/in/users/create" /> */}
           <FilterInput filter={searchTerm} onFilterChange={setSearchTerm} />
 
           <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
@@ -123,14 +123,14 @@ export const UsersListComponent = ({
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
-                          stroke-width="1.5"
+                          strokeWidth="1.5"
                           stroke="currentColor"
                           className="size-8 hover:scale-125 hover:text-blue-700  mx-auto col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
                         >
                           <title>Ver detalle del usuario</title>
                           <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
                           />
                         </svg>
