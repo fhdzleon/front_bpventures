@@ -1,5 +1,5 @@
 "use client";
-import { GetUserById } from "@/helpers/auth.helper";
+import { fetchUsers, GetUserById } from "@/helpers/auth.helper";
 import React, {
   createContext,
   useContext,
@@ -70,25 +70,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [fetchAgain, setFetchAgain] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/users`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
-        const data = await response.json();
-        setLoading(false);
-        setAllUsers(data);
-      } catch (error) {
-        setLoading(false);
-        console.error("Error fetching users:", error);
-      }
+    const fetchAllUsers = async () => {
+      setLoading(true);
+      const res = await fetchUsers();
+      setAllUsers(res);
+      setLoading(false);
     };
 
-    fetchUsers();
+    fetchAllUsers();
   }, []);
 
   useEffect(() => {

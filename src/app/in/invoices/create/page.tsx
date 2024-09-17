@@ -4,6 +4,7 @@ import "@/styles/form-style.css";
 import Button from "@/components/FormComponent/Button";
 import Swal from "sweetalert2";
 import BackButton from "@/components/Buttons/BackButton";
+import Cookies from "js-cookie";
 
 const invoiceStatuses = [
   { id: 1, name: "Pendiente" },
@@ -23,6 +24,7 @@ export const UploadInvoice: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [companies, setCompanies] = useState<any[]>([]);
   const [companyId, setCompanyId] = useState<number | null>(null); // Estado para companyId
+  const token = Cookies.get("token");
 
   const getCompanies = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/companies`);
@@ -110,6 +112,9 @@ export const UploadInvoice: React.FC = () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices`, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -164,6 +169,7 @@ export const UploadInvoice: React.FC = () => {
 
     {/* Contenedor principal */}
     <div className="flex justify-center items-center w-full min-h-screen">
+      {/* <pre>{JSON.stringify(token, null , 2)}</pre> */}
       <form className="form-apply" onSubmit={handleSubmit}>
         <h1 className="text-center text-[1.2rem] mb-6">Cargar Nueva Factura{/*  {userId} */}</h1>
         <div className="mb-4">
