@@ -24,6 +24,11 @@ const CompanyTable: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 5;
+  // Redirige a la primera página cuando cambia el término de búsqueda
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
+
 
   const fetchCompanies = async () => {
     try {

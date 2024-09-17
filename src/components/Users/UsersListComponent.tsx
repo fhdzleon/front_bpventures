@@ -26,6 +26,10 @@ export const UsersListComponent = ({
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 5;
+// Redirige a la primera página cuando cambia el término de búsqueda
+useEffect(() => {
+  setCurrentPage(1);
+}, [searchTerm]);
 
   const filteredUsers = Array.isArray(allUsers)
     ? allUsers.filter((user) => {
