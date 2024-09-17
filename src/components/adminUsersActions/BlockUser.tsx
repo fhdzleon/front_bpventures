@@ -4,8 +4,9 @@ import { useParams } from "next/navigation";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { useAuth } from "@/context/AuthContext";
+import { fetchUsers } from "@/helpers/auth.helper";
 const BlockUser = () => {
-  const { blocked, setBlocked } = useAuth();
+  const { blocked, setBlocked,setAllUsers } = useAuth();
   const { id } = useParams();
 
   const token = Cookies.get("token");
@@ -33,10 +34,13 @@ const BlockUser = () => {
               },
             }
           );
+          const data = await fetchUsers();
+          setAllUsers(data);
 
           if (!response.ok) {
             throw new Error("No se logró bloquear el usuario");
           }
+
           setBlocked(true);
           Swal.fire({
             title: "Bloqueado!",
@@ -81,7 +85,7 @@ const BlockUser = () => {
               },
             }
           );
-
+          
           if (!response.ok) {
             throw new Error("No se logró desbloquear el usuario");
           }
@@ -103,6 +107,10 @@ const BlockUser = () => {
           });
         }
       }
+    }).finally(async () => {
+      const data = await fetchUsers();
+      setAllUsers(data);
+
     });
   };
 
