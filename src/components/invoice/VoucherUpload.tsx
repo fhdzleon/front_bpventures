@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 interface InvoiceDetailProps {
   Invoice: InvoiceInterface;
@@ -14,6 +15,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
   const [amount, setAmount] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [voucherState, setVoucherState] = useState<any>(null);
+  const token = Cookies.get("token");
 
   const getVoucherById = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${Invoice?.voucher?.id}`);
@@ -42,6 +44,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ invoiceStatusId: 2 }),
       });
@@ -202,6 +205,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
+      <pre>{JSON.stringify(voucherState, null, 2)}</pre>
       {voucherState ? (
         <div className="voucher-detail-container mt-8 p-4 border rounded shadow">
           <pre>{JSON.stringify(Invoice?.invoiceStatus?.name, null, 2)}</pre>
@@ -234,7 +238,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
         <>
           {Invoice?.invoiceStatus?.name === "Pendiente" ? (
             <form className="form-apply" onSubmit={handleSubmit}>
-              {/* <pre>{JSON.stringify(Invoice, null, 2)}</pre> */}
+              {/* <pre>{JSON.stringify(token, null, 2)}</pre> */}
 
               <h1 className="text-center text-[1.2rem] mb-6">Cargar Comprobante de Pago</h1>
               <div className="mb-4">
