@@ -120,7 +120,7 @@ const DeliverablesList = () => {
           fetchdeliverable={fetchDeliverables2}
         />
         <FilterDeliverableForBussines
-          userId={userData.id}
+          userId={userData?.id}
           token={token}
           currentPage={currentPage}
           currentFolder={currentFolder}
