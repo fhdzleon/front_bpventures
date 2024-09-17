@@ -34,9 +34,7 @@ const BlockUser = () => {
               },
             }
           );
-          const data = await fetchUsers();
-          setAllUsers(data);
-
+        
           if (!response.ok) {
             throw new Error("No se logró bloquear el usuario");
           }
@@ -59,6 +57,9 @@ const BlockUser = () => {
           });
         }
       }
+    }).finally(async () => {
+      const data = await fetchUsers();
+      setAllUsers(data);
     });
   };
 
