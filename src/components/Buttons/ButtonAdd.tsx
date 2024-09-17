@@ -11,7 +11,7 @@ export const ButtonAdd = ({ children, hrefString }: { children: React.ReactNode;
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="size-8 text-white mr-2 col-start-2 md:col-start-1 md:size-6 text-secundary cursor-pointer "
+            className="size-8 text-white mr-2 col-start-2 md:col-start-1 md:size-6 dark:text-secundary cursor-pointer "
           >
             <title>Ver Detalles</title>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
