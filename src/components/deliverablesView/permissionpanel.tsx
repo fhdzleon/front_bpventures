@@ -62,6 +62,7 @@ export default function PermissionPanel({
   const [loading, setLoading] = useState(true);
   const [selectedCompany, setSelectedCompany] = useState(null); 
   const [selectedUser, setSelectedUser] = useState<any>(null);
+  const token = localStorage.getItem('token'); 
   useEffect(() => {
     const permissionsMap = async () => {
       try {
@@ -229,7 +230,7 @@ export default function PermissionPanel({
   
   const isAdmin = userData?.isAdmin;
   return ReactDOM.createPortal (
-    <div className={`absolute top-[250px] bottom-0 right-52 z-50 isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+    <div className={`absolute top-[350px] bottom-0 right-52 z-50 isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
 <div className="w-[300px] md:w-[500px] rounded-md m-2 bg-white p-4 shadow-lg border border-gray-300 max-h-96 overflow-y-auto">
         <div className="flex justify-end items-center mb-4">
           <button
