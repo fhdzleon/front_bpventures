@@ -280,7 +280,7 @@ const Notifications = () => {
                     - {notification?.invoice?.number || "Sin número de factura"}
                   </p>
                
-                  {notification?.impactedUser?.Names || notification?.impactedUser?.LastName ? (
+      {notification?.impactedUser?.Names || notification?.impactedUser?.LastName ? (
   <p className="text-gray-600 text-sm">
     Al Usuario: <strong>{notification?.impactedUser?.Names} {notification?.impactedUser?.LastName}</strong>
   </p>
