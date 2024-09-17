@@ -1,6 +1,6 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InvoiceDetail from "@/components/DetailInvoice/DetailInvoice";
 import VoucherUpload from "@/components/invoice/VoucherUpload";
 import DeleteInvoice from "@/components/InvoicesButton/ButtonDelete";
@@ -35,25 +35,13 @@ const ListInvoiceComponent = ({
   const [openPanel, setOpenPanel] = useState<number | null>(null);
   const socket = useSocket();
 
+  // Redirige a la primera página cuando cambia el término de búsqueda
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
+
   const { userData, loading, fetchAgain } = useAuth();
 
-  // useEffect(() => {
-  //   // Escuchar el evento de factura pendiente
-  //   socket.on("pendingInvoice", (pendingInvoice) => {
-  //     alert(`Factura pendiente: ${pendingInvoice.number}, monto: ${pendingInvoice.amount}`);
-  //   });
-
-  //   // Escuchar el evento de factura vencida
-  //   socket.on("overdueInvoice", (overdueInvoice) => {
-  //     alert(`¡Factura vencida!: ${overdueInvoice.number}, monto: ${overdueInvoice.amount}`);
-  //   });
-
-  //   // Limpieza al desmontar el componente
-  //   return () => {
-  //     socket.off("pendingInvoice");
-  //     socket.off("overdueInvoice");
-  //   };
-  // }, [socket]);
 
   const togglePanel = (fileId: number | null) => {
     setOpenPanel(openPanel === fileId ? null : fileId);
@@ -95,6 +83,9 @@ const ListInvoiceComponent = ({
 
   const indexOfLastInvoice = currentPage * itemsPerPage;
   const indexOfFirstInvoice = indexOfLastInvoice - itemsPerPage;
+  // Redirige a la primera página cuando cambia el término de búsqueda
+
+
 
   const filteredInvoices = invoicesData?.filter((invoice: InvoiceInterface) =>
     invoice.number && typeof invoice.number === "string"
