@@ -157,7 +157,7 @@ useEffect(() => {
             <button
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50"
+              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-2xl disabled:opacity-50"
             >
               Anterior
             </button>
@@ -169,7 +169,7 @@ useEffect(() => {
             <button
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50"
+              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-2xl disabled:opacity-50"
             >
               Siguiente
             </button>
