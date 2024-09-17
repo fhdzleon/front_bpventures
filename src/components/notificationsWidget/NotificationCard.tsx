@@ -104,7 +104,7 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
           </span>
           <span className="mr-1">acaba de</span>
           <span className="text-acent font-bold mr-1">
-            {notificationType.name}
+            {notificationType?.name}
           </span>
           {deliverable && (
             <span className="font-bold mr-1">{deliverable.name}</span>
