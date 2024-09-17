@@ -44,7 +44,7 @@ export const usersData = [
     },
     impactedUser: {
       Names: "Beatriz",
-      LastName: "Ramírez",
+      LastName: "Juarez",
     },
     triggerUser: {
       Names: "Luis",
