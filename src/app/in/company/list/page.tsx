@@ -248,7 +248,7 @@ const CompanyTable: React.FC = () => {
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className={`px-4 py-2 bg-gray-200 text-black rounded ${
+            className={`px-4 py-2 bg-gray-200 text-black rounded-2xl ${
               currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
             }`}
           >
@@ -260,7 +260,7 @@ const CompanyTable: React.FC = () => {
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className={`px-4 py-2 bg-gray-200 text-black rounded ${
+            className={`px-4 py-2 bg-gray-200 text-black rounded-2xl ${
               currentPage === totalPages ? "cursor-not-allowed opacity-50" : ""
             }`}
           >
