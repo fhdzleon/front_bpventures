@@ -32,7 +32,7 @@ const Notifications: React.FC = () => {
         Actividad reciente
       </h2>
       <div className="space-y-0">
-        {notificationsData.length > 0 ? (
+        {Array.isArray(notificationsData) && notificationsData.length > 0 ? (
           notificationsData.map((notification, index) => (
             <NotificationCard
               key={index}
