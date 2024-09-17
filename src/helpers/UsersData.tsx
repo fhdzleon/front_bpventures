@@ -10,7 +10,7 @@ export const usersData = [
     },
     triggerUser: {
       Names: "Carlos",
-      LastName: "Martínez",
+      LastName: "Martíz",
     },
     deliverable: null,
     invoice: {

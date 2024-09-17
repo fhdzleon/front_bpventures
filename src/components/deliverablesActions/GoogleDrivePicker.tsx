@@ -1,9 +1,12 @@
 import useDrivePicker from 'react-google-drive-picker';
 import Cookies from 'js-cookie';
-
-function GoogleDrivePicker() {
+interface Props {
+  parentId: string;
+}
+function GoogleDrivePicker(props: Props) {
   const [openPicker] = useDrivePicker();
   const Token = Cookies.get("token");
+  const filepath = props.parentId;
   const handleOpenPicker = () => {
     openPicker({
       clientId: `${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`,
@@ -19,9 +22,7 @@ function GoogleDrivePicker() {
           console.log('Archivo seleccionado:', fileId);
           const fileName = data.docs[0].name;
           console.log('Nombre del archivo:', fileName);
-          
 
-          
           try {
             // Enviar el ID del archivo al backend para que lo descargue
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/deliverables/uploadGoogleFile`, {
@@ -30,7 +31,7 @@ function GoogleDrivePicker() {
                 Authorization: `Bearer ${Token}`,
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({ deliverableId: fileId, fileName:fileName }),
+              body: JSON.stringify({ deliverableId: fileId, fileName:fileName, parentId:filepath }),
             });
             
             if (!response.ok) {

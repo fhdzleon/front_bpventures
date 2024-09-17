@@ -4,6 +4,7 @@ import { AuthContextType, useAuth } from "@/context/AuthContext";
 import Swal from "sweetalert2";
 import Select from "react-select";
 import ReactDOM from "react-dom";
+import Cookies from "js-cookie";
 
 interface permissionTypes {
   id: number;
@@ -62,6 +63,8 @@ export default function PermissionPanel({
   const [loading, setLoading] = useState(true);
   const [selectedCompany, setSelectedCompany] = useState(null); 
   const [selectedUser, setSelectedUser] = useState<any>(null);
+  // const token = localStorage.getItem('token'); 
+  const token = Cookies.get("token");
   useEffect(() => {
     const permissionsMap = async () => {
       try {
@@ -71,6 +74,7 @@ export default function PermissionPanel({
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+             
             },
           }
         );
@@ -79,6 +83,7 @@ export default function PermissionPanel({
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -185,6 +190,7 @@ export default function PermissionPanel({
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(permisosUpdated),
         }
@@ -229,7 +235,7 @@ export default function PermissionPanel({
   
   const isAdmin = userData?.isAdmin;
   return ReactDOM.createPortal (
-    <div className={`absolute top-[250px] bottom-0 right-52 z-50 isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+    <div className={`absolute top-[350px] bottom-0 right-5 z-50 isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
 <div className="w-[300px] md:w-[500px] rounded-md m-2 bg-white p-4 shadow-lg border border-gray-300 max-h-96 overflow-y-auto">
         <div className="flex justify-end items-center mb-4">
           <button
@@ -284,8 +290,8 @@ export default function PermissionPanel({
           className="w-full"
             id="users"
             placeholder="Seleccione un usuario"
-            options={Companies?.find((company) => company.id === selectedCompany)
-              .users
+            options={Companies?.find((company) => company.id === selectedCompany)?.users
+              // .users
               .filter((user) => !user.isAdmin)
               .map((user) => ({
                 key: user.id,

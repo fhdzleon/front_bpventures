@@ -339,7 +339,7 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
                   <h3 className="font-sans text-lg text-secundary">
                     Subir Archivo:
                   </h3>
-                  {/*  <GoogleDrivePicker /> */}
+                   <GoogleDrivePicker parentId={parentId} />
                   <p className="font-sans mb-2">
                     Selecciona un archivo desde tu PC.
                   </p>
