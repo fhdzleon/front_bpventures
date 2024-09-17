@@ -18,7 +18,7 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
   const [dueDate, setDueDate] = useState("");
   const [amount, setAmount] = useState(0);
   const [invoiceStatusId, setInvoiceStatusId] = useState(invoiceStatuses[0].id);
-  const [companyId, setCompanyId] = useState<number | null>(null);
+  const [companyId, setCompanyId] = useState<number>();
   const [companies, setCompanies] = useState<Array<{ id: number; name: string }>>([]);
   const [file, setFile] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -34,12 +34,13 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoices/getbyid/${invoiceId}`);
         if (response.ok) {
           const data = await response.json();
+          console.log(data)
           setInvoiceNumber(data.number);
           setIssueDate(data.issueDate);
           setDueDate(data.dueDate);
           setAmount(data.amount);
           setInvoiceStatusId(data.invoiceStatus.id);
-          setCompanyId(data.companyId); // Set the company associated with the invoice
+          setCompanyId(data.company.id); // Set the company associated with the invoice
           setPathFile(data.path);
           setLoading(false);
         } else {
@@ -228,7 +229,7 @@ const UpdateInvoiceComponent: React.FC<{ invoiceId: number }> = ({ invoiceId }) 
                 <label className="label-apply">Empresa:</label>
                 <select
                   id="empresa"
-                  value={companyId || ""}
+                  value={companyId}
                   onChange={(e) => setCompanyId(parseInt(e.target.value))}
                   className="input-apply"
                   required
