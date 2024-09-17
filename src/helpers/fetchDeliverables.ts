@@ -24,7 +24,7 @@ export const fetchDeliverables = async (
       url += `&companyId=${companyId}`;
     }
 
-    console.log("Fetching deliverables with URL:", url);
+    /* console.log("Fetching deliverables with URL:", url); */
 
     const response = await fetch(url, {
       method: "GET",
