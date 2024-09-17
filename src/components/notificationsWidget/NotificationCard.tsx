@@ -67,7 +67,7 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
   };
 
   return (
-    <div className="bg-white shadow-md border border-1 py-7 px-10">
+    <div className="bg-white shadow-md border text-sm border-1 py-7 px-10">
       <div className="flex flex-col md:flex-row items-start justify-between">
         <div className="flex flex-col md:flex-row items-center text-gray-800">
           <svg
@@ -104,7 +104,7 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
           </span>
           <span className="mr-1">acaba de</span>
           <span className="text-acent font-bold mr-1">
-            {notificationType.name}
+            {notificationType?.name}
           </span>
           {deliverable && (
             <span className="font-bold mr-1">{deliverable.name}</span>
