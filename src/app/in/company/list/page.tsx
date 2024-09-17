@@ -2,9 +2,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Swal from "sweetalert2";
-import 'sweetalert2/dist/sweetalert2.min.css';
-import  "../../../../styles/style.css";
-
+import "sweetalert2/dist/sweetalert2.min.css";
+import "../../../../styles/style.css";
 
 import FilterInput from "@/components/Search/Search";
 import { ButtonAdd } from "@/components/Buttons/ButtonAdd";
@@ -28,16 +27,18 @@ const CompanyTable: React.FC = () => {
 
   const fetchCompanies = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/companies`);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/companies`
+      );
       if (response.ok) {
         const data = await response.json();
         setCompanies(data);
         setLoading(false);
       } else {
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Error al cargar las empresas',
+          icon: "error",
+          title: "Error",
+          text: "Error al cargar las empresas",
           confirmButtonText: "error",
           confirmButtonColor: "#2b4168",
         });
@@ -45,15 +46,14 @@ const CompanyTable: React.FC = () => {
     } catch (error: any) {
       console.error("Error al obtener empresas", error);
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Error al cargar las empresas',
+        icon: "error",
+        title: "Error",
+        text: "Error al cargar las empresas",
         confirmButtonText: "Aceptar",
         confirmButtonColor: "#2b4168",
       });
     }
   };
-
 
   useEffect(() => {
     fetchCompanies();
@@ -62,9 +62,14 @@ const CompanyTable: React.FC = () => {
   const indexOfLastCompany = currentPage * itemsPerPage;
   const indexOfFirstCompany = indexOfLastCompany - itemsPerPage;
 
-  const filteredCompanies = companies.filter((company) => company.name.toLowerCase().includes(filter.toLowerCase()));
+  const filteredCompanies = companies.filter((company) =>
+    company.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
-  const currentCompanies = filteredCompanies.slice(indexOfFirstCompany, indexOfLastCompany);
+  const currentCompanies = filteredCompanies.slice(
+    indexOfFirstCompany,
+    indexOfLastCompany
+  );
   const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
 
   const handlePreviousPage = () => {
@@ -76,11 +81,12 @@ const CompanyTable: React.FC = () => {
   };
   return (
     <div>
-    {loading && <PreloaderAwait />}
+      {loading && <PreloaderAwait />}
 
       <div className="m-5 max-h-screen mt-5 rounded-lg font-futura">
-    
-        <h1 className="text-4xl font-futura mb-6 text-secundary">Lista de Empresas</h1>
+        <h1 className="text-4xl font-futura mb-6 text-secundary">
+          Lista de Empresas
+        </h1>
         <ButtonAdd children="Agregar Empresa" hrefString="/in/company/create" />
         <FilterInput filter={filter} onFilterChange={setFilter} />
 
@@ -91,26 +97,45 @@ const CompanyTable: React.FC = () => {
             <table className="min-w-full divide-y divide-gray-300">
               <thead className="bg-secundary font-futura text-white">
                 <tr>
-                  <th className="py-3 px-6 font-futura text-left text-lg">ID</th>
-                  <th className="py-3 px-6 font-futura text-left text-lg">Razón Social</th>
-                  <th className="py-3 px-6 font-futura text-left text-lg">CUIT</th>
-                  <th className="py-3 px-6 font-futura text-left text-lg">Dirección</th>
-                  <th className="py-3 px-6 font-futura text-left text-lg">Acciones</th>
+                  <th className="py-3 px-6 font-futura text-left text-lg">
+                    ID
+                  </th>
+                  <th className="py-3 px-6 font-futura text-center text-lg">
+                    Razón Social
+                  </th>
+                  <th className="py-3 px-6 font-futura text-center text-lg">
+                    CUIT
+                  </th>
+                  <th className="py-3 px-6 font-futura text-center text-lg">
+                    Dirección
+                  </th>
+                  <th className="py-3 px-6 font-futura text-center text-lg">
+                    Acciones
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {currentCompanies.length > 0 ? (
                   currentCompanies.map((company) => (
-                    <tr key={company.id} className="hover:bg-gray-50 transition-colors duration-200">
-                      <td className="py-4 px-6 font-futura text-sm text-gray-900">{company.id}</td>
-                      <td className="py-4 px-6 font-futura text-sm text-gray-900">
+                    <tr
+                      key={company.id}
+                      className="hover:bg-gray-50 transition-colors duration-200"
+                    >
+                      <td className="py-4 px-6 font-sans text-center text-sm text-gray-900">
+                        {company.id}
+                      </td>
+                      <td className="py-4 px-6 font-sans text-center text-sm text-gray-900">
                         {company.name}
                       </td>
-                      <td className="py-4 px-6 font-futura text-sm text-gray-700">{company.cuit}</td>
-                      <td className="py-4 px-6 font-futura text-sm text-gray-700">{company.address}</td>
+                      <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
+                        {company.cuit}
+                      </td>
+                      <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
+                        {company.address}
+                      </td>
 
                       {/* <td className="py-4 px-6 font-futura text-sm text-gray-700"> */}
-                      <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                      <td className="py-4 px-6 font-futura justify-center flex text-sm text-gray-700">
                         <div className="flex space-x-2">
                           <Link href={`/in/company/${company.id}/details`}>
                             <svg
@@ -127,7 +152,11 @@ const CompanyTable: React.FC = () => {
                                 strokeLinejoin="round"
                                 d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
                               />
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                              />
                             </svg>
                           </Link>
 
@@ -190,7 +219,10 @@ const CompanyTable: React.FC = () => {
                           </Link>
 
                           <button>
-                            <DeleteCompany id={company.id} fetchCompanies={fetchCompanies} />
+                            <DeleteCompany
+                              id={company.id}
+                              fetchCompanies={fetchCompanies}
+                            />
                           </button>
                         </div>
                       </td>
@@ -211,7 +243,9 @@ const CompanyTable: React.FC = () => {
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className={`px-4 py-2 bg-gray-200 text-black rounded ${currentPage === 1 ? "cursor-not-allowed opacity-50" : ""}`}
+            className={`px-4 py-2 bg-gray-200 text-black rounded ${
+              currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
+            }`}
           >
             Anterior
           </button>
@@ -221,7 +255,9 @@ const CompanyTable: React.FC = () => {
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className={`px-4 py-2 bg-gray-200 text-black rounded ${currentPage === totalPages ? "cursor-not-allowed opacity-50" : ""}`}
+            className={`px-4 py-2 bg-gray-200 text-black rounded ${
+              currentPage === totalPages ? "cursor-not-allowed opacity-50" : ""
+            }`}
           >
             Siguiente
           </button>

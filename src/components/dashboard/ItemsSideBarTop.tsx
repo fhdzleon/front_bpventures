@@ -38,7 +38,7 @@ const ItemsSideBarTop = () => {
             stroke="currentColor"
             className="size-8 hover:scale-125 md:hover:scale-100 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
           >
-            <title>Mi unidad</title>
+            <title>Mis Archivos</title>
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -47,7 +47,7 @@ const ItemsSideBarTop = () => {
           </svg>
 
           <h1 className="text-xs hidden md:block text-secundary col-span-3">
-            MI UNIDAD
+            MIS ARCHIVOS
           </h1>
 
           <svg

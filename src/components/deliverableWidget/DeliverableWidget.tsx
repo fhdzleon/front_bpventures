@@ -71,7 +71,7 @@ const DeliverableWidget = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {allDeliverables.map((deliverable) => {
-              console.log(allDeliverables);
+              /* console.log(allDeliverables); */
 
               const extension = !deliverable.deliverableIsFolder
                 ? getDeliverableExtension(deliverable.deliverablePath)

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 import PreloaderAwait from "../preloader/PreloaderAwait";
 import { ButtonAdd } from "../Buttons/ButtonAdd";
-import FilterInput from "../Search/Search"
+import FilterInput from "../Search/Search";
 
 export interface User {
   look: ReactNode;
@@ -29,12 +29,12 @@ export const UsersListComponent = ({
 
   const filteredUsers = Array.isArray(allUsers)
     ? allUsers.filter((user) => {
-      const fullName = `${user.Names} ${user.LastName}`.toLowerCase();
-      return (
-        fullName.includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    })
+        const fullName = `${user.Names} ${user.LastName}`.toLowerCase();
+        return (
+          fullName.includes(searchTerm.toLowerCase()) ||
+          user.email.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      })
     : [];
 
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
@@ -56,7 +56,7 @@ export const UsersListComponent = ({
       {!loading ? (
         <div className="m-5 max-h-screen mt-5 rounded-lg font-futura">
           <h1 className="text-4xl font-futura mb-6 text-secundary">
-            Lista de Usuarios {companyName && `: ${companyName}`}  
+            Lista de Usuarios {companyName && `: ${companyName}`}
           </h1>
 
           <ButtonAdd children="Agregar usuario" hrefString="/in/users/create" />
@@ -66,51 +66,74 @@ export const UsersListComponent = ({
             <table className="min-w-full divide-y divide-gray-300">
               <thead className="bg-secundary font-futura text-white">
                 <tr>
-                  <th className="py-3 px-6 font-futura text-left text-lg">Nombre</th>
-                  <th className="py-3 px-6 font-futura text-left text-lg">Email</th>
-                  <th className="py-3 px-6 font-futura text-left text-lg">Cargo</th>
+                  <th className="py-3 px-6 font-futura text-left text-lg">
+                    Nombre
+                  </th>
+                  <th className="py-3 px-6 font-futura text-center text-lg">
+                    Email
+                  </th>
+                  <th className="py-3 px-6 font-futura text-center text-lg">
+                    Cargo
+                  </th>
                   {!isCompany && (
                     <>
-                      <th className="py-3 px-6 font-futura text-left text-lg">Empresa</th>
+                      <th className="py-3 px-6 font-futura text-center text-lg">
+                        Empresa
+                      </th>
                     </>
                   )}
-                  <th className="py-3 px-6 font-futura text-left text-lg">Estado</th>
-                  <th className="flex py-3 px-6 font-futura text-center text-lg">Ver Usuario</th>
+                  <th className="py-3 px-6 font-futura text-center text-lg">
+                    Estado
+                  </th>
+                  <th className=" py-3 px-6 font-futura text-center text-lg">
+                    Ver Usuario
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {paginatedUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50 transition-colors duration-200">
-                    <td className="py-4 px-6 font-futura text-sm text-gray-900">
-                        {user.Names} {user.LastName}
+                  <tr
+                    key={user.id}
+                    className="hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    <td className="py-4 px-6 font-sans text-left text-sm text-gray-900">
+                      {user.Names} {user.LastName}
                     </td>
-                    <td className="py-4 px-6 font-futura text-sm text-gray-700">{user.email}</td>
-                    <td className="py-4 px-6 font-futura text-sm text-gray-700">{user.Position}</td>
+                    <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
+                      {user.email}
+                    </td>
+                    <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
+                      {user.Position}
+                    </td>
                     {!isCompany && (
                       <>
-                        <td className="py-4 px-6 font-futura text-sm text-gray-700">{user?.company?.name}</td>
+                        <td className="py-4 px-6 font-sans text-center text-sm text-gray-700">
+                          {user?.company?.name}
+                        </td>
                       </>
                     )}
-                    <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                    <td className="py-4 px-6 flex justify-center items-center font-sans text-sm  text-gray-700">
                       {user.statusId === 1 ? "Desbloqueado" : "Bloqueado"}
                     </td>
-                    <td className="py-4 px-6 font-futura text-sm text-gray-700">
+                    <td className="py-4 px-6 items-center justify-center   text-sm text-gray-700">
                       <Link href={`${PATHROUTES.USER}/${user.id}/details`}>
                         {/* <button className="bg-green-500 text-white px-2 py-1 rounded mr-2">Ver Usuarios</button> */}
-                        
-                        <svg xmlns="http://www.w3.org/2000/svg"
+
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          className="size-8 hover:scale-125 hover:text-blue-700 col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
+                          className="size-8 hover:scale-125 hover:text-blue-700  mx-auto col-start-2 md:col-start-1 md:size-6 text-secundary transform transition-all duration-500 ease-in-out cursor-pointer "
                         >
                           <title>Ver detalle del usuario</title>
-                          <path stroke-linecap="round"
+                          <path
+                            stroke-linecap="round"
                             stroke-linejoin="round"
-                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                          />
                         </svg>
-
                       </Link>
                       {/* <Link href={`${PATHROUTES.USER}/${user.id}/details`} className="text-black hover:text-blue-700">
                         Ver Usuario
@@ -121,7 +144,9 @@ export const UsersListComponent = ({
               </tbody>
             </table>
 
-            {paginatedUsers.length === 0 && <p className="p-6 text-gray-600">No se encontraron usuarios.</p>}
+            {paginatedUsers.length === 0 && (
+              <p className="p-6 text-gray-600">No se encontraron usuarios.</p>
+            )}
           </div>
 
           <div className="flex justify-between items-center mt-4">
