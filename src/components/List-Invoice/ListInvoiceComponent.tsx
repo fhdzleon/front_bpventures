@@ -115,15 +115,16 @@ const ListInvoiceComponent = ({
 
   return (
     <div className=" max-h-screen mt-5 rounded-lg">
-      {/* <PreloaderLoad/> */}
+     
       {loading && <PreloaderAwait />}
-      {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
+
       {titleInvoicesList && (
         <h1 className="text-4xl font-futura mb-6 text-secundary">
           {titleInvoicesList}
         </h1>
       )}
-      <FilterInput filter={filter} onFilterChange={setFilter} />
+      {/* <FilterInput filter={filter} onFilterChange={setFilter} /> */}
+      
       <div className="overflow-auto mt-4 bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
