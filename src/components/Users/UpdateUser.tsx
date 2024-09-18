@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 import { useParams } from "next/navigation";
 import PreloaderLoad from "../preloader/PreloaderLoad";
-import { GetUserById, UpdateUser } from "@/helpers/auth.helper";
+import { fetchUsers, GetUserById, UpdateUser } from "@/helpers/auth.helper";
 import { useAuth } from "@/context/AuthContext";
 import Swal from "sweetalert2";
 
@@ -42,7 +42,7 @@ interface Props {
 const UpdateUserComponent: React.FC<Props> = ({ id }) => {
   const userId = id;
   const params = useParams();
-
+  const {setAllUsers} = useAuth();
   const myAccount = Object.keys(params).length === 0;
 
   const [userDataForm, setUserDataForm] = useState<User>({
@@ -118,9 +118,11 @@ const UpdateUserComponent: React.FC<Props> = ({ id }) => {
         text: "Redirigiendo...",
         timer: 1500,
         showConfirmButton: false,
-      }).then(() => {
+      }).then(async () => {
         // Aquí puedes redirigir después de la confirmación
         // router.push(PATHROUTES.LIST);
+        const refetch = await fetchUsers()
+        setAllUsers(refetch)
         window.location.href = PATHROUTES.LIST;
       });
     } catch (error: any) {
