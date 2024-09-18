@@ -151,26 +151,26 @@ const formatRelativeTime = (dateString: string | number | Date) => {
 
   const rtf = new Intl.RelativeTimeFormat("es", { numeric: "auto" });
 
-  if (days > 30) {
-    return date.toLocaleDateString("es-ES", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  } else if (days >= 7) {
-    return rtf.format(-weeks, "week");
-  } else if (days > 0) {
-    return rtf.format(-days, "day");
-  } else if (hours > 0) {
-    return rtf.format(-hours, "hour");
-  } else if (minutes > 0) {
-    return rtf.format(-minutes, "minute");
-  } else {
-    return rtf.format(-seconds, "second");
-  }
+  // if (days > 30) {
+  //   return date.toLocaleDateString("es-ES", {
+  //     weekday: "long",
+  //     year: "numeric",
+  //     month: "long",
+  //     day: "numeric",
+  //     hour: "2-digit",
+  //     minute: "2-digit",
+  //   });
+  // } else if (days >= 7) {
+  //   return rtf.format(-weeks, "week");
+  // } else if (days > 0) {
+  //   return rtf.format(-days, "day");
+  // } else if (hours > 0) {
+  //   return rtf.format(-hours, "hour");
+  // } else if (minutes > 0) {
+  //   return rtf.format(-minutes, "minute");
+  // } else {
+  //   return rtf.format(-seconds, "second");
+  // }
 };
 
 const Notifications = () => {
@@ -190,6 +190,7 @@ const Notifications = () => {
         if (response.ok) {
           const data = await response.json();
           setNotifications(data);
+          console.log(data, "datanotif")
         } else {
           throw new Error("No se cargaron las notificaciones");
         }
@@ -204,7 +205,7 @@ const Notifications = () => {
   useEffect(() => {
     if (!userId) return;
 
-    const socket = io(`${process.env.NEXT_PUBLIC_API_URL}/notifications`, {
+    const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`, {
       query: { userId: userId },
     });
 
@@ -221,6 +222,7 @@ const Notifications = () => {
     };
   }, [userId]);
 
+
   const toggleNotifications = () => {
     setIsOpen(!isOpen);
     if (hasNewNotification) {
@@ -232,7 +234,7 @@ const Notifications = () => {
     <div className="relative">
        <button
     onClick={toggleNotifications}
-    className={`bg-acent flex items-center text-white p-2 rounded-full focus:outline-none hover:bg-acent transition ${hasNewNotification ? 'bg-red-500' : ''}`}
+    className={`bg-acent flex items-center text-white p-2 rounded-full focus:outline-none hover:bg-acent transition ${hasNewNotification ? 'bg-acent' : ''}`}
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -252,8 +254,11 @@ const Notifications = () => {
     <span className="hidden md:inline ml-2">Notificaciones</span>
     {/* Indicador de notificaciones */}
     {hasNewNotification && (
-      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-2 py-1">
-        !
+      <span className="absolute -top-3 -right-3 bg-red-400 text-white text-xs rounded-full px-2 py-1">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+</svg>
+
       </span>
     )}
   </button>
@@ -309,7 +314,7 @@ const Notifications = () => {
                       </strong>
                     </p>
                     <p className="text-gray-500 text-xs">
-                    {formatRelativeTime(notification?.createdAt)}
+                    {/* {formatRelativeTime(notification?.createdAt)} */}
                     </p>
                   </div>
                 </li>
