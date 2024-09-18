@@ -113,7 +113,7 @@ const DeliverablesList = () => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row items-center space-x-4">
+      <div className="flex flex-col items-start space-y-3 lg:space-y-0 w-full lg:flex-row lg:items-center space-x-4">
         <SearchBar
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
