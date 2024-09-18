@@ -55,15 +55,16 @@ const BillingTable: React.FC<IdParams> = ({ params }) => {
   const titleInvoicesList = `Lista de Facturas de: ${companyName}`;
 
   return (
-    <>
-      <div className="m-5 max-h-screen  mt-5 rounded-lg">
+    <div className="m-5 max-h-screen  mt-5 rounded-lg font-futura">
+         
+      {/* <div > */}
         <button
           onClick={() => window.history.back()} // Alternativa usando window.history.back()
-          className="bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 mb-4"
+          className="bg-[#2B4168] text-white   py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 mb-4"
         >
           Volver
         </button>
-      </div>
+     
 
       {/* <button
         onClick={() => router.back()} // Uso correcto de router.back()
@@ -73,7 +74,7 @@ const BillingTable: React.FC<IdParams> = ({ params }) => {
       </button> */}
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
       <ListInvoiceComponent invoicesData={invoicesData} isAdmin={false} companyName={companyName} titleInvoicesList={titleInvoicesList} />
-    </>
+    </div>
   );
 };
 
