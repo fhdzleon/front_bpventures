@@ -67,9 +67,9 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
   };
 
   return (
-    <div className="bg-white shadow-md border text-sm border-1 py-7 px-10">
-      <div className="flex flex-col md:flex-row items-start justify-between">
-        <div className="flex flex-col md:flex-row items-center text-gray-800">
+    <div className="bg-white shadow-md border text-sm border-1 py-7 px-10 w-full">
+      <div className="flex flex-col md:flex-row items-start justify-between w-full">
+        <div className="flex flex-col md:flex-row items-center text-gray-800 w-full md:w-2/3 lg:w-3/4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
