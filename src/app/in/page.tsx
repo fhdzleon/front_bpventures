@@ -1,6 +1,6 @@
-import React from "react";
-import DeliverableWidget from "@/components/deliverableWidget/DeliverableWidget";
-import InvoiceWidget from "@/components/invoiceWidget/InvoiceWidget";
+import React, { lazy } from "react";
+const DeliverableWidget = (lazy(()=>import('@/components/deliverableWidget/DeliverableWidget')));
+const InvoiceWidget = (lazy(()=>import('@/components/invoiceWidget/InvoiceWidget')));
 import Notifications from "@/components/notificationsWidget/Notifications";
 
 const Dashboard = () => {

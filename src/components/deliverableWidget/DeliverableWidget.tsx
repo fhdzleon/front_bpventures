@@ -25,13 +25,13 @@ export interface Deliverable {
 const DeliverableWidget = () => {
   const [allDeliverables, setAllDeliverables] = useState<Deliverable[]>([]);
   const token = Cookies.get("token");
-  const { user } = useAuth();
+  const { userData } = useAuth();
 
   useEffect(() => {
     const fetchDeliverables = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/deliverables/user/${user.id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/deliverables/user/${userData?.id}`,
           {
             method: "GET",
             headers: {
@@ -48,7 +48,7 @@ const DeliverableWidget = () => {
     };
 
     fetchDeliverables();
-  }, []);
+  }, [userData?.id, token]);
 
   return (
     <div className="p-6 font-futura">

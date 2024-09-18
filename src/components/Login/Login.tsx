@@ -125,11 +125,11 @@ export default function Login() {
             icon: "success",
             title: "¡Inicio de sesión exitoso!",
             text: "Redirigiendo...",
-            timer: 1500,
+            timer: 3000,
             showConfirmButton: false,
           }).then(() => {
             router.push(PATHROUTES.HOME);
-          });
+          })
         }
       } catch (error) {
         Swal.fire({
