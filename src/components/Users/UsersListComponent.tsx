@@ -26,19 +26,19 @@ export const UsersListComponent = ({
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 5;
-// Redirige a la primera página cuando cambia el término de búsqueda
-useEffect(() => {
-  setCurrentPage(1);
-}, [searchTerm]);
+  // Redirige a la primera página cuando cambia el término de búsqueda
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   const filteredUsers = Array.isArray(allUsers)
     ? allUsers.filter((user) => {
-        const fullName = `${user.Names} ${user.LastName}`.toLowerCase();
-        return (
-          fullName.includes(searchTerm.toLowerCase()) ||
-          user.email.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      })
+      const fullName = `${user.Names} ${user.LastName}`.toLowerCase();
+      return (
+        fullName.includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    })
     : [];
 
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
@@ -62,9 +62,12 @@ useEffect(() => {
           <h1 className="text-4xl font-futura mb-6 text-secundary">
             Lista de Usuarios {companyName && `: ${companyName}`}
           </h1>
-          <ButtonAdd hrefString="/in/users/create">Agregar Usuario</ButtonAdd>
-          {/* <ButtonAdd children="Agregar usuario" hrefString="/in/users/create" /> */}
-          <FilterInput filter={searchTerm} onFilterChange={setSearchTerm} />
+
+          <div className="flex items-center space-x-4" >
+            <FilterInput filter={searchTerm} onFilterChange={setSearchTerm} />
+            <ButtonAdd hrefString="/in/users/create">Agregar Usuario</ButtonAdd>
+            {/* <ButtonAdd children="Agregar usuario" hrefString="/in/users/create" /> */}
+          </div>
 
           <div className="overflow-x-auto bg-white shadow-lg rounded-lg border border-gray-300">
             <table className="min-w-full divide-y divide-gray-300">
@@ -157,7 +160,7 @@ useEffect(() => {
             <button
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50"
+              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-2xl disabled:opacity-50"
             >
               Anterior
             </button>
@@ -169,7 +172,7 @@ useEffect(() => {
             <button
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50"
+              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-2xl disabled:opacity-50"
             >
               Siguiente
             </button>

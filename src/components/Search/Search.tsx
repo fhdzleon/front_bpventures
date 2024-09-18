@@ -5,7 +5,7 @@ interface FilterInputProps {
   onFilterChange: (value: string) => void;
 }
 
-const FilterInput = ({ filter, onFilterChange }: FilterInputProps) => {
+const FilterInput: React.FC<FilterInputProps> = ({ filter, onFilterChange }: FilterInputProps) => {
   return (
     <div className="flex my-3 items-center">
       <div>
