@@ -32,7 +32,9 @@ const InvoicesByUser = ({params }: {params: { id: number }}) => {
   return (
     <>
       {/* <pre>{JSON.stringify(userName, null, 2)}</pre> */}
+      <div className="m-4">
       <ListInvoiceComponent isAdmin={false} invoicesData={invoicesData} titleInvoicesList={titleInvoicesList} />
+      </div>
     </>
   );
 };

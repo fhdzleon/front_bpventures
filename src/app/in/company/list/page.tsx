@@ -243,29 +243,33 @@ const CompanyTable: React.FC = () => {
             </table>
           </div>
         )}
-        <div className=" flex justify-between mt-4 ">
-          <button
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-            className={`px-4 py-2 bg-gray-200 text-black rounded-2xl ${
-              currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
-            }`}
-          >
-            Anterior
-          </button>
-          <p className="text-sm">
-            Página {currentPage} de {totalPages}
-          </p>
-          <button
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            className={`px-4 py-2 bg-gray-200 text-black rounded-2xl ${
-              currentPage === totalPages ? "cursor-not-allowed opacity-50" : ""
-            }`}
-          >
-            Siguiente
-          </button>
-        </div>
+        {totalPages > 0 && (
+          <div className="flex justify-between mt-4">
+            <button
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 bg-gray-200 text-black rounded-2xl ${
+                currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
+              }`}
+            >
+              Anterior
+            </button>
+            <p className="text-sm">
+              Página {currentPage} de {totalPages}
+            </p>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 bg-gray-200 text-black rounded-2xl ${
+                currentPage === totalPages
+                  ? "cursor-not-allowed opacity-50"
+                  : ""
+              }`}
+            >
+              Siguiente
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
