@@ -124,7 +124,7 @@ export const CreateUserForm: React.FC = () => {
       Swal.fire({
         icon: "success",
         title: "¡Usuario registrado exitosamente!",
-        text: "Redirigiendo...",
+        // text: "Redirigiendo...",
         timer: 1500,
         showConfirmButton: false,
       }).then(() => {

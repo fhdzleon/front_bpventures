@@ -111,7 +111,7 @@ export const AddCompanyComponent: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full min-h-screen">
+    <div className="flex justify-center items-center w-full">
       <form className="form-apply" onSubmit={handleSubmit}>
         <h1 className="text-center text-[1.2rem] mb-6">Añadir Empresa</h1>
 
