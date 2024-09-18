@@ -189,6 +189,7 @@ const Notifications = () => {
         if (response.ok) {
           const data = await response.json();
           setNotifications(data);
+          console.log(data, "datanotif")
         } else {
           throw new Error("No se cargaron las notificaciones");
         }

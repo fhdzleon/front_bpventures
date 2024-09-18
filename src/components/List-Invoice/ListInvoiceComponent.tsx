@@ -42,7 +42,6 @@ const ListInvoiceComponent = ({
 
   const { userData, loading, fetchAgain } = useAuth();
 
-
   const togglePanel = (fileId: number | null) => {
     setOpenPanel(openPanel === fileId ? null : fileId);
   };
@@ -85,8 +84,6 @@ const ListInvoiceComponent = ({
   const indexOfFirstInvoice = indexOfLastInvoice - itemsPerPage;
   // Redirige a la primera página cuando cambia el término de búsqueda
 
-
-
   const filteredInvoices = invoicesData?.filter((invoice: InvoiceInterface) =>
     invoice.number && typeof invoice.number === "string"
       ? invoice.number.toLowerCase().includes(filter.toLowerCase())
@@ -115,7 +112,6 @@ const ListInvoiceComponent = ({
 
   return (
     <div className=" max-h-screen mt-5 rounded-lg">
-     
       {loading && <PreloaderAwait />}
 
       {titleInvoicesList && (
@@ -124,7 +120,7 @@ const ListInvoiceComponent = ({
         </h1>
       )}
       {/* <FilterInput filter={filter} onFilterChange={setFilter} /> */}
-      
+
       <div className="overflow-auto mt-4 bg-white shadow-lg rounded-lg border border-gray-300">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-secundary font-futura text-white">
@@ -370,7 +366,7 @@ const ListInvoiceComponent = ({
 
         {/* {invoicesData.length === 0 && <p className="p-6 text-gray-600">No se encontraron facturas.</p>} */}
       </div>
-      {filteredInvoices.length > 0 && (
+      {filteredInvoices.length > 0 && totalPages > 0 && (
         <div className="pagination-container flex justify-between items-center mt-4">
           {/* Paginación */}
           <button
