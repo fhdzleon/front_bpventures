@@ -7,12 +7,14 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { PATHROUTES } from "@/helpers/pathRoutes";
 import DeleteIcon from "../icons/DeleteIcon";
+import { useAuth } from "@/context/AuthContext";
+import { fetchUsers } from "@/helpers/auth.helper";
 
 const DeleteUser = () => {
   const { id } = useParams();
   const token = Cookies.get("token");
   const router = useRouter();
-
+  const {setAllUsers} = useAuth();
   const handleClick = async () => {
     Swal.fire({
       title: "¿Estás seguro?",
@@ -48,7 +50,12 @@ const DeleteUser = () => {
             text: "El usuario ha sido eliminado.",
             icon: "success",
             confirmButtonColor: "#2b4168",
-          }).finally(() => router.push(PATHROUTES.LIST));
+          }).finally(async() =>
+            {
+              const refetch = await fetchUsers()
+              setAllUsers(refetch)
+              router.push(PATHROUTES.LIST)
+            });
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
           Swal.fire({
