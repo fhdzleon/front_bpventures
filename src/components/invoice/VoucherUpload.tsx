@@ -173,7 +173,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
 
           <strong>Archivo Comprobante:</strong>
           <iframe src={fileUrl} title="Comprobante PDF" className="w-full h-96 border-0" />
-          <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline mt-2 block">
+          <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-secundary underline mt-2 block">
             Ver PDF en Nueva Ventana
           </a>
         </div>
@@ -184,7 +184,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
           {/* <pre>{JSON.stringify(Invoice, null, 2)}</pre> */}
           <strong>Previsualización de Comprobante:</strong>
           <img src={fileUrl} alt="Comprobante de Pago" className="mt-2 max-w-xs" />
-          <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline mt-2 block">
+          <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-secundary underline mt-2 block">
             Ver Imagen en Nueva Ventana
           </a>
         </div>
@@ -195,7 +195,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
           {/* <pre>{JSON.stringify(Invoice, null, 2)}</pre> */}
 
           <strong>Archivo Comprobante:</strong>
-          <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+          <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-secundary underline mt-2 block">
             Descargar archivo
           </a>
         </div>
