@@ -1,6 +1,7 @@
 "use client";
 
 import { ButtonAdd } from "@/components/Buttons/ButtonAdd";
+import ButtonSendEmail from "@/components/Buttons/ButtonSendEmail";
 import ListInvoiceComponent from "@/components/List-Invoice/ListInvoiceComponent";
 import FilterInput from "@/components/Search/Search";
 import { useAuth } from "@/context/AuthContext";
@@ -56,6 +57,7 @@ const BillingTable = () => {
         </select>
 
         <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
+        <ButtonSendEmail text="Enviar Emails de facturas vencidas"/>
       </div>
 
       {/* Lista de facturas filtradas */}
