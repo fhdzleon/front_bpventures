@@ -56,7 +56,7 @@ const UpdateUserComponent: React.FC<Props> = ({ id }) => {
     Domicilio: "",
   });
   const [companies, setCompanies] = useState<any[]>([]);
-  const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
+  const [selectedCompanyId, setSelectedCompanyId] = useState<number >();
   const { loading, userData, setUserData } = useAuth();
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
@@ -66,7 +66,7 @@ const UpdateUserComponent: React.FC<Props> = ({ id }) => {
     try {
       const response = await GetUserById(userId);
       setUserDataForm(response);
-      setSelectedCompanyId(companies.find((company: any) => company.name === response.Empresa)?.id || null);
+      setSelectedCompanyId(response.company.id);
     } catch (error) {
       console.error(error);
     }
