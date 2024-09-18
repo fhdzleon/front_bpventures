@@ -4,7 +4,7 @@ import { PATHROUTES } from "@/helpers/pathRoutes";
 
 const ItemsSideBarTop = () => {
   return (
-    <div className="my-7">
+    <div className="mt-7">
       <Link href={PATHROUTES.HOME}>
         <div className="grid grid-cols-6 px-4 items-center ">
           <svg
@@ -49,21 +49,6 @@ const ItemsSideBarTop = () => {
           <h1 className="text-xs hidden md:block text-secundary col-span-3">
             MIS ARCHIVOS
           </h1>
-
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill=""
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="size-4 hidden md:block text-secundary"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m8.25 4.5 7.5 7.5-7.5 7.5"
-            />
-          </svg>
         </div>
       </Link>
     </div>
