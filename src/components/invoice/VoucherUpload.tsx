@@ -24,11 +24,9 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
   const [file, setFile] = useState<File | null>(null);
   const [voucherState, setVoucherState] = useState<any>(null);
   const token = Cookies.get("token");
-  
 
   const getVoucherById = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${Invoice?.id}`);
-    // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/1`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${Invoice.voucher.id}`);
     if (response.ok) {
       const data = await response.json();
       console.log("data",data)
@@ -116,6 +114,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
         });
         setVoucherState(result);
         await updateInvoiceStatus(); // Actualiza el estado de la factura a "Revisión"
+        fetchInvoices && fetchInvoices();
       } else {
         const errorData = await response.json();
         Swal.fire({
@@ -290,7 +289,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
               </div>            
             </>): (<>
               <div className="flex items-center justify-center h-[80vh]">
-                <h1 className="text-center text-[1.2rem] ">Esta Factura a sido cancelada</h1>
+                <h1 className="text-center text-[1.2rem] ">Esta Factura a sido anulada</h1>
               </div>
             </>)}
               </>

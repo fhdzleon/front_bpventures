@@ -366,7 +366,7 @@ const ListInvoiceComponent = ({
 
         {/* {invoicesData.length === 0 && <p className="p-6 text-gray-600">No se encontraron facturas.</p>} */}
       </div>
-      {filteredInvoices.length > 0 && totalPages > 0 && (
+      {filteredInvoices.length > 5 && totalPages > 0 && (
         <div className="pagination-container flex justify-between items-center mt-4">
           {/* Paginación */}
           <button

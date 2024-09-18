@@ -54,10 +54,11 @@ const DeleteInvoice: React.FC<DeleteInvoiceProps> = ({ id }) => {
           });
         } catch (error) {
           console.error("Hubo un problema con la petición", error);
-          Swal.fire(
-            "Error",
-            "Hubo un problema al eliminar el archivo",
-            "error"
+          Swal.fire({
+            title: "Error",
+            text: "No se logro borrar el archivo",
+            icon: "error",
+            confirmButtonColor: "#2b4168",} 
           );
         } finally {
           setFetchAgain(!fetchAgain);

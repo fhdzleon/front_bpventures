@@ -9,7 +9,7 @@ const BillingTable = () => {
   const [invoicesData2, setInvoicesData2] = useState<any[]>([]);
   const { userData, loading, fetchAgain } = useAuth();
 
-  const fetchInvoices = async () => {
+  const fetchInvoicesAdmin = async () => {
     try {
       if (userData?.id) {
         const response = await getUserById(userData.id);
@@ -21,7 +21,7 @@ const BillingTable = () => {
     }
   };
 
-  const fetchInvoices2 = async () => {
+  const fetchInvoicesClient = async () => {
     try {
       if (userData?.id) {
         const response = await fetch(
@@ -44,9 +44,9 @@ const BillingTable = () => {
   useEffect(() => {
     if (userData?.id) {
       if (userData.isAdmin) {
-        fetchInvoices();
+        fetchInvoicesAdmin();
       } else {
-        fetchInvoices2();
+        fetchInvoicesClient();
       }
     }
   }, [fetchAgain, userData?.id]);
@@ -55,12 +55,14 @@ const BillingTable = () => {
 
   return (
     <div className="m-5 max-h-screen mt-5 rounded-lg">
+    {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
     {/* <pre>{JSON.stringify(invoicesData2, null, 2)}</pre> */}
       <ListInvoiceComponent
-        invoicesData={userData?.isAdmin ? invoicesData : invoicesData2 }
-        isAdmin={userData?.isAdmin || false}
-        userEmail={userData?.email || ''}
+        invoicesData={invoicesData2 }
+        isAdmin={ false}
+        // userEmail={userData?.email || ''}
         titleInvoicesList={titleInvoicesList}
+        fetchInvoices={fetchInvoicesClient}
       />
     </div>
   );
