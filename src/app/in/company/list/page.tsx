@@ -91,8 +91,10 @@ const CompanyTable: React.FC = () => {
         <h1 className="text-4xl font-futura mb-6 text-secundary">
           Lista de Empresas
         </h1>
-        <ButtonAdd hrefString="/in/company/create">Agregar Empresa</ButtonAdd>
-        <FilterInput filter={filter} onFilterChange={setFilter} />
+        <div className="flex justify-start gap-4">
+          <FilterInput filter={filter} onFilterChange={setFilter} />
+          <ButtonAdd hrefString="/in/company/create">Agregar Empresa</ButtonAdd>
+        </div>
 
         {loading ? (
           <p className="text-center">Cargando empresas...</p>
