@@ -29,7 +29,6 @@ const CompanyTable: React.FC = () => {
     setCurrentPage(1);
   }, [filter]);
 
-
   const fetchCompanies = async () => {
     try {
       const response = await fetch(
@@ -88,7 +87,7 @@ const CompanyTable: React.FC = () => {
     <div>
       {loading && <PreloaderAwait />}
 
-      <div className="m-5 max-h-screen mt-5 rounded-lg font-futura">
+      <div className="m-20 max-h-screen mt-5 rounded-lg font-futura">
         <h1 className="text-4xl font-futura mb-6 text-secundary">
           Lista de Empresas
         </h1>
