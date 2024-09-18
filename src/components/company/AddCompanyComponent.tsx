@@ -9,28 +9,40 @@ export const AddCompanyComponent: React.FC = () => {
   const [cuit, setCuit] = useState('');
   const [address, setAddress] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [cuitError, setCuitError] = useState('');
+  const [addressError, setAddressError] = useState('');
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-  
-    // Validación simple de campos obligatorios
+
+    // Validaciones de los campos
     if (!name || !cuit || !address) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Todos los campos son obligatorios',
-        confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#2b4168',
-      });
+      setErrorMessage('Todos los campos son obligatorios.');
       return;
     }
-  
+
+    if (cuit.length !== 11) {
+      setErrorMessage('El CUIT debe tener 11 caracteres.');
+      return;
+    }
+
+    if (name.length > 100) {
+      setErrorMessage('El nombre no puede tener más de 100 caracteres.');
+      return;
+    }
+
+    if (address.length > 100) {
+      setErrorMessage('La dirección no puede tener más de 100 caracteres.');
+      return;
+    }
+
     const companyData = {
       name,
       address,
-      cuit: parseInt(cuit, 10), // Aseguramos que CUIT sea un número
+      cuit: parseInt(cuit, 10),
     };
-  
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/companies`, {
         method: 'POST',
@@ -39,7 +51,7 @@ export const AddCompanyComponent: React.FC = () => {
         },
         body: JSON.stringify(companyData),
       });
-  
+
       if (response.ok) {
         const result = await response.json();
         Swal.fire({
@@ -51,6 +63,7 @@ export const AddCompanyComponent: React.FC = () => {
           confirmButtonColor: "#2b4168",
         });
         console.log(result);
+        setErrorMessage(''); // Limpiar el mensaje de error
       } else {
         const errorData = await response.json();
         Swal.fire({
@@ -72,11 +85,33 @@ export const AddCompanyComponent: React.FC = () => {
       });
     }
   };
-  
+
+  const validateName = () => {
+    if (name.length > 20) {
+      setNameError('El nombre no puede tener más de 20 caracteres.');
+    } else {
+      setNameError('');
+    }
+  };
+
+  const validateCuit = () => {
+    if (cuit.length !== 11) {
+      setCuitError('El CUIT debe tener 11 caracteres.');
+    } else {
+      setCuitError('');
+    }
+  };
+
+  const validateAddress = () => {
+    if (address.length > 40) {
+      setAddressError('La dirección no puede tener más de 40 caracteres.');
+    } else {
+      setAddressError('');
+    }
+  };
 
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
-
       <form className="form-apply" onSubmit={handleSubmit}>
         <h1 className="text-center text-[1.2rem] mb-6">Añadir Empresa</h1>
 
@@ -87,9 +122,12 @@ export const AddCompanyComponent: React.FC = () => {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            onBlur={validateName} // Validación al perder el foco
             className="input-apply"
             required
+            maxLength={100}
           />
+          {nameError && <p className="text-red-500 mt-2">{nameError}</p>}
         </div>
 
         <div className="mb-4">
@@ -99,9 +137,11 @@ export const AddCompanyComponent: React.FC = () => {
             id="cuit"
             value={cuit}
             onChange={(e) => setCuit(e.target.value)}
+            onBlur={validateCuit} // Validación al perder el foco
             className="input-apply"
             required
           />
+          {cuitError && <p className="text-red-500 mt-2">{cuitError}</p>}
         </div>
 
         <div className="mb-4">
@@ -111,9 +151,12 @@ export const AddCompanyComponent: React.FC = () => {
             id="address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            onBlur={validateAddress} // Validación al perder el foco
             className="input-apply"
             required
+            maxLength={100}
           />
+          {addressError && <p className="text-red-500 mt-2">{addressError}</p>}
         </div>
 
         {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
