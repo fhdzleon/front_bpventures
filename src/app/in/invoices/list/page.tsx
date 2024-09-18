@@ -40,7 +40,7 @@ const BillingTable = () => {
 
   return (
     <div className="m-5 max-h-screen mt-5 rounded-lg">
-      <pre>{JSON.stringify(invoicesData, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
       <h1 className="text-4xl font-futura mb-6 text-secundary">{titleInvoicesList}</h1>
 
       <div className="flex items-center mb-4 space-x-4">

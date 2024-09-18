@@ -182,7 +182,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
     if (fileExtension === "pdf") {
       return (
         <div className="mb-4">
-          <pre>{JSON.stringify(Invoice, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(Invoice, null, 2)}</pre> */}
 
           <strong>Archivo Comprobante:</strong>
           <iframe src={fileUrl} title="Comprobante PDF" className="w-full h-96 border-0" />
@@ -194,7 +194,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
     } else if (["jpg", "jpeg", "png", "gif"].includes(fileExtension)) {
       return (
         <div className="mb-4">
-          <pre>{JSON.stringify(Invoice, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(Invoice, null, 2)}</pre> */}
           <strong>Previsualización de Comprobante:</strong>
           <img src={fileUrl} alt="Comprobante de Pago" className="mt-2 max-w-xs" />
           <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-secundary underline mt-2 block">
@@ -205,7 +205,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
     } else {
       return (
         <div className="mb-4">
-          <pre>{JSON.stringify(Invoice, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(Invoice, null, 2)}</pre> */}
 
           <strong>Archivo Comprobante:</strong>
           <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="text-secundary underline mt-2 block">
@@ -218,10 +218,10 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      <pre>{JSON.stringify(voucherState, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(voucherState, null, 2)}</pre> */}
       {voucherState ? (
         <div className="voucher-detail-container mt-8 p-4 border rounded shadow">
-          <pre>{JSON.stringify(Invoice?.invoiceStatus?.name, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(Invoice?.invoiceStatus?.name, null, 2)}</pre> */}
 
           <h2 className="text-center text-[1.2rem] mb-4">Detalle del Comprobante de Pago</h2>
           <div className="mb-2">
@@ -251,7 +251,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
         <>
           {Invoice?.invoiceStatus?.name === "Pendiente" ? (
             <form className="form-apply" onSubmit={handleSubmit}>
-              <pre>{JSON.stringify(token, null, 2)}</pre>
+              {/* <pre>{JSON.stringify(token, null, 2)}</pre> */}
 
               <h1 className="text-center text-[1.2rem] mb-6">Cargar Comprobante de Pago</h1>
               <div className="mb-4">
