@@ -56,7 +56,7 @@ const BillingTable = () => {
   return (
     <div className="m-5 max-h-screen mt-5 rounded-lg">
     {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
-    <pre>{JSON.stringify(invoicesData2, null, 2)}</pre>
+    {/* <pre>{JSON.stringify(invoicesData2, null, 2)}</pre> */}
       <ListInvoiceComponent
         invoicesData={invoicesData2 }
         isAdmin={ false}
