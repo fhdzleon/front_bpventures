@@ -33,12 +33,12 @@ export const UsersListComponent = ({
 
   const filteredUsers = Array.isArray(allUsers)
     ? allUsers.filter((user) => {
-      const fullName = `${user.Names} ${user.LastName}`.toLowerCase();
-      return (
-        fullName.includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    })
+        const fullName = `${user.Names} ${user.LastName}`.toLowerCase();
+        return (
+          fullName.includes(searchTerm.toLowerCase()) ||
+          user.email.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      })
     : [];
 
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
@@ -59,11 +59,14 @@ export const UsersListComponent = ({
       {loading && <PreloaderAwait />}
       {!loading ? (
         <div className="m-5 max-h-screen mt-5 rounded-lg font-futura">
-          <h1 className="text-4xl font-futura mb-6 text-secundary">
-            Lista de Usuarios {companyName && `: ${companyName}`}
+          <h1 className="text-3xl sm:text-4xl font-futura mb-6 text-secundary">
+            <span className="block sm:inline">Lista de</span>
+            <span className="block sm:inline"> Usuarios</span>
+            {companyName && (
+              <span className="block sm:inline">: {companyName}</span>
+            )}
           </h1>
-
-          <div className="flex items-center space-x-4" >
+          <div className="flex items-center space-x-4">
             <FilterInput filter={searchTerm} onFilterChange={setSearchTerm} />
             <ButtonAdd hrefString="/in/users/create">Agregar Usuario</ButtonAdd>
             {/* <ButtonAdd children="Agregar usuario" hrefString="/in/users/create" /> */}
@@ -156,27 +159,29 @@ export const UsersListComponent = ({
             )}
           </div>
 
-          <div className="flex justify-between items-center mt-4">
-            <button
-              onClick={handlePreviousPage}
-              disabled={currentPage === 1}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-2xl disabled:opacity-50"
-            >
-              Anterior
-            </button>
+          {totalPages > 0 && (
+            <div className="flex justify-between items-center mt-4">
+              <button
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-2xl disabled:opacity-50"
+              >
+                Anterior
+              </button>
 
-            <span>
-              Página {currentPage} de {totalPages}
-            </span>
+              <span>
+                Página {currentPage} de {totalPages}
+              </span>
 
-            <button
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-2xl disabled:opacity-50"
-            >
-              Siguiente
-            </button>
-          </div>
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-2xl disabled:opacity-50"
+              >
+                Siguiente
+              </button>
+            </div>
+          )}
         </div>
       ) : (
         <div className="flex h-screen flex-col items-center justify-center mt-7">
