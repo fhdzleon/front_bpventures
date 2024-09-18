@@ -18,16 +18,16 @@ export interface Deliverable {
 const invoiceWidget = () => {
   const [allInvoices, setAllInvoices] = useState<Deliverable[]>([]);
 
-  const { user } = useAuth();
+  const { userData } = useAuth();
 
   useEffect(() => {
     const fetchDeliverables = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/invoices/${user?.id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/invoices/${userData?.id}`
         );
         const data = await response.json();
-
+        
         setAllInvoices(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching invoices:", error);
@@ -35,7 +35,7 @@ const invoiceWidget = () => {
     };
 
     fetchDeliverables();
-  }, []);
+  }, [userData?.id]);
 
   return (
     <div className=" p-6 font-futura">
