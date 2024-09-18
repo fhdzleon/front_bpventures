@@ -27,12 +27,9 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
   
 
   const getVoucherById = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${Invoice?.id}`);
-    // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/1`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${Invoice?.voucher?.id}`);
     if (response.ok) {
       const data = await response.json();
-      console.log("data",data)
-      console.log("Invoice",Invoice)
       setVoucherState(data);
       // fetchInvoices
       fetchInvoices && fetchInvoices();
@@ -42,7 +39,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
   useEffect(() => {
     getVoucherById();
     fetchInvoices && fetchInvoices();
-  }, []);
+  }, [voucherState]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -217,10 +214,10 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      {/* <pre>{JSON.stringify(voucherState, null, 2)}</pre> */}
+      <pre>{JSON.stringify(voucherState, null, 2)}</pre>
       {voucherState ? (
         <div className="voucher-detail-container mt-8 p-4 border rounded shadow">
-          {/* <pre>{JSON.stringify(Invoice?.invoiceStatus?.name, null, 2)}</pre> */}
+          <pre>{JSON.stringify(Invoice?.invoiceStatus?.name, null, 2)}</pre>
 
           <h2 className="text-center text-[1.2rem] mb-4">Detalle del Comprobante de Pago</h2>
           <div className="mb-2">

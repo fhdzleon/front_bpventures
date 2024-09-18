@@ -319,7 +319,7 @@ const ListInvoiceComponent = ({
                       )
                     )}
                   </td>{" "}
-                  <td className="py-4 px-6 font-sans text-sm text-gray-700 relative">
+                  <td className="py-4 px-6 font-sans text-sm text-gray-700 relative text-center">
                     {userData?.isAdmin && (
                       <>
                         <button
@@ -391,6 +391,7 @@ const ListInvoiceComponent = ({
           </button>
         </div>
       )}
+      {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
     </div>
   );
 };
