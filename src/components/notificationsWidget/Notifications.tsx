@@ -3,15 +3,23 @@ import { usersData } from "@/helpers/UsersData";
 import React, { useState, useEffect } from "react";
 import NotificationCard from "./NotificationCard";
 import { Notification } from "@/interfaces/notifications";
+import Cookies from "js-cookie";
 
 const Notifications: React.FC = () => {
   const [notificationsData, setNotificationData] = useState<Notification[]>([]);
+  const token = Cookies.get("token");
 
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/notifications`
+          `${process.env.NEXT_PUBLIC_API_URL}/notifications`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (response.ok) {
           const data = await response.json();
