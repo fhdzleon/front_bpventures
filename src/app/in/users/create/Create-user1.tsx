@@ -2,13 +2,15 @@
 import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import CreateUserForm from "@/components/Users/CreateUserForm";
+import BackButtonString from "@/components/Buttons/BackButtonString";
 const CreateUser = () => {
   const { loading } = useAuth();
   return (
     <>
       {!loading ? (
         <>
-          <div className="flex items-start">
+          <div className="flex items-start m-4">
+            <BackButtonString hrefString={"/in/users/list"} />
             <CreateUserForm />
           </div>
         </>
