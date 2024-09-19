@@ -44,6 +44,7 @@ const ButtonSendEmail = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleClick}
+      title="Los emails serán enviados automaticamente todos los días al medio día"
       disabled={loading}
       className={`bg-[#2B4168] text-white py-2 px-4 rounded-full shadow-md hover:bg-[#4a9c80] transition duration-300 flex items-center ${
         loading ? "cursor-not-allowed opacity-50" : ""
