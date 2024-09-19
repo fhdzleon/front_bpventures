@@ -189,7 +189,7 @@ const Notifications = () => {
         if (response.ok) {
           const data = await response.json();
           setNotifications(data);
-          console.log(data, "datanotif")
+          console.log(data, "datanotif");
         } else {
           throw new Error("No se cargaron las notificaciones");
         }
@@ -224,13 +224,13 @@ const Notifications = () => {
 
   function playSound() {
     const audio = new Audio();
-    audio.src = '/sounds/notification.mp3'; // Formato MP3 para mayor compatibilidad
+    audio.src = "/sounds/notification.mp3"; // Formato MP3 para mayor compatibilidad
     audio.onerror = () => {
-      audio.src = '/sounds/notification.ogg'; // Fallo con MP3, usa OGG
+      audio.src = "/sounds/notification.ogg"; // Fallo con MP3, usa OGG
     };
     audio.play();
   }
-  
+
   const toggleNotifications = () => {
     setIsOpen(!isOpen);
     if (hasNewNotification) {
@@ -309,9 +309,14 @@ const Notifications = () => {
           </div>
 
           <ul className="p-4 space-y-4 h-56 overflow-auto">
+        
             {notifications.length > 0 ? (
               notifications.map((notification, index) => (
-                <li key={index} className="flex items-start space-x-2">
+                <li key={index} className="flex items-start space-x-2"> 
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+</svg>
+
                   <div>
                     <p className="text-gray-600 text-sm">
                       <strong>
@@ -327,11 +332,16 @@ const Notifications = () => {
                         ? ` ${notification.invoice.number}`
                         : ""}{" "}
                       <br />
-                      Para:{" "}
-                      <strong>
-                        {notification?.impactedUser?.Names || "Desconocido"}{" "}
-                        {notification?.impactedUser?.LastName || ""}
-                      </strong>
+                      {(notification?.impactedUser?.Names ||
+                        notification?.impactedUser?.LastName) && (
+                        <>
+                          Para:{" "}
+                          <strong>
+                            {notification?.impactedUser?.Names || "Desconocido"}{" "}
+                            {notification?.impactedUser?.LastName || ""}
+                          </strong>
+                        </>
+                      )}
                     </p>
                     <p className="text-gray-500 text-xs">
                       {/* {formatRelativeTime(notification?.createdAt)} */}
