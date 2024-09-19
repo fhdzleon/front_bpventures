@@ -26,7 +26,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
   const token = Cookies.get("token");
 
   const getVoucherById = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${Invoice.voucher.id}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${Invoice?.voucher?.id}`);
     if (response.ok) {
       const data = await response.json();
       console.log("data",data)
@@ -235,7 +235,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
             <strong>Factura Asociada:</strong> {voucherState.invoiceId.number}
           </div>
           {renderVoucherFile()}
-          {Invoice?.invoiceStatus?.name === "Pendiente" && (
+          {Invoice?.invoiceStatus?.name === "Revisión" && (
             <Button onClick={handleDelete} type="button" className="mt-4 bg-red-500 hover:bg-red-600 text-white">
               Eliminar Comprobante
             </Button>
@@ -272,7 +272,8 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
                 <input
                   type="file"
                   id="cargarComprobante"
-                  accept="image/*,application/pdf" // Limita la selección a imágenes y PDF
+                  // accept="image/*,application/pdf" // Limita la selección a imágenes y PDF
+                  accept=".jpg,.jpeg,.png,application/pdf" // Limita la selección a archivos JPG, PNG y PDF
                   onChange={handleFileChange}
                   className="input-apply"
                   required
