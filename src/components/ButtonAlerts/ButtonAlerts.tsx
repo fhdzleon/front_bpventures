@@ -137,7 +137,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { io } from "socket.io-client";
-
+import Cookies from 'js-cookie'; 
 const formatRelativeTime = (dateString: string | number | Date) => {
   const date = new Date(dateString);
   const now = new Date();
@@ -178,26 +178,37 @@ const Notifications = () => {
   const { userData } = useAuth();
   const [notifications, setNotifications] = useState<any[]>([]);
 
+
   const userId = userData?.isAdmin ? "Admin" : userData?.id;
 
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/notifications`
-        );
+        const token = Cookies.get('token'); 
+        if (!token) throw new Error("Token no encontrado en las cookies");
+  
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/notifications`, {
+          headers: {
+            'Authorization': `Bearer ${token}`, 
+          },
+        });
+  
         if (response.ok) {
           const data = await response.json();
-          setNotifications(data);
-          console.log(data, "datanotif");
+          
+          // Aquí limitamos a solo 5 notificaciones más recientes
+          const recentNotifications = data.slice(0, 5);
+  
+          setNotifications(recentNotifications);
+          console.log(recentNotifications, "últimas 5 notificaciones");
         } else {
           throw new Error("No se cargaron las notificaciones");
         }
       } catch (error) {
-        console.error("Error al cargar las notificaciones");
+        console.error("Error al cargar las notificaciones:");
       }
     };
-
+  
     fetchNotifications();
   }, []);
 
@@ -224,9 +235,9 @@ const Notifications = () => {
 
   function playSound() {
     const audio = new Audio();
-    audio.src = "/sounds/notification.mp3"; // Formato MP3 para mayor compatibilidad
+    audio.src = "/sounds/notification.mp3"; 
     audio.onerror = () => {
-      audio.src = "/sounds/notification.ogg"; // Fallo con MP3, usa OGG
+      audio.src = "/sounds/notification.ogg"; 
     };
     audio.volume = 0.6;
     audio.play();
@@ -353,9 +364,7 @@ const Notifications = () => {
 
 export default Notifications;
 
-function setShowAll(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}
+
 // import React, { useEffect, useState } from 'react';
 // import { io } from 'socket.io-client';
 
