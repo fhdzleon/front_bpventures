@@ -319,7 +319,7 @@ export default function Login() {
                         className="inline-block ps-[0.15rem] hover:cursor-pointer text-gray-700 font-futura"
                         htmlFor="remember"
                       >
-                        Remember me
+                        Recordar
                       </label>
                     </div>
                     {/* Forgot password link */}
@@ -327,7 +327,7 @@ export default function Login() {
                       href="/forgotPassword"
                       className="text-gray-700 px-4 focus:outline-none dark:text-primary-400 font-futura hover:underline"
                     >
-                      Forgot password?
+                      Olvidaste tu contraseña?
                     </Link>
                   </div>
                   <button

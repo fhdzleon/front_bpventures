@@ -202,7 +202,7 @@ export default function PermissionPanel({
 
       Swal.fire({
         title: "Permiso Guardado!",
-        text: "Permiso guardado para el archivo " + fileId,
+        text: "Permiso guardado  " ,
         icon: "success",
         confirmButtonColor: "#2b4168",
       });
