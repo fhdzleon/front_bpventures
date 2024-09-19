@@ -26,7 +26,7 @@ export const VoucherUpload: React.FC<InvoiceDetailProps> = ({ Invoice, fetchInvo
   const token = Cookies.get("token");
 
   const getVoucherById = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${Invoice.voucher.id}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/vouchers/${Invoice?.voucher?.id}`);
     if (response.ok) {
       const data = await response.json();
       console.log("data",data)

@@ -211,7 +211,7 @@ const Notifications = () => {
     socket.on("newNotification", (data) => {
       console.log("Nueva notificación:", data);
       setHasNewNotification(true);
-      setNotifications((prev) => [data, ...prev]);
+      setNotifications((prev) => [...prev, data]);
       playSound();
     });
 
