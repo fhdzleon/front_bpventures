@@ -228,6 +228,7 @@ const Notifications = () => {
     audio.onerror = () => {
       audio.src = "/sounds/notification.ogg"; // Fallo con MP3, usa OGG
     };
+    audio.volume = 0.6;
     audio.play();
   }
 
