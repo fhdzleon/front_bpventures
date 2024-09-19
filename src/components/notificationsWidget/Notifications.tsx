@@ -13,7 +13,7 @@ const Notifications: React.FC = () => {
     const fetchNotifications = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/notifications`,
+          `${process.env.NEXT_PUBLIC_API_URL}/notifications?limit=10`,
           {
             method: "GET",
             headers: {

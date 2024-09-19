@@ -13,25 +13,28 @@ const ButtonSendEmail = ({ text }: { text: string }) => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to send emails");
+        throw new Error("No se pudieron enviar correos electrónicos");
       }
 
       // Mostrar SweetAlert2 al éxito
       Swal.fire({
         icon: 'success',
-        title: 'Emails sent successfully!',
-        text: 'All due soon invoices have been notified.',
+        title: '¡Correos enviados exitosamente!',
+        text: 'Se ha notificado a todas las facturas que están por vencer.',
         confirmButtonText: 'OK',
+        confirmButtonColor: "#2b4168",        
       });
     } catch (error) {
-      console.error("Error sending emails:", error);
+      console.error("Error al enviar correos:", error);
 
       // Mostrar SweetAlert2 en caso de error
       Swal.fire({
         icon: 'error',
-        title: 'Failed to send emails',
-        text: 'There was an error sending the emails. Please try again later.',
+        title: 'Error al enviar correos',
+        text: 'Hubo un error al enviar los correos. Por favor, inténtalo más tarde.',
         confirmButtonText: 'OK',
+        confirmButtonColor: "#2b4168",
+
       });
     } finally {
       setLoading(false);
@@ -46,7 +49,7 @@ const ButtonSendEmail = ({ text }: { text: string }) => {
         loading ? "cursor-not-allowed opacity-50" : ""
       }`}
     >
-      {loading ? "Sending..." : text}
+      {loading ? "Enviando..." : text}
     </button>
   );
 };
