@@ -57,7 +57,7 @@ const BillingTable = () => {
         </select>
 
         <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
-        <ButtonSendEmail text="Enviar Emails de facturas vencidas"/>
+        <ButtonSendEmail text="Enviar Emails de facturas por vencer"/>
       </div>
 
       {/* Lista de facturas filtradas */}
