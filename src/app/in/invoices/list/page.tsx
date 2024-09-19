@@ -47,7 +47,7 @@ const BillingTable = () => {
       <div className="flex items-center mb-4 space-x-4">
         <FilterInput filter={filter} onFilterChange={setFilter} />
 
-        <select id="companySelect" value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)} className="py-2 font-sans h-12 text-secundary  rounded-xl  px-4">
+        <select id="companySelect" value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)} className="py-2 font-sans h-12 text-secundary  rounded-xl  px-4 border-2 border-gray-300 ">
           <option value="">Todas las empresas</option>
           {companies.map((company, index) => (
             <option key={index} value={company}>
