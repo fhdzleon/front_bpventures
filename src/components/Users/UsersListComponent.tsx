@@ -66,7 +66,7 @@ export const UsersListComponent = ({
               <span className="block sm:inline">: {companyName}</span>
             )}
           </h1>
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-wrap items-center space-x-4">
             <FilterInput filter={searchTerm} onFilterChange={setSearchTerm} />
             <ButtonAdd hrefString="/in/users/create">Agregar Usuario</ButtonAdd>
             {/* <ButtonAdd children="Agregar usuario" hrefString="/in/users/create" /> */}

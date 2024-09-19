@@ -42,23 +42,30 @@ const BillingTable = () => {
   return (
     <div className="m-5 max-h-screen mt-5 rounded-lg">
       {/* <pre>{JSON.stringify(invoicesData, null, 2)}</pre> */}
-      <h1 className="text-4xl font-futura mb-6 text-secundary">{titleInvoicesList}</h1>
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-futura mb-6 text-secundary">
+  {titleInvoicesList}
+</h1>
 
-      <div className="flex items-center mb-4 space-x-4">
-        <FilterInput filter={filter} onFilterChange={setFilter} />
+      <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-4 sm:space-y-0 mb-4">
+  <FilterInput filter={filter} onFilterChange={setFilter} />
 
-        <select id="companySelect" value={selectedCompany} onChange={(e) => setSelectedCompany(e.target.value)} className="py-2 font-sans h-12 text-secundary  rounded-xl  px-4">
-          <option value="">Todas las empresas</option>
-          {companies.map((company, index) => (
-            <option key={index} value={company}>
-              {company}
-            </option>
-          ))}
-        </select>
+  <select
+    id="companySelect"
+    value={selectedCompany}
+    onChange={(e) => setSelectedCompany(e.target.value)}
+    className="py-2 font-sans h-12 text-secundary rounded-xl px-4 w-full sm:w-auto"
+  >
+    <option value="">Todas las empresas</option>
+    {companies.map((company, index) => (
+      <option key={index} value={company}>
+        {company}
+      </option>
+    ))}
+  </select>
 
-        <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
-        <ButtonSendEmail text="Enviar Emails de facturas vencidas"/>
-      </div>
+  <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" className="w-full sm:w-auto" />
+  <ButtonSendEmail text="Enviar Emails de facturas vencidas" className="w-full sm:w-auto" />
+</div>
 
       {/* Lista de facturas filtradas */}
       <ListInvoiceComponent 

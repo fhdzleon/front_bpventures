@@ -31,7 +31,7 @@ const FilterInput: React.FC<FilterInputProps> = ({ filter, onFilterChange }: Fil
           value={filter}
           onChange={(e) => onFilterChange(e.target.value)}
           placeholder="Buscar por Nombre"
-          className="bg-gray-200 w-40 font-sans text-xs md:text-lg h-12 md:w-96 outline-none rounded-r-2xl placeholder-secundary px-3"
+          className="bg-gray-200 w-40 font-sans  text-lg md:text-lg h-12 md:w-96 outline-none rounded-r-2xl placeholder-secundary px-3"
           aria-label="Buscar por Nombre"
         />
       </div>
