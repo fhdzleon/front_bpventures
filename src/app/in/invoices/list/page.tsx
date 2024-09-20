@@ -55,8 +55,7 @@ const BillingTable = () => {
             </option>
           ))}
         </select>
-
-        <ButtonAdd children="Agregar Factura" hrefString="/in/invoices/create" />
+        <ButtonAdd hrefString="/in/invoices/create">Agregar Factura</ButtonAdd>
         <ButtonSendEmail text="Enviar Emails de facturas por vencer"/>
       </div>
 
