@@ -29,9 +29,9 @@ const DeleteUser = () => {
       if (result.isConfirmed) {
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/users/status/${id}/3`,
+            `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`,
             {
-              method: "PUT",
+              method: "DELETE",
               headers: {
                 "content-type": "application/json",
                 Authorization: `Bearer ${token}`,

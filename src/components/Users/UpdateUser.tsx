@@ -31,8 +31,6 @@ interface User {
   LastName: string;
   Position: string;
   Empresa: string;
-  Cuit: number;
-  Domicilio: string;
 }
 
 interface Props {
@@ -52,8 +50,6 @@ const UpdateUserComponent: React.FC<Props> = ({ id }) => {
     LastName: "",
     Position: "",
     Empresa: "",
-    Cuit: 0,
-    Domicilio: "",
   });
   const [companies, setCompanies] = useState<any[]>([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState<number >();
@@ -146,8 +142,6 @@ const UpdateUserComponent: React.FC<Props> = ({ id }) => {
     LastName: "Apellidos",
     Position: "Puesto",
     Empresa: "Empresa",
-    Cuit: "CUIT",
-    Domicilio: "Domicilio",
   };
 
   return (
@@ -168,7 +162,7 @@ const UpdateUserComponent: React.FC<Props> = ({ id }) => {
 
         <div className="col-span-1">
           <form className="form-apply" onSubmit={handleSubmit}>
-            {["email", "password", "Names", "LastName", "Position", "Domicilio", "Cuit"].map((field, index) => (
+            {["email", "password", "Names", "LastName", "Position"].map((field, index) => (
               <React.Fragment key={index}>
                 <label htmlFor={field} className="label-apply">
                   {fieldLabels[field]}
@@ -191,6 +185,7 @@ const UpdateUserComponent: React.FC<Props> = ({ id }) => {
               </React.Fragment>
             ))}
             {/* Campo para seleccionar empresa */}
+            
             <div className="mb-4">
               <label htmlFor="companyId" className="label-apply">
                 {fieldLabels["Empresa"]}
