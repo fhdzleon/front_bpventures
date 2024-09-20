@@ -1,10 +1,11 @@
 "use client";
-import { RegisterUser } from "@/helpers/auth.helper";
+import { fetchUsers, RegisterUser } from "@/helpers/auth.helper";
 import React, { useState, useEffect } from "react";
 import Button from "../FormComponent/Button";
 import "../../styles/form-style.css";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { useAuth } from "@/context/AuthContext";
 
 // Función para obtener empresas
 const getCompanies = async () => {
@@ -48,6 +49,7 @@ export const CreateUserForm: React.FC = () => {
     LastName: "",
     Position: "",
   });
+  const {setAllUsers} = useAuth ()
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [companies, setCompanies] = useState<any[]>([]);
@@ -127,7 +129,9 @@ export const CreateUserForm: React.FC = () => {
         // text: "Redirigiendo...",
         timer: 1500,
         showConfirmButton: false,
-      }).then(() => {
+      }).then(async () => {
+          const refetch = await fetchUsers()
+        setAllUsers(refetch)
         // Redirigir después de mostrar el mensaje
         // router.push(`${PATHROUTES.LIST}/${res.id}`);
         // window.location.href = `${PATHROUTES.LIST}/${res.id}`;
