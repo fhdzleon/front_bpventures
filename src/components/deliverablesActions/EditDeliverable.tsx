@@ -64,12 +64,13 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
               {
                 method: "PUT",
                 headers: {
-                  "content-type": "application/json",
+                  "Content-Type": "application/json",
                   Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(jsonData),
               }
             );
+      
           } else {
             const formDataToSend = new FormData();
             formDataToSend.append("name", formData.name);
@@ -91,13 +92,17 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
               }
             );
           }
-
+          
+            
           if (!response.ok) {
             throw new Error("No se logro actualizar el archivo");
           }
-
-          const data = await response.json();
-
+          console.log(response);
+          
+          // const data = await response.json();
+          // console.log(data);
+          
+          
           Swal.fire({
             title: "Actualizado",
             text: "El archivo ha sido actualizado",
@@ -108,7 +113,7 @@ const EditDeliverable: React.FC<EditDeliverableProps> = ({
             setIsModalOpen(false);
           });
         } catch (error) {
-          console.error("hubo un problema con la peticion, error");
+          console.error("hubo un problema con la peticion, error", error);
           Swal.fire({
             icon: "error",
             title: "Error",
