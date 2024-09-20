@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import "../../styles/form-style.css";
 import Button from "../FormComponent/Button";
 import Swal from 'sweetalert2';
+import { useRouter } from "next/navigation";
 
 export const AddCompanyComponent: React.FC = () => {
   const [name, setName] = useState('');
@@ -12,7 +13,7 @@ export const AddCompanyComponent: React.FC = () => {
   const [nameError, setNameError] = useState('');
   const [cuitError, setCuitError] = useState('');
   const [addressError, setAddressError] = useState('');
-
+  const router = useRouter();
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -61,6 +62,8 @@ export const AddCompanyComponent: React.FC = () => {
           timer: 1500,
           showConfirmButton: false,
           confirmButtonColor: "#2b4168",
+        }).then(() => {
+          router.push('/in/company/list')
         });
         console.log(result);
         setErrorMessage(''); // Limpiar el mensaje de error

@@ -6,6 +6,7 @@ import "../../styles/form-style.css";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { useAuth } from "@/context/AuthContext";
+import { PATHROUTES } from "@/helpers/pathRoutes";
 
 // Función para obtener empresas
 const getCompanies = async () => {
@@ -130,10 +131,9 @@ export const CreateUserForm: React.FC = () => {
         timer: 1500,
         showConfirmButton: false,
       }).then(async () => {
-          const refetch = await fetchUsers()
+        const refetch = await fetchUsers()
         setAllUsers(refetch)
-        // Redirigir después de mostrar el mensaje
-        // router.push(`${PATHROUTES.LIST}/${res.id}`);
+        router.push(`/in/users/list`);
         // window.location.href = `${PATHROUTES.LIST}/${res.id}`;
       });
     } catch (error: any) {
