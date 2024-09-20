@@ -14,7 +14,7 @@ export default function Login() {
   const router = useRouter();
   const [step, setStep] = useState(1); // 1: Login Step, 2: 2FA Step
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+  const inputsRef = useRef<(HTMLInputElement )[]>([]);
   const { user, setUser }: AuthContextType = useAuth();
   const [remember, setRemember] = useState(false);
   const [formData, setFormData] = useState({
@@ -46,8 +46,10 @@ export default function Login() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, index?: number) => {
     const { name, value } = e.target;
+    console.log(value);
+    
     const newOtp = [...otp];
-    if (index) {
+    if (typeof index === "number") {
       newOtp[index] = e.target.value;
       // Move to next input if not last input
       if (e.target.value.length === 1 && index < 5) {
@@ -129,7 +131,7 @@ export default function Login() {
             showConfirmButton: false,
           }).then(() => {
             router.push(PATHROUTES.HOME);
-          })
+          });
         }
       } catch (error) {
         Swal.fire({
@@ -137,7 +139,8 @@ export default function Login() {
           title: "Error",
           text: "Error en el inicio de sesión. Verifica tus credenciales.",
           confirmButtonColor: "#2b4168",
-        });      }
+        });
+      }
     } else if (step === 2) {
       // Step 2: Validate the 2FA code
       try {
@@ -181,7 +184,8 @@ export default function Login() {
           title: "Error",
           text: "Error en la verificación 2FA. Verifica tu código.",
           confirmButtonColor: "#2b4168",
-        });      }
+        });
+      }
     }
   };
 
@@ -275,35 +279,35 @@ export default function Login() {
                   </div>
 
                   <div className="mb-9 relative">
-  <label
-    className="font-futura block text-left text-gray-700 text-sm font-bold mb-2"
-    htmlFor="password"
-  >
-    Contraseña
-  </label>
-  <input
-    className="relative font-futura border-[0.5px] border-gray-300 appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent " // Añade un padding derecho extra para el botón
-    id="password"
-    name="password"
-    type={showPassword ? "text" : "password"}
-    placeholder="Ingresa tu password"
-    value={formData.password}
-    onChange={handleChange}
-    onFocus={handleFocus}
-  />
-  <button
-    type="button"
-    className="absolute inset-y-12 right-0 flex items-center pr-3 text-sm leading-5 text-gray-500 opacity-0 hover:opacity-100 bg-transparent hover:bg-white transition duration-300"
-    onClick={() => setShowPassword(!showPassword)}
-  >
-    {showPassword ? "Ocultar" : "Mostrar"}
-  </button>
-  {activeField === "password" && errors.password && (
-    <p className="absolute text-red-500 text-xs italic mt-1">
-      {errors.password}
-    </p>
-  )}
-</div>
+                    <label
+                      className="font-futura block text-left text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="password"
+                    >
+                      Contraseña
+                    </label>
+                    <input
+                      className="relative font-futura border-[0.5px] border-gray-300 appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-transparent " // Añade un padding derecho extra para el botón
+                      id="password"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Ingresa tu password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      onFocus={handleFocus}
+                    />
+                    <button
+                      type="button"
+                      className="absolute inset-y-12 right-0 flex items-center pr-3 text-sm leading-5 text-gray-500 opacity-0 hover:opacity-100 bg-transparent hover:bg-white transition duration-300"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? "Ocultar" : "Mostrar"}
+                    </button>
+                    {activeField === "password" && errors.password && (
+                      <p className="absolute text-red-500 text-xs italic mt-1">
+                        {errors.password}
+                      </p>
+                    )}
+                  </div>
 
                   {/* Remember me checkbox */}
                   <div className="mb-6 flex items-center justify-between">
@@ -344,12 +348,12 @@ export default function Login() {
                     {[0, 1, 2, 3, 4, 5].map((index) => (
                       <input
                         key={index}
-                        // ref={(el) => (inputsRef.current[index] = el)}
-                        ref={(el) => {
-                          if (el) {
-                            inputsRef.current[index] = el;
-                          }
-                        }}
+                        ref={(el) => (inputsRef.current[index] = el)}
+                        // ref={(el) => {
+                        //   if (el) {
+                        //     inputsRef.current[index] = el;
+                        //   }
+                        // }}
                         type="text"
                         maxLength={1}
                         value={otp[index]}
