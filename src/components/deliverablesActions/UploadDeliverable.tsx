@@ -163,12 +163,22 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
 
       /* console.log(formDataFetch); */
 
+      let messageText = "";
+
+      if (selectedOption === "1") {
+        messageText = "Carpeta agregada con éxito";
+      } else if (selectedOption === "3") {
+        messageText = "Archivo agregado con éxito";
+      } else {
+        messageText = "Link agregado con éxito";
+      }
+
       if (response.ok) {
         const result = await response.json();
         Swal.fire({
           icon: "success",
           title: "Éxito",
-          text: "Archivo agregado con éxito",
+          text: messageText,
           confirmButtonText: "Aceptar",
           confirmButtonColor: "#2b4168",
         });
@@ -178,7 +188,7 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
           Swal.fire({
             icon: "warning",
             title: "Error de conflicto",
-            text: "El nombre del archivo ya existe en la base de datos. Por favor, utiliza otro diferente.",
+            text: "El nombre del folder ya existe en la base de datos. Por favor, utiliza otro diferente.",
             confirmButtonText: "Aceptar",
             confirmButtonColor: "#2b4168",
           });
@@ -197,14 +207,14 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
         Swal.fire({
           icon: "warning",
           title: "Error de archivo",
-          text: "El archivo exede el tamaño permitido.",
+          text: "El archivo excede el tamaño permitido.",
           confirmButtonText: "Aceptar",
           confirmButtonColor: "#2b4168",
         });
       } else {
         Swal.fire({
           icon: "error",
-          title: "Error al subir el archivo",
+          title: "Error al crear el elemento",
           text: "",
           confirmButtonText: "Aceptar",
           confirmButtonColor: "#2b4168",
@@ -339,7 +349,7 @@ const UploadDeliverable: React.FC<UploadDeliverableProps> = ({
                   <h3 className="font-sans text-lg text-secundary">
                     Subir Archivo:
                   </h3>
-                   <GoogleDrivePicker parentId={parentId} />
+                  {/*  <GoogleDrivePicker parentId={parentId} /> */}
                   <p className="font-sans mb-2">
                     Selecciona un archivo desde tu PC.
                   </p>
